@@ -238,7 +238,9 @@ public class BulkPurchase extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    if(lb.validateInput(jtxtItem.getText())){
+                        setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    }
                 }
             }
 

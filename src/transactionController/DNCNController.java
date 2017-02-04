@@ -946,7 +946,9 @@ public class DNCNController extends javax.swing.JDialog {
             }
         } else if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcName)) {
-                setAccountDetailMobile("2", jtxtAcName.getText(), 0);
+                if(lb.validateInput(jtxtAcName.getText())){
+                    setAccountDetailMobile("2", jtxtAcName.getText(), 0);
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcNameKeyPressed
@@ -984,7 +986,9 @@ public class DNCNController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtBankName)) {
-                setAccountDetailMobile("2", jtxtBankName.getText(), 1);
+                if(lb.validateInput(jtxtBankName.getText())){
+                    setAccountDetailMobile("2", jtxtBankName.getText(), 1);
+                }
             }
         }
     }//GEN-LAST:event_jtxtBankNameKeyPressed

@@ -346,7 +346,9 @@ public class PurchaseController extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    if(lb.validateInput(jtxtItem.getText())){
+                        setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    }
                 }
             }
 
@@ -2317,7 +2319,9 @@ public class PurchaseController extends javax.swing.JDialog {
                     ac_cd = "";
                 }
             } else {
-                setAccountDetailMobile("2", jtxtName.getText());
+                if(lb.validateInput(jtxtName.getText())){
+                    setAccountDetailMobile("2", jtxtName.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtNameKeyPressed

@@ -800,7 +800,9 @@ public class JournalVoucherController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcName)) {
-                setAccountDetailMobile("2", jtxtAcName.getText());
+                if(lb.validateInput(jtxtAcName.getText())){
+                    setAccountDetailMobile("2", jtxtAcName.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcNameKeyPressed
