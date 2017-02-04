@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DummyPrint" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="af285981-bf68-48f4-91e4-66c712a47f3c">
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="comp_name" class="java.lang.String"/>
+	<parameter name="add1" class="java.lang.String"/>
+	<parameter name="add2" class="java.lang.String"/>
+	<parameter name="city" class="java.lang.String"/>
+	<parameter name="pin" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="dir" class="java.lang.String"/>
+	<parameter name="for" class="java.lang.String"/>
+	<parameter name="mobile" class="java.lang.String"/>
+	<parameter name="imei" class="java.lang.String"/>
+	<parameter name="cash" class="java.lang.String"/>
+	<parameter name="days" class="java.lang.String"/>
+	<parameter name="item" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="231" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="1" width="208" height="15" uuid="d2e07222-7198-4908-a820-56dfdde92057"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{comp_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="31" width="208" height="15" uuid="e0f952e0-dd19-4c0c-9cf1-0e7ac708dbdd"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{add2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="16" width="208" height="15" uuid="bc3b75ee-994c-472c-99a1-8bb97499bd87"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{add1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="46" width="208" height="15" uuid="eaed163e-fa39-4546-bf9e-680d13717f97"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{city}+" - "+$P{pin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="391" y="61" width="164" height="20" uuid="8878fc46-fb6d-4669-89cf-2179c72faa97"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="-1" y="181" width="555" height="25" uuid="1848b2b6-927b-4c45-a0dc-04e23f3e50cb"/>
+				<box leftPadding="4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="81" width="94" height="20" uuid="84843ba7-f025-4cda-960d-d57e484402e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="101" width="94" height="20" uuid="60567094-c777-49a4-9f88-bf948631ae17"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Mobile]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="81" width="279" height="20" uuid="dba8f521-13d1-4fde-b3a9-1c63c3f8f370"/>
+				<textFieldExpression><![CDATA[$P{for}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="101" width="279" height="20" uuid="8dc4b446-ea6f-41ac-8ed6-6be77b386dcd"/>
+				<textFieldExpression><![CDATA[$P{mobile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="141" width="94" height="20" uuid="c9c004d2-a263-4346-9b39-256022bad67a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[IMEI No]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="141" width="279" height="20" uuid="3ad2c98f-8706-4b89-a66a-fd39f917696f"/>
+				<textFieldExpression><![CDATA[$P{imei}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="161" width="279" height="20" uuid="323ff433-ea9a-44d9-ab04-6e3bb10419f8"/>
+				<textFieldExpression><![CDATA[$P{cash}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="161" width="94" height="20" uuid="267eef36-6aee-44c1-8416-683a8a5a9f48"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cash Recieved]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="206" width="555" height="25" uuid="5fb7bc5d-2b46-40ca-9344-63ad856cded3"/>
+				<box leftPadding="4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Approximate days for repairing / Insurance Claim : "+$P{days}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="121" width="94" height="20" uuid="8f71c2e6-8e58-4740-9bfc-103a539fa6be"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Faulty Item Name]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="121" width="279" height="20" uuid="bb6266a3-c60d-40b8-ba1f-70ac437f5f08"/>
+				<textFieldExpression><![CDATA[$P{item}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="174">
+			<textField>
+				<reportElement x="374" y="0" width="180" height="20" uuid="88cf1e8b-8e91-4161-b50b-e56f66dc680d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["For, "+$P{comp_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="373" y="69" width="181" height="20" uuid="b9a219ee-1235-447d-92eb-226aece19a9a"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Authorized Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="69" width="140" height="20" uuid="cdadb920-4f24-4654-b990-e1481a309b18"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Receiver's Signature]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="374" y="124" width="180" height="50" uuid="f6fbb2d6-7d74-4a42-96c8-647c77153429"/>
+				<imageExpression><![CDATA[$P{dir}+"/Resources/Images/image.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>
