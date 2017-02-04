@@ -36,6 +36,7 @@ import retrofit2.Response;
 import retrofitAPI.StartUpAPI;
 import retrofitAPI.StkAdjAPI;
 import retrofitAPI.SupportAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
@@ -75,6 +76,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
     public StockAdjustmentController(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setUpData();
         addJtextBox();
         tableForView();
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -114,9 +116,23 @@ public class StockAdjustmentController extends javax.swing.JDialog {
         viewTable.makeTable();
     }
 
+    
+    private void setUpData() {
+        jComboBox2.removeAllItems();
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            jComboBox2.addItem(Constants.BRANCH.get(i).getBranch_name());
+        }
+        jComboBox2.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            jComboBox2.setEnabled(true);
+        } else {
+            jComboBox2.setEnabled(false);
+        }
+    }
     public StockAdjustmentController(java.awt.Frame parent, boolean modal, int vtype) {
         super(parent, modal);
         initComponents();
+        setUpData();
         addJtextBox();
         tableForView();
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -407,6 +423,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
                                     jtxtVouDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                                     jlblVday.setText(lb.setDay(jtxtVouDate));
                                     jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
+                                    jComboBox2.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt()-1);
 
                                     Vector row = new Vector();
                                     row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
@@ -496,6 +513,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
             row.setPur_tag_no(jTable1.getValueAt(i, 5).toString());
             row.setSr_cd(jTable1.getValueAt(i, 6).toString());
             row.setRemark(jTextArea1.getText());
+            row.setBranch_cd((jComboBox2.getSelectedIndex()+1) + "");
             detail.add(row);
         }
 
@@ -546,6 +564,8 @@ public class StockAdjustmentController extends javax.swing.JDialog {
         jBillDateBtn = new javax.swing.JButton();
         jbtnAdd = new javax.swing.JButton();
         jlblVday = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -613,6 +633,15 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
         jlblVday.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel5.setText("Branch");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox2KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -630,26 +659,36 @@ public class StockAdjustmentController extends javax.swing.JDialog {
                 .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlblVday, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
                 .addComponent(jbtnAdd)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnAdd)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblVday))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblVday)
+                            .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jbtnAdd)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jLabel1, jLabel24, jlblVday, jtxtVouDate, jtxtVoucher});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox2, jLabel1, jLabel24, jLabel5, jlblVday, jtxtVouDate, jtxtVoucher});
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -907,6 +946,11 @@ public class StockAdjustmentController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jComboBox2);
+    }//GEN-LAST:event_jComboBox2KeyPressed
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
@@ -917,8 +961,10 @@ public class StockAdjustmentController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

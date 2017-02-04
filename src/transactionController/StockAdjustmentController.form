@@ -93,7 +93,11 @@
                   <Component id="jBillDateBtn" min="-2" pref="20" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jlblVday" min="-2" pref="96" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel5" pref="109" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jComboBox2" min="-2" pref="182" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                   <Component id="jbtnAdd" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -101,16 +105,25 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jbtnAdd" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtVoucher" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel24" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtVouDate" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jBillDateBtn" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jlblVday" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel5" linkSize="2" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="jComboBox2" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblVday" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jBillDateBtn" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtVouDate" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jLabel24" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jLabel1" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtVoucher" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="jbtnAdd" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -165,6 +178,26 @@
               </Border>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Branch"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox2">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox2KeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

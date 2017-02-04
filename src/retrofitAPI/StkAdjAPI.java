@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public interface StkAdjAPI {
 
     @GET("GetStkAdjHeader")
-    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type);
+    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetStkAdjBill")
     Call<JsonObject> getBill(@Query("ref_no") String ref_no);
