@@ -1323,6 +1323,7 @@ public class SalesPaymentDialog extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_N) {
             if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
                 TidMasterController tid = new TidMasterController(null, true, null, "", "");
+                tid.setLocationRelativeTo(null);
                 tid.setVisible(true);
             }
         }

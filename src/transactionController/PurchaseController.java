@@ -116,6 +116,7 @@ public class PurchaseController extends javax.swing.JDialog {
     boolean flag = false;
     PurchaseAPI purchaseAPI = null;
     private ReportTable viewTable = null;
+    private ReportTable viewTableSummary = null;
     private String sr_cd = "";
     private String item_name = "";
     private ArrayList<PurchaseControllerDetailModel> subDetail = new ArrayList<PurchaseControllerDetailModel>();
@@ -124,6 +125,7 @@ public class PurchaseController extends javax.swing.JDialog {
     private HashMap<String, double[]> taxInfo;
     private PurchaseView pbv;
     private ArrayList<SchemeMasterModel> detail;
+    private HashMap<String, Integer> data;
 
     /**
      * Creates new form PurchaseController
@@ -209,6 +211,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
     private void tableForView() {
         viewTable = new ReportTable();
+        viewTableSummary = new ReportTable();
 
         viewTable.AddColumn(0, "Item Code", 120, java.lang.String.class, null, false);
         viewTable.AddColumn(1, "Item Name", 120, java.lang.String.class, null, false);
@@ -216,6 +219,10 @@ public class PurchaseController extends javax.swing.JDialog {
         viewTable.AddColumn(3, "Tax Name", 120, java.lang.String.class, null, false);
         viewTable.AddColumn(4, "SKU", 120, java.lang.String.class, null, false);
         viewTable.makeTable();
+
+        viewTableSummary.AddColumn(0, "Item Name", 120, java.lang.String.class, null, false);
+        viewTableSummary.AddColumn(1, "Count", 120, java.lang.String.class, null, false);
+        viewTableSummary.makeTable();
     }
 
     private void addTaxCombo() {
@@ -346,7 +353,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    if(lb.validateInput(jtxtItem.getText())){
+                    if (lb.validateInput(jtxtItem.getText())) {
                         setSeriesData("3", jtxtItem.getText().toUpperCase());
                     }
                 }
@@ -1438,6 +1445,7 @@ public class PurchaseController extends javax.swing.JDialog {
         jTable2 = new javax.swing.JTable();
         jbtnBulkPurchase = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -1555,11 +1563,11 @@ public class PurchaseController extends javax.swing.JDialog {
             }
         });
         jtxtName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtNameKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtNameKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtNameKeyPressed(evt);
             }
         });
 
@@ -2078,6 +2086,13 @@ public class PurchaseController extends javax.swing.JDialog {
 
         jLabel5.setText("SELECT ROW AND PRESS CTRL+ E  FOR OPEN ITEM MASTER ");
 
+        jButton2.setText("Summary");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -2088,7 +2103,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -2113,14 +2128,16 @@ public class PurchaseController extends javax.swing.JDialog {
                                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane2)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jbtnBulkPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jbtnBulkPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2154,7 +2171,9 @@ public class PurchaseController extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton1)
-                                    .addComponent(jbtnBulkPurchase, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jbtnBulkPurchase)
+                                        .addComponent(jButton2)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -2319,7 +2338,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     ac_cd = "";
                 }
             } else {
-                if(lb.validateInput(jtxtName.getText())){
+                if (lb.validateInput(jtxtName.getText())) {
                     setAccountDetailMobile("2", jtxtName.getText());
                 }
             }
@@ -2794,6 +2813,31 @@ public class PurchaseController extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbPmt1KeyPressed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        final SelectDailog sa = new SelectDailog(null, true);
+        sa.setData(viewTableSummary);
+        sa.setLocationRelativeTo(null);
+        data = new HashMap<>();
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (data.get(jTable1.getValueAt(i, 1).toString()) == null) {
+                data.put(jTable1.getValueAt(i, 1).toString(), 1);
+            } else {
+                data.put(jTable1.getValueAt(i, 1).toString(), data.get(jTable1.getValueAt(i, 1).toString()) + 1);
+            }
+        }
+        Iterator it = data.keySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next().toString();
+            Vector row = new Vector();
+            row.add(key);
+            row.add(data.get(key));
+            sa.getDtmHeader().addRow(row);
+        }
+        lb.setColumnSizeForTable(viewTableSummary, sa.jPanelHeader.getWidth());
+        sa.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void doClose(int retStatus) {
         lb.confirmDialog("Do you want to discard this voucher?");
         if (lb.type) {
@@ -2808,6 +2852,7 @@ public class PurchaseController extends javax.swing.JDialog {
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JButton jBillDateBtn2;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
