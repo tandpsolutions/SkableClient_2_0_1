@@ -786,7 +786,9 @@ private void jbtnPreviewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jtxtPrdNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPrdNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setSeriesData("3", jtxtPrdName.getText().toUpperCase());
+            if(lb.validateInput(jtxtPrdName.getText())){
+                setSeriesData("3", jtxtPrdName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtPrdNameKeyPressed
 

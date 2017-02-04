@@ -115,6 +115,7 @@ import masterView.RefMasterView;
 import masterView.SalesmanMaster;
 import masterView.SchemeMasterView;
 import masterView.SeriesMasterView;
+import masterView.TidMasterView;
 import masterView.TypeMasterView;
 import masterView.UserGroupMasterView;
 import masterView.UserMasterView;
@@ -486,6 +487,7 @@ public class SkableHome extends javax.swing.JFrame {
         jmnSalesmanMaster = new javax.swing.JMenuItem();
         jmnReferalMaster = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jmnTransaction = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jmnRDPurchase = new javax.swing.JMenuItem();
@@ -630,6 +632,8 @@ public class SkableHome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jDesktopPane1.setLayout(null);
+
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
 
@@ -750,6 +754,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnMaster.add(jMenuItem10);
+
+        jMenuItem24.setText("TID Master");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jMenuItem24);
 
         jMenuBar3.add(jmnMaster);
 
@@ -2674,6 +2686,12 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(crr, "Card Charges Register");
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        // TODO add your handling code here:
+        TidMasterView tm = new TidMasterView(13);
+        addOnScreen(tm, "TID Master View");
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2705,6 +2723,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;

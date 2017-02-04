@@ -256,7 +256,7 @@
                               </Group>
                               <Component id="jtxtBrandName" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="18" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jPanel3" min="-2" pref="97" max="-2" attributes="0"/>
                       </Group>
                   </Group>

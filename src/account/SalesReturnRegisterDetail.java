@@ -980,7 +980,9 @@ public class SalesReturnRegisterDetail extends javax.swing.JInternalFrame {
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcAlias)) {
-                setAccountDetailMobile("2", jtxtAcAlias.getText());
+                if(lb.validateInput(jtxtAcAlias.getText())){
+                    setAccountDetailMobile("2", jtxtAcAlias.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcAliasKeyPressed

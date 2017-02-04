@@ -1244,14 +1244,18 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
     private void jtxtSeriesNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtSeriesNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            setSeriesData("3", jtxtSeriesName.getText().toUpperCase());
+            if(lb.validateInput(jtxtSeriesName.getText())){
+                setSeriesData("3", jtxtSeriesName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtSeriesNameKeyPressed
 
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton1.isSelected()) {
-            setBrandData("8", jtxtBrandName.getText().toUpperCase());
+            if(lb.validateInput(jtxtBrandName.getText())){
+                setBrandData("8", jtxtBrandName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtBrandNameKeyPressed
 
@@ -1269,7 +1273,9 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setModelData("12", jtxtModelName.getText().toUpperCase());
+            if(lb.validateInput(jtxtModelName.getText())){
+                setModelData("12", jtxtModelName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtModelNameKeyPressed
 

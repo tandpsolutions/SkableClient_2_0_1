@@ -950,7 +950,9 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            setMemoryMaster("13", jtxtMemoryName.getText().toUpperCase());
+            if(lb.validateInput(jtxtMemoryName.getText())){
+                setMemoryMaster("13", jtxtMemoryName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtMemoryNameKeyPressed
 
@@ -969,7 +971,9 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            setColorMaster("14", jtxtColorName.getText().toUpperCase());
+            if(lb.validateInput(jtxtColorName.getText())){
+                setColorMaster("14", jtxtColorName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtColorNameKeyPressed
 
@@ -995,7 +999,9 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            setModelData("12", jtxtModelName.getText().toUpperCase());
+            if(lb.validateInput(jtxtModelName.getText())){
+                setModelData("12", jtxtModelName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtModelNameKeyPressed
 

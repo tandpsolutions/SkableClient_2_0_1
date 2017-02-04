@@ -726,7 +726,9 @@ public class MonthwiseModelWiseSalesStatement extends javax.swing.JInternalFrame
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setModelData("12", jtxtModelName.getText().toUpperCase());
+            if(lb.validateInput(jtxtModelName.getText())){
+                setModelData("12", jtxtModelName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtModelNameKeyPressed
 

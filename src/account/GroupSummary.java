@@ -659,7 +659,9 @@ public class GroupSummary extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            setBrandData("11", jtxtBrandName.getText().toUpperCase());
+            if (lb.validateInput(jtxtBrandName.getText())) {
+                setBrandData("11", jtxtBrandName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtBrandNameKeyPressed
 

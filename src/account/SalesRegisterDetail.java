@@ -692,9 +692,6 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtxtAcAliasKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtxtAcAliasKeyReleased(evt);
-            }
         });
 
         jCheckBox1.setText("Name");
@@ -1032,14 +1029,12 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcAlias)) {
-                setAccountDetailMobile("2", jtxtAcAlias.getText());
+                if(lb.validateInput(jtxtAcAlias.getText())){
+                    setAccountDetailMobile("2", jtxtAcAlias.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcAliasKeyPressed
-
-    private void jtxtAcAliasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyReleased
-
-    }//GEN-LAST:event_jtxtAcAliasKeyReleased
 
     private void jtxtAcNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusGained
         lb.selectAll(evt);

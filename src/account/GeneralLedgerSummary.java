@@ -51,7 +51,7 @@ public class GeneralLedgerSummary extends javax.swing.JInternalFrame {
         lb = Library.getInstance();
         dtm = (DefaultTableModel) jTable1.getModel();
         registerShortKeys();
-     setPopUp();
+        setPopUp();
     }
 
     private void setPopUp() {
@@ -432,7 +432,9 @@ public class GeneralLedgerSummary extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcName)) {
-                setAccountDetailMobile("2", jtxtAcAlias.getText());
+                if (lb.validateInput(jtxtAcAlias.getText())) {
+                    setAccountDetailMobile("2", jtxtAcAlias.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcAliasKeyPressed

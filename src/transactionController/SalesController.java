@@ -667,23 +667,62 @@ public class SalesController extends javax.swing.JDialog {
 
             @Override
             public void focusLost(java.awt.event.FocusEvent e) {
-                if (lb.isNumber2(jtxtRate.getText()) > 0) {
+
+                if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+                    try {
+                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                        if (call != null) {
+                            JsonArray array = call.getAsJsonArray("data");
+                            if (array.size() > 0) {
+                                double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
+                                double sale_rate = lb.isNumber(jtxtRate);
+                                if (sale_rate < pur_rate) {
+                                    jtxtRate.requestFocusInWindow();
+                                    return;
+                                } else {
+                                    if (lb.isNumber2(jtxtRate.getText()) > 0) {
 //                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
-                    if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                        jtxtDiscPer.setText("0.00");
-                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                    } else {
-                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                        jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-                        jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
-                    }
+                                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                            jtxtDiscPer.setText("0.00");
+                                            jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                        } else {
+                                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+                                        }
 //                    }
-                    jcmbTaxItemStateChanged(null);
-                    calculation();
-                    jbtnAdd.doClick();
-                    jlblRate.setText("");
-                    lb.toDouble(e);
+                                        jcmbTaxItemStateChanged(null);
+                                        calculation();
+                                        jbtnAdd.doClick();
+                                        jlblRate.setText("");
+                                        lb.toDouble(e);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (IOException ex) {
+                        jtxtRate.requestFocusInWindow();
+                    }
+                } else {
+                    if (lb.isNumber2(jtxtRate.getText()) > 0) {
+//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                            jtxtDiscPer.setText("0.00");
+                            jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                        } else {
+                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+                        }
+//                    }
+                        jcmbTaxItemStateChanged(null);
+                        calculation();
+                        jbtnAdd.doClick();
+                        jlblRate.setText("");
+                        lb.toDouble(e);
+                    }
                 }
             }
         });
@@ -722,7 +761,29 @@ public class SalesController extends javax.swing.JDialog {
 
                     }
                 }
-                lb.enterFocus(e, jbtnAdd);
+                if (lb.isEnter(e)) {
+                    if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+                        try {
+                            JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                            if (call != null) {
+                                JsonArray array = call.getAsJsonArray("data");
+                                if (array.size() > 0) {
+                                    double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
+                                    double sale_rate = lb.isNumber(jtxtRate);
+                                    if (sale_rate < pur_rate) {
+                                        return;
+                                    } else {
+                                        jbtnAdd.requestFocusInWindow();
+                                    }
+                                }
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        lb.enterFocus(e, jbtnAdd);
+                    }
+                }
             }
         });
 
@@ -2660,7 +2721,7 @@ public class SalesController extends javax.swing.JDialog {
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1256, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

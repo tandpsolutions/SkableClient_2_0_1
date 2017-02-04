@@ -453,7 +453,9 @@ public class StockSummaryDetail extends javax.swing.JInternalFrame {
     private void jtxtProductNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtProductNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setSeriesData("3", jtxtProductName.getText().toUpperCase());
+            if(lb.validateInput(jtxtProductName.getText())){
+                setSeriesData("3", jtxtProductName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtProductNameKeyPressed
 

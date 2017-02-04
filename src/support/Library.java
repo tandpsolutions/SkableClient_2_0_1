@@ -848,6 +848,14 @@ public class Library {
         }
     }
 
+    public boolean validateInput(String text) {
+        if (text != null && text.length() >= 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void toUpper(java.awt.event.FocusEvent evt) {
         if (evt.getSource() instanceof JTextField) {
             JTextField txt = (JTextField) evt.getSource();
@@ -1496,6 +1504,29 @@ public class Library {
             return (newTag);
         } else {
             return inputTag;
+        }
+    }
+
+    private boolean validateDate(JTextField jtxtVouDate) {
+        try {
+            if (jtxtVouDate.getText().contains("/")) {
+                jtxtVouDate.setText(jtxtVouDate.getText().replace("/", ""));
+            }
+            if (jtxtVouDate.getText().length() == 8) {
+                String temp = jtxtVouDate.getText();
+                String setDate = (temp.substring(0, 2)).replace(temp.substring(0, 2), temp.substring(0, 2) + "/") + (temp.substring(2, 4)).replace(temp.substring(2, 4), temp.substring(2, 4) + "/") + temp.substring(4, temp.length());
+                jtxtVouDate.setText(setDate);
+            }
+            Date d = new SimpleDateFormat("dd/MM/yyyy").parse(jtxtVouDate.getText().trim());
+            Date beforeDate = new Date(116, 3, 1);
+            Date afterDate = new Date(117, 2, 31);
+            if (d.before(beforeDate) && d.after(afterDate)) {
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            jtxtVouDate.requestFocusInWindow();
+            return false;
         }
     }
 }

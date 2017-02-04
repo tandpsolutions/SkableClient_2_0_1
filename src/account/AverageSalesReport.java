@@ -988,7 +988,9 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setModelData("12", jtxtModelName.getText().toUpperCase());
+            if (lb.validateInput(jtxtModelName.getText())) {
+                setModelData("12", jtxtModelName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtModelNameKeyPressed
 
@@ -1000,7 +1002,9 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            setBrandData("8", jtxtBrandName.getText().toUpperCase());
+            if (lb.validateInput(jtxtBrandName.getText())) {
+                setBrandData("8", jtxtBrandName.getText().toUpperCase());
+            }
         }
     }//GEN-LAST:event_jtxtBrandNameKeyPressed
 
@@ -1043,7 +1047,9 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcAlias)) {
-                setAccountDetailMobile("2", jtxtAcAlias.getText());
+                if (lb.validateInput(jtxtAcAlias.getText())) {
+                    setAccountDetailMobile("2", jtxtAcAlias.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtAcAliasKeyPressed
