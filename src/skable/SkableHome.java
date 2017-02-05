@@ -91,6 +91,7 @@ import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -99,12 +100,16 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import login.Login;
 import masterView.AccountMasterView;
 import masterView.BrandMasterView;
 import masterView.ColorMasterView;
@@ -123,6 +128,7 @@ import model.BranchMasterModel;
 import model.UserRightsModel;
 import retrofit2.Call;
 import retrofitAPI.UserAPI;
+import support.InactivityListener;
 import support.Library;
 import support.UnCaughtException;
 import support.ZoomingTableToolTip;
@@ -198,6 +204,19 @@ public class SkableHome extends javax.swing.JFrame {
             jmnTaxInvoice1.setVisible(false);
             jmnMarginReportSummary1.setVisible(false);
         }
+
+        Action logout = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane.removeAll();
+                SkableHome.this.dispose();
+                Login lg = new Login();
+                lg.setLocationRelativeTo(null);
+                lg.setVisible(true);
+            }
+        };
+
+        InactivityListener listener = new InactivityListener(this, logout, 10);
+        listener.start();
     }
 
     private void setTrayIcon() {
