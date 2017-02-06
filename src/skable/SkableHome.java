@@ -207,7 +207,7 @@ public class SkableHome extends javax.swing.JFrame {
 
         Action logout = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                tabbedPane.removeAll();
+//                tabbedPane.removeAll();
                 SkableHome.this.dispose();
                 Login lg = new Login();
                 lg.setLocationRelativeTo(null);
@@ -215,7 +215,7 @@ public class SkableHome extends javax.swing.JFrame {
             }
         };
 
-        InactivityListener listener = new InactivityListener(this, logout, 10);
+        InactivityListener listener = new InactivityListener(this, logout, 1);
         listener.start();
     }
 
