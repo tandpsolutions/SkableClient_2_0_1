@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import login.Login;
 import model.BranchMasterModel;
@@ -23,6 +24,7 @@ import retrofitAPI.SalesmanAPI;
 import retrofitAPI.UpdateInterface;
 import static skable.Constants.FOLDER;
 import support.Library;
+import utility.SwingFileDownloadHTTP;
 
 /**
  *
@@ -47,38 +49,63 @@ public class Skable {
         final Library lb = Library.getInstance();
 //
         try {
-            final UpdateInterface update1 = lb.getRetrofit().create(UpdateInterface.class);
-            final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
-            final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
+            UpdateInterface update = lb.getUpdateRetrofit().create(UpdateInterface.class);
+            JsonObject data = update.getUpdateVersion(ver).execute().body();
+            JsonArray array = data.getAsJsonArray("update");
 
-            final JsonObject branchMaster = update1.GetBranchMaster().execute().body();
-            final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
-            final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+            if (array.size() > 0) {
+                if (!array.get(0).getAsJsonObject().get("UPDATE_VER").getAsString().equalsIgnoreCase(ver)) {
+                    lb.confirmDialog("New Update has been found.\n Do you want to update it now?");
+                    if (lb.type) {
+                        final String ver = array.get(0).getAsJsonObject().get("UPDATE_VER").getAsString();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                SwingFileDownloadHTTP sf = new SwingFileDownloadHTTP("http://www.tandpsolutions.in/update_ipearl/" + ver + ".zip");
+                                sf.setTitle("Downloading...  Ver " + ver);
+                                sf.setVisible(true);
+                                sf.buttonDownloadActionPerformed();
+                            }
+                        });
+                    } else {
+                        System.exit(0);
+                    }
 
-            final JsonArray branchArray = branchMaster.getAsJsonArray("data");
-            final JsonArray refMaster = refmaster.getAsJsonArray("data");
-            final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
-
-            if (branchArray.size() > 0) {
-                for (int i = 0; i < branchArray.size(); i++) {
-                    BranchMasterModel model = new Gson().fromJson(branchArray.get(i).getAsJsonObject().toString(), BranchMasterModel.class);
-                    Constants.BRANCH.add(model);
                 }
-            }
-            if (refMaster.size() > 0) {
-                for (int i = 0; i < refMaster.size(); i++) {
-                    RefModel model = new Gson().fromJson(refMaster.get(i).getAsJsonObject().toString(), RefModel.class);
-                    Constants.REFERAL.add(model);
-                }
-            }
+            } else {
+                final UpdateInterface update1 = lb.getRetrofit().create(UpdateInterface.class);
+                final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
+                final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
 
-            if (salesmanMaster.size() > 0) {
-                for (int i = 0; i < salesmanMaster.size(); i++) {
-                    SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
-                    Constants.SALESMAN.add(model);
+                final JsonObject branchMaster = update1.GetBranchMaster().execute().body();
+                final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
+                final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+
+                final JsonArray branchArray = branchMaster.getAsJsonArray("data");
+                final JsonArray refMaster = refmaster.getAsJsonArray("data");
+                final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
+
+                if (branchArray.size() > 0) {
+                    for (int i = 0; i < branchArray.size(); i++) {
+                        BranchMasterModel model = new Gson().fromJson(branchArray.get(i).getAsJsonObject().toString(), BranchMasterModel.class);
+                        Constants.BRANCH.add(model);
+                    }
                 }
+                if (refMaster.size() > 0) {
+                    for (int i = 0; i < refMaster.size(); i++) {
+                        RefModel model = new Gson().fromJson(refMaster.get(i).getAsJsonObject().toString(), RefModel.class);
+                        Constants.REFERAL.add(model);
+                    }
+                }
+
+                if (salesmanMaster.size() > 0) {
+                    for (int i = 0; i < salesmanMaster.size(); i++) {
+                        SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
+                        Constants.SALESMAN.add(model);
+                    }
+                }
+                startApplication();
             }
-            startApplication();
         } catch (IOException ex) {
             if (ex instanceof ConnectException) {
                 try {
