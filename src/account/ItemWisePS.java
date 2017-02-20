@@ -336,14 +336,18 @@ public class ItemWisePS extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 5).toString());
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
+                row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 9).toString());
                 rows.add(row);
             }
 
             ArrayList header = new ArrayList();
-            header.add("Name");
+            header.add("Purchase Party");
+            header.add("Sales Party");
+            header.add("SKU Code");
             header.add("Date");
-            header.add("Item Name");
             header.add("IMEI");
+            header.add("Item Name");
             header.add("Pur RATE");
             header.add("Sale");
             header.add("Profit");

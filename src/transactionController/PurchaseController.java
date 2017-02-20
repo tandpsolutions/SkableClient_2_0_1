@@ -2827,6 +2827,7 @@ public class PurchaseController extends javax.swing.JDialog {
             }
         }
         Iterator it = data.keySet().iterator();
+        sa.getDtmHeader().setRowCount(0);
         while (it.hasNext()) {
             String key = it.next().toString();
             Vector row = new Vector();

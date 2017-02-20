@@ -215,7 +215,7 @@ public class SkableHome extends javax.swing.JFrame {
             }
         };
 
-        InactivityListener listener = new InactivityListener(this, logout, 1);
+        InactivityListener listener = new InactivityListener(this, logout, 10);
         listener.start();
     }
 

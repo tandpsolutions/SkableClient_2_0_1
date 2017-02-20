@@ -68,7 +68,7 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = stkAdjAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "",jComboBox1.getSelectedIndex()+1+"").execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 JsonObject result = call;
@@ -95,9 +95,10 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
             Logger.getLogger(StockAdjustmentView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void setUpData() {
         jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
             jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
         }

@@ -80,6 +80,7 @@ public class SalesView extends javax.swing.JInternalFrame {
 
     private void setUpData() {
         jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
             jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
@@ -119,10 +120,10 @@ public class SalesView extends javax.swing.JInternalFrame {
             PurchaseHead call;
             if (formCd == 130) {
                 call = salesAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", Constants.BRANCH.get(jComboBox1.getSelectedIndex()).getBranch_cd()).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
             } else {
                 call = salesAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", Constants.BRANCH.get(jComboBox1.getSelectedIndex()).getBranch_cd()).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
             }
             if (call != null) {
                 System.out.println(call.toString());

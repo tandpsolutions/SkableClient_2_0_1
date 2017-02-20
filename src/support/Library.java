@@ -84,6 +84,7 @@ import transactionController.BankPaymentController;
 import transactionController.CashPaymentReceiptController;
 import transactionController.ContraVoucherController;
 import transactionController.DCController;
+import transactionController.DNCNController;
 import transactionController.JournalVoucherController;
 import transactionController.PurchaseController;
 import transactionController.PurchaseReturnController;
@@ -1486,6 +1487,22 @@ public class Library {
                 VisitorBookController sbc = new VisitorBookController(null, true);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
+            } else {
+                showMessageDailog("You don't have rights to perform this action");
+            }
+        } else if (ref_no.startsWith("CN")) {
+            if (SkableHome.userRightsMap.get(90).getEDITS().equalsIgnoreCase("1")) {
+                DNCNController pc = new DNCNController(null, true, 1);
+                pc.setLocationRelativeTo(null);
+                pc.setData(null, ref_no);
+            } else {
+                showMessageDailog("You don't have rights to perform this action");
+            }
+        } else if (ref_no.startsWith("DN")) {
+            if (SkableHome.userRightsMap.get(91).getEDITS().equalsIgnoreCase("1")) {
+                DNCNController pc = new DNCNController(null, true, 1);
+                pc.setLocationRelativeTo(null);
+                pc.setData(null, ref_no);
             } else {
                 showMessageDailog("You don't have rights to perform this action");
             }
