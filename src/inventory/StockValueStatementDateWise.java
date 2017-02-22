@@ -265,10 +265,12 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                         JsonArray array = rspns.body().getAsJsonArray("data");
                         dtm.setRowCount(0);
                         double opb = 0.00, pur = 0.00, sal = 0.00, stock = 0.00;
+                        double opb_value = 0.00, pur_value = 0.00, sal_value = 0.00, stock_value = 0.00;
                         for (int i = 0; i < array.size(); i++) {
                             Vector row = new Vector();
 
                             row.add(i + 1);
+                            row.add(array.get(i).getAsJsonObject().get("TYPE_NAME").getAsString());
                             row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                             row.add(array.get(i).getAsJsonObject().get("OPB").getAsDouble());
                             if (array.get(i).getAsJsonObject().get("OPB").getAsDouble() != 0) {
@@ -276,7 +278,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                             } else {
                                 row.add(0.00);
                             }
-                            row.add(array.get(i).getAsJsonObject().get("OPB_VAL").getAsDouble());
+                            row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("OPB_VAL").getAsDouble()));
                             row.add(array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble());
                             if (array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() != 0) {
                                 row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("PURCHASE_VAL").getAsDouble() / array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble()));
@@ -297,6 +299,15 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                             double opb_val = array.get(i).getAsJsonObject().get("OPB_VAL").getAsDouble();
                             double pur_qty = array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble();
                             double pur_val = array.get(i).getAsJsonObject().get("PURCHASE_VAL").getAsDouble();
+
+                            opb += array.get(i).getAsJsonObject().get("OPB").getAsDouble();
+                            opb_value += array.get(i).getAsJsonObject().get("OPB_VAL").getAsDouble();
+                            pur += array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble();
+                            pur_value += array.get(i).getAsJsonObject().get("PURCHASE_VAL").getAsDouble();
+                            sal += array.get(i).getAsJsonObject().get("SALES").getAsDouble();
+                            sal_value += array.get(i).getAsJsonObject().get("SALES_VAL").getAsDouble();
+                            stock += array.get(i).getAsJsonObject().get("OPB").getAsDouble() + array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() - array.get(i).getAsJsonObject().get("SALES").getAsDouble();
+                            stock_value += (opb_qty + pur_qty - array.get(i).getAsJsonObject().get("SALES").getAsDouble()) * ((pur_val + opb_val) / (opb_qty + pur_qty));
                             if (((opb_qty + pur_qty)) != 0) {
                                 row.add(lb.Convert2DecFmtForRs(((pur_val + opb_val) / (opb_qty + pur_qty))));
                                 row.add(lb.Convert2DecFmtForRs((opb_qty + pur_qty - array.get(i).getAsJsonObject().get("SALES").getAsDouble()) * ((pur_val + opb_val) / (opb_qty + pur_qty))));
@@ -314,15 +325,35 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                         row.add(" ");
                         row.add(" ");
                         row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
+                        row.add(" ");
                         dtm.addRow(row);
 
                         row = new Vector();
                         row.add("Total");
                         row.add(" ");
+                        row.add(" ");
                         row.add(opb);
+                        row.add(" ");
+                        row.add(opb_value);
                         row.add(pur);
+                        row.add(" ");
+                        row.add(pur_value);
                         row.add(sal);
+                        row.add(" ");
+                        row.add(sal_value);
                         row.add(stock);
+                        row.add(" ");
+                        row.add(stock_value);
                         row.add(" ");
                         dtm.addRow(row);
 
@@ -488,6 +519,54 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
 
     }
 
+    public void callExcel() {
+        try {
+            ArrayList rows = new ArrayList();
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                ArrayList row = new ArrayList();
+                row.add(jTable1.getValueAt(i, 0).toString());
+                row.add(jTable1.getValueAt(i, 1).toString());
+                row.add(jTable1.getValueAt(i, 2).toString());
+                row.add(jTable1.getValueAt(i, 3).toString());
+                row.add(jTable1.getValueAt(i, 4).toString());
+                row.add(jTable1.getValueAt(i, 5).toString());
+                row.add(jTable1.getValueAt(i, 6).toString());
+                row.add(jTable1.getValueAt(i, 7).toString());
+                row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 9).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
+                row.add(jTable1.getValueAt(i, 11).toString());
+                row.add(jTable1.getValueAt(i, 12).toString());
+                row.add(jTable1.getValueAt(i, 13).toString());
+                row.add(jTable1.getValueAt(i, 14).toString());
+                row.add(jTable1.getValueAt(i, 15).toString());
+                rows.add(row);
+            }
+
+            ArrayList header = new ArrayList();
+            header.add("Sr No");
+            header.add("Type Name");
+            header.add("Item Name");
+            header.add("OPB");
+            header.add("OPB Rate");
+            header.add("OPB Value");
+            header.add("Purcahse");
+            header.add("Purcahse Rate");
+            header.add("Purcahse Value");
+            header.add("Sales");
+            header.add("Sales Rate");
+            header.add("Sales Value");
+            header.add("Stock");
+            header.add("Avg Rate");
+            header.add("Avg Value");
+            header.add("Alias");
+            lb.exportToExcel("Stock Value Statement Date Wise", header, rows, "Stock Value Statement Date Wise");
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
+        }
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -534,11 +613,11 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "SR No", "Product Name", "Opening", "Rate", "OPB Val", "Purchase", "Rate", "Val", "Sales", "Rate", "Val", "Balance", "Rate", "Val", "sr_cd"
+                "SR No", "Type Name", "Product Name", "Opening", "Rate", "OPB Val", "Purchase", "Rate", "Val", "Sales", "Rate", "Val", "Balance", "Rate", "Val", "sr_cd"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -568,9 +647,10 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(11).setResizable(false);
             jTable1.getColumnModel().getColumn(12).setResizable(false);
             jTable1.getColumnModel().getColumn(13).setResizable(false);
-            jTable1.getColumnModel().getColumn(14).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(14).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(14).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(14).setResizable(false);
+            jTable1.getColumnModel().getColumn(15).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(15).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(15).setMaxWidth(0);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -618,7 +698,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Item Name");
 
-        jbtnPreview.setText("Preview");
+        jbtnPreview.setText("Excel");
         jbtnPreview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnPreviewActionPerformed(evt);
@@ -835,7 +915,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -864,6 +944,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
     private void jbtnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPreviewActionPerformed
         // TODO add your handling code here:
         //        generalLedgerPreview();
+        callExcel();
     }//GEN-LAST:event_jbtnPreviewActionPerformed
 
     private void jbtnPreviewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnPreviewKeyPressed
@@ -902,7 +983,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
     private void jtxtProductNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtProductNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtProductName.getText())){
+            if (lb.validateInput(jtxtProductName.getText())) {
                 setSeriesData("3", jtxtProductName.getText().toUpperCase());
             }
         }
@@ -921,7 +1002,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -946,7 +1027,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
