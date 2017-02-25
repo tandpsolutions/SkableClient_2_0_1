@@ -135,6 +135,7 @@ import support.ZoomingTableToolTip;
 import transactionView.BankPaymentReceiptView;
 import transactionView.CashPaymentReceiptView;
 import transactionView.ContraVoucherView;
+import transactionView.CreditNoteListReport;
 import transactionView.DCView;
 import transactionView.DNCNView;
 import transactionView.JournalVoucherView;
@@ -2063,8 +2064,8 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnCreditNoteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCreditNoteListActionPerformed
         // TODO add your handling code here:
-//        CreditNoteListReport cn = new CreditNoteListReport();
-//        addOnScreen(cn, "Credit Note List Report");
+        CreditNoteListReport cn = new CreditNoteListReport();
+        addOnScreen(cn, "Credit Note List Report");
     }//GEN-LAST:event_jmnCreditNoteListActionPerformed
 
     private void jmnStockLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockLedgerActionPerformed
