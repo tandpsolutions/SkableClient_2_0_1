@@ -297,20 +297,26 @@ public class CreditNoteListReport extends javax.swing.JInternalFrame {
             ArrayList rows = new ArrayList();
             for (int i = 0; i < jTable1.getRowCount(); i++) {
                 ArrayList row = new ArrayList();
-                row.add(jTable1.getValueAt(i, 0).toString());
                 row.add(jTable1.getValueAt(i, 1).toString());
                 row.add(jTable1.getValueAt(i, 2).toString());
                 row.add(jTable1.getValueAt(i, 3).toString());
                 row.add(jTable1.getValueAt(i, 4).toString());
+                row.add(jTable1.getValueAt(i, 5).toString());
+                row.add(jTable1.getValueAt(i, 6).toString());
+                row.add(jTable1.getValueAt(i, 7).toString());
+                row.add(jTable1.getValueAt(i, 8).toString());
                 rows.add(row);
             }
 
             ArrayList header = new ArrayList();
-            header.add("Name");
+            header.add("Sr No");
+            header.add("Type");
             header.add("Date");
             header.add("Item Name");
-            header.add("PCS");
+            header.add("IMEI");
             header.add("Amount");
+            header.add("Sales Date");
+            header.add("Branch");
             lb.exportToExcel("Type Wise Purchase", header, rows, "Type Wise Purchase");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);

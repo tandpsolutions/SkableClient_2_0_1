@@ -251,7 +251,8 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 4).toString());
                 row.add(jTable1.getValueAt(i, 5).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
-                row.add((jTable1.getValueAt(i, 8) == null) ? "" : jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 8).toString());
+                row.add((jTable1.getValueAt(i, 9) == null) ? "" : jTable1.getValueAt(i, 9).toString());
                 rows.add(row);
             }
 
@@ -263,6 +264,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
             header.add("Date");
             header.add("Days");
             header.add("Branch Name");
+            header.add("Sku");
             header.add("Scan Imei");
             lb.exportToExcel("IMEI Statement", header, rows, "IMEI Statement");
         } catch (Exception ex) {
@@ -467,14 +469,14 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "SR", "Model Name", "Item Name", "IMEI", "Purchase Date", "Days", "Purchase Party", "Branch", "Scan Imei"
+                "SR", "Model Name", "Item Name", "IMEI", "Purchase Date", "Days", "Purchase Party", "Branch", "SKU", "Scan Imei"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -485,6 +487,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -498,6 +501,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
             jTable1.getColumnModel().getColumn(7).setResizable(false);
             jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -805,7 +809,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                             .addComponent(jRadioButton8)
                             .addComponent(jtxtFromDate2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBillDateBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -955,6 +959,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                             row.add("");
                         }
                         row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
+                        row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
                         row.add("");
                         dtm.addRow(row);
                     }
@@ -1066,7 +1071,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
     private void jtxtSeriesNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtSeriesNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            if(lb.validateInput(jtxtSeriesName.getText())){
+            if (lb.validateInput(jtxtSeriesName.getText())) {
                 setSeriesData("3", jtxtSeriesName.getText().toUpperCase());
             }
         }
@@ -1075,7 +1080,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton1.isSelected()) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -1095,7 +1100,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
@@ -1248,7 +1253,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                                 String val = Double.valueOf(cell.toString().toUpperCase().replaceAll("!", "").trim()).longValue() + "";
                                 value = val;
                                 if (jTable1.getValueAt(i, 3).toString().equalsIgnoreCase(val)) {
-                                    jTable1.setValueAt(val + "", i, 8);
+                                    jTable1.setValueAt(val + "", i, 9);
                                     check = true;
                                     break;
                                 }
@@ -1260,7 +1265,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                                 value = cell.toString().toUpperCase().replaceAll("!", "");
                             }
                             if (jTable1.getValueAt(i, 3).toString().equalsIgnoreCase(cell.toString().toUpperCase().replaceAll("!", ""))) {
-                                jTable1.setValueAt(cell.toString().toUpperCase().replaceAll("!", ""), i, 8);
+                                jTable1.setValueAt(cell.toString().toUpperCase().replaceAll("!", ""), i, 9);
                                 check = true;
                                 break;
                             }
@@ -1269,6 +1274,7 @@ public class StockValueIMEI extends javax.swing.JInternalFrame {
                         if (!check) {
                             Vector rowData = new Vector();
                             rowData.add(jTable1.getRowCount() + 1);
+                            rowData.add("");
                             rowData.add("");
                             rowData.add("");
                             rowData.add("");

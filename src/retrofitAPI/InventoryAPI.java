@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface InventoryAPI {
 
     @GET("GetStockLedger")
-    Call<JsonObject> GetStockLedger(@Query("sr_cd") String sr_cd, @Query("from_date") String type_name, @Query("to_date") String user_id);
+    Call<JsonObject> GetStockLedger(@Query("sr_cd") String sr_cd, @Query("from_date") String type_name, @Query("to_date") String user_id, @Query("branch_cd") String branch_cd);
 
     @GET("GetBrandWiseStockLedger")
     Call<JsonObject> GetBrandWiseStockLedger(@Query("sr_cd") String sr_cd, @Query("from_date") String type_name,

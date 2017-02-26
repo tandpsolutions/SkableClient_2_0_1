@@ -87,7 +87,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
         searchOnTextFields();
         tableForView();
         setUpData();
-    setPopUp();
+        setPopUp();
     }
 
     private void setPopUp() {
@@ -245,6 +245,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 9).toString());
                 rows.add(row);
             }
 
@@ -258,6 +259,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
             header.add("Days");
             header.add("Party Name");
             header.add("Branch Name");
+            header.add("SKU");
             lb.exportToExcel("IMEI Statement", header, rows, "IMEI Statement");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
@@ -465,11 +467,11 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "SR", "Model Name", "Item Name", "IMEI", "Rate", "Purchase Date", "Days", "Party Name", "Branch"
+                "SR", "Model Name", "Item Name", "IMEI", "Rate", "Purchase Date", "Days", "Party Name", "Branch", "SKU"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -487,6 +489,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(6).setResizable(false);
             jTable1.getColumnModel().getColumn(7).setResizable(false);
             jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -996,6 +999,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                             row.add("");
                         }
                         row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
+                        row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
                         dtm.addRow(row);
                     }
 
@@ -1009,6 +1013,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add(lb.Convert2DecFmtForRs(tot));
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -1207,6 +1212,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                             row.add("");
                         }
                         row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
+                        row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
                         dtm.addRow(row);
                     }
 
@@ -1220,6 +1226,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add(lb.Convert2DecFmtForRs(tot));
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -1244,7 +1251,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
     private void jtxtSeriesNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtSeriesNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            if(lb.validateInput(jtxtSeriesName.getText())){
+            if (lb.validateInput(jtxtSeriesName.getText())) {
                 setSeriesData("3", jtxtSeriesName.getText().toUpperCase());
             }
         }
@@ -1253,7 +1260,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton1.isSelected()) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -1273,7 +1280,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }

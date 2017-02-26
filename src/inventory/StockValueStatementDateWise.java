@@ -306,14 +306,14 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                             pur_value += array.get(i).getAsJsonObject().get("PURCHASE_VAL").getAsDouble();
                             sal += array.get(i).getAsJsonObject().get("SALES").getAsDouble();
                             sal_value += array.get(i).getAsJsonObject().get("SALES_VAL").getAsDouble();
-                            stock += array.get(i).getAsJsonObject().get("OPB").getAsDouble() + array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() - array.get(i).getAsJsonObject().get("SALES").getAsDouble();
-                            stock_value += (opb_qty + pur_qty - array.get(i).getAsJsonObject().get("SALES").getAsDouble()) * ((pur_val + opb_val) / (opb_qty + pur_qty));
                             if (((opb_qty + pur_qty)) != 0) {
                                 row.add(lb.Convert2DecFmtForRs(((pur_val + opb_val) / (opb_qty + pur_qty))));
                                 row.add(lb.Convert2DecFmtForRs((opb_qty + pur_qty - array.get(i).getAsJsonObject().get("SALES").getAsDouble()) * ((pur_val + opb_val) / (opb_qty + pur_qty))));
+                                stock += array.get(i).getAsJsonObject().get("OPB").getAsDouble() + array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() - array.get(i).getAsJsonObject().get("SALES").getAsDouble();
+                                stock_value += (opb_qty + pur_qty - array.get(i).getAsJsonObject().get("SALES").getAsDouble()) * ((pur_val + opb_val) / (opb_qty + pur_qty));
                             } else {
-                                row.add(0.00);
-                                row.add(0.00);
+                                row.add(lb.Convert2DecFmtForRs(0.00));
+                                row.add(lb.Convert2DecFmtForRs(0.00));
                             }
                             row.add(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
                             dtm.addRow(row);
@@ -344,16 +344,16 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
                         row.add(" ");
                         row.add(opb);
                         row.add(" ");
-                        row.add(opb_value);
+                        row.add(lb.Convert2DecFmtForRs(opb_value));
                         row.add(pur);
                         row.add(" ");
-                        row.add(pur_value);
+                        row.add(lb.Convert2DecFmtForRs(pur_value));
                         row.add(sal);
                         row.add(" ");
-                        row.add(sal_value);
+                        row.add(lb.Convert2DecFmtForRs(sal_value));
                         row.add(stock);
                         row.add(" ");
-                        row.add(stock_value);
+                        row.add(lb.Convert2DecFmtForRs(stock_value));
                         row.add(" ");
                         dtm.addRow(row);
 
@@ -566,7 +566,7 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
         }
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
