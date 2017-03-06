@@ -3,23 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inventory;
+package transactionView;
 
-import com.google.gson.JsonArray;
+import account.GeneralLedger1;
 import com.google.gson.JsonObject;
 import java.awt.BorderLayout;
 import java.awt.MouseInfo;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -34,56 +26,46 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import retrofitAPI.InventoryAPI;
-import skable.Constants;
+import model.PurchaseHead;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofitAPI.QuotationAPI;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
+import support.SmallNavigation;
+import transactionController.QuotationController;
+//import utility.TagPrint;
 
 /**
  *
  * @author bhaumik
  */
-public class StockInOUTReport extends javax.swing.JInternalFrame {
+public class QuoatationView extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form PurchaseView
+     * Creates new form QuoatationView
      */
-    private final Library lb = Library.getInstance();
+    private Library lb = Library.getInstance();
+    public SmallNavigation navLoad = null;
     public String ref_no = "";
     private DefaultTableModel dtm = null;
     private TableRowSorter<TableModel> rowSorter;
-    private final JTextField jtfFilter = new JTextField();
-    private final InventoryAPI inventoryAPI;
+    private JTextField jtfFilter = new JTextField();
+    private QuotationAPI quotationAPI;
 
-    public StockInOUTReport() {
+    public QuoatationView(int formCd) {
         initComponents();
-        setUpData();
-        inventoryAPI = lb.getRetrofit().create(InventoryAPI.class);
+        quotationAPI = lb.getRetrofit().create(QuotationAPI.class);
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
         dtm = (DefaultTableModel) jTable1.getModel();
-        try {
-            setData();
-        } catch (IOException ex) {
-            lb.printToLogFile("Exception at getData for Stock TransferView", ex);
-        }
+        setData();
         searchOnTextFields();
+        connectNavigation();
+        navLoad.setFormCd(formCd);
         setPopUp();
-    }
-
-    private void setUpData() {
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("ALL");
-        for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
-        }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
-        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
-        } else {
-            jComboBox1.setEnabled(false);
-        }
     }
 
     private void setPopUp() {
@@ -94,54 +76,58 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
                 int row = jTable1.getSelectedRow();
                 int column = jTable1.getSelectedColumn();
                 if (row != -1 && column != -1) {
-                    String selection = jTable1.getValueAt(row, column).toString();
-                    StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(data, data);
+                    String ac_cd = jTable1.getValueAt(row, 8).toString();
+                    String ac_name = jTable1.getValueAt(row, 5).toString();
+                    GeneralLedger1 gl = new GeneralLedger1(ac_cd, ac_name);
+                    SkableHome.addOnScreen(gl, "General Ledger");
                 }
             }
         };
         final JMenuItem item;
-        popup.add(item = new JMenuItem("COPY"));
+        popup.add(item = new JMenuItem("Open Ledger"));
         item.setHorizontalTextPosition(JMenuItem.RIGHT);
         item.addActionListener(menuListener);
         popup.setLocation(MouseInfo.getPointerInfo().getLocation());
         jTable1.setComponentPopupMenu(popup);
     }
 
-    private void setData() throws IOException {
+    public void setData() {
         lb.addGlassPane(this);
-        JsonObject call = inventoryAPI.GetStockInOutReport((jComboBox1.getSelectedIndex() == 0) ? "" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd(),
-                lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
-
-        lb.removeGlassPane(StockInOUTReport.this);
-        if (call != null) {
-            System.out.println(call.toString());
-            if (call.get("result").getAsInt() == 1) {
-                JsonArray header = call.getAsJsonArray("data");
-                dtm.setRowCount(0);
-                for (int i = 0; i < header.size(); i++) {
-                    if (!header.get(i).getAsJsonObject().get("SR_NAME").isJsonNull()) {
-                        Vector row = new Vector();
-                        row.add(header.get(i).getAsJsonObject().get("ref_no").getAsString());
-                        row.add(header.get(i).getAsJsonObject().get("inv_no").getAsString());
-                        row.add(lb.ConvertDateFormetForDisplay(header.get(i).getAsJsonObject().get("v_date").getAsString()));
-                        row.add(header.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                        row.add(header.get(i).getAsJsonObject().get("SR_NAME").getAsString());
-                        row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("from_loc").getAsInt() - 1).getBranch_name());
-                        row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("to_loc").getAsInt() - 1).getBranch_name());
-                        row.add(header.get(i).getAsJsonObject().get("approve_by").getAsString());
-                        row.add(header.get(i).getAsJsonObject().get("approve_time").getAsString());
-                        dtm.addRow(row);
+        Call<PurchaseHead> call = quotationAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()));
+        call.enqueue(new Callback<PurchaseHead>() {
+            @Override
+            public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
+                lb.removeGlassPane(QuoatationView.this);
+                if (response.isSuccessful()) {
+                    System.out.println(response.body().toString());
+                    PurchaseHead header = (PurchaseHead) response.body();
+                    if (header.getResult() == 1) {
+                        dtm.setRowCount(0);
+                        for (int i = 0; i < header.getPurchaseHeader().size(); i++) {
+                            Vector row = new Vector();
+                            row.add(header.getPurchaseHeader().get(i).getREFNO());
+                            row.add(header.getPurchaseHeader().get(i).getINVNO());
+                            row.add(lb.ConvertDateFormetForDisplay(header.getPurchaseHeader().get(i).getVDATE()));
+                            row.add(header.getPurchaseHeader().get(i).getACNAME());
+                            row.add(header.getPurchaseHeader().get(i).getNETAMT());
+                            row.add(header.getPurchaseHeader().get(i).getREMARK());
+                            row.add(header.getPurchaseHeader().get(i).getACCD());
+                            dtm.addRow(row);
+                        }
+                        lb.setColumnSizeForTable(jTable1, jPanel2.getWidth());
+                    } else {
+                        lb.showMessageDailog(response.body().getCause());
                     }
+                } else {
+                    lb.showMessageDailog(response.message());
                 }
-                lb.setColumnSizeForTable(jTable1, jPanel2.getWidth());
-            } else {
-                lb.showMessageDailog(call.get("Cause").getAsString());
             }
-        }
+
+            @Override
+            public void onFailure(Call<PurchaseHead> call, Throwable thrwbl) {
+                lb.removeGlassPane(QuoatationView.this);
+            }
+        });
     }
 
     private void searchOnTextFields() {
@@ -186,6 +172,94 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
         });
     }
 
+    private void addPurchaseConroller() {
+        QuotationController pc = new QuotationController(null, true, this);
+        pc.setLocationRelativeTo(null);
+        pc.setData(quotationAPI, ref_no);
+        jButton1.doClick();
+    }
+
+    private void connectNavigation() {
+        class navigation extends SmallNavigation {
+
+            @Override
+            public void callNew() {
+                if (navLoad.getModel().getADDS().equalsIgnoreCase("1")) {
+                    ref_no = "";
+                    addPurchaseConroller();
+                } else {
+                    lb.showMessageDailog("You don't have rights to perform this action");
+                }
+            }
+
+            @Override
+            public void callEdit() {
+                if (navLoad.getModel().getEDITS().equalsIgnoreCase("1")) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        ref_no = jTable1.getValueAt(row, 0).toString();
+                        addPurchaseConroller();
+                    }
+                } else {
+                    lb.showMessageDailog("You don't have rights to perform this action");
+                }
+            }
+
+            @Override
+            public void callDelete() {
+                if (navLoad.getModel().getDELETES().equalsIgnoreCase("1")) {
+                    final int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        lb.confirmDialog("Do you want to delete this voucher?");
+                        if (lb.type) {
+                            String ref_no = jTable1.getValueAt(row, 0).toString();
+                            lb.addGlassPane(QuoatationView.this);
+                            quotationAPI.DeleteQuotationBill(ref_no).enqueue(new Callback<JsonObject>() {
+                                @Override
+                                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
+                                    lb.removeGlassPane(QuoatationView.this);
+                                    JsonObject object = rspns.body();
+                                    if (object.get("result").getAsInt() == 1) {
+                                        lb.showMessageDailog("Delete successfull");
+                                        dtm.removeRow(row);
+                                    } else {
+                                        lb.showMessageDailog(object.get("Cause").getAsString());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                                    lb.removeGlassPane(QuoatationView.this);
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog("You don't have rights to perform this action");
+                }
+            }
+
+            @Override
+            public void callClose() {
+                close();
+            }
+
+            @Override
+            public void callPrint() {
+            }
+        }
+        navLoad = new navigation();
+
+        jpanelNav.add(navLoad);
+
+        navLoad.setVisible(
+                true);
+    }
+
+    private void close() {
+        this.dispose();
+    }
+
     @Override
     public void dispose() {
         try {
@@ -214,9 +288,7 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
         jtxtToDate = new javax.swing.JTextField();
         jBillDateBtn1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jpanelNav = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -284,81 +356,53 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Close");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton2KeyPressed(evt);
-            }
-        });
-
-        jLabel5.setText("From Location");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(14, 14, 14))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addContainerGap())))
         );
+
+        jpanelNav.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jpanelNav.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -369,11 +413,11 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "Tag", "Item Name", "From Location", "To Location", "Arrpove By", "Time"
+                "ref no", "Quote No", "Date", "Name", "Amount", "Remark", "Ac Cd"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -400,9 +444,9 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -416,20 +460,23 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1009, Short.MAX_VALUE)
-                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpanelNav, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE))
+                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpanelNav, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -526,13 +573,23 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
         odc.showDialog(jp, "Select Date");
     }//GEN-LAST:event_jBillDateBtn1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            setData();
-        } catch (IOException ex) {
-            lb.printToLogFile("Exception at getData for Stock TransferView", ex);
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            navLoad.callEdit();
         }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if (lb.isEnter(evt)) {
+            navLoad.callEdit();
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        setData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
@@ -540,46 +597,19 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jButton1KeyPressed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jTable1MouseClicked
-
-    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jTable1KeyPressed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
-        // TODO add your handling code here:
-        lb.enterClick(evt);
-    }//GEN-LAST:event_jButton2KeyPressed
-
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
-        // TODO add your handling code here:
-        lb.enterFocus(evt, jButton1);
-    }//GEN-LAST:event_jComboBox1KeyPressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JPanel jpanelNav;
     private javax.swing.JTextField jtxtFromDate;
     private javax.swing.JTextField jtxtToDate;
     private javax.swing.JPanel panel;

@@ -153,7 +153,10 @@ public interface AccountAPI {
 
     @FormUrlEncoded
     @POST("CreditNoteReport")
-    Call<JsonObject> StockReportCreditNote(@Field("type_cd") String type_cd, @Field("model_cd") String model_cd, @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd, @Field("memory_cd") String memory_cd, @Field("sales") boolean sales, @Field("brand_cd") String brand_cd);
+    Call<JsonObject> StockReportCreditNote(@Field("type_cd") String type_cd, @Field("model_cd") String model_cd,
+            @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd,
+            @Field("memory_cd") String memory_cd, @Field("sales") boolean sales, @Field("brand_cd") String brand_cd,
+             @Field("branch_cd") String branch_cd);
 
     @FormUrlEncoded
     @POST("UpdatePrize")

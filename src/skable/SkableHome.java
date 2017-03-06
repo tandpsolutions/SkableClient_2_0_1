@@ -143,6 +143,7 @@ import transactionView.ListBill;
 import transactionView.OrderBookView;
 import transactionView.PurchaseReturnView;
 import transactionView.PurchaseView;
+import transactionView.QuoatationView;
 import transactionView.SalesReturnView;
 import transactionView.SalesView;
 import transactionView.StockAdjustmentView;
@@ -537,7 +538,6 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem52 = new javax.swing.JMenuItem();
         jMenuItem53 = new javax.swing.JMenuItem();
         jmnStockAdjst = new javax.swing.JMenuItem();
-        jmnCreditNoteList = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jmnCrediNote = new javax.swing.JMenuItem();
@@ -547,6 +547,7 @@ public class SkableHome extends javax.swing.JFrame {
         jmnsds1 = new javax.swing.JMenuItem();
         jMenuItem60 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
         jmnInventory = new javax.swing.JMenu();
         jmnStockInTransit = new javax.swing.JMenuItem();
         jmnStockInoutReport = new javax.swing.JMenuItem();
@@ -569,6 +570,7 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jmnCreditNoteList = new javax.swing.JMenuItem();
         jmnAccounts = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -651,8 +653,6 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jDesktopPane1.setLayout(null);
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
@@ -1011,14 +1011,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnTransaction.add(jmnStockAdjst);
 
-        jmnCreditNoteList.setText("Credit Note Item List");
-        jmnCreditNoteList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnCreditNoteListActionPerformed(evt);
-            }
-        });
-        jmnTransaction.add(jmnCreditNoteList);
-
         jMenuItem8.setText("Bill Adjustment");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1082,6 +1074,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnTransaction.add(jMenuItem9);
+
+        jMenuItem25.setText("Quoatation");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jmnTransaction.add(jMenuItem25);
 
         jMenuBar3.add(jmnTransaction);
 
@@ -1261,6 +1261,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnInventory.add(jMenuItem15);
+
+        jmnCreditNoteList.setText("Stock Statement");
+        jmnCreditNoteList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnCreditNoteListActionPerformed(evt);
+            }
+        });
+        jmnInventory.add(jmnCreditNoteList);
 
         jMenuBar3.add(jmnInventory);
 
@@ -2065,7 +2073,7 @@ public class SkableHome extends javax.swing.JFrame {
     private void jmnCreditNoteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCreditNoteListActionPerformed
         // TODO add your handling code here:
         CreditNoteListReport cn = new CreditNoteListReport();
-        addOnScreen(cn, "Credit Note List Report");
+        addOnScreen(cn, "Stock Statement");
     }//GEN-LAST:event_jmnCreditNoteListActionPerformed
 
     private void jmnStockLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockLedgerActionPerformed
@@ -2712,6 +2720,12 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(tm, "TID Master View");
     }//GEN-LAST:event_jMenuItem24ActionPerformed
 
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        // TODO add your handling code here:
+        QuoatationView qv = new QuoatationView(13);
+        addOnScreen(qv, "Quoatation View");
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2744,6 +2758,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
