@@ -25,5 +25,5 @@ public interface GroupMasterAPI {
     @FormUrlEncoded
     @POST("AddUpdateGroupMaster")
     Call<JsonObject> AddUpdateGroupMaster(@Field("GRP_CD") String grp_cd, @Field("ACC_EFF") String acc_eff,
-            @Field("GRP_NAME") String grp_name, @Field("HEAD_GRP") String head_grp, @Field("user_id") String user_id);
+            @Field("GRP_NAME") String grp_name, @Field("HEAD_GRP") String head_grp, @Field("user_id") String user_id, @Field("AC_YEAR") String ac_year);
 }

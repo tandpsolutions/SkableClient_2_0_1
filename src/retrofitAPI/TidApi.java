@@ -20,6 +20,6 @@ public interface TidApi {
     Call<JsonObject> GetTIDMaster();
 
     @GET("AddUpdateTidMaster")
-    Call<JsonObject> addUpdateTidMaster(@Query("tid_cd") String brand_cd, @Query("tid_name") String brand_name, @Query("user_id") String user_id);
+    Call<JsonObject> addUpdateTidMaster(@Query("tid_cd") String brand_cd, @Query("tid_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
 
 }

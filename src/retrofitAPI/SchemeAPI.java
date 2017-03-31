@@ -23,6 +23,6 @@ public interface SchemeAPI {
     Call<JsonObject> getSchemeMaster(@Query("type_cd") String type_cd);
 
     @GET("AddUpdateSchemeMaster")
-    Call<JsonObject> addUpdateSchemeMaster(@Query("scheme_cd") String scheme_cd, @Query("scheme_name") String scheme_name, @Query("type_cd") String type_cd, @Query("user_id") String user_id);
+    Call<JsonObject> addUpdateSchemeMaster(@Query("scheme_cd") String scheme_cd, @Query("scheme_name") String scheme_name, @Query("type_cd") String type_cd, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
 
 }

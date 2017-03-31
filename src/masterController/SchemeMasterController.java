@@ -112,7 +112,7 @@ public class SchemeMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = schemeAPI.addUpdateSchemeMaster(scheme_cd, jtxtSchemeName.getText(), jComboBox1.getSelectedIndex() + "", SkableHome.user_id);
+        Call<JsonObject> call = schemeAPI.addUpdateSchemeMaster(scheme_cd, jtxtSchemeName.getText(), jComboBox1.getSelectedIndex() + "", SkableHome.user_id,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

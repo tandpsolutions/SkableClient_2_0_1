@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import login.Login;
 import model.BranchMasterModel;
+import model.DBYearModel;
 import model.RefModel;
 import model.SalesManMasterModel;
 import retrofitAPI.RefralAPI;
@@ -34,7 +35,7 @@ public class Skable {
 
     /**
      */
-    public static String ver = "6";
+    public static String ver = "8";
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -82,6 +83,7 @@ public class Skable {
                 final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
 
                 final JsonArray branchArray = branchMaster.getAsJsonArray("data");
+                final JsonArray yearArray = branchMaster.getAsJsonArray("year");
                 final JsonArray refMaster = refmaster.getAsJsonArray("data");
                 final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
 
@@ -91,6 +93,14 @@ public class Skable {
                         Constants.BRANCH.add(model);
                     }
                 }
+
+                if (yearArray.size() > 0) {
+                    for (int i = 0; i < yearArray.size(); i++) {
+                        DBYearModel model = new Gson().fromJson(yearArray.get(i).getAsJsonObject().toString(), DBYearModel.class);
+                        Constants.DBYMS.add(model);
+                    }
+                }
+
                 if (refMaster.size() > 0) {
                     for (int i = 0; i < refMaster.size(); i++) {
                         RefModel model = new Gson().fromJson(refMaster.get(i).getAsJsonObject().toString(), RefModel.class);

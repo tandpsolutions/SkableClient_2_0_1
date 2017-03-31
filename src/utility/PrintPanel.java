@@ -27,6 +27,7 @@ import retrofitAPI.DNCNApi;
 import retrofitAPI.PurchaseReturnAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SalesReturnAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 
@@ -104,7 +105,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("tax_data", dataSource1);
                             lb.confirmDialog("Do you want to print sales Bill with header?");
                             if (lb.type) {
-                                lb.reportGenerator("SalesInvoicePDF.jasper", params, dataSource, jPanel1);
+                                lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
                             } else {
                                 lb.reportGenerator("SalesInVoice.jasper", params, dataSource, jPanel1);
                             }
@@ -281,7 +282,7 @@ public class PrintPanel extends javax.swing.JDialog {
 
     }
 
-      public void getCashreceiptPrint(String ref_no, final int type) {
+    public void getCashreceiptPrint(String ref_no, final int type) {
         try {
             CashPRAPI cashPRAPI = lb.getRetrofit().create(CashPRAPI.class);
             JsonObject call;
@@ -325,8 +326,7 @@ public class PrintPanel extends javax.swing.JDialog {
         }
     }
 
-      
-      public void getDnCnPrint(String ref_no, final int type) {
+    public void getDnCnPrint(String ref_no, final int type) {
         try {
             DNCNApi cashPRAPI = lb.getRetrofit().create(DNCNApi.class);
             JsonObject call;
@@ -350,9 +350,9 @@ public class PrintPanel extends javax.swing.JDialog {
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", "IPEARL");
-                             if (type == 0) {
+                            if (type == 0) {
                                 params.put("title", "Debit Note");
-                            }else{
+                            } else {
                                 params.put("title", "Credit Note");
                             }
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
@@ -375,7 +375,6 @@ public class PrintPanel extends javax.swing.JDialog {
         }
     }
 
-      
     public void getBankreceiptPrint(String ref_no, final int type) {
         try {
             BankAPI bankAPI = lb.getRetrofit().create(BankAPI.class);
@@ -419,7 +418,7 @@ public class PrintPanel extends javax.swing.JDialog {
             Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void printDCVoucherWithoutAmt(final String ref_no) {
         DCAPI dcAPI = lb.getRetrofit().create(DCAPI.class);
         if (!ref_no.equalsIgnoreCase("")) {
