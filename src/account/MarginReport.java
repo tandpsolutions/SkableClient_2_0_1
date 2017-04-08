@@ -791,7 +791,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
             String mode = "";
             if (jRadioButton1.isSelected()) {
-                mode = "1";
+                mode = "3";
             }
 
             if (jRadioButton2.isSelected()) {
@@ -799,7 +799,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
             }
 
             if (jRadioButton3.isSelected()) {
-                mode = "3";
+                mode = "1";
             }
 
             if (jRadioButton8.isSelected()) {
@@ -832,6 +832,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
                     ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), jCheckBox1.isSelected(), jCheckBox2.isSelected()).execute().body();
 
             lb.addGlassPane(this);
+            mode = "0";
 
             if (call != null) {
                 JsonObject result = call;
@@ -1004,7 +1005,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
@@ -1018,7 +1019,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -1035,7 +1036,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
     private void jtxtProductNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtProductNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtProductName.getText())){
+            if (lb.validateInput(jtxtProductName.getText())) {
                 setSeriesData("3", jtxtProductName.getText().toUpperCase());
             }
         }

@@ -187,12 +187,12 @@ public class SalesController extends javax.swing.JDialog {
         }
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
             jtxtDiscount.setEnabled(true);
-            jtxtItem.setEnabled(true);
+//            jtxtItem.setEnabled(true);
             jComboBox1.setEnabled(true);
         } else {
             jtxtDiscount.setEnabled(false);
             jComboBox1.setEnabled(false);
-            jtxtItem.setEnabled(false);
+//            jtxtItem.setEnabled(false);
         }
     }
 
@@ -412,6 +412,16 @@ public class SalesController extends javax.swing.JDialog {
         }
     }
 
+    private boolean validateTag() {
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (jTable1.getValueAt(i, 0).toString().equalsIgnoreCase(jtxtTag.getText())) {
+                lb.showMessageDailog("Item already exist");
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void addJtextBox() {
         jtxtTag = new javax.swing.JTextField();
         jtxtTag.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -430,7 +440,7 @@ public class SalesController extends javax.swing.JDialog {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
 
-                if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
+                if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
                         JsonObject call;
@@ -677,17 +687,37 @@ public class SalesController extends javax.swing.JDialog {
                                 double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
                                 double sale_rate = lb.isNumber(jtxtRate);
                                 if (sale_rate < pur_rate) {
-                                    jtxtRate.requestFocusInWindow();
+                                    lb.showMessageDailog("Please check rate");
+                                    lb.confirmDialog("Are you sure to proceed?");
+                                    if (lb.type) {
+                                        if (lb.isNumber2(jtxtRate.getText()) > 0) {
+                                            if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                                jtxtDiscPer.setText("0.00");
+                                                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                            } else {
+                                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                                jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                            }
+                                            jcmbTaxItemStateChanged(null);
+                                            calculation();
+                                            jbtnAdd.doClick();
+                                            jlblRate.setText("");
+                                            lb.toDouble(e);
+                                        }
+                                    } else {
+                                        jtxtRate.requestFocusInWindow();
+                                    }
                                     return;
                                 } else {
                                     if (lb.isNumber2(jtxtRate.getText()) > 0) {
 //                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
                                         if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
                                             jtxtDiscPer.setText("0.00");
                                             jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
                                         } else {
-                                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
                                             jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
                                             jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
                                         }
@@ -771,7 +801,7 @@ public class SalesController extends javax.swing.JDialog {
                                     double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
                                     double sale_rate = lb.isNumber(jtxtRate);
                                     if (sale_rate < pur_rate) {
-                                        return;
+                                        jbtnAdd.requestFocusInWindow();
                                     } else {
                                         jbtnAdd.requestFocusInWindow();
                                     }
@@ -1454,6 +1484,11 @@ public class SalesController extends javax.swing.JDialog {
     }
 
     private boolean validateVoucher() {
+
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Date");
+            return false;
+        }
         if (ac_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Please select valid account");
             return false;

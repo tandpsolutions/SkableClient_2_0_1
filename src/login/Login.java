@@ -59,7 +59,7 @@ public class Login extends javax.swing.JFrame {
                 SkableHome.user_grp_cd = data.get("USER_GRP_CD").getAsString();
                 SkableHome.selected_branch = Constants.BRANCH.get(jComboBox1.getSelectedIndex());
                 SkableHome.selected_year = jComboBox2.getSelectedItem().toString();
-                if (jComboBox2.getSelectedIndex() == 0) {
+                if (jComboBox2.getSelectedIndex() != 0) {
                     Constants.BASE_URL = "http://" + Constants.HOST1 + "/" + Constants.FOLDER + "/";
                 } else {
                     Constants.BASE_URL = "http://" + Constants.HOST1 + "/" + Constants.FOLDER_NEW + "/";

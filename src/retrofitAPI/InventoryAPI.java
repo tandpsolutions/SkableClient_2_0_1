@@ -98,4 +98,6 @@ public interface InventoryAPI {
     @GET("GetStockInOutReport")
     Call<JsonObject> GetStockInOutReport(@Query("from_loc") String from_loc, @Query("from_date") String from_date, @Query("to_date") String to_date);
 
+    @GET("TransferStockForReturn")
+    Call<JsonObject> TransferStockForReturn(@Query("ac_year") String from_date, @Query("tag") String to_date);
 }

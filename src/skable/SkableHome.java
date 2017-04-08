@@ -157,6 +157,7 @@ import utility.DummyPrint;
 import utility.IMEISearch;
 import utility.NotesView;
 import utility.TagPrint;
+import utility.TagTransfer;
 import utility.UserPermission;
 
 /**
@@ -196,7 +197,7 @@ public class SkableHome extends javax.swing.JFrame {
         setTrayIcon();
         openLogFile();
         createMenuList();
-        setTitle(user_name + " " + selected_branch.getBranch_name());
+        setTitle(user_name + " - " + selected_branch.getBranch_name() + " - YEAR " + selected_year);
         if (!user_grp_cd.equalsIgnoreCase("1")) {
             jmnMarginReportModelWise.setVisible(false);
             jMenuItem3.setVisible(false);
@@ -495,6 +496,7 @@ public class SkableHome extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar3 = new javax.swing.JMenuBar();
         jmenuLogin = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
         jmnExit = new javax.swing.JMenuItem();
         jmnMaster = new javax.swing.JMenu();
         jmnGroupMst = new javax.swing.JMenuItem();
@@ -652,11 +654,20 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
+
+        jMenuItem26.setText("Log Off");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jmenuLogin.add(jMenuItem26);
 
         jmnExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
         jmnExit.setMnemonic('E');
@@ -1887,6 +1898,14 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem12);
 
+        jMenuItem29.setText("Stock Transfer For Return");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jmnUtility.add(jMenuItem29);
+
         jMenuBar3.add(jmnUtility);
 
         setJMenuBar(jMenuBar3);
@@ -2727,6 +2746,20 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(qv, "Quoatation View");
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Login lg = new Login();
+        lg.setLocationRelativeTo(null);
+        lg.setVisible(true);
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        // TODO add your handling code here:
+        TagTransfer tt = new TagTransfer();
+        addOnScreen(tt, "Tag Transfer");
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2760,6 +2793,10 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
