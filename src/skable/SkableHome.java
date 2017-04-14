@@ -109,6 +109,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import login.ChangeYear;
 import login.Login;
 import masterView.AccountMasterView;
 import masterView.BrandMasterView;
@@ -496,6 +497,7 @@ public class SkableHome extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar3 = new javax.swing.JMenuBar();
         jmenuLogin = new javax.swing.JMenu();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem26 = new javax.swing.JMenuItem();
         jmnExit = new javax.swing.JMenuItem();
         jmnMaster = new javax.swing.JMenu();
@@ -660,6 +662,14 @@ public class SkableHome extends javax.swing.JFrame {
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
+
+        jMenuItem30.setText("Change Year");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jmenuLogin.add(jMenuItem30);
 
         jMenuItem26.setText("Log Off");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
@@ -2760,6 +2770,14 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(tt, "Tag Transfer");
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ChangeYear lg = new ChangeYear();
+        lg.setLocationRelativeTo(null);
+        lg.setVisible(true);
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2794,10 +2812,9 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem5;

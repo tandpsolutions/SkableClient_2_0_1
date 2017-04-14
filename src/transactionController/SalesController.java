@@ -729,6 +729,25 @@ public class SalesController extends javax.swing.JDialog {
                                         lb.toDouble(e);
                                     }
                                 }
+                            } else {
+                                if (lb.isNumber2(jtxtRate.getText()) > 0) {
+//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+                                    if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                        jtxtDiscPer.setText("0.00");
+                                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                    } else {
+                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                        jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                        jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+                                    }
+//                    }
+                                    jcmbTaxItemStateChanged(null);
+                                    calculation();
+                                    jbtnAdd.doClick();
+                                    jlblRate.setText("");
+                                    lb.toDouble(e);
+                                }
                             }
                         }
                     } catch (IOException ex) {
@@ -805,6 +824,8 @@ public class SalesController extends javax.swing.JDialog {
                                     } else {
                                         jbtnAdd.requestFocusInWindow();
                                     }
+                                }else{
+                                     lb.enterFocus(e, jbtnAdd);
                                 }
                             }
                         } catch (IOException ex) {

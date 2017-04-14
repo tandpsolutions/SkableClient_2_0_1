@@ -156,7 +156,7 @@ public interface AccountAPI {
     Call<JsonObject> StockReportCreditNote(@Field("type_cd") String type_cd, @Field("model_cd") String model_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd,
             @Field("memory_cd") String memory_cd, @Field("sales") boolean sales, @Field("brand_cd") String brand_cd,
-             @Field("branch_cd") String branch_cd);
+            @Field("branch_cd") String branch_cd);
 
     @FormUrlEncoded
     @POST("UpdatePrize")
@@ -329,7 +329,11 @@ public interface AccountAPI {
             @Field("DR_DOC_CD") String DR_DOC_CD, @Field("CR_DOC_CD") String CR_DOC_CD,
             @Field("DR_INV_NO") String DR_INV_NO, @Field("CR_INV_NO") String CR_INV_NO,
             @Field("DR_AMT") String DR_AMT, @Field("CR_AMT") String CR_AMT,
-            @Field("DR_SR_NO") String DR_SR_NO, @Field("CR_SR_NO") String CR_SR_NO);
+            @Field("DR_SR_NO") String DR_SR_NO, @Field("CR_SR_NO") String CR_SR_NO, @Field("ac_cd") String ac_cd);
+
+    @FormUrlEncoded
+    @POST("ReverseBill")
+    Call<JsonObject> ReverseBill(@Field("doc_ref_no") String doc_ref_no);
 
     @GET("GetModelwiseMonthWiseSalesStatement")
     Call<JsonObject> GetModelwiseMonthWiseSalesStatement(@Query("code") String code, @Query("mode") String mode, @Query("type_cd") String type_cd,
