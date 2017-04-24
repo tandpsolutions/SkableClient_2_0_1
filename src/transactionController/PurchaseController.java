@@ -890,7 +890,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
                                         Vector row = new Vector();
                                         row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
+                                        row.add((array.get(i).getAsJsonObject().get("SR_NAME").isJsonNull()) ? "" : array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                                         row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
                                         row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
                                         row.add(array.get(i).getAsJsonObject().get("QTY").getAsInt());

@@ -116,7 +116,6 @@ public class StockAdjustmentController extends javax.swing.JDialog {
         viewTable.makeTable();
     }
 
-    
     private void setUpData() {
         jComboBox2.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
@@ -129,6 +128,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
             jComboBox2.setEnabled(false);
         }
     }
+
     public StockAdjustmentController(java.awt.Frame parent, boolean modal, int vtype) {
         super(parent, modal);
         initComponents();
@@ -423,7 +423,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
                                     jtxtVouDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                                     jlblVday.setText(lb.setDay(jtxtVouDate));
                                     jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
-                                    jComboBox2.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt()-1);
+                                    jComboBox2.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
 
                                     Vector row = new Vector();
                                     row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
@@ -513,7 +513,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
             row.setPur_tag_no(jTable1.getValueAt(i, 5).toString());
             row.setSr_cd(jTable1.getValueAt(i, 6).toString());
             row.setRemark(jTextArea1.getText());
-            row.setBranch_cd((jComboBox2.getSelectedIndex()+1) + "");
+            row.setBranch_cd((jComboBox2.getSelectedIndex() + 1) + "");
             detail.add(row);
         }
 
@@ -845,7 +845,13 @@ public class StockAdjustmentController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusGained
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        lb.enterFocus(evt, jtxtTag);
+        if (lb.isEnter(evt)) {
+            if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+                jComboBox2.requestFocusInWindow();
+            } else {
+                lb.enterFocus(evt, jtxtTag);
+            }
+        }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
     private void jBillDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtnActionPerformed
@@ -948,7 +954,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
     private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jComboBox2);
+        lb.enterFocus(evt, jtxtTag);
     }//GEN-LAST:event_jComboBox2KeyPressed
 
     private void doClose(int retStatus) {

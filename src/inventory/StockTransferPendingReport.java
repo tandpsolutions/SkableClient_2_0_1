@@ -133,6 +133,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
             if (call.get("result").getAsInt() == 1) {
                 dtm.removeRow(jTable1.getSelectedRow());
                 lb.showMessageDailog("Voucher Update Successfully");
+                jButton1.doClick();
             } else {
                 lb.showMessageDailog(call.get("Cause").getAsString());
             }

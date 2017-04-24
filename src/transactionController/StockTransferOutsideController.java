@@ -952,10 +952,12 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusGained
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.requestFocusInWindow();
-        } else {
-            jComboBox2.requestFocusInWindow();
+        if (lb.isEnter(evt)) {
+            if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+                jComboBox1.requestFocusInWindow();
+            } else {
+                jComboBox2.requestFocusInWindow();
+            }
         }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
