@@ -784,6 +784,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
+                jComboBox1.setEnabled(false);
                 JsonObject call = purchaseReturnAPI.GetDataFromServer(ref_no, "16").execute().body();
                 lb.addGlassPane(this);
 

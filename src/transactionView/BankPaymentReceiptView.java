@@ -111,7 +111,7 @@ public class BankPaymentReceiptView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
-    private void setData() {
+    public void setData() {
         try {
             lb.addGlassPane(this);
             JsonObject call = bankAPI.GetBankPaymentHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -188,7 +188,7 @@ public class BankPaymentReceiptView extends javax.swing.JInternalFrame {
     }
 
     private void addCashController() {
-        BankPaymentController pc = new BankPaymentController(null, true, vType);
+        BankPaymentController pc = new BankPaymentController(null, true, vType,this);
         pc.setLocationRelativeTo(null);
         pc.setData(bankAPI, ref_no);
     }

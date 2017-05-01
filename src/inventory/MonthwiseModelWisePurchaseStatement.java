@@ -389,6 +389,11 @@ public class MonthwiseModelWisePurchaseStatement extends javax.swing.JInternalFr
                 jbtnViewActionPerformed(evt);
             }
         });
+        jbtnView.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnViewKeyPressed(evt);
+            }
+        });
 
         jbtnClose.setText("Close");
         jbtnClose.addActionListener(new java.awt.event.ActionListener() {
@@ -735,6 +740,11 @@ public class MonthwiseModelWisePurchaseStatement extends javax.swing.JInternalFr
     private void jcmbType1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbType1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbType1KeyPressed
+
+    private void jbtnViewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnViewKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnViewKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

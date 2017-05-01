@@ -304,13 +304,13 @@ public interface AccountAPI {
     Call<JsonObject> IMEWisePS(@Query("from_date") String type_name, @Query("to_date") String user_id,
             @Query("model_cd") String model_cd, @Query("ac_cd") String ac_cd,
             @Query("type_cd") String type_cd, @Query("brand_cd") String brand_cd, @Query("bill_no") String bill_no,
-            @Query("sub_type_cd") String sub_type_cd0, @Query("sr_cd") String sr_cd);
+            @Query("sub_type_cd") String sub_type_cd0, @Query("sr_cd") String sr_cd, @Query("branch_cd") String branch_cd);
 
     @GET("IMEWisePSSales")
     Call<JsonObject> IMEWisePSSales(@Query("from_date") String type_name, @Query("to_date") String user_id,
             @Query("model_cd") String model_cd, @Query("ac_cd") String ac_cd, @Query("type_cd") String type_cd,
             @Query("include") boolean include, @Query("brand_cd") String brand_cd, @Query("bill_no") String bill_no,
-            @Query("sub_type_cd") String sub_type_cd, @Query("sr_cd") String sr_cd);
+            @Query("sub_type_cd") String sub_type_cd, @Query("sr_cd") String sr_cd, @Query("branch_cd") String branch_cd);
 
     @FormUrlEncoded
     @POST("GetStockAdjustmentRegister")

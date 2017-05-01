@@ -30,10 +30,24 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" pref="77" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel2" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel1" min="-2" pref="77" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jtxtAcAlias" min="-2" pref="71" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jlblMobile" max="32767" attributes="0"/>
+                                  <Component id="jtxtAcName" pref="285" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel3" min="-2" pref="72" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jtxtFromDate" min="-2" pref="84" max="-2" attributes="0"/>
@@ -43,25 +57,17 @@
                               <Component id="jLabel4" min="-2" pref="72" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jtxtToDate" min="-2" pref="84" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jtxtAcAlias" min="-2" pref="71" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlblMobile" max="32767" attributes="0"/>
-                                  <Component id="jtxtAcName" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jBillDateBtn1" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jBillDateBtn1" min="-2" pref="20" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jlblOpb" min="-2" pref="123" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="15" max="32767" attributes="0"/>
                               <Component id="jbtnView" linkSize="4" min="-2" pref="87" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jbtnPreview" linkSize="4" min="-2" pref="104" max="-2" attributes="0"/>
@@ -81,23 +87,24 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="jbtnPreview" linkSize="2" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jbtnClose" linkSize="2" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jbtnPreview1" alignment="3" max="32767" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="jtxtAcAlias" alignment="0" max="32767" attributes="0"/>
                   <Component id="jtxtAcName" alignment="0" max="32767" attributes="0"/>
                   <Component id="jbtnView" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jbtnPreview" linkSize="2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jbtnPreview1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jbtnClose" linkSize="2" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jlblMobile" min="-2" pref="24" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jlblMobile" alignment="0" pref="24" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jlblOpb" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" pref="20" max="-2" attributes="1"/>
+                  <Component id="jLabel3" linkSize="3" min="-2" pref="20" max="-2" attributes="1"/>
                   <Component id="jLabel4" linkSize="3" alignment="0" min="-2" pref="20" max="-2" attributes="1"/>
                   <Group type="103" alignment="0" groupAlignment="2" attributes="0">
                       <Component id="jBillDateBtn" linkSize="3" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
@@ -109,7 +116,7 @@
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jPanel1" pref="607" max="32767" attributes="0"/>
+              <Component id="jPanel1" pref="610" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel" min="-2" pref="24" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -315,6 +322,11 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnPreview1ActionPerformed"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jbtnPreview1KeyPressed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mobile"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

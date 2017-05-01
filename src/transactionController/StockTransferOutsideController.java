@@ -473,6 +473,16 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
             jtxtItem.requestFocusInWindow();
             return false;
         }
+
+        if (jTextArea1.getText().isEmpty()) {
+            lb.confirmDialog("Please enter remark");
+            if (lb.type) {
+                jTextArea1.requestFocusInWindow();
+                return false;
+            } else {
+                return true;
+            }
+        }
         return true;
     }
 

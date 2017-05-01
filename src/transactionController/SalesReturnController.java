@@ -808,6 +808,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
+                jComboBox1.setEnabled(false);
                 Call<JsonObject> call = salesReturnAPI.GetDataFromServer(ref_no, "25");
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {

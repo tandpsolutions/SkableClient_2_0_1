@@ -448,6 +448,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                             row.add("");
                         }
                         row.add(lb.ConvertDateFormetForDisplay(array.get(i).getAsJsonObject().get("v_date").getAsString()));
+                        row.add(array.get(i).getAsJsonObject().get("model_name").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("sr_name").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("pcs").getAsDouble());
                         row.add(array.get(i).getAsJsonObject().get("tot_sales").getAsDouble());
@@ -462,11 +463,12 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
 
                     double qty = 0.0, amt = 0.00;
                     for (int i = 0; i < jTable1.getRowCount(); i++) {
-                        qty += lb.isNumber2(jTable1.getValueAt(i, 7).toString());
-                        amt += lb.isNumber2(jTable1.getValueAt(i, 8).toString());
+                        qty += lb.isNumber2(jTable1.getValueAt(i, 8).toString());
+                        amt += lb.isNumber2(jTable1.getValueAt(i, 9).toString());
                     }
 
                     Vector row = new Vector();
+                    row.add(" ");
                     row.add(" ");
                     row.add(" ");
                     row.add(" ");
@@ -486,6 +488,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
 
                     row = new Vector();
                     row.add("Total");
+                    row.add(" ");
                     row.add(" ");
                     row.add(" ");
                     row.add(" ");
@@ -532,10 +535,11 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 7).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
                 row.add(jTable1.getValueAt(i, 9).toString());
-                row.add(jTable1.getValueAt(i, 11).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
                 row.add(jTable1.getValueAt(i, 12).toString());
                 row.add(jTable1.getValueAt(i, 13).toString());
                 row.add(jTable1.getValueAt(i, 14).toString());
+                row.add(jTable1.getValueAt(i, 15).toString());
                 rows.add(row);
             }
 
@@ -546,6 +550,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             header.add("Mobile");
             header.add("Email");
             header.add("Date");
+            header.add("Model Name");
             header.add("Item Name");
             header.add("PCS");
             header.add("Amount");
@@ -647,11 +652,11 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr No", "Bill No", "Name", "Mobile", "Email", "Date", "Item Name", "PCS", "Amount", "IMEI NO", "REF", "Branch", "SalesMan", "Purchase Party", "Remark"
+                "Sr No", "Bill No", "Name", "Mobile", "Email", "Date", "Model Name", "Item Name", "PCS", "Amount", "IMEI NO", "REF", "Branch", "SalesMan", "Purchase Party", "Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -675,13 +680,14 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(7).setResizable(false);
             jTable1.getColumnModel().getColumn(8).setResizable(false);
             jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(10).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(10).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(11).setResizable(false);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
+            jTable1.getColumnModel().getColumn(11).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
             jTable1.getColumnModel().getColumn(12).setResizable(false);
             jTable1.getColumnModel().getColumn(13).setResizable(false);
             jTable1.getColumnModel().getColumn(14).setResizable(false);
+            jTable1.getColumnModel().getColumn(15).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -928,7 +934,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(20, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1188,7 +1194,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
-                lb.openVoucherBook(jTable1.getValueAt(row, 8).toString());
+                lb.openVoucherBook(jTable1.getValueAt(row, 11).toString());
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked

@@ -238,7 +238,7 @@ public class BulkPurchase extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    if(lb.validateInput(jtxtItem.getText())){
+                    if (lb.validateInput(jtxtItem.getText())) {
                         setSeriesData("3", jtxtItem.getText().toUpperCase());
                     }
                 }
@@ -819,7 +819,7 @@ public class BulkPurchase extends javax.swing.JDialog {
         if (lb.isEnter(evt)) {
             if (validateRow(jtxtIMEI.getText())) {
                 Vector row = new Vector();
-                row.add(jtxtIMEI.getText());
+                row.add(jtxtIMEI.getText().toUpperCase());
                 dtm.addRow(row);
 //                lb.confirmDialog("Do you want to add more item?");
 //                if (lb.type) {

@@ -881,7 +881,7 @@ public class TypeWisePurchaseDetail extends javax.swing.JInternalFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(20, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1134,7 +1134,7 @@ public class TypeWisePurchaseDetail extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
-                lb.openVoucherBook(jTable1.getValueAt(row, 7).toString());
+                lb.openVoucherBook(jTable1.getValueAt(row, 0).toString());
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked

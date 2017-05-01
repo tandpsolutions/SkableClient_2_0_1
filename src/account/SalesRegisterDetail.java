@@ -76,7 +76,6 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
         dtm = (DefaultTableModel) jTable1.getModel();
         lb.setDateChooserPropertyInit(jtxtToDate);
         lb.setDateChooserPropertyInit(jtxtFromDate);
-        jTable1.getColumnModel().getColumn(9).setCellRenderer(new RightAlignment());
         jTable1.getColumnModel().getColumn(10).setCellRenderer(new RightAlignment());
         jTable1.getColumnModel().getColumn(11).setCellRenderer(new RightAlignment());
         jTable1.getColumnModel().getColumn(12).setCellRenderer(new RightAlignment());
@@ -86,6 +85,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
         jTable1.getColumnModel().getColumn(16).setCellRenderer(new RightAlignment());
         jTable1.getColumnModel().getColumn(17).setCellRenderer(new RightAlignment());
         jTable1.getColumnModel().getColumn(18).setCellRenderer(new RightAlignment());
+        jTable1.getColumnModel().getColumn(19).setCellRenderer(new RightAlignment());
         searchOnTextFields();
         setPopUp();
     }
@@ -239,6 +239,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                             row.add("");
                             row.add("");
                             row.add("");
+                            row.add("");
                             row.add(lb.Convert2DecFmtForRs(rate));
                             row.add(lb.Convert2DecFmtForRs(basic_amt));
                             row.add(lb.Convert2DecFmtForRs(tax_amt));
@@ -280,6 +281,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                             row.add("");
                         }
                         row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
@@ -321,6 +323,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                         old_ref_no = array.get(i).getAsJsonObject().get("ref_no").getAsString();
                     }
                     Vector row = new Vector();
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -442,6 +445,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 25).toString());
                 row.add(jTable1.getValueAt(i, 26).toString());
                 row.add(jTable1.getValueAt(i, 27).toString());
+                row.add(jTable1.getValueAt(i, 28).toString());
                 rows.add(row);
             }
 
@@ -451,6 +455,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
             header.add("Date");
             header.add("Name");
             header.add("Product Code");
+            header.add("Tag");
             header.add("Product Name");
             header.add("IMEI");
             header.add("Serail No");
@@ -607,11 +612,11 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref_no", "Type", "Bill No", "Date", "Name", "Code", "Name", "IMEI", "Serail No", "Qty", "MRP", "Basic Amt", "Tax", "Add Tax", "Disc", "Rate", "Amt", "Net Amt", "Tax Name", "Cash", "Bank", "Card", "Bajaj", "Buy Back Amt", "Buy Back Model", "INS", "Debtor", "Branch"
+                "ref_no", "Type", "Bill No", "Date", "Name", "Code", "Tag", "Name", "IMEI", "Serail No", "Qty", "MRP", "Basic Amt", "Tax", "Add Tax", "Disc", "Rate", "Amt", "Net Amt", "Tax Name", "Cash", "Bank", "Card", "Bajaj", "Buy Back Amt", "Buy Back Model", "INS", "Debtor", "Branch"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -656,6 +661,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(25).setResizable(false);
             jTable1.getColumnModel().getColumn(26).setResizable(false);
             jTable1.getColumnModel().getColumn(27).setResizable(false);
+            jTable1.getColumnModel().getColumn(28).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -868,7 +874,7 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jComboBox1, jComboBox2, jLabel3, jLabel4, jbtnClose, jbtnExcel, jtxtFromDate, jtxtToDate});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jComboBox1, jComboBox2, jComboBox3, jLabel3, jLabel4, jbtnClose, jbtnExcel, jbtnExcel3, jbtnView, jtxtFromDate, jtxtToDate});
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jCheckBox1, jtxtAcAlias, jtxtAcName});
 

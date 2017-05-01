@@ -61,13 +61,14 @@
             <Component class="javax.swing.JTable" name="jTable1">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="28" rowCount="0">
+                  <Table columnCount="29" rowCount="0">
                     <Column editable="false" title="ref_no" type="java.lang.Object"/>
                     <Column editable="false" title="Type" type="java.lang.Object"/>
                     <Column editable="false" title="Bill No" type="java.lang.Object"/>
                     <Column editable="false" title="Date" type="java.lang.Object"/>
                     <Column editable="false" title="Name" type="java.lang.Object"/>
                     <Column editable="false" title="Code" type="java.lang.Object"/>
+                    <Column editable="false" title="Tag" type="java.lang.Object"/>
                     <Column editable="false" title="Name" type="java.lang.Object"/>
                     <Column editable="true" title="IMEI" type="java.lang.Object"/>
                     <Column editable="false" title="Serail No" type="java.lang.Object"/>
@@ -95,6 +96,11 @@
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -314,14 +320,14 @@
                       <Component id="jComboBox1" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jComboBox2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jbtnExcel" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbtnClose" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbtnExcel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbtnExcel3" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jbtnView" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="jbtnView" linkSize="2" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">

@@ -409,9 +409,27 @@ public class BillTrack extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Name");
 
+        jtxtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtNameKeyPressed(evt);
+            }
+        });
+
         jLabel6.setText("Mobile");
 
+        jtxtMobile.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtMobileKeyPressed(evt);
+            }
+        });
+
         jLabel7.setText("IMEI");
+
+        jtxtImei.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtImeiKeyPressed(evt);
+            }
+        });
 
         jButton2.setText("Email");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -422,6 +440,12 @@ public class BillTrack extends javax.swing.JInternalFrame {
         jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jButton2KeyPressed(evt);
+            }
+        });
+
+        jtxtBillNo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtBillNoKeyPressed(evt);
             }
         });
 
@@ -737,6 +761,26 @@ public class BillTrack extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         lb.enterClick(evt);
     }//GEN-LAST:event_jButton2KeyPressed
+
+    private void jtxtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNameKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jtxtNameKeyPressed
+
+    private void jtxtMobileKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtMobileKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jtxtMobileKeyPressed
+
+    private void jtxtImeiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtImeiKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jtxtImeiKeyPressed
+
+    private void jtxtBillNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBillNoKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jtxtBillNoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

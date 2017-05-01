@@ -51,6 +51,7 @@ import support.ReportTable;
 import support.SelectDailog;
 import transactionController.SelectAccount;
 import model.SeriesHead;
+import skable.Constants;
 import transactionController.SelectItem;
 
 /**
@@ -80,6 +81,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
 
     public ItemWisePSSales() {
         initComponents();
+        setUpData();
         registerShortKeys();
         dtm = (DefaultTableModel) jTable1.getModel();
         lb = Library.getInstance();
@@ -118,6 +120,20 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
         item.addActionListener(menuListener);
         popup.setLocation(MouseInfo.getPointerInfo().getLocation());
         jTable1.setComponentPopupMenu(popup);
+    }
+
+    private void setUpData() {
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+        }
+        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            jComboBox1.setEnabled(true);
+        } else {
+            jComboBox1.setEnabled(false);
+        }
     }
 
     private void registerShortKeys() {
@@ -366,6 +382,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 5).toString());
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
+                row.add(jTable1.getValueAt(i, 8).toString());
                 rows.add(row);
             }
 
@@ -378,6 +395,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
             header.add("Pur RATE");
             header.add("Sale ");
             header.add("Profit");
+            header.add("Branch");
             lb.exportToExcel("IMEI Wise PS", header, rows, "IMEI Wise PS");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
@@ -426,6 +444,8 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
         jcmbType1 = new javax.swing.JComboBox();
         jCheckBox6 = new javax.swing.JCheckBox();
         jtxtProductName = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -434,11 +454,11 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "SR No", "Sales Party", "Purchase Party", "Sku Code", "Date", "IMEI", "Item Name", "Rate", "Sale Rate", "Profit"
+                "SR No", "Sales Party", "Purchase Party", "Sku Code", "Date", "IMEI", "Item Name", "Rate", "Sale Rate", "Profit", "Branch Code"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -457,6 +477,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(7).setResizable(false);
             jTable1.getColumnModel().getColumn(8).setResizable(false);
             jTable1.getColumnModel().getColumn(9).setResizable(false);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -641,6 +662,15 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setText("Branch");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -652,7 +682,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                         .addComponent(jCheckBox5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBox4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -673,7 +703,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                         .addComponent(jtxtAcAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(296, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -687,7 +717,11 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                 .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 562, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtnView, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -714,13 +748,15 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                         .addComponent(jbtnView)
                         .addComponent(jButton2)
                         .addComponent(jbtnClose)
-                        .addComponent(jButton4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                        .addComponent(jButton4))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcmbType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -829,7 +865,8 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
             }
 
             JsonObject call = accountAPI.IMEWisePSSales(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), model_cd, ac_cd, type_cd, jCheckBox3.isSelected(), brand_cd, bill_no, sub_type_cd, sr_cd).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), model_cd, ac_cd, type_cd, jCheckBox3.isSelected(), brand_cd, bill_no, 
+                    sub_type_cd, sr_cd,((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
 
             lb.addGlassPane(this);
 
@@ -865,6 +902,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                         } else {
                             row.add(lb.Convert2DecFmtForRs(0.00));
                         }
+                        row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1).getBranch_name());
                         dtm.addRow(row);
                     }
 
@@ -885,6 +923,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                     row.add(lb.Convert2DecFmtForRs(tot));
                     row.add(lb.Convert2DecFmtForRs(tot1));
                     row.add(lb.Convert2DecFmtForRs(tot2));
+                    row.add("");
                     dtm.addRow(row);
 
                     lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
@@ -971,7 +1010,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
                 jtxtToDate.setText(setDate);
             }
             if ((new SimpleDateFormat("dd/MM/yyyy").format(new Date(jtxtToDate.getText().trim()))) != null) {
-                jbtnView.requestFocusInWindow();
+                jComboBox1.requestFocusInWindow();
             }
 
         } catch (Exception ex) {
@@ -983,7 +1022,7 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
     private void jtxtToDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtToDateKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jbtnView.requestFocusInWindow();
+            jComboBox1.requestFocusInWindow();
         }
     }//GEN-LAST:event_jtxtToDateKeyPressed
 
@@ -1101,6 +1140,11 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnViewKeyPressed
 
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jbtnView);
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBillDateBtn;
@@ -1113,10 +1157,12 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

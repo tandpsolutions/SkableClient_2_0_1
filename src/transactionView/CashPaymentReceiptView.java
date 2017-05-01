@@ -71,9 +71,7 @@ public class CashPaymentReceiptView extends javax.swing.JInternalFrame {
         navLoad.setFormCd(formCd);
         setPopUp();
     }
-    
-    
-    
+
     private void setUpData() {
         jComboBox1.removeAllItems();
         jComboBox1.addItem("All");
@@ -87,7 +85,6 @@ public class CashPaymentReceiptView extends javax.swing.JInternalFrame {
             jComboBox1.setEnabled(false);
         }
     }
-    
 
     private void setPopUp() {
         final JPopupMenu popup = new JPopupMenu();
@@ -112,7 +109,7 @@ public class CashPaymentReceiptView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
-    private void setData() {
+    public void setData() {
         try {
             lb.addGlassPane(this);
             JsonObject call = cashPRAPI.GetCashPaymentHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -185,7 +182,7 @@ public class CashPaymentReceiptView extends javax.swing.JInternalFrame {
     }
 
     private void addCashController() {
-        CashPaymentReceiptController pc = new CashPaymentReceiptController(null, true, vType);
+        CashPaymentReceiptController pc = new CashPaymentReceiptController(null, true, vType, this);
         pc.setLocationRelativeTo(null);
         pc.setData(cashPRAPI, ref_no);
     }

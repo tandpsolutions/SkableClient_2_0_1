@@ -898,8 +898,17 @@ public class StockOnHandBranchWise extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("STOCK").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
+                        tot += array.get(i).getAsJsonObject().get("STOCK").getAsDouble();
                         dtm.addRow(row);
                     }
+
+                    Vector row = new Vector();
+                    row.add("Total");
+                    row.add("");
+                    row.add(tot);
+                    row.add("");
+                    row.add("");
+                    dtm.addRow(row);
                     lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
                     lb.removeGlassPane(StockOnHandBranchWise.this);
                 } else {
@@ -926,7 +935,7 @@ public class StockOnHandBranchWise extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton1.isSelected()) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -946,7 +955,7 @@ public class StockOnHandBranchWise extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
