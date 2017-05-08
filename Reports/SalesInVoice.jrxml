@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="864"/>
+	<property name="ireport.y" value="384"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -147,49 +147,49 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<background>
 		<band height="802">
 			<rectangle>
-				<reportElement x="0" y="200" width="553" height="200" uuid="960fec92-3266-4881-95e6-f59f159719fa"/>
+				<reportElement uuid="960fec92-3266-4881-95e6-f59f159719fa" x="0" y="200" width="553" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="500" y="200" width="53" height="200" uuid="df853a77-d325-49c7-b8fb-aa8d2a1e380f"/>
+				<reportElement uuid="df853a77-d325-49c7-b8fb-aa8d2a1e380f" x="500" y="200" width="53" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="267" y="200" width="25" height="200" uuid="f35e3b96-8dbb-4296-84fa-dd3b17c8c4dd"/>
+				<reportElement uuid="f35e3b96-8dbb-4296-84fa-dd3b17c8c4dd" x="267" y="200" width="25" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="200" width="18" height="200" uuid="84cbe684-02d7-4094-a83a-1a404e7be1c4"/>
+				<reportElement uuid="84cbe684-02d7-4094-a83a-1a404e7be1c4" x="0" y="200" width="18" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="18" y="200" width="150" height="200" uuid="03a0398d-7b8a-45e5-8b33-b46297f6d65c"/>
+				<reportElement uuid="03a0398d-7b8a-45e5-8b33-b46297f6d65c" mode="Transparent" x="18" y="200" width="150" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="447" y="200" width="53" height="200" uuid="0e5b4299-d622-4ad1-8801-8edf432cb7fc"/>
+				<reportElement uuid="0e5b4299-d622-4ad1-8801-8edf432cb7fc" x="447" y="200" width="53" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="291" y="200" width="53" height="200" uuid="8feeff80-191a-47dd-acc7-505e73bca9c4"/>
+				<reportElement uuid="8feeff80-191a-47dd-acc7-505e73bca9c4" x="291" y="200" width="53" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="344" y="200" width="53" height="200" uuid="c8031fca-9698-47e2-a8ff-58452507fc4c"/>
+				<reportElement uuid="c8031fca-9698-47e2-a8ff-58452507fc4c" x="344" y="200" width="53" height="200"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -199,7 +199,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<pageHeader>
 		<band height="200">
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="169" y="185" width="226" height="15" forecolor="#000000" uuid="5ffac756-7a8e-4f58-8479-3809722bb462"/>
+				<reportElement uuid="5ffac756-7a8e-4f58-8479-3809722bb462" mode="Transparent" x="169" y="185" width="226" height="15" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -209,7 +209,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Retail Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Retail Insurance Invoice"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="0" y="91" width="555" height="15" uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c"/>
+				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="0" y="91" width="555" height="15"/>
 				<box leftPadding="4" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -218,7 +218,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Name : "+$F{FNAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="462" y="185" width="93" height="15" uuid="2d1c03b2-c02a-42ce-897e-2ddb7f77be00"/>
+				<reportElement uuid="2d1c03b2-c02a-42ce-897e-2ddb7f77be00" mode="Transparent" x="462" y="185" width="93" height="15"/>
 				<box leftPadding="4">
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -228,7 +228,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?$F{INV_NO}:($F{V_TYPE}==1)?"TI-"+$F{INV_NO}:"RI-"+$F{INV_NO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="89" y="185" width="80" height="15" uuid="dbeabd35-2542-47cb-acd2-2adf79798d32"/>
+				<reportElement uuid="dbeabd35-2542-47cb-acd2-2adf79798d32" mode="Transparent" x="89" y="185" width="80" height="15"/>
 				<box leftPadding="4">
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -238,7 +238,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{V_DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="84" y="185" width="5" height="15" forecolor="#000000" uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d"/>
+				<reportElement uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d" mode="Transparent" x="84" y="185" width="5" height="15" forecolor="#000000"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
@@ -248,7 +248,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="457" y="185" width="5" height="15" forecolor="#000000" uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d"/>
+				<reportElement uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d" mode="Transparent" x="457" y="185" width="5" height="15" forecolor="#000000"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -256,7 +256,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="-1" y="185" width="85" height="15" forecolor="#000000" uuid="01f9b046-7a75-477b-8fc2-a8add7c973df"/>
+				<reportElement uuid="01f9b046-7a75-477b-8fc2-a8add7c973df" mode="Transparent" x="-1" y="185" width="85" height="15" forecolor="#000000"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -266,7 +266,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Invoice Date]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="106" width="555" height="15" uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d"/>
+				<reportElement uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="106" width="555" height="15"/>
 				<box leftPadding="4" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -274,7 +274,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Address : "+$F{ADD1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="395" y="185" width="62" height="15" forecolor="#000000" uuid="7869a299-1521-4727-be85-36117fed6192"/>
+				<reportElement uuid="7869a299-1521-4727-be85-36117fed6192" mode="Transparent" x="395" y="185" width="62" height="15" forecolor="#000000"/>
 				<box leftPadding="4">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
@@ -284,7 +284,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Invoice No.]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="121" width="555" height="15" uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e"/>
+				<reportElement uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="121" width="555" height="15"/>
 				<box leftPadding="4" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -292,7 +292,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Mobile : "+$F{MOBILE1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="136" width="555" height="15" uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8"/>
+				<reportElement uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="136" width="555" height="15"/>
 				<box leftPadding="4" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -300,7 +300,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's Tin :"+$F{TIN}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="151" width="555" height="15" uuid="08ea1664-4493-450e-b677-6b5eb53f11ec"/>
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="151" width="555" height="15"/>
 				<box leftPadding="4" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
@@ -308,7 +308,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's Email :"+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="166" width="555" height="15" uuid="6fa65429-5664-4cdd-bc7b-5364aa5e3984">
+				<reportElement uuid="6fa65429-5664-4cdd-bc7b-5364aa5e3984" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="166" width="555" height="15">
 					<printWhenExpression><![CDATA[$F{V_TYPE}==1 && $F{PMT_DAYS} != 0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="4" rightPadding="2"/>
@@ -322,7 +322,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<columnHeader>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="18" y="0" width="150" height="30" forecolor="#000000" uuid="4728d2f2-ed33-4dae-ad99-e3fc4a6c1a22"/>
+				<reportElement uuid="4728d2f2-ed33-4dae-ad99-e3fc4a6c1a22" x="18" y="0" width="150" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -334,7 +334,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Item Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="500" y="0" width="53" height="30" forecolor="#000000" uuid="ef68c92d-04d1-4d9e-b7f3-aa170ff0cb2a"/>
+				<reportElement uuid="ef68c92d-04d1-4d9e-b7f3-aa170ff0cb2a" x="500" y="0" width="53" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -346,7 +346,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[AMOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="267" y="0" width="24" height="30" forecolor="#000000" uuid="5caca31d-b0ab-48a7-814a-0c346649ee8c"/>
+				<reportElement uuid="5caca31d-b0ab-48a7-814a-0c346649ee8c" x="267" y="0" width="24" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -358,7 +358,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[PCS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="18" height="30" forecolor="#000000" uuid="65e6cf26-691f-411d-b02e-a13a77e3e186"/>
+				<reportElement uuid="65e6cf26-691f-411d-b02e-a13a77e3e186" x="0" y="0" width="18" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5"/>
@@ -371,14 +371,15 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[SR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="336" y="13" width="218" height="0" uuid="21b3ec25-41a3-469c-a22a-54db9f195f51"/>
+				<reportElement uuid="21b3ec25-41a3-469c-a22a-54db9f195f51" x="336" y="13" width="218" height="0"/>
 				<box>
 					<bottomPen lineWidth="0.0"/>
 				</box>
+				<textElement/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="292" y="0" width="52" height="30" forecolor="#000000" uuid="540a4cc2-be23-4bd8-9452-70edfd9151b6"/>
+				<reportElement uuid="540a4cc2-be23-4bd8-9452-70edfd9151b6" x="292" y="0" width="52" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -390,7 +391,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Basic]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="169" y="0" width="98" height="30" forecolor="#000000" uuid="7b3a4004-aaa8-4916-8228-90852c7e4e12"/>
+				<reportElement uuid="7b3a4004-aaa8-4916-8228-90852c7e4e12" x="169" y="0" width="98" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -402,7 +403,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[IMEI No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="344" y="0" width="53" height="30" forecolor="#000000" uuid="3859c92c-be47-412d-9495-187d2f4d26c2"/>
+				<reportElement uuid="3859c92c-be47-412d-9495-187d2f4d26c2" x="344" y="0" width="53" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -414,7 +415,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Tax]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="447" y="0" width="53" height="30" forecolor="#000000" uuid="120b4e32-7951-429d-9bee-d70ad0137b06"/>
+				<reportElement uuid="120b4e32-7951-429d-9bee-d70ad0137b06" x="447" y="0" width="53" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -426,7 +427,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Vat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="0" width="50" height="30" forecolor="#000000" uuid="92ce1e28-9275-4b4a-8fe9-069fdff02902"/>
+				<reportElement uuid="92ce1e28-9275-4b4a-8fe9-069fdff02902" x="397" y="0" width="50" height="30" forecolor="#000000"/>
 				<box topPadding="1" leftPadding="2">
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -442,7 +443,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="500" y="0" width="53" height="13" uuid="58952e66-cc1a-4ffd-a171-83739ef8b9b8"/>
+				<reportElement uuid="58952e66-cc1a-4ffd-a171-83739ef8b9b8" stretchType="RelativeToTallestObject" x="500" y="0" width="53" height="13"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -450,7 +451,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{AMT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="267" y="0" width="25" height="13" uuid="c32ee20a-2ca9-4923-9942-4fb43aecde6f"/>
+				<reportElement uuid="c32ee20a-2ca9-4923-9942-4fb43aecde6f" stretchType="RelativeToTallestObject" x="267" y="0" width="25" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 					<paragraph rightIndent="2"/>
@@ -458,14 +459,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="19" height="13" uuid="4b11c91e-1ad2-4b54-a3dd-0cbefbe5f47a"/>
+				<reportElement uuid="4b11c91e-1ad2-4b54-a3dd-0cbefbe5f47a" stretchType="RelativeToTallestObject" x="0" y="0" width="19" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
-				<reportElement stretchType="RelativeToTallestObject" x="447" y="0" width="53" height="13" uuid="9583eaba-d09e-420a-90a3-f2981a1fe2db"/>
+				<reportElement uuid="9583eaba-d09e-420a-90a3-f2981a1fe2db" stretchType="RelativeToTallestObject" x="447" y="0" width="53" height="13"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -474,7 +475,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{TAX_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="169" y="0" width="100" height="13" uuid="d2ae3666-5301-4c96-a60d-5603a645f5ec"/>
+				<reportElement uuid="d2ae3666-5301-4c96-a60d-5603a645f5ec" stretchType="RelativeToTallestObject" x="169" y="0" width="100" height="13"/>
 				<box leftPadding="4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -482,14 +483,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[(!$F{TAG_NO}.equals(""))?$F{TAG_NO}:($F{IMEI_NO}.equalsIgnoreCase( "" ))?$F{SERAIL_NO}:$F{IMEI_NO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="19" y="0" width="149" height="13" uuid="8941f662-6ba1-46ad-80bb-c4b1d0cb7362"/>
+				<reportElement uuid="8941f662-6ba1-46ad-80bb-c4b1d0cb7362" stretchType="RelativeToTallestObject" x="19" y="0" width="149" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
-				<reportElement stretchType="RelativeToTallestObject" x="292" y="0" width="52" height="13" uuid="10c74bb4-d750-4506-a290-fe30656b646e"/>
+				<reportElement uuid="10c74bb4-d750-4506-a290-fe30656b646e" stretchType="RelativeToTallestObject" x="292" y="0" width="52" height="13"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -498,7 +499,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{BASIC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
-				<reportElement stretchType="RelativeToTallestObject" x="344" y="0" width="52" height="13" uuid="dae3ba7b-91c6-417c-9a32-7a36f4c61f48"/>
+				<reportElement uuid="dae3ba7b-91c6-417c-9a32-7a36f4c61f48" stretchType="RelativeToTallestObject" x="344" y="0" width="52" height="13"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -507,7 +508,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{TAX}+$F{ADD_TAX}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
-				<reportElement stretchType="RelativeToTallestObject" x="397" y="0" width="50" height="13" uuid="67f68ca6-2937-4625-b773-526724333480"/>
+				<reportElement uuid="67f68ca6-2937-4625-b773-526724333480" stretchType="RelativeToTallestObject" x="397" y="0" width="50" height="13"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
@@ -520,12 +521,13 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<pageFooter>
 		<band height="404">
 			<textField>
-				<reportElement x="216" y="384" width="80" height="20" uuid="46002b27-269e-41a2-b2f4-6c307aa05bbd"/>
+				<reportElement uuid="46002b27-269e-41a2-b2f4-6c307aa05bbd" x="216" y="384" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="296" y="384" width="40" height="20" uuid="71f83f53-a6f2-43b6-86a2-fd500cc3a9c6"/>
+				<reportElement uuid="71f83f53-a6f2-43b6-86a2-fd500cc3a9c6" x="296" y="384" width="40" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -533,7 +535,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<lastPageFooter>
 		<band height="404">
 			<frame>
-				<reportElement x="0" y="2" width="317" height="72" uuid="e9f7239d-d20a-418a-84e7-7c8e2088ab5d"/>
+				<reportElement uuid="e9f7239d-d20a-418a-84e7-7c8e2088ab5d" x="0" y="2" width="317" height="72"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -541,7 +543,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="14" width="204" height="13" uuid="e2a4623d-b36c-432e-8c71-535bebff600d"/>
+					<reportElement uuid="e2a4623d-b36c-432e-8c71-535bebff600d" x="0" y="14" width="204" height="13"/>
 					<box>
 						<bottomPen lineWidth="0.5"/>
 					</box>
@@ -552,7 +554,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<text><![CDATA[Cash:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="27" width="79" height="13" uuid="e2a4623d-b36c-432e-8c71-535bebff600d"/>
+					<reportElement uuid="e2a4623d-b36c-432e-8c71-535bebff600d" x="0" y="27" width="79" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
@@ -564,7 +566,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<text><![CDATA[Cheque:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="0" y="40" width="204" height="16" uuid="4a454a53-e82e-4c8b-bdce-32af06800657"/>
+					<reportElement uuid="4a454a53-e82e-4c8b-bdce-32af06800657" x="0" y="40" width="204" height="16"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
@@ -576,7 +578,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<textFieldExpression><![CDATA["Credit Card : "]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement x="204" y="40" width="113" height="16" uuid="0c9733df-ca1e-4b27-a59a-734436374232"/>
+					<reportElement uuid="0c9733df-ca1e-4b27-a59a-734436374232" x="204" y="40" width="113" height="16"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
@@ -588,7 +590,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<textFieldExpression><![CDATA[$F{CARD_AMT}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="79" y="27" width="125" height="13" uuid="29c1bff9-bb64-417a-838f-507ee6cf64df"/>
+					<reportElement uuid="29c1bff9-bb64-417a-838f-507ee6cf64df" x="79" y="27" width="125" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
@@ -600,7 +602,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<textFieldExpression><![CDATA[$F{CHEQUE_NO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement x="204" y="27" width="113" height="13" uuid="65348170-a7c0-4370-b81e-a9517cb7f5e0"/>
+					<reportElement uuid="65348170-a7c0-4370-b81e-a9517cb7f5e0" x="204" y="27" width="113" height="13"/>
 					<box>
 						<topPen lineWidth="0.5"/>
 						<bottomPen lineWidth="0.5"/>
@@ -612,7 +614,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<textFieldExpression><![CDATA[$F{BANK_AMT}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="204" y="14" width="113" height="13" uuid="ae4e4843-f5fe-4eb6-a966-109cdf12aef5"/>
+					<reportElement uuid="ae4e4843-f5fe-4eb6-a966-109cdf12aef5" x="204" y="14" width="113" height="13"/>
 					<box>
 						<bottomPen lineWidth="0.5"/>
 					</box>
@@ -623,7 +625,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<textFieldExpression><![CDATA[$F{CASH_AMT}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="317" height="14" uuid="5787a9b3-20d3-4d84-82bf-979c01e7c768"/>
+					<reportElement uuid="5787a9b3-20d3-4d84-82bf-979c01e7c768" x="0" y="0" width="317" height="14"/>
 					<box>
 						<bottomPen lineWidth="0.5"/>
 					</box>
@@ -634,7 +636,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="0" y="326" width="140" height="20" uuid="8ecef96e-b330-4629-b5d7-23931429d10f"/>
+				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="0" y="326" width="140" height="20"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
@@ -644,7 +646,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Customer's Signature]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="325" width="181" height="20" uuid="8ecef96e-b330-4629-b5d7-23931429d10f"/>
+				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="373" y="325" width="181" height="20"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
@@ -654,14 +656,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Authorized Signatory]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="373" y="255" width="180" height="20" uuid="d22a1a0a-6e55-4c25-b4fa-3f50f1e9852a"/>
+				<reportElement uuid="d22a1a0a-6e55-4c25-b4fa-3f50f1e9852a" x="373" y="255" width="180" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["For, "+$P{comp_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="123" width="79" height="13" forecolor="#000000" uuid="9f945a53-3397-492d-853f-d7a5db431df8"/>
+				<reportElement uuid="9f945a53-3397-492d-853f-d7a5db431df8" x="373" y="123" width="79" height="13" forecolor="#000000"/>
 				<box rightPadding="4">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.75"/>
@@ -674,14 +676,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Remaining"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="190" width="554" height="65" uuid="5a2444b4-32ff-473e-8b94-17dde492a536"/>
+				<reportElement uuid="5a2444b4-32ff-473e-8b94-17dde492a536" x="0" y="190" width="554" height="65"/>
 				<textElement markup="html">
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>Terms and Conditions </b>: 1)Goods once sold will not be taken back 2)Warranty as per respective Company's Policy 3)Cheques are subject to Realisation 4) Subject to Ahmedabad Jurisdiction 5) Warranties subject to production of our invoice at the authorised company's service center 6) No warranty for water damage & physical damage 7) No exchange applicable 8)Mobile phone packet contains handsfree & charger. 9)No Warranty or Guarantee on Cases, Backcover, toughen glass, Screen Guard"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="373" y="97" width="79" height="13" forecolor="#000000" uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87"/>
+				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="97" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -693,7 +695,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Advance :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="373" y="18" width="79" height="13" forecolor="#000000" uuid="eaee5ddd-acf0-445b-b160-781a409f4c87"/>
+				<reportElement uuid="eaee5ddd-acf0-445b-b160-781a409f4c87" x="373" y="18" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -705,7 +707,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Tax : "]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="373" y="71" width="79" height="13" forecolor="#000000" uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87"/>
+				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="71" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -717,7 +719,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Bill Amount :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="3" width="79" height="15" forecolor="#000000" uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87"/>
+				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="3" width="79" height="15" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -729,7 +731,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Taxable Amt : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="110" width="79" height="13" forecolor="#000000" uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87"/>
+				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="110" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -741,7 +743,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Cash / Bank :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="373" y="31" width="79" height="14" forecolor="#000000" uuid="2b6e016b-c79a-46ec-8a11-06bfe6a49c31"/>
+				<reportElement uuid="2b6e016b-c79a-46ec-8a11-06bfe6a49c31" x="373" y="31" width="79" height="14" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -753,14 +755,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Add Tax : "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="255" width="318" height="20" uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f"/>
+				<reportElement uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f" x="0" y="255" width="318" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Tin "+$P{tin_no}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="3" width="101" height="15" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="3" width="101" height="15"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -771,7 +773,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{DET_TOT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="97" width="101" height="13" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="97" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -782,7 +784,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{ADVANCE_AMT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="71" width="101" height="13" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="71" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -793,7 +795,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{NET_AMT}+$F{BUY_BACK_AMT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="18" width="101" height="13" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="18" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -804,7 +806,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{TAX_AMT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="110" width="101" height="13" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="110" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -815,7 +817,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{CASH_AMT}+$F{BANK_AMT}+$F{CARD_AMT}+$F{BAJAJ_AMT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="123" width="101" height="13" uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf"/>
+				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="123" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -826,7 +828,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{NET_AMT} -($F{CASH_AMT}+$F{BANK_AMT}+$F{CARD_AMT}+$F{BAJAJ_AMT})]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="31" width="101" height="14" uuid="a4de063f-f66c-4999-8620-a9d5e895d02b"/>
+				<reportElement uuid="a4de063f-f66c-4999-8620-a9d5e895d02b" x="452" y="31" width="101" height="14"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -837,7 +839,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{ADD_TAX_AMT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="373" y="84" width="79" height="13" forecolor="#000000" uuid="0c0924af-f5b5-48b4-a36a-ae59644519d2"/>
+				<reportElement uuid="0c0924af-f5b5-48b4-a36a-ae59644519d2" x="373" y="84" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -849,7 +851,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Buy Back Amt]]></text>
 			</staticText>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="84" width="101" height="13" uuid="da27aafe-d857-4189-8c34-5c8a597f9b1a"/>
+				<reportElement uuid="da27aafe-d857-4189-8c34-5c8a597f9b1a" x="452" y="84" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -860,7 +862,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{BUY_BACK_AMT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="78" y="87" width="239" height="13" uuid="50161ec0-1141-459b-ae40-6a81049147a8">
+				<reportElement uuid="50161ec0-1141-459b-ae40-6a81049147a8" x="78" y="87" width="239" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -874,7 +876,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{PART_NO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="74" width="78" height="13" uuid="ec30c052-5359-445a-9f2a-27e689252240">
+				<reportElement uuid="ec30c052-5359-445a-9f2a-27e689252240" x="0" y="74" width="78" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -889,7 +891,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Buy Back Model"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="78" y="74" width="239" height="13" uuid="1a17f9d0-031b-49ce-8bc0-1eb2399833f0">
+				<reportElement uuid="1a17f9d0-031b-49ce-8bc0-1eb2399833f0" x="78" y="74" width="239" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -903,7 +905,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{BUY_BACK_MODEL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="87" width="78" height="13" uuid="d3e1002e-a8d8-4331-9cdf-2df2b392269b">
+				<reportElement uuid="d3e1002e-a8d8-4331-9cdf-2df2b392269b" x="0" y="87" width="78" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -918,7 +920,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Part Number]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="45" width="79" height="13" forecolor="#000000" uuid="3cfa0cf7-0e7c-4e86-a2c3-4622394f9dc5"/>
+				<reportElement uuid="3cfa0cf7-0e7c-4e86-a2c3-4622394f9dc5" x="373" y="45" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -930,7 +932,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Insu. Amt :]]></text>
 			</staticText>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="45" width="101" height="13" uuid="41b798e0-86e2-4131-8809-5b3494b6eccf"/>
+				<reportElement uuid="41b798e0-86e2-4131-8809-5b3494b6eccf" x="452" y="45" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -941,7 +943,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{INS_AMT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="204" y="58" width="113" height="16" uuid="9ad3e382-f6e9-42af-a558-5bc366be8106"/>
+				<reportElement uuid="9ad3e382-f6e9-42af-a558-5bc366be8106" x="204" y="58" width="113" height="16"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
@@ -954,7 +956,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{BAJAJ_AMT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="58" width="204" height="16" uuid="05970944-d863-4c24-8c60-c3cf07c13249"/>
+				<reportElement uuid="05970944-d863-4c24-8c60-c3cf07c13249" x="0" y="58" width="204" height="16"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -967,7 +969,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Finance : "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="78" y="100" width="239" height="13" uuid="f9d9dfe4-9fd1-45be-8629-a252473292ab">
+				<reportElement uuid="f9d9dfe4-9fd1-45be-8629-a252473292ab" x="78" y="100" width="239" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -981,7 +983,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{BUY_BACK_IMEI}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="100" width="78" height="13" uuid="d6e0e1e4-a49b-458a-99be-b36b27421566">
+				<reportElement uuid="d6e0e1e4-a49b-458a-99be-b36b27421566" x="0" y="100" width="78" height="13">
 					<printWhenExpression><![CDATA[!$F{BUY_BACK_MODEL}.equals( "" )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
@@ -996,12 +998,12 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[IMEI NO]]></text>
 			</staticText>
 			<subreport isUsingCache="false" runToBottom="true">
-				<reportElement positionType="Float" mode="Transparent" x="0" y="113" width="169" height="39" uuid="895f1a1c-24f7-475d-8016-3650e23faf00"/>
+				<reportElement uuid="895f1a1c-24f7-475d-8016-3650e23faf00" positionType="Float" mode="Transparent" x="0" y="113" width="169" height="39"/>
 				<dataSourceExpression><![CDATA[$P{tax_data}]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{dir} + "/Reports/sales_tax.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{dir} + File.separatorChar+"Reports"+File.separatorChar+"sales_tax.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="373" y="58" width="79" height="13" forecolor="#000000" uuid="05501acd-0f85-493f-b899-b2c884e138e4"/>
+				<reportElement uuid="05501acd-0f85-493f-b899-b2c884e138e4" x="373" y="58" width="79" height="13" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.25"/>
@@ -1013,7 +1015,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[Discount :]]></text>
 			</staticText>
 			<textField pattern="###0.00" isBlankWhenNull="true">
-				<reportElement x="452" y="58" width="101" height="13" uuid="8ab4262b-c04a-4d65-933a-4c329057383b"/>
+				<reportElement uuid="8ab4262b-c04a-4d65-933a-4c329057383b" x="452" y="58" width="101" height="13"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.75"/>
@@ -1024,7 +1026,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$V{sum_disc}+$F{DISCOUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="275" width="318" height="20" uuid="2379f1f5-cb4c-4b48-a08e-eaebdc935418"/>
+				<reportElement uuid="2379f1f5-cb4c-4b48-a08e-eaebdc935418" x="0" y="275" width="318" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
