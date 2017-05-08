@@ -141,11 +141,13 @@ public class Library {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
             OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
                     .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(interceptor).build();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if (!Constants.BASE_URL.isEmpty()) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(Constants.BASE_URL)
+                        .client(client)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
             upDateRetrofit = new Retrofit.Builder()
                     .baseUrl(Constants.UPDATE_BASE_URL)
                     .client(client)
@@ -1452,7 +1454,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("PR")) {
             if (SkableHome.userRightsMap.get(12).getEDITS().equalsIgnoreCase("1")) {
-                PurchaseReturnController sbc = new PurchaseReturnController(null, true);
+                PurchaseReturnController sbc = new PurchaseReturnController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {
@@ -1460,7 +1462,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("SR")) {
             if (SkableHome.userRightsMap.get(15).getEDITS().equalsIgnoreCase("1")) {
-                SalesReturnController sbc = new SalesReturnController(null, true);
+                SalesReturnController sbc = new SalesReturnController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {

@@ -218,6 +218,7 @@ public class SchemeMasterView extends javax.swing.JInternalFrame {
                             row.add(detail.get(i).getSCHEME_CD());
                             row.add(detail.get(i).getSCHEME_NAME());
                             row.add(detail.get(i).getTYPE_CD());
+                            row.add((detail.get(i).getTYPE_CD().equalsIgnoreCase("0"))?"SALES":"PURCHASE");
                             dtm.addRow(row);
                         }
                     } else {
@@ -257,11 +258,11 @@ public class SchemeMasterView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Scheme_cd", "Scheme Name", "TYPE_CD"
+                "Scheme_cd", "Scheme Name", "TYPE_CD", "Scheme Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -288,6 +289,7 @@ public class SchemeMasterView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(2).setMinWidth(0);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(0);
             jTable1.getColumnModel().getColumn(2).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);

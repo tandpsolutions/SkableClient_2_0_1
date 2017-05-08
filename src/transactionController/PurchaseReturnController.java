@@ -65,6 +65,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
 import support.SelectDailog;
+import transactionView.PurchaseReturnView;
 
 /**
  *
@@ -104,15 +105,17 @@ public class PurchaseReturnController extends javax.swing.JDialog {
     private SalesPaymentDialog sd = null;
     private final HashMap<String, double[]> taxInfo;
     private final DefaultTableModel dtmTax;
+    private PurchaseReturnView prc = null;
 
     /**
      * Creates new form PurchaseController
      */
-    public PurchaseReturnController(java.awt.Frame parent, boolean modal) {
+    public PurchaseReturnController(java.awt.Frame parent, boolean modal, PurchaseReturnView prc) {
         super(parent, modal);
         initComponents();
         dtm = (DefaultTableModel) jTable1.getModel();
         dtmTax = (DefaultTableModel) jTable2.getModel();
+        this.prc = prc;
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -279,6 +282,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent e) {
 
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
+                    jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
                         JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true).execute().body();
 
@@ -921,8 +925,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     }
 
-    private
-            void setAccountDetailMobile(String param_cd, String value) {
+    private void setAccountDetailMobile(String param_cd, String value) {
         try {
             JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
 
@@ -1143,6 +1146,9 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             if (object.get("result").getAsInt() == 1) {
                 lb.showMessageDailog("Voucher saved successfully");
                 PurchaseReturnController.this.dispose();
+                if(prc!= null){
+                    prc.setData();
+                }
                 if (ref_no.equalsIgnoreCase("")) {
                     SwingWorker worker = new SwingWorker() {
 

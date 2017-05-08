@@ -95,7 +95,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
-    private void setData() {
+    public void setData() {
         lb.addGlassPane(this);
         Call<PurchaseHead> call = purchaeReturnAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "");
         call.enqueue(new Callback<PurchaseHead>() {
@@ -183,7 +183,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
     }
 
     private void addSalesReturnController() {
-        PurchaseReturnController pc = new PurchaseReturnController(null, true);
+        PurchaseReturnController pc = new PurchaseReturnController(null, true, this);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }

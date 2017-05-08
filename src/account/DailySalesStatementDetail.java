@@ -240,6 +240,7 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
                                 row.add("");
                                 row.add("");
                                 row.add("");
+                                row.add("");
                                 dtm.addRow(row);
                             }
                         }
@@ -264,6 +265,7 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
                                 row.add("");
                                 row.add("");
                                 row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("bal").getAsDouble()));
+                                row.add("");
                                 row.add("");
                                 row.add("");
                                 row.add("");
@@ -313,6 +315,7 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
                 row.add(" ");
                 row.add(" ");
                 row.add(" ");
+                row.add(" ");
                 dtm.addRow(row);
 
                 row = new Vector();
@@ -332,6 +335,7 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
                 row.add(lb.Convert2DecFmtForRs(bank_charges));
                 row.add(lb.Convert2DecFmtForRs(debtors));
                 row.add(lb.Convert2DecFmtForRs(net));
+                row.add(" ");
                 row.add(" ");
                 dtm.addRow(row);
 

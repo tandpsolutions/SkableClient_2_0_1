@@ -96,6 +96,18 @@ public class PurchaseHeader {
     @Expose
     private String MOBILE;
 
+    @SerializedName("BRANCH_CD")
+    @Expose
+    private int BRANCHCD;
+
+    public int getBRANCHCD() {
+        return BRANCHCD;
+    }
+
+    public void setBRANCHCD(int BRANCHCD) {
+        this.BRANCHCD = BRANCHCD;
+    }
+
     public String getACCD() {
         return ACCD;
     }

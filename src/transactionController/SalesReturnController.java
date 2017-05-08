@@ -69,6 +69,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
 import support.SelectDailog;
+import transactionView.SalesReturnView;
 
 /**
  *
@@ -107,13 +108,15 @@ public class SalesReturnController extends javax.swing.JDialog {
     private SalesPaymentDialog sd = null;
     private HashMap<String, double[]> taxInfo;
     private DefaultTableModel dtmTax;
+    private SalesReturnView srv = null;
 
     /**
      * Creates new form PurchaseController
      */
-    public SalesReturnController(java.awt.Frame parent, boolean modal) {
+    public SalesReturnController(java.awt.Frame parent, boolean modal,SalesReturnView srv) {
         super(parent, modal);
         initComponents();
+        this.srv= srv;
         dtm = (DefaultTableModel) jTable1.getModel();
         dtmTax = (DefaultTableModel) jTable2.getModel();
 
@@ -282,7 +285,7 @@ public class SalesReturnController extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent e) {
 
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
-                    lb.checkTag(jtxtTag.getText());
+                    jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     Call<JsonObject> call = salesReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", false);
                     call.enqueue(new Callback<JsonObject>() {
                         @Override
@@ -1203,6 +1206,9 @@ public class SalesReturnController extends javax.swing.JDialog {
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
                         SalesReturnController.this.dispose();
+                        if(srv!= null){
+                            srv.setData();
+                        }
                         if (ref_no.equalsIgnoreCase("")) {
                             SwingWorker worker = new SwingWorker() {
 

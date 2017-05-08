@@ -259,10 +259,10 @@ public class SalesController extends javax.swing.JDialog {
         }
         jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
 
-        jComboBox2.removeAllItems();
-        jComboBox2.addItem("");
+        jcmbRefBy.removeAllItems();
+        jcmbRefBy.addItem("");
         for (int i = 0; i < Constants.REFERAL.size(); i++) {
-            jComboBox2.addItem(Constants.REFERAL.get(i).getREF_NAME());
+            jcmbRefBy.addItem(Constants.REFERAL.get(i).getREF_NAME());
         }
 
         jcmbSalesman.removeAllItems();
@@ -304,9 +304,9 @@ public class SalesController extends javax.swing.JDialog {
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
             detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0").execute().body().getAsJsonArray("data").toString(), token.getType());
-            jcmbPmt1.removeAllItems();
+            jcmbScheme.removeAllItems();
             for (int i = 0; i < detail.size(); i++) {
-                jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
+                jcmbScheme.addItem(detail.get(i).getSCHEME_NAME());
             }
         } catch (IOException ex) {
 
@@ -1190,7 +1190,7 @@ public class SalesController extends javax.swing.JDialog {
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
                                         jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
-                                        jComboBox2.setSelectedItem(array.get(i).getAsJsonObject().get("REF_NAME").getAsString());
+                                        jcmbRefBy.setSelectedItem(array.get(i).getAsJsonObject().get("REF_NAME").getAsString());
                                         jcmbSalesman.setSelectedItem(array.get(i).getAsJsonObject().get("SM_NAME").getAsString());
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
@@ -1229,7 +1229,7 @@ public class SalesController extends javax.swing.JDialog {
                                             jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                                         }
                                         if (!array.get(i).getAsJsonObject().get("SCHEME_NAME").isJsonNull()) {
-                                            jcmbPmt1.setSelectedItem(array.get(i).getAsJsonObject().get("SCHEME_NAME").getAsString());
+                                            jcmbScheme.setSelectedItem(array.get(i).getAsJsonObject().get("SCHEME_NAME").getAsString());
                                         }
 
                                         sd.bank_cd = array.get(i).getAsJsonObject().get("BANK_CD").getAsString();
@@ -1544,7 +1544,7 @@ public class SalesController extends javax.swing.JDialog {
         }
 
         if (jcmbPmt.getSelectedIndex() == 1) {
-            if (jComboBox2.getSelectedIndex() == 0) {
+            if (jcmbRefBy.getSelectedIndex() == 0) {
                 lb.showMessageDailog("Please select ref by");
                 return false;
             }
@@ -1629,14 +1629,14 @@ public class SalesController extends javax.swing.JDialog {
         header.setBank_charges(lb.isNumber(jtxtBankCharges));
         header.setPmt_days(((int) (lb.isNumber(jtxtPmtDays))) + "");
         header.setAdvance_amt(lb.isNumber(jtxtAdvance));
-        header.setSCHEME_CD(detail.get(jcmbPmt1.getSelectedIndex()).getSCHEME_CD());
+        header.setSCHEME_CD(detail.get(jcmbScheme.getSelectedIndex()).getSCHEME_CD());
         if (!sd.jtxtChequeDate.getText().equalsIgnoreCase("")) {
             header.setCHEQUE_DATE(lb.ConvertDateFormetForDB(sd.jtxtChequeDate.getText()));
         } else {
             header.setCHEQUE_DATE(null);
         }
-        if (jComboBox2.getSelectedIndex() > 0) {
-            header.setRef_cd(Constants.REFERAL.get(jComboBox2.getSelectedIndex() - 1).getREF_CD());
+        if (jcmbRefBy.getSelectedIndex() > 0) {
+            header.setRef_cd(Constants.REFERAL.get(jcmbRefBy.getSelectedIndex() - 1).getREF_CD());
         } else {
             header.setRef_cd("");
 
@@ -1818,11 +1818,11 @@ public class SalesController extends javax.swing.JDialog {
         jtxtPmtDays = new javax.swing.JTextField();
         jlblRate = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcmbRefBy = new javax.swing.JComboBox();
         jLabel32 = new javax.swing.JLabel();
         jcmbSalesman = new javax.swing.JComboBox();
         jLabel33 = new javax.swing.JLabel();
-        jcmbPmt1 = new javax.swing.JComboBox();
+        jcmbScheme = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -2060,10 +2060,10 @@ public class SalesController extends javax.swing.JDialog {
 
         jLabel31.setText("Ref Name");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbRefBy.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbRefBy.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
+                jcmbRefByKeyPressed(evt);
             }
         });
 
@@ -2078,10 +2078,10 @@ public class SalesController extends javax.swing.JDialog {
 
         jLabel33.setText("Scheme");
 
-        jcmbPmt1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cash", "Credit" }));
-        jcmbPmt1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbScheme.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cash", "Credit" }));
+        jcmbScheme.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jcmbPmt1KeyPressed(evt);
+                jcmbSchemeKeyPressed(evt);
             }
         });
 
@@ -2150,7 +2150,7 @@ public class SalesController extends javax.swing.JDialog {
                                 .addComponent(jlblBillDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addGap(0, 20, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(21, 21, 21)
                                 .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2173,12 +2173,12 @@ public class SalesController extends javax.swing.JDialog {
                         .addGap(219, 219, 219)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbRefBy, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcmbPmt1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(218, 218, 218)))
+                        .addComponent(jcmbScheme, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -2187,38 +2187,43 @@ public class SalesController extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblVday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlblPmtDays, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtPmtDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBillDateBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblBillDay1)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcmbSalesman, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblVday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblPmtDays, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtPmtDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBillDateBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblBillDay1)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcmbSalesman, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jlblRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel28)
                     .addComponent(jtxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbRefBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33)
-                    .addComponent(jcmbPmt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbScheme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2236,10 +2241,6 @@ public class SalesController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnAdd)
                 .addGap(5, 5, 5))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jlblRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(123, 123, 123))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox1, jLabel1, jLabel2, jLabel24, jLabel3, jLabel6, jcmbPmt, jcmbType, jlblVday, jtxtVouDate, jtxtVoucher});
@@ -2248,7 +2249,7 @@ public class SalesController extends javax.swing.JDialog {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel32, jcmbSalesman});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox2, jLabel28, jLabel31, jLabel33, jcmbPmt1, jtxtMobile});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel28, jLabel31, jLabel33, jcmbRefBy, jcmbScheme, jtxtMobile});
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -2918,7 +2919,7 @@ public class SalesController extends javax.swing.JDialog {
     private void jcmbPmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbPmtKeyPressed
 
         if (jcmbPmt.getSelectedIndex() == 0) {
-            lb.enterFocus(evt, jtxtMobile);
+            lb.enterFocus(evt, jcmbSalesman);
         } else {
             lb.enterFocus(evt, jtxtPmtDays);
         }
@@ -3618,20 +3619,25 @@ public class SalesController extends javax.swing.JDialog {
         lb.enterFocus(evt, jtxtBankCharges);
     }//GEN-LAST:event_jtxtDiscountKeyPressed
 
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+    private void jcmbRefByKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbRefByKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jcmbPmt1);
-    }//GEN-LAST:event_jComboBox2KeyPressed
+        lb.enterFocus(evt, jcmbScheme);
+    }//GEN-LAST:event_jcmbRefByKeyPressed
 
     private void jcmbSalesmanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbSalesmanKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jComboBox2);
+        if (jcmbPmt.getSelectedIndex() == 0) {
+            lb.enterFocus(evt, jcmbScheme);
+        } else {
+             lb.enterFocus(evt, jcmbRefBy);
+        }
+       
     }//GEN-LAST:event_jcmbSalesmanKeyPressed
 
-    private void jcmbPmt1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbPmt1KeyPressed
+    private void jcmbSchemeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbSchemeKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtMobile);
-    }//GEN-LAST:event_jcmbPmt1KeyPressed
+    }//GEN-LAST:event_jcmbSchemeKeyPressed
 
     private void doClose(int retStatus) {
         lb.confirmDialog("Do you want to discard this voucher?");
@@ -3646,7 +3652,6 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn2;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3696,8 +3701,9 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JButton jbtnOK;
     private javax.swing.JComboBox jcmbPmt;
-    private javax.swing.JComboBox jcmbPmt1;
+    private javax.swing.JComboBox jcmbRefBy;
     private javax.swing.JComboBox jcmbSalesman;
+    private javax.swing.JComboBox jcmbScheme;
     private javax.swing.JComboBox jcmbTax;
     private javax.swing.JComboBox jcmbType;
     private javax.swing.JLabel jlblAddTax;

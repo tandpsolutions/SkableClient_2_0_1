@@ -216,7 +216,7 @@
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
                                   <Component id="jLabel2" min="-2" pref="96" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                   <Component id="jcmbType" min="-2" pref="116" max="-2" attributes="0"/>
@@ -243,12 +243,12 @@
                           <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
                           <Component id="jLabel31" min="-2" pref="82" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jComboBox2" min="-2" pref="169" max="-2" attributes="0"/>
+                          <Component id="jcmbRefBy" min="-2" pref="169" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel33" min="-2" pref="97" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jcmbPmt1" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                          <Component id="jcmbScheme" min="-2" pref="301" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -258,40 +258,48 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel1" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtVoucher" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel24" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtVouDate" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jBillDateBtn" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jlblVday" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel3" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jComboBox1" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel2" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jcmbType" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabel6" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jcmbPmt" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel1" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtVoucher" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jLabel24" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtVouDate" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jBillDateBtn" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jlblVday" linkSize="2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel3" linkSize="2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jComboBox1" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jcmbType" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jLabel6" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jcmbPmt" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jlblPmtDays" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtPmtDays" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel27" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jtxtDueDate" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jBillDateBtn2" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jlblBillDay1" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel32" linkSize="11" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jcmbSalesman" linkSize="11" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="44" pref="44" max="-2" attributes="0"/>
+                          <Component id="jlblRate" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlblPmtDays" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtPmtDays" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel27" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jtxtDueDate" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jBillDateBtn2" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jlblBillDay1" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel32" linkSize="11" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jcmbSalesman" linkSize="11" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel28" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jtxtMobile" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel31" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox2" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcmbRefBy" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel33" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jcmbPmt1" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcmbScheme" linkSize="12" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -313,11 +321,6 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jbtnAdd" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="44" pref="44" max="-2" attributes="0"/>
-                  <Component id="jlblRate" max="32767" attributes="0"/>
-                  <EmptySpace min="123" pref="123" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -528,7 +531,7 @@
             <Property name="text" type="java.lang.String" value="Ref Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="jcmbRefBy">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -540,7 +543,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox2KeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbRefByKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
@@ -568,7 +571,7 @@
             <Property name="text" type="java.lang.String" value="Scheme"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcmbPmt1">
+        <Component class="javax.swing.JComboBox" name="jcmbScheme">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
@@ -578,7 +581,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbPmt1KeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbSchemeKeyPressed"/>
           </Events>
         </Component>
       </SubComponents>
