@@ -90,7 +90,7 @@ public class JournalVoucherView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
-    private void setData() {
+    public void setData() {
         try {
             lb.addGlassPane(this);
             JsonObject call = journalAPI.GetJournalVoucher(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -164,7 +164,7 @@ public class JournalVoucherView extends javax.swing.JInternalFrame {
     }
 
     private void addCashController() {
-        JournalVoucherController pc = new JournalVoucherController(null, true);
+        JournalVoucherController pc = new JournalVoucherController(null, true, this);
         pc.setLocationRelativeTo(null);
         pc.setData(journalAPI, ref_no);
     }

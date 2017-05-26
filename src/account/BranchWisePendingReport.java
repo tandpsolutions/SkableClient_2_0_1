@@ -593,7 +593,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 4).toString()).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {

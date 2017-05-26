@@ -42,6 +42,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
 import support.SelectDailog;
+import transactionView.StockAdjustmentView;
 
 /**
  *
@@ -69,13 +70,15 @@ public class StockAdjustmentController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
+    private StockAdjustmentView sv;
 
     /**
      * Creates new form SalesBillDetailController
      */
-    public StockAdjustmentController(java.awt.Frame parent, boolean modal) {
+    public StockAdjustmentController(java.awt.Frame parent, boolean modal, StockAdjustmentView sv) {
         super(parent, modal);
         initComponents();
+        this.sv = sv;
         setUpData();
         addJtextBox();
         tableForView();
@@ -129,9 +132,10 @@ public class StockAdjustmentController extends javax.swing.JDialog {
         }
     }
 
-    public StockAdjustmentController(java.awt.Frame parent, boolean modal, int vtype) {
+    public StockAdjustmentController(java.awt.Frame parent, boolean modal, int vtype, StockAdjustmentView sv) {
         super(parent, modal);
         initComponents();
+        this.sv = sv;
         setUpData();
         addJtextBox();
         tableForView();
@@ -530,6 +534,9 @@ public class StockAdjustmentController extends javax.swing.JDialog {
                     JsonObject object = response.body();
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
+                        if (sv != null) {
+                            sv.setData();
+                        }
                         StockAdjustmentController.this.dispose();
                     } else {
                         lb.showMessageDailog(object.get("Cause").getAsString());

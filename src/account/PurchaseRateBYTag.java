@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * StockLedger.java
  *
  * Created on Oct 16, 2012, 12:58:30 PM
@@ -68,7 +68,7 @@ public class PurchaseRateBYTag extends javax.swing.JInternalFrame {
     private void initOther() {
         dtm = (DefaultTableModel) jTable1.getModel();
         registerShortKeys();
-     setPopUp();
+        setPopUp();
     }
 
     private void setPopUp() {
@@ -335,6 +335,7 @@ private void jbtnPreviewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jtxtTagNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtTagNoKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
+            jtxtTagNo.setText(lb.checkTag(jtxtTagNo.getText()));
             jbtnView.requestFocusInWindow();
         }
     }//GEN-LAST:event_jtxtTagNoKeyPressed

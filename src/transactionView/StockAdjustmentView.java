@@ -64,7 +64,7 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
         vType = type;
     }
 
-    private void setData() {
+    public void setData() {
         try {
             lb.addGlassPane(this);
             JsonObject call = stkAdjAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -153,7 +153,7 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
     }
 
     private void addPurchaseConroller() {
-        StockAdjustmentController pc = new StockAdjustmentController(null, true, vType);
+        StockAdjustmentController pc = new StockAdjustmentController(null, true, vType, this);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }

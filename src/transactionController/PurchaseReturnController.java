@@ -1146,7 +1146,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             if (object.get("result").getAsInt() == 1) {
                 lb.showMessageDailog("Voucher saved successfully");
                 PurchaseReturnController.this.dispose();
-                if(prc!= null){
+                if (prc != null) {
                     prc.setData();
                 }
                 if (ref_no.equalsIgnoreCase("")) {
@@ -2249,6 +2249,11 @@ public class PurchaseReturnController extends javax.swing.JDialog {
     private void jbtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOKActionPerformed
         // TODO add your handling code here:
         if (validateVoucher()) {
+            if (!lb.checkDate(jtxtVouDate)) {
+                jtxtVouDate.requestFocusInWindow();
+                lb.showMessageDailog("Invalid Date");
+                return;
+            }
             lb.confirmDialog("Do you want to save this voucher?");
             if (lb.type) {
                 if (jcmbPmt.getSelectedIndex() == 0) {

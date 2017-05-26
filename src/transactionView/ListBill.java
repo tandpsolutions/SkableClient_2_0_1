@@ -624,7 +624,7 @@ public class ListBill extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 0).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 0).toString(),ac_cd).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {
@@ -648,7 +648,7 @@ public class ListBill extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable2.getValueAt(row, 0).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable2.getValueAt(row, 0).toString(),ac_cd).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {

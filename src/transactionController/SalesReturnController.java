@@ -113,10 +113,10 @@ public class SalesReturnController extends javax.swing.JDialog {
     /**
      * Creates new form PurchaseController
      */
-    public SalesReturnController(java.awt.Frame parent, boolean modal,SalesReturnView srv) {
+    public SalesReturnController(java.awt.Frame parent, boolean modal, SalesReturnView srv) {
         super(parent, modal);
         initComponents();
-        this.srv= srv;
+        this.srv = srv;
         dtm = (DefaultTableModel) jTable1.getModel();
         dtmTax = (DefaultTableModel) jTable2.getModel();
 
@@ -1105,6 +1105,12 @@ public class SalesReturnController extends javax.swing.JDialog {
     }
 
     private boolean validateVoucher() {
+        if (!lb.checkDate(jtxtVouDate)) {
+            jtxtVouDate.requestFocusInWindow();
+            lb.showMessageDailog("Invalid Date");
+            return false;
+        }
+
         if (ac_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Please select valid account");
             return false;
@@ -1206,7 +1212,7 @@ public class SalesReturnController extends javax.swing.JDialog {
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
                         SalesReturnController.this.dispose();
-                        if(srv!= null){
+                        if (srv != null) {
                             srv.setData();
                         }
                         if (ref_no.equalsIgnoreCase("")) {
@@ -2079,7 +2085,11 @@ public class SalesReturnController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusLost
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        lb.enterFocus(evt, jtxtPmtDays);
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            lb.enterFocus(evt, jComboBox1);
+        } else {
+            lb.enterFocus(evt, jcmbPmt);
+        }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
     private void jBillDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtnActionPerformed
@@ -2095,7 +2105,7 @@ public class SalesReturnController extends javax.swing.JDialog {
     }//GEN-LAST:event_jBillDateBtnActionPerformed
 
     private void jcmbPmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbPmtKeyPressed
-        lb.enterFocus(evt, jtxtMobile);
+        lb.enterFocus(evt, jtxtPmtDays);
     }//GEN-LAST:event_jcmbPmtKeyPressed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -2376,7 +2386,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jtxtMobile);
+        lb.enterFocus(evt, jcmbPmt);
     }//GEN-LAST:event_jComboBox1KeyPressed
 
     private void jtxtDueDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtDueDateFocusGained
@@ -2607,7 +2617,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void jtxtPmtDaysKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPmtDaysKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jcmbPmt);
+        lb.enterFocus(evt, jtxtMobile);
     }//GEN-LAST:event_jtxtPmtDaysKeyPressed
 
     private void doClose(int retStatus) {

@@ -41,6 +41,7 @@ import retrofitAPI.StartUpAPI;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
+import transactionView.JournalVoucherView;
 
 /**
  *
@@ -65,13 +66,15 @@ public class JournalVoucherController extends javax.swing.JDialog {
     HashMap itemCode = new HashMap();
     boolean flag = false;
     JournalAPI cashPRAPI = null;
+    private JournalVoucherView jv;
 
     /**
      * Creates new form PurchaseController
      */
-    public JournalVoucherController(java.awt.Frame parent, boolean modal) {
+    public JournalVoucherController(java.awt.Frame parent, boolean modal, JournalVoucherView jv) {
         super(parent, modal);
         initComponents();
+        this.jv = jv;
         dtm = (DefaultTableModel) jTable1.getModel();
 
         // Close the dialog when Esc is pressed
@@ -293,6 +296,9 @@ public class JournalVoucherController extends javax.swing.JDialog {
                     JsonObject object = addUpdaCall;
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
+                        if (jv != null) {
+                            jv.setData();
+                        }
                         JournalVoucherController.this.dispose();
                     } else {
                         lb.showMessageDailog(object.get("Cause").getAsString());
@@ -800,7 +806,7 @@ public class JournalVoucherController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcName)) {
-                if(lb.validateInput(jtxtAcName.getText())){
+                if (lb.validateInput(jtxtAcName.getText())) {
                     setAccountDetailMobile("2", jtxtAcName.getText());
                 }
             }

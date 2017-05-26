@@ -163,7 +163,7 @@ public class JournalVoucherRegister extends javax.swing.JInternalFrame {
     }
 
     private void addCashController() {
-        JournalVoucherController pc = new JournalVoucherController(null, true);
+        JournalVoucherController pc = new JournalVoucherController(null, true,null);
         pc.setLocationRelativeTo(null);
         pc.setData(journalAPI, ref_no);
     }

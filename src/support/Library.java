@@ -1446,7 +1446,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("JV")) {
             if (SkableHome.userRightsMap.get(21).getEDITS().equalsIgnoreCase("1")) {
-                JournalVoucherController sbc = new JournalVoucherController(null, true);
+                JournalVoucherController sbc = new JournalVoucherController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
             } else {
@@ -1478,7 +1478,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("STK")) {
             if (SkableHome.userRightsMap.get(25).getEDITS().equalsIgnoreCase("1")) {
-                StockAdjustmentController sbc = new StockAdjustmentController(null, true);
+                StockAdjustmentController sbc = new StockAdjustmentController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {

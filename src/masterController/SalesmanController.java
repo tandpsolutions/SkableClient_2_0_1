@@ -5,20 +5,27 @@
  */
 package masterController;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import masterView.SalesmanMaster;
+import model.SalesManMasterModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.SalesmanAPI;
 import retrofitAPI.SupportAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 
@@ -111,7 +118,7 @@ public class SalesmanController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = salesmanAPI.AddUpdateSalesmanMaster(sm_cd, jtxtSmName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = salesmanAPI.AddUpdateSalesmanMaster(sm_cd, jtxtSmName.getText(), SkableHome.user_id, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -119,11 +126,25 @@ public class SalesmanController extends javax.swing.JDialog {
                 lb.removeGlassPane(SalesmanController.this);
                 if (rspns.isSuccessful()) {
                     if (rspns.body().get("result").getAsInt() == 1) {
-                        lb.showMessageDailog(rspns.body().get("Cause").getAsString());
-                        if (smv != null) {
-                            smv.addRow(rspns.body().get("sm_cd").getAsString(), jtxtSmName.getText());
+                        try {
+                            lb.showMessageDailog(rspns.body().get("Cause").getAsString());
+                            if (smv != null) {
+                                smv.addRow(rspns.body().get("sm_cd").getAsString(), jtxtSmName.getText());
+                            }
+                            final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
+                            final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+                            final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
+                            Constants.SALESMAN.clear();
+                            if (salesmanMaster.size() > 0) {
+                                for (int i = 0; i < salesmanMaster.size(); i++) {
+                                    SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
+                                    Constants.SALESMAN.add(model);
+                                }
+                            }
+                            SalesmanController.this.dispose();
+                        } catch (IOException ex) {
+
                         }
-                        SalesmanController.this.dispose();
                     } else {
                         lb.showMessageDailog(rspns.body().get("Cause").getAsString());
                     }
