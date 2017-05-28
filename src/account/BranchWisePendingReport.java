@@ -179,6 +179,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                     row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
                     row.add((array.get(i).getAsJsonObject().get("INV_NO").getAsString()));
                     row.add((array.get(i).getAsJsonObject().get("DOC_REF_NO").getAsString()));
+                    row.add((array.get(i).getAsJsonObject().get("DOC_CD").getAsString()));
                     row.add(lb.ConvertDateFormetForDisplay(array.get(i).getAsJsonObject().get("DOC_DATE").getAsString()));
                     row.add((array.get(i).getAsJsonObject().get("AC_CD").getAsString()));
                     row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("UNPAID_AMT").getAsDouble()));
@@ -191,10 +192,11 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
                 double buy_back = 0.00;
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
-                    buy_back += lb.isNumber2(jTable1.getValueAt(i, 5).toString());
+                    buy_back += lb.isNumber2(jTable1.getValueAt(i, 6).toString());
                 }
 
                 Vector row = new Vector();
+                row.add(" ");
                 row.add(" ");
                 row.add(" ");
                 row.add(" ");
@@ -211,6 +213,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
                 row = new Vector();
                 row.add("Total");
+                row.add(" ");
                 row.add(" ");
                 row.add(" ");
                 row.add(" ");
@@ -245,17 +248,19 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 0).toString());
                 row.add(jTable1.getValueAt(i, 1).toString());
                 row.add(jTable1.getValueAt(i, 3).toString());
-                row.add(jTable1.getValueAt(i, 5).toString());
+                row.add(jTable1.getValueAt(i, 4).toString());
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
                 row.add(jTable1.getValueAt(i, 9).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
                 rows.add(row);
             }
 
             ArrayList header = new ArrayList();
             header.add("Branch");
             header.add("Bill No");
+            header.add("Doc");
             header.add("Date");
             header.add("Pending Amount");
             header.add("Due Date");
@@ -307,11 +312,11 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Branch", "Bill No", "ref_no", "Date", "AC_CD", "Pending Amount", "Due Date", "Ac Name", "Remark", "Referal"
+                "Branch", "Bill No", "ref_no", "Doc", "Date", "AC_CD", "Pending Amount", "Due Date", "Ac Name", "Remark", "Referal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -337,15 +342,16 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(0);
             jTable1.getColumnModel().getColumn(2).setMaxWidth(0);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
             jTable1.getColumnModel().getColumn(6).setResizable(false);
             jTable1.getColumnModel().getColumn(7).setResizable(false);
             jTable1.getColumnModel().getColumn(8).setResizable(false);
             jTable1.getColumnModel().getColumn(9).setResizable(false);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);

@@ -420,6 +420,11 @@ public class ListBill extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("A/C Name");
 
@@ -661,6 +666,11 @@ public class ListBill extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jButton1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

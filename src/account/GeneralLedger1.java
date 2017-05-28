@@ -30,6 +30,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
@@ -225,6 +226,8 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
                         if (!array.get(i).getAsJsonObject().get("FNAME").isJsonNull()) {
                             row.add(array.get(i).getAsJsonObject().get("FNAME").getAsString());
+                        }else{
+                            row.add("");
                         }
                         dtm.addRow(row);
                     }
@@ -518,6 +521,11 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                 jTable1MouseClicked(evt);
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -626,6 +634,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
                                 .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -851,6 +860,27 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnPreview1KeyPressed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        if (row != -1) {
+            if (evt.getKeyCode() == KeyEvent.VK_F2) {
+                String amtW = new JOptionPane().showInputDialog(null, "Please enter rate");
+                double amt = lb.isNumber(amtW);
+                {
+                    try {
+                        final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 7).toString(),ac_cd).execute().body();
+                        JsonObject result = call;
+                        lb.showMessageDailog(result.get("Cause").getAsString());
+                    } catch (IOException ex) {
+                    }
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;

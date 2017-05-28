@@ -5,26 +5,16 @@
  */
 package skable;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
-import login.Login;
 import login.SelectIP;
-import model.BranchMasterModel;
-import model.DBYearModel;
-import model.RefModel;
-import model.SalesManMasterModel;
-import retrofitAPI.RefralAPI;
-import retrofitAPI.SalesmanAPI;
 import retrofitAPI.UpdateInterface;
-import static skable.Constants.FOLDER;
 import support.Library;
 import utility.SwingFileDownloadHTTP;
 
