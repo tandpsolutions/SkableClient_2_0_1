@@ -339,7 +339,6 @@ public class MarginReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 5).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
                 row.add(jTable1.getValueAt(i, 9).toString());
-                row.add(jTable1.getValueAt(i, 10).toString());
                 rows.add(row);
             }
 

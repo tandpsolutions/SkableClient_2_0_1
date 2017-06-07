@@ -203,7 +203,6 @@ public class SkableHome extends javax.swing.JFrame {
             jmnMarginReportModelWise.setVisible(false);
             jMenuItem3.setVisible(false);
             jMenuItem4.setVisible(false);
-            jMenu5.setVisible(false);
             jmnAvgSalesReport.setVisible(false);
             jmnRetailInvoice2.setVisible(false);
             jmnTaxInvoice1.setVisible(false);

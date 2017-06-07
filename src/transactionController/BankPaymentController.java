@@ -85,7 +85,8 @@ public class BankPaymentController extends javax.swing.JDialog {
         initComponents();
         this.type = type;
         dtm = (DefaultTableModel) jTable1.getModel();
-
+        
+        jlblRemark.setLineWrap(true);
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -416,7 +417,7 @@ public class BankPaymentController extends javax.swing.JDialog {
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
                         BankPaymentController.this.dispose();
-                        if(bank!= null){
+                        if (bank != null) {
                             bank.setData();
                         }
                     } else {
@@ -547,7 +548,8 @@ public class BankPaymentController extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         jlblTimeStamp = new javax.swing.JLabel();
         jbtnOK = new javax.swing.JButton();
-        jlblRemark = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlblRemark = new javax.swing.JTextArea();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -914,9 +916,11 @@ public class BankPaymentController extends javax.swing.JDialog {
             }
         });
 
-        jlblRemark.setText("jLabel4");
-        jlblRemark.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jlblRemark.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jlblRemark.setEditable(false);
+        jlblRemark.setColumns(20);
+        jlblRemark.setRows(5);
+        jlblRemark.setEnabled(false);
+        jScrollPane2.setViewportView(jlblRemark);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -943,7 +947,7 @@ public class BankPaymentController extends javax.swing.JDialog {
                         .addComponent(jlblTimeStamp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(96, 96, 96))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlblRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -976,8 +980,8 @@ public class BankPaymentController extends javax.swing.JDialog {
                             .addComponent(cancelButton)
                             .addComponent(jbtnOK)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlblRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1056,7 +1060,7 @@ public class BankPaymentController extends javax.swing.JDialog {
             jTable1.setValueAt(jtxtAmount.getText(), rowSel, 3);
             jTable1.setValueAt(jtxtRemark.getText(), rowSel, 4);
         }
-        jlblRemark.setText(jlblRemark.getText()+"\n"+jtxtRemark.getText());
+        jlblRemark.setText(jlblRemark.getText() + "\n" + jtxtRemark.getText());
         clear();
         jTable1.clearSelection();
         if (JOptionPane.showConfirmDialog(this, "Do you want to Add more Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -1264,11 +1268,12 @@ public class BankPaymentController extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JButton jbtnOK;
     private javax.swing.JLabel jlblEditNo;
-    private javax.swing.JLabel jlblRemark;
+    private javax.swing.JTextArea jlblRemark;
     private javax.swing.JLabel jlblTimeStamp;
     private javax.swing.JLabel jlblUser;
     private javax.swing.JLabel jlblVday;

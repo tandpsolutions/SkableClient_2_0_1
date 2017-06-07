@@ -77,6 +77,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
 
     private void setUpData() {
         jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
             jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
@@ -91,7 +92,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
     private void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = stkTrAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() + 1) + "").execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
 
         lb.removeGlassPane(StockTransferOutsideView.this);
         if (call != null) {

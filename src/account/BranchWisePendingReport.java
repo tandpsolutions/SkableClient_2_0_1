@@ -187,6 +187,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                     row.add((array.get(i).getAsJsonObject().get("FNAME").getAsString()));
                     row.add((array.get(i).getAsJsonObject().get("REMARK").getAsString()));
                     row.add((array.get(i).getAsJsonObject().get("REF_NAME").getAsString()));
+                    row.add((array.get(i).getAsJsonObject().get("SR_NO").getAsString()));
                     dtm.addRow(row);
                 }
 
@@ -196,6 +197,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 }
 
                 Vector row = new Vector();
+                row.add(" ");
                 row.add(" ");
                 row.add(" ");
                 row.add(" ");
@@ -219,6 +221,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 row.add(" ");
                 row.add(" ");
                 row.add(lb.Convert2DecFmtForRs(buy_back));
+                row.add(" ");
                 row.add(" ");
                 row.add(" ");
                 row.add(" ");
@@ -312,11 +315,11 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Branch", "Bill No", "ref_no", "Doc", "Date", "AC_CD", "Pending Amount", "Due Date", "Ac Name", "Remark", "Referal"
+                "Branch", "Bill No", "ref_no", "Doc", "Date", "AC_CD", "Pending Amount", "Due Date", "Ac Name", "Remark", "Referal", "Sr"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -352,6 +355,9 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(8).setResizable(false);
             jTable1.getColumnModel().getColumn(9).setResizable(false);
             jTable1.getColumnModel().getColumn(10).setResizable(false);
+            jTable1.getColumnModel().getColumn(11).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -576,7 +582,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                     if (column == 1) {
                         lb.openVoucherBook(jTable1.getValueAt(row, 2).toString());
                     } else {
-                        GeneralLedger1 gl = new GeneralLedger1(jTable1.getValueAt(row, 4).toString(), jTable1.getValueAt(row, 7).toString());
+                        GeneralLedger1 gl = new GeneralLedger1(jTable1.getValueAt(row, 5).toString(), jTable1.getValueAt(row, 8).toString());
                         SkableHome.addOnScreen(gl, "General Ledger");
                     }
                 }
@@ -599,7 +605,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 4).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 5).toString(), jTable1.getValueAt(row, 11).toString()).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {

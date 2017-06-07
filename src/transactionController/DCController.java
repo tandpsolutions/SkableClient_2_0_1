@@ -79,6 +79,7 @@ public class DCController extends javax.swing.JDialog {
     public DCController(java.awt.Frame parent, boolean modal, DCView dcv) {
         super(parent, modal);
         initComponents();
+        jlblRemark.setLineWrap(true);
         addJtextBox();
         tableForView();
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -148,7 +149,7 @@ public class DCController extends javax.swing.JDialog {
 
         }
     }
-    
+
     private void setUpData() {
         jComboBox1.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
@@ -523,6 +524,7 @@ public class DCController extends javax.swing.JDialog {
 
                             JsonArray array = object.get("data").getAsJsonArray();
                             try {
+                                String remark = "";
                                 for (int i = 0; i < array.size(); i++) {
                                     DCController.this.ref_no = array.get(i).getAsJsonObject().get("REF_NO").getAsString();
                                     jtxtVoucher.setText(array.get(i).getAsJsonObject().get("INV_NO").getAsInt() + "");
@@ -552,8 +554,10 @@ public class DCController extends javax.swing.JDialog {
                                     row.add(array.get(i).getAsJsonObject().get("PUR_TAG_NO").getAsString());
                                     row.add(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
                                     dtm.addRow(row);
-
+                                    remark += "\n" + array.get(i).getAsJsonObject().get("REMARK").getAsString();
                                 }
+
+                                jlblRemark.setText(remark);
                                 setTotal();
                                 jtxtVouDate.requestFocusInWindow();
                             } catch (Exception ex) {
@@ -717,7 +721,7 @@ public class DCController extends javax.swing.JDialog {
                     JsonObject object = response.body();
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
-                        if(dcv!= null){
+                        if (dcv != null) {
                             dcv.setData();
                         }
                         DCController.this.dispose();
@@ -774,6 +778,8 @@ public class DCController extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jlblTotal = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlblRemark = new javax.swing.JTextArea();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -916,7 +922,7 @@ public class DCController extends javax.swing.JDialog {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtxtAcAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1056,6 +1062,12 @@ public class DCController extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jlblRemark.setEditable(false);
+        jlblRemark.setColumns(20);
+        jlblRemark.setRows(5);
+        jlblRemark.setEnabled(false);
+        jScrollPane2.setViewportView(jlblRemark);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1067,7 +1079,8 @@ public class DCController extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 133, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1086,12 +1099,15 @@ public class DCController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cancelButton)
+                            .addComponent(jButton1)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1140,7 +1156,12 @@ public class DCController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusGained
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        lb.enterFocus(evt, jtxtAcAlias);
+        
+        if(SkableHome.user_grp_cd.equalsIgnoreCase("1")){
+            lb.enterFocus(evt, jComboBox1);
+        }else{
+            lb.enterFocus(evt, jtxtAcAlias);
+        }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
     private void jBillDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtnActionPerformed
@@ -1336,7 +1357,7 @@ public class DCController extends javax.swing.JDialog {
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jtxtAcName);
+        lb.enterFocus(evt, jtxtAcAlias);
     }//GEN-LAST:event_jComboBox1KeyPressed
 
     private void doClose(int retStatus) {
@@ -1361,9 +1382,11 @@ public class DCController extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JComboBox jcmbType;
+    private javax.swing.JTextArea jlblRemark;
     private javax.swing.JLabel jlblTotal;
     private javax.swing.JLabel jlblVday;
     private javax.swing.JTextField jtxtAcAlias;

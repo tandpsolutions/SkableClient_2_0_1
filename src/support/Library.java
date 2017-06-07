@@ -331,9 +331,9 @@ public class Library {
             if (isWindows()) {
                 Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler",
                     file.getAbsolutePath()});
-            } else if (isLinux() || isMac()) {
-                Runtime.getRuntime().exec(new String[]{"/usr/bin/open",
-                    file.getAbsolutePath()});
+//            } else if (isLinux() || isMac()) {
+//                Runtime.getRuntime().exec(new String[]{"/usr/bin/open",
+//                    file.getAbsolutePath()});
             } else {
                 // Unknown OS, try with desktop
                 if (Desktop.isDesktopSupported()) {
