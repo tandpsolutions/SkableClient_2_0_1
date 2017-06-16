@@ -50,6 +50,9 @@ public interface SalesAPI {
 
     @GET("GetSalesBillPrint")
     Call<JsonObject> GetSalesBillPrint(@Query("ref_no") String ref_no);
+    
+    @GET("GetBulkSalesPrint")
+    Call<JsonObject> GetBulkSalesBillPrint(@Query("ref_no") String ref_no);
 
     @GET("GetSalesBillTaxPrint")
     Call<JsonObject> GetSalesBillTaxPrint(@Query("ref_no") String ref_no);

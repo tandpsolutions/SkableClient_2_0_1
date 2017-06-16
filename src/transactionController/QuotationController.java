@@ -768,11 +768,11 @@ public class QuotationController extends javax.swing.JDialog {
 
     private boolean validateVoucher() {
 
-        if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
-            lb.showMessageDailog("Please Enter valid Voucher Date");
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Date");
             return false;
         }
-
+        
         if (lb.ConvertDateFormetForDB(jtxtBillDate.getText()).equalsIgnoreCase("")) {
             lb.showMessageDailog("Please Enter valid Voucher Date");
             return false;

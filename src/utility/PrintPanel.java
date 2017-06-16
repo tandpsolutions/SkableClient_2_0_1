@@ -120,6 +120,59 @@ public class PrintPanel extends javax.swing.JDialog {
             Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public void getBulkSalesBillPrint(String ref_no) {
+        try {
+            SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
+            JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
+
+            if (call != null) {
+                JsonObject result = call;
+                if (result.get("result").getAsInt() == 1) {
+                    JsonArray array = call.getAsJsonArray("data");
+                    JsonArray array1 = call1.getAsJsonArray("data");
+                    if (array != null) {
+                        try {
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            FileWriter file2 = new FileWriter(System.getProperty("user.dir") + File.separator + "file2.txt");
+                            file.write(array.toString());
+                            file2.write(array1.toString());
+                            file.close();
+                            file2.close();
+                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            File jsonFile1 = new File(System.getProperty("user.dir") + File.separator + "file2.txt");
+                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
+                            HashMap params = new HashMap();
+                            params.put("dir", System.getProperty("user.dir"));
+                            params.put("comp_name", "IPearl");
+                            params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                            params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            params.put("tax_data", dataSource1);
+                            lb.confirmDialog("Do you want to print sales Bill with header?");
+                            if (lb.type) {
+                                lb.reportGenerator("BulkSalesBillPDF.jasper", params, dataSource, jPanel1);
+                            } else {
+                                lb.reportGenerator("BulkSalesBill.jasper", params, dataSource, jPanel1);
+                            }
+                        } catch (Exception ex) {
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog(call.get("Cause").getAsString());
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void getSalesReturnBillPrint(String ref_no) {
         try {

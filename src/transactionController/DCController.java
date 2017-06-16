@@ -256,15 +256,8 @@ public class DCController extends javax.swing.JDialog {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_N) {
-                    if (e.getModifiers() == KeyEvent.CTRL_MASK) {
-                        SeriesMasterController smc = new SeriesMasterController(null, true, null);
-                        smc.setLocationRelativeTo(null);
-                        smc.setVisible(true);
-                    }
-                }
                 if (lb.isEnter(e) && !lb.isBlank(jtxtItem)) {
-                    setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    lb.enterFocus(e, jtxtIMEI);
                 }
             }
 
@@ -439,68 +432,6 @@ public class DCController extends javax.swing.JDialog {
         lb.setTable(jTable1, new JComponent[]{jtxtTag, jtxtItem, jtxtIMEI, jtxtSerialNo, jtxtQty, jtxtRate, jtxtAmount, jtxtRemark, null, null});
     }
 
-    private void setSeriesData(String param_cd, String value) {
-        try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
-            lb.addGlassPane(this);
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    lb.removeGlassPane(DCController.this);
-                    if (response.isSuccessful()) {
-                        System.out.println(response.body().toString());
-                        SeriesHead header = (SeriesHead) new Gson().fromJson(response.body(), SeriesHead.class);
-                        if (header.getResult() == 1) {
-                            final SelectDailog sa = new SelectDailog(null, true);
-                            sa.setData(viewTable);
-                            sa.setLocationRelativeTo(null);
-                            ArrayList<SeriesMaster> series = (ArrayList<SeriesMaster>) header.getAccountHeader();
-                            sa.getDtmHeader().setRowCount(0);
-                            for (int i = 0; i < series.size(); i++) {
-                                Vector row = new Vector();
-                                row.add(series.get(i).getSRCD());
-                                row.add(series.get(i).getSRNAME());
-                                sa.getDtmHeader().addRow(row);
-                            }
-                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                            sa.setVisible(true);
-                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                int row = viewTable.getSelectedRow();
-                                if (row != -1) {
-                                    sr_cd = viewTable.getValueAt(row, 0).toString();
-                                    item_name = viewTable.getValueAt(row, 1).toString();
-                                    jtxtItem.setText(viewTable.getValueAt(row, 1).toString());
-                                    if (jcmbType.getSelectedIndex() == 0) {
-                                        jtxtIMEI.requestFocusInWindow();
-                                    } else {
-                                        jtxtIMEI.requestFocusInWindow();
-                                    }
-                                }
-                                sa.dispose();
-                            }
-                        } else {
-                            lb.showMessageDailog(header.getCause().toString());
-                        }
-                    } else {
-                        // handle request errors yourself
-                        lb.showMessageDailog(response.message());
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                    lb.removeGlassPane(DCController.this);
-                }
-            }
-            );
-        } catch (Exception ex) {
-            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
-        }
-
-    }
-
     private void calculation() {
         double qty = lb.isNumber(jtxtQty);
         double rate = lb.isNumber(jtxtRate);
@@ -596,7 +527,7 @@ public class DCController extends javax.swing.JDialog {
             return false;
         }
 
-        if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
+        if (!lb.checkDate(jtxtVouDate)) {
             lb.showMessageDailog("Invalid Voucher Date");
             jtxtVouDate.requestFocusInWindow();
             return false;
@@ -657,7 +588,7 @@ public class DCController extends javax.swing.JDialog {
     }
 
     private boolean validateRow() {
-        if (sr_cd.equalsIgnoreCase("")) {
+        if (jtxtItem.getText().equalsIgnoreCase("")) {
             lb.showMessageDailog("Please enter valid item");
             return false;
         }
@@ -694,6 +625,7 @@ public class DCController extends javax.swing.JDialog {
             row.setV_type(jcmbType.getSelectedIndex() + "");
             row.setDet_tot(lb.isNumber(jlblTotal));
             row.setTag_no(jTable1.getValueAt(i, 0).toString());
+            row.setSr_name(jTable1.getValueAt(i, 1).toString());
             row.setImei_no(jTable1.getValueAt(i, 2).toString());
             row.setSerial_no(jTable1.getValueAt(i, 3).toString());
             row.setQty((int) lb.isNumber(jTable1.getValueAt(i, 4).toString()));
@@ -1156,10 +1088,10 @@ public class DCController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusGained
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        
-        if(SkableHome.user_grp_cd.equalsIgnoreCase("1")){
+
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
             lb.enterFocus(evt, jComboBox1);
-        }else{
+        } else {
             lb.enterFocus(evt, jtxtAcAlias);
         }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
@@ -1246,7 +1178,7 @@ public class DCController extends javax.swing.JDialog {
                     } else {
                         row.add(jtxtTag.getText());
                     }
-                    row.add(item_name);
+                    row.add(jtxtItem.getText());
                     row.add(jtxtIMEI.getText());
                     row.add(jtxtSerialNo.getText());
                     row.add(1);
@@ -1263,7 +1195,7 @@ public class DCController extends javax.swing.JDialog {
                 }
             } else if (index != -1) {
                 jTable1.setValueAt(jtxtTag.getText(), index, 0);
-                jTable1.setValueAt(item_name, index, 1);
+                jTable1.setValueAt(jtxtItem.getText(), index, 1);
                 jTable1.setValueAt(lb.isNumber2(jtxtQty.getText()), index, 4);
                 jTable1.setValueAt(lb.isNumber2(jtxtRate.getText()), index, 5);
                 jTable1.setValueAt(lb.isNumber2(jtxtAmount.getText()), index, 6);

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -110,6 +111,9 @@ public class CreateSalesAccount extends javax.swing.JDialog {
         account.setAC_CD(ac_cd);
         account.setFNAME(jtxtName.getText());
         account.setADD1(jtxtAddress1.getText());
+        final ArrayList<String> address = new ArrayList<>();
+        address.add(jtxtAddress1.getText());
+        account.setAddress(address);
         account.setEMAIL(jtxtEmail.getText());
         account.setMOBILE1(jtxtMobile.getText());
         account.setGRP_CD("G000001");
@@ -123,7 +127,7 @@ public class CreateSalesAccount extends javax.swing.JDialog {
     }
 
     private void saveVoucher(AccountMasterModel acc) {
-        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc),SkableHome.selected_year);
+        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc), SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

@@ -364,6 +364,21 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
         jtxtAmount.setText("");
     }
 
+    private boolean validateVoucehr() {
+        if (jTable1.getRowCount() == 0) {
+            lb.showMessageDailog("Voucher can not be empty");
+            return false;
+        }
+
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Voucher Date");
+            jtxtVouDate.requestFocusInWindow();
+            flag = false;
+        }
+
+        return true;
+    }
+
     private void saveVoucher() {
         if (jTable1.getRowCount() > 0) {
             try {
@@ -922,7 +937,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
             jTable1.setValueAt(jtxtAmount.getText(), rowSel, 3);
             jTable1.setValueAt(jtxtRemark.getText(), rowSel, 4);
         }
-        jlblRemark.setText(jlblRemark.getText()+"\n"+jtxtRemark.getText());
+        jlblRemark.setText(jlblRemark.getText() + "\n" + jtxtRemark.getText());
         clear();
         jTable1.clearSelection();
         if (JOptionPane.showConfirmDialog(this, "Do you want to Add more Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -940,7 +955,9 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
 
     private void jbtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOKActionPerformed
         // TODO add your handling code here:
-        saveVoucher();
+        if (validateVoucehr()) {
+            saveVoucher();
+        }
     }//GEN-LAST:event_jbtnOKActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

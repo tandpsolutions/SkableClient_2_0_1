@@ -95,6 +95,7 @@ public class SalesController extends javax.swing.JDialog {
 
     Library lb = Library.getInstance();
     private String ac_cd = "";
+    private int add_sr_no = 1;
     private String ref_no = "";
     private javax.swing.JTextField jtxtTag = null, jtxtIMEI = null, jtxtSerialNo = null, jtxtQty = null, jtxtRate = null, jtxtAmount = null, jtxtBasicAmt = null, jtxtTaxAmt = null, jtxtAddTaxAmt = null;
     private javax.swing.JTextField jtxtDiscPer = null, jtxtMRP = null, jtxtMRP1 = null;
@@ -1225,6 +1226,7 @@ public class SalesController extends javax.swing.JDialog {
                                         jlblUser.setText(array.get(i).getAsJsonObject().get("USER_ID").getAsString() + "");
                                         jlblEditNo.setText(array.get(i).getAsJsonObject().get("EDIT_NO").getAsDouble() + "");
                                         jlblTimeStamp.setText(array.get(i).getAsJsonObject().get("TIME_STAMP").getAsString());
+                                        add_sr_no = (array.get(i).getAsJsonObject().get("add_sr_no").getAsInt());
                                         if (!array.get(i).getAsJsonObject().get("REMARK").isJsonNull()) {
                                             jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                                         }
@@ -1326,6 +1328,7 @@ public class SalesController extends javax.swing.JDialog {
                                         dtm.addRow(row);
 
                                     }
+                                    jcmbSalesman.setEnabled(false);
                                     setTotal();
                                 } catch (Exception ex) {
                                     lb.printToLogFile("Exception", ex);
@@ -1379,6 +1382,7 @@ public class SalesController extends javax.swing.JDialog {
                                     jtxtAddress.setText(header.getAccountHeader().get(row).getADD1());
                                     jtxtTin.setText(header.getAccountHeader().get(row).getTIN());
                                     jtxtRefBy.setText(header.getAccountHeader().get(row).getRef_by());
+                                    add_sr_no = header.getAccountHeader().get(row).getSr_no();
                                     jtxtTag.requestFocusInWindow();
                                 }
                             }
@@ -1623,6 +1627,7 @@ public class SalesController extends javax.swing.JDialog {
         header.setBuy_back_imei(jtxtBuyBackIMEI.getText());
         header.setBuy_back_model(jtxtBuyBack.getText());
         header.setPart_no(jtxtPartNo.getText());
+        header.setAdd_sr_no(add_sr_no);
         header.setBuy_back_cd(buy_back_cd);
         header.setIns_amt(lb.isNumber(jtxtInsAmt));
         header.setIns_cd(ins_cd);
@@ -2114,9 +2119,6 @@ public class SalesController extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jtxtTin, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnAdd))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -2167,18 +2169,21 @@ public class SalesController extends javax.swing.JDialog {
                                 .addComponent(jlblRate, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(219, 219, 219)
-                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcmbRefBy, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcmbScheme, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnAdd, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(219, 219, 219)
+                                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcmbRefBy, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcmbScheme, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
 
@@ -2779,7 +2784,7 @@ public class SalesController extends javax.swing.JDialog {
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1306, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1318, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2920,6 +2925,8 @@ public class SalesController extends javax.swing.JDialog {
 
         if (jcmbPmt.getSelectedIndex() == 0) {
             lb.enterFocus(evt, jcmbSalesman);
+            jtxtPmtDays.setText("0");
+            setDueDate();
         } else {
             lb.enterFocus(evt, jtxtPmtDays);
         }
@@ -3354,6 +3361,7 @@ public class SalesController extends javax.swing.JDialog {
                         jtxtCardNo.setText(bmc.account.getCARD_NO());
                         jtxtTin.setText(bmc.account.getTIN());
                         jtxtRefBy.setText(bmc.account.getREF_BY());
+                        add_sr_no = 1;
                         jtxtTag.requestFocusInWindow();
                     }
                 } else {
@@ -3629,9 +3637,9 @@ public class SalesController extends javax.swing.JDialog {
         if (jcmbPmt.getSelectedIndex() == 0) {
             lb.enterFocus(evt, jcmbScheme);
         } else {
-             lb.enterFocus(evt, jcmbRefBy);
+            lb.enterFocus(evt, jcmbRefBy);
         }
-       
+
     }//GEN-LAST:event_jcmbSalesmanKeyPressed
 
     private void jcmbSchemeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbSchemeKeyPressed

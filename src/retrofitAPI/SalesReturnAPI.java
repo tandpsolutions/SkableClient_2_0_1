@@ -25,6 +25,9 @@ public interface SalesReturnAPI {
 
     @GET("GetSalesReturnBill")
     Call<JsonObject> getBill(@Query("ref_no") String ref_no);
+    
+    @GET("GetSalesRateByTag")
+    Call<JsonObject> GetSalesRateByTag(@Query("tag_no") String tag_no);
 
     @GET("GetDataFromServer")
     Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code);

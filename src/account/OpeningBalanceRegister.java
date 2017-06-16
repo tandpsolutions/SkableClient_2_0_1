@@ -142,7 +142,7 @@ public class OpeningBalanceRegister extends javax.swing.JInternalFrame {
     }
 
     public void getAccountData() {
-        Call<JsonObject> call = accountAPI.getSeriesMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(),"");
+        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(),"");
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

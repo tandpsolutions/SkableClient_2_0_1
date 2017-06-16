@@ -232,7 +232,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getAccountData() {
-        Call<JsonObject> call = accountAPI.getSeriesMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null);
+        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

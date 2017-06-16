@@ -464,9 +464,8 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
     private boolean validateVoucher() {
 
-        if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
-            lb.showMessageDailog("Invalid Voucher Date");
-            jtxtVouDate.requestFocusInWindow();
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Date");
             return false;
         }
 

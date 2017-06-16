@@ -285,7 +285,7 @@ public interface AccountAPI {
             @Query("type_cd") String type_cd, @Query("v_type") int voucher_type, @Query("branch_cd") String branch_cd, @Query("ac_cd") String ac_cd);
 
     @GET("SnapShots")
-    Call<JsonObject> SnapShots(@Query("from_date") String type_name, @Query("to_date") String user_id);
+    Call<JsonObject> SnapShots(@Query("from_date") String from_date, @Query("to_date") String to_date,@Query("branch_cd") String branch_cd);
 
     @GET("TypeWiseProftStatement")
     Call<JsonObject> TypeWiseProftStatement(@Query("from_date") String type_name, @Query("to_date") String user_id,

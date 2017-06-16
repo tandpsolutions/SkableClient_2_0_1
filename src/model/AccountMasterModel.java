@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author bhaumik
@@ -25,7 +27,8 @@ public class AccountMasterModel {
     private int OPB_EFF;
     private String REF_BY;
     private String ref_cd;
-    
+    private ArrayList<String> address;
+
     public String getRef_cd() {
         return ref_cd;
     }
@@ -33,7 +36,6 @@ public class AccountMasterModel {
     public void setRef_cd(String ref_cd) {
         this.ref_cd = ref_cd;
     }
-
 
     public double getOPB_AMT() {
         return OPB_AMT;
@@ -137,6 +139,14 @@ public class AccountMasterModel {
 
     public void setREF_BY(String REF_BY) {
         this.REF_BY = REF_BY;
+    }
+
+    public ArrayList<String> getAddress() {
+        return address;
+    }
+
+    public void setAddress(ArrayList<String> address) {
+        this.address = address;
     }
 
 }

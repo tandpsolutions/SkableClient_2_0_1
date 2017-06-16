@@ -284,7 +284,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
-                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true).execute().body();
+                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true, (jComboBox1.getSelectedIndex() + 1) + "").execute().body();
 
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
@@ -485,6 +485,21 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 //                        }
 //                    }
 //                }
+
+                if (e.getKeyCode() == KeyEvent.VK_F1) {
+                    try {
+                        JsonObject call = purchaseReturnAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                        if (call != null) {
+                            JsonArray array = call.getAsJsonArray("data");
+                            if (array.size() > 0) {
+                                jlblRate.setText(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString());
+                            }
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     if (e.getModifiers() == KeyEvent.CTRL_MASK) {
                         TaxMasterModel tm = null;
@@ -1052,11 +1067,11 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             return false;
         }
 
-        if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
-            lb.showMessageDailog("Invalid Voucher Date");
-            jtxtVouDate.requestFocusInWindow();
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Date");
             return false;
         }
+
         if (lb.ConvertDateFormetForDB(jtxtDueDate.getText()).equalsIgnoreCase("")) {
             lb.showMessageDailog("Please Enter Due Date");
             return false;
@@ -1246,6 +1261,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         jtxtTinNum = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
         jtxtBillNo = new javax.swing.JTextField();
+        jlblRate = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1512,7 +1528,9 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(jlblRate, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1530,7 +1548,8 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1868,7 +1887,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1256, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1281, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1887,7 +1906,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlblTimeStamp, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
+                                .addComponent(jlblTimeStamp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
@@ -2488,6 +2507,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
     private javax.swing.JLabel jlblNet;
     private javax.swing.JLabel jlblNet1;
     private javax.swing.JLabel jlblPmtDays;
+    private javax.swing.JLabel jlblRate;
     private javax.swing.JLabel jlblRemAmt;
     private javax.swing.JLabel jlblTax;
     private javax.swing.JLabel jlblTimeStamp;

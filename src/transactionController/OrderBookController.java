@@ -400,12 +400,11 @@ public class OrderBookController extends javax.swing.JDialog {
     }
 
     private boolean validateVoucher() {
-        if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
-            lb.showMessageDailog("Invalid Voucher Date");
-            jtxtVouDate.requestFocusInWindow();
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Date");
             return false;
         }
-        
+
         if (ac_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Please select valid account");
             jtxtAcName.requestFocusInWindow();

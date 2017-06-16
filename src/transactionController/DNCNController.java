@@ -425,6 +425,11 @@ public class DNCNController extends javax.swing.JDialog {
             lb.showMessageDailog("Please select valid our bank");
             return false;
         }
+        if (!lb.checkDate(jtxtVouDate)) {
+            lb.showMessageDailog("Invalid Voucher Date");
+            jtxtVouDate.requestFocusInWindow();
+            flag = false;
+        }
 
         return true;
     }

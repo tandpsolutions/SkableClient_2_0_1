@@ -161,7 +161,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="325" max="-2" attributes="0"/>
                                   <Component id="jlblPmtDays" min="-2" pref="105" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -199,6 +199,8 @@
                                   <Component id="jLabel6" min="-2" pref="97" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jcmbPmt" min="-2" pref="78" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                  <Component id="jlblRate" min="-2" pref="195" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -223,8 +225,9 @@
                       <Component id="jComboBox1" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jcmbPmt" linkSize="2" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jlblRate" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel27" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jtxtDueDate" linkSize="5" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
@@ -418,6 +421,8 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxtBillNoKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxtBillNoKeyTyped"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlblRate">
         </Component>
       </SubComponents>
     </Container>

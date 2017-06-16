@@ -59,6 +59,7 @@ public class SalesControllerHeaderModel {
     private String SCHEME_CD;
     private String card_no;
     private String tid_no;
+    private int add_sr_no;
 
     public String getRef_cd() {
         return ref_cd;
@@ -442,6 +443,14 @@ public class SalesControllerHeaderModel {
 
     public void setCard_no(String card_no) {
         this.card_no = card_no;
+    }
+
+    public int getAdd_sr_no() {
+        return add_sr_no;
+    }
+
+    public void setAdd_sr_no(int add_sr_no) {
+        this.add_sr_no = add_sr_no;
     }
 
 }

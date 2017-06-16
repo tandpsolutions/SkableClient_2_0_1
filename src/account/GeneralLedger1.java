@@ -204,7 +204,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                     if (call.getAsJsonObject().get("opb").getAsDouble() > 0) {
                         jlblOpb.setText(lb.Convert2DecFmtForRs(call.getAsJsonObject().get("opb").getAsDouble()) + " DR");
                     } else {
-                        jlblOpb.setText(lb.Convert2DecFmtForRs(Math.abs(call.getAsJsonObject().get("opb").getAsDouble())) + " CR");
+                        jlblOpb.setText(lb.Convert2DecFmtForRs((call.getAsJsonObject().get("opb").getAsDouble())) + " CR");
                     }
                     dtm.addRow(row);
                     opb += call.getAsJsonObject().get("opb").getAsDouble();
@@ -220,7 +220,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                         if ((opb + dr - cr) > 0) {
                             row.add(lb.Convert2DecFmtForRs(opb + dr - cr) + " DR.");
                         } else {
-                            row.add(lb.Convert2DecFmtForRs(Math.abs(opb + dr - cr)) + " CR.");
+                            row.add(lb.Convert2DecFmtForRs((opb + dr - cr)) + " CR.");
                         }
                         row.add(array.get(i).getAsJsonObject().get("PARTICULAR").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
@@ -253,7 +253,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                     if ((call.getAsJsonObject().get("opb").getAsDouble() + dr - cr) > 0) {
                         row.add(lb.Convert2DecFmtForRs(call.getAsJsonObject().get("opb").getAsDouble() + dr - cr) + " DR.");
                     } else {
-                        row.add(lb.Convert2DecFmtForRs(Math.abs(call.getAsJsonObject().get("opb").getAsDouble() + dr - cr)) + " CR.");
+                        row.add(lb.Convert2DecFmtForRs((call.getAsJsonObject().get("opb").getAsDouble() + dr - cr)) + " CR.");
                     }
                     row.add("");
                     row.add("");

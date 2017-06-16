@@ -291,13 +291,11 @@ public class SalesView extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
-                        lb.confirmDialog("Do you want to print sales bill?");
+                        lb.confirmDialog("Do you want to print normal sales bill?");
                         if (lb.type) {
                             pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString());
                         } else {
-                            if (vType == 2) {
-                                pp.getInsuranceBill(jTable1.getValueAt(row, 0).toString());
-                            }
+                            pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
                         }
                         pp.setVisible(true);
                     }

@@ -49,6 +49,9 @@ public class AccountMaster {
     @SerializedName("EMAIL")
     @Expose
     private String email;
+    @SerializedName("sr_no")
+    @Expose
+    private int sr_no;
 
     public String getEmail() {
         return email;
@@ -58,7 +61,6 @@ public class AccountMaster {
         this.email = email;
     }
 
-    
     /**
      *
      * @return The ACCD
@@ -201,6 +203,14 @@ public class AccountMaster {
 
     public void setRef_by(String ref_by) {
         this.ref_by = ref_by;
+    }
+
+    public int getSr_no() {
+        return sr_no;
+    }
+
+    public void setSr_no(int sr_no) {
+        this.sr_no = sr_no;
     }
 
 }
