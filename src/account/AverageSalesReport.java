@@ -291,8 +291,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                             brand_cd = viewTable.getValueAt(row, 0).toString();
                             if (jRadioButton2.isSelected()) {
                                 jtxtBrandName.setText(viewTable.getValueAt(row, 1).toString());
-                                jbtnView.requestFocusInWindow();
                             }
+                            jbtnView.requestFocusInWindow();
                         }
                         sa.dispose();
                     }
@@ -331,8 +331,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                         if (row != -1) {
                             model_cd = viewTable.getValueAt(row, 0).toString();
                             jtxtModelName.setText(viewTable.getValueAt(row, 1).toString());
-                            jbtnView.requestFocusInWindow();
                         }
+                        jbtnView.requestFocusInWindow();
                         sa.dispose();
                     }
                 } else {
@@ -355,20 +355,18 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 2).toString());
                 row.add(jTable1.getValueAt(i, 3).toString());
                 row.add(jTable1.getValueAt(i, 4).toString());
-                row.add(jTable1.getValueAt(i, 7).toString());
-                row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 5).toString());
                 rows.add(row);
             }
 
             ArrayList header = new ArrayList();
-            header.add("IMEI NO");
-            header.add("Item Name");
-            header.add("Purchase Rate");
-            header.add("Sales Rate");
-            header.add("Profit");
+            header.add("Brand Name");
+            header.add("Model Name");
+            header.add("PCS");
+            header.add("Sales Amount");
+            header.add("Average Purchase Rate");
             header.add("Branch");
-            header.add("Bill No");
-            lb.exportToExcel("Margin Report", header, rows, "Margin Report");
+            lb.exportToExcel("Average Sales Report", header, rows, "Average Sales Report");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
         }
@@ -489,6 +487,11 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
         jbtnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnViewActionPerformed(evt);
+            }
+        });
+        jbtnView.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnViewKeyPressed(evt);
             }
         });
 
@@ -1057,6 +1060,11 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private void jtxtAcNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusGained
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtAcNameFocusGained
+
+    private void jbtnViewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnViewKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnViewKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

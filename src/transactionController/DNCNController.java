@@ -45,6 +45,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
 import support.SelectDailog;
+import transactionView.DNCNView;
 
 /**
  *
@@ -74,6 +75,7 @@ public class DNCNController extends javax.swing.JDialog {
     private ReportTable viewTable = null;
     private String doc_ref_no = "";
     private String doc_cd = "";
+    private DNCNView dNCNView;
 
     /**
      * Creates new form PurchaseController
@@ -117,6 +119,14 @@ public class DNCNController extends javax.swing.JDialog {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
             }
         });
+    }
+
+    public void setdNCNView(DNCNView dNCNView) {
+        this.dNCNView = dNCNView;
+    }
+
+    public DNCNView getdNCNView() {
+        return dNCNView;
     }
 
     private void setPopUp() {
@@ -288,7 +298,7 @@ public class DNCNController extends javax.swing.JDialog {
                             } else {
                                 bank_cd = header.getAccountHeader().get(row).getACCD();
                                 jtxtBankName.setText(header.getAccountHeader().get(row).getFNAME());
-                                jtxtAcName.requestFocusInWindow();
+                                jtxtDocRefNo.requestFocusInWindow();
                             }
                         }
                     }
@@ -347,6 +357,9 @@ public class DNCNController extends javax.swing.JDialog {
                     JsonObject object = addUpdaCall;
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
+                        if (getdNCNView() != null) {
+                            getdNCNView().setData();
+                        }
                         DNCNController.this.dispose();
                     } else {
                         lb.showMessageDailog(object.get("Cause").getAsString());
@@ -851,7 +864,7 @@ public class DNCNController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusLost
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        lb.enterFocus(evt, jtxtDocRefNo);
+        lb.enterFocus(evt, jtxtAcName);
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
     private void jBillDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtnActionPerformed

@@ -21,17 +21,17 @@ import retrofit2.http.Query;
 public interface SalesReturnAPI {
 
     @GET("GetSalesReturnHeader")
-    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type);
+    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetSalesReturnBill")
     Call<JsonObject> getBill(@Query("ref_no") String ref_no);
-    
+
     @GET("GetSalesRateByTag")
     Call<JsonObject> GetSalesRateByTag(@Query("tag_no") String tag_no);
 
     @GET("GetDataFromServer")
     Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code);
-    
+
     @GET("GetDataFromServer")
     Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code);
 
@@ -40,14 +40,13 @@ public interface SalesReturnAPI {
 
     @GET("GetSalesReturnPrint")
     Call<JsonObject> GetSalesReturnPrint(@Query("ref_no") String ref_no);
-    
+
     @GET("GetSalesReturnTaxPrint")
     Call<JsonObject> GetSalesReturnTaxPrint(@Query("ref_no") String ref_no);
-    
+
     @FormUrlEncoded
     @POST("AddUpdateSalesReturnBill")
     Call<JsonObject> addUpdateSalesBill(@Field("header") String ref_no, @Field("detail") String param_code);
-
 
     @FormUrlEncoded
     @POST("DeleteSalesReturn")

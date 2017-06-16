@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.PurchaseAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
@@ -59,6 +60,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
 
     public PurchaseView(int type, int formCd) {
         initComponents();
+        setUpData();
         vType = type;
         purchasAPI = lb.getRetrofit().create(PurchaseAPI.class);
         lb.setDateChooserPropertyInit(jtxtFromDate);
@@ -94,9 +96,24 @@ public class PurchaseView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
+    private void setUpData() {
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+        }
+        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            jComboBox1.setEnabled(true);
+        } else {
+            jComboBox1.setEnabled(false);
+        }
+    }
+
     public void setData() {
         lb.addGlassPane(this);
-        Call<PurchaseHead> call = purchasAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "");
+        Call<PurchaseHead> call = purchasAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "",
+                 (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "");
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -117,6 +134,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
                             row.add(lb.Convert2DecFmtForRs(header.getPurchaseHeader().get(i).getNETAMT()));
                             row.add(header.getPurchaseHeader().get(i).getREMARK());
                             row.add(header.getPurchaseHeader().get(i).getACCD());
+                            row.add(Constants.BRANCH.get(header.getPurchaseHeader().get(i).getBRANCHCD() - 1).getBranch_name());
                             dtm.addRow(row);
                         }
                         lb.setColumnSizeForTable(jTable1, jPanel2.getWidth());
@@ -319,6 +337,8 @@ public class PurchaseView extends javax.swing.JInternalFrame {
         jtxtToDate = new javax.swing.JTextField();
         jBillDateBtn1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         jpanelNav = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -387,6 +407,15 @@ public class PurchaseView extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("Branch");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -395,26 +424,36 @@ public class PurchaseView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(14, 14, 14))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -444,11 +483,11 @@ public class PurchaseView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Bill No", "Type", "Date", "Name", "Net Amt", "Remark", "Ac Cd"
+                "ref no", "INV No", "Bill No", "Type", "Date", "Name", "Net Amt", "Remark", "Ac Cd", "Branch"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -482,6 +521,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(8).setMinWidth(0);
             jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
             jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -632,14 +672,21 @@ public class PurchaseView extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jButton1KeyPressed
 
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

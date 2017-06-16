@@ -337,14 +337,18 @@ public class MarginReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 3).toString());
                 row.add(jTable1.getValueAt(i, 4).toString());
                 row.add(jTable1.getValueAt(i, 5).toString());
-                row.add(jTable1.getValueAt(i, 8).toString());
-                row.add(jTable1.getValueAt(i, 9).toString());
+                row.add(jTable1.getValueAt(i, 6).toString());
+                row.add(jTable1.getValueAt(i, 7).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
+                row.add(jTable1.getValueAt(i, 11).toString());
                 rows.add(row);
             }
 
             ArrayList header = new ArrayList();
             header.add("Sr NO");
+            header.add("Date");
             header.add("IMEI NO");
+            header.add("Brand Name");
             header.add("Item Name");
             header.add("Purchase Rate");
             header.add("Sales Rate");
@@ -413,11 +417,11 @@ public class MarginReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr No", "IMEI Name", "Item Name", "Rate", "Sale Rate", "Profit", "Pur Ref", "Sale Ref", "Branch", "Bill No"
+                "Sr No", "Date", "IMEI Name", "Brand", "Item Name", "Rate", "Sale Rate", "Profit", "Pur Ref", "Sale Ref", "Branch", "Bill No"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, true, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -434,17 +438,18 @@ public class MarginReport extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(7).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(7).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(7).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(9).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(9).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
+            jTable1.getColumnModel().getColumn(11).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -851,7 +856,9 @@ public class MarginReport extends javax.swing.JInternalFrame {
                     for (int i = 0; i < array.size(); i++) {
                         Vector row = new Vector();
                         row.add(i + 1);
+                        row.add(lb.ConvertDateFormetForDisplay(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                         row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("BRAND_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
                         row.add(array.get(i).getAsJsonObject().get("SALE_RATE").getAsDouble());
@@ -870,12 +877,14 @@ public class MarginReport extends javax.swing.JInternalFrame {
                     }
 
                     for (int i = 0; i < jTable1.getRowCount(); i++) {
-                        pur_tot += lb.isNumber(jTable1.getValueAt(i, 3).toString());
-                        sale_tot += lb.isNumber(jTable1.getValueAt(i, 4).toString());
-                        tot += lb.isNumber(jTable1.getValueAt(i, 5).toString());
+                        pur_tot += lb.isNumber(jTable1.getValueAt(i, 5).toString());
+                        sale_tot += lb.isNumber(jTable1.getValueAt(i, 6).toString());
+                        tot += lb.isNumber(jTable1.getValueAt(i, 7).toString());
                     }
 
                     Vector row = new Vector();
+                    row.add("");
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -1057,9 +1066,9 @@ public class MarginReport extends javax.swing.JInternalFrame {
             if (row != -1) {
                 int column = jTable1.getSelectedColumn();
                 if (column == 3) {
-                    lb.openVoucherBook(jTable1.getValueAt(row, 6).toString());
+                    lb.openVoucherBook(jTable1.getValueAt(row, 8).toString());
                 } else if (column == 4) {
-                    lb.openVoucherBook(jTable1.getValueAt(row, 7).toString());
+                    lb.openVoucherBook(jTable1.getValueAt(row, 9).toString());
                 }
             }
         }

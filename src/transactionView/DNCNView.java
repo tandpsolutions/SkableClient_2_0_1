@@ -70,7 +70,7 @@ public class DNCNView extends javax.swing.JInternalFrame {
         setPopUp();
     }
 
-    private void setData() {
+    public void setData() {
         try {
             lb.addGlassPane(this);
             JsonObject call = dncnAPI.GetBankPaymentHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
