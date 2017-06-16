@@ -472,11 +472,11 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "Type", "Name", "Net Amt", "Cash", "Bank", "Card", "Bajaj", "SFID", "Remark", "ac_Cd"
+                "ref no", "INV No", "Date", "Type", "Name", "Net Amt", "Cash", "Bank", "Card", "Bajaj", "SFID", "Remark", "ac_Cd", "Branch"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -514,6 +514,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(12).setMinWidth(0);
             jTable1.getColumnModel().getColumn(12).setPreferredWidth(0);
             jTable1.getColumnModel().getColumn(12).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(13).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);

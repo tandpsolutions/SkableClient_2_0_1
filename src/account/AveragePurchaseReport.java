@@ -489,6 +489,11 @@ public class AveragePurchaseReport extends javax.swing.JInternalFrame {
                 jbtnViewActionPerformed(evt);
             }
         });
+        jbtnView.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnViewKeyPressed(evt);
+            }
+        });
 
         jbtnClose.setText("Close");
         jbtnClose.addActionListener(new java.awt.event.ActionListener() {
@@ -1055,6 +1060,11 @@ public class AveragePurchaseReport extends javax.swing.JInternalFrame {
     private void jtxtAcNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusGained
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtAcNameFocusGained
+
+    private void jbtnViewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnViewKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnViewKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
