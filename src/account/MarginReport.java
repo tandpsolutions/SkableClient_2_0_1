@@ -235,7 +235,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
                             jbtnView.requestFocusInWindow();
                         }
                     }
-                    sa.setVisible(true);
+                    sa.setVisible(false);
                 } else {
                     lb.showMessageDailog(header.getCause());
                 }

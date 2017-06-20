@@ -757,15 +757,15 @@ public class SalesController extends javax.swing.JDialog {
                 } else {
                     if (lb.isNumber2(jtxtRate.getText()) > 0) {
 //                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
-                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+//                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
                             jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
                             jtxtDiscPer.setText("0.00");
                             jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                        } else {
-                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
-                        }
+//                        } else {
+//                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+//                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+//                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+//                        }
 //                    }
                         jcmbTaxItemStateChanged(null);
                         calculation();
@@ -1026,7 +1026,7 @@ public class SalesController extends javax.swing.JDialog {
         jcmbTax.setBounds(0, 0, 20, 20);
         jcmbTax.setVisible(true);
         jPanel3.add(jcmbTax);
-        jcmbTax.setEnabled(false);
+        jcmbTax.setEnabled(true);
 
         jtxtBasicAmt.setBounds(0, 0, 20, 20);
         jtxtBasicAmt.setVisible(true);

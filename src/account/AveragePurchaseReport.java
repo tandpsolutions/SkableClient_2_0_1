@@ -868,6 +868,7 @@ public class AveragePurchaseReport extends javax.swing.JInternalFrame {
                     row.add(lb.Convert2DecFmtForRs(tot));
                     row.add(lb.Convert2DecFmtForRs(tot1));
                     row.add("");
+                    row.add("");
                     dtm.addRow(row);
 
                     lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
