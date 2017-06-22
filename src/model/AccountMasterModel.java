@@ -29,6 +29,16 @@ public class AccountMasterModel {
     private String ref_cd;
     private ArrayList<String> address;
 
+    private String GST_NO;
+
+    public String getGST_NO() {
+        return GST_NO;
+    }
+
+    public void setGST_NO(String GST_NO) {
+        this.GST_NO = GST_NO;
+    }
+
     public String getRef_cd() {
         return ref_cd;
     }
