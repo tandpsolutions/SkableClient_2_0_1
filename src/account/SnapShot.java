@@ -452,6 +452,11 @@ public class SnapShot extends javax.swing.JInternalFrame {
                     row.add("Debtors");
                     row.add(result.get("debtors").getAsString());
                     dtm.addRow(row);
+                    
+                    row = new Vector();
+                    row.add("Swipe Charge");
+                    row.add(result.get("swipe_charge").getAsString());
+                    dtm.addRow(row);
 
                     lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
                     lb.removeGlassPane(SnapShot.this);

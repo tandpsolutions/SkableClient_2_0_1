@@ -107,6 +107,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
                     row.add(lb.ConvertDateFormetForDisplay(header.get(i).getAsJsonObject().get("v_date").getAsString()));
                     row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("from_loc").getAsInt() - 1).getBranch_name());
                     row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("to_loc").getAsInt() - 1).getBranch_name());
+                    row.add(header.get(i).getAsJsonObject().get("user_name").getAsString());
                     row.add(header.get(i).getAsJsonObject().get("approve_by").getAsString());
                     row.add(header.get(i).getAsJsonObject().get("REMARK").getAsString());
                     dtm.addRow(row);
@@ -428,11 +429,11 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "From Location", "To Location", "Arrpove Status", "Remark"
+                "ref no", "INV No", "Date", "From Location", "To Location", "Entry By", "Arrpove Status", "Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -460,6 +461,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);

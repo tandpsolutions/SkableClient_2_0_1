@@ -128,9 +128,12 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                 };
                 typeList = new Gson().fromJson(result.get("data"), token.getType());
                 jcmbType.removeAllItems();
+                jcmbType1.removeAllItems();
                 jcmbType.addItem("ALL");
+                jcmbType1.addItem("ALL");
                 for (int i = 0; i < typeList.size(); i++) {
                     jcmbType.addItem(typeList.get(i).getTYPE_NAME());
+                    jcmbType1.addItem(typeList.get(i).getTYPE_NAME());
                 }
             } else {
                 lb.showMessageDailog(call.get("Cause").getAsString());
@@ -419,6 +422,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
         jtxtAcAlias = new javax.swing.JTextField();
         jtxtAcName = new javax.swing.JTextField();
         jlblMobile = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jcmbType1 = new javax.swing.JComboBox();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -629,6 +634,14 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
 
         jlblMobile.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel7.setText("Sub Type");
+
+        jcmbType1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcmbType1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -641,7 +654,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                             .addComponent(jRadioButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jRadioButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -660,7 +674,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jcmbType1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -753,6 +768,10 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtxtAcAlias)
                     .addComponent(jtxtAcName)
@@ -784,7 +803,7 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(2, 2, 2)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -834,7 +853,8 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), mode, brand_cd, model_cd,
                     ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     jComboBox1.getSelectedIndex(),
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), ac_cd).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), ac_cd,
+                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")).execute().body();
 
             lb.addGlassPane(this);
 
@@ -1066,6 +1086,10 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnViewKeyPressed
 
+    private void jcmbType1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbType1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcmbType1KeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -1082,6 +1106,7 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
@@ -1096,6 +1121,7 @@ public class AverageSalesReport extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnView;
     private javax.swing.JComboBox jcmbType;
+    private javax.swing.JComboBox jcmbType1;
     private javax.swing.JLabel jlblMobile;
     private javax.swing.JTextField jtxtAcAlias;
     private javax.swing.JTextField jtxtAcName;
