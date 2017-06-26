@@ -134,6 +134,7 @@ import support.Library;
 import support.UnCaughtException;
 import support.ZoomingTableToolTip;
 import transactionView.BankPaymentReceiptView;
+import transactionView.BranchWiseLimit;
 import transactionView.CashPaymentReceiptView;
 import transactionView.ContraVoucherView;
 import transactionView.CreditNoteListReport;
@@ -552,6 +553,7 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem60 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
+        jmnBranchWiseCreditLimit1 = new javax.swing.JMenuItem();
         jmnInventory = new javax.swing.JMenu();
         jmnStockInTransit = new javax.swing.JMenuItem();
         jmnStockInoutReport = new javax.swing.JMenuItem();
@@ -1103,6 +1105,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnTransaction.add(jMenuItem25);
+
+        jmnBranchWiseCreditLimit1.setText("Branch Wise Credit Limit");
+        jmnBranchWiseCreditLimit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnBranchWiseCreditLimit1ActionPerformed(evt);
+            }
+        });
+        jmnTransaction.add(jmnBranchWiseCreditLimit1);
 
         jMenuBar3.add(jmnTransaction);
 
@@ -1924,13 +1934,13 @@ public class SkableHome extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1)
                 .addGap(0, 0, 0))
         );
 
@@ -2777,6 +2787,12 @@ public class SkableHome extends javax.swing.JFrame {
         lg.setVisible(true);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
+    private void jmnBranchWiseCreditLimit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBranchWiseCreditLimit1ActionPerformed
+        // TODO add your handling code here:
+        BranchWiseLimit bl = new BranchWiseLimit(null, true);
+        bl.setVisible(true);
+    }//GEN-LAST:event_jmnBranchWiseCreditLimit1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2832,6 +2848,8 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnBankBook;
     private javax.swing.JMenuItem jmnBankPmt;
     private javax.swing.JMenuItem jmnBankRcpt;
+    private javax.swing.JMenuItem jmnBranchWiseCreditLimit;
+    private javax.swing.JMenuItem jmnBranchWiseCreditLimit1;
     private javax.swing.JMenuItem jmnBrandMst;
     private javax.swing.JMenuItem jmnBrandWiseItemLedger;
     private javax.swing.JMenuItem jmnBuyBackRegister;

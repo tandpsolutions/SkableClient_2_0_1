@@ -19,6 +19,15 @@ public class BranchMasterModel {
     private String address3;
     private String phone;
     private String email;
+    private String credit_limit;
+
+    public String getCredit_limit() {
+        return credit_limit;
+    }
+
+    public void setCredit_limit(String credit_limit) {
+        this.credit_limit = credit_limit;
+    }
 
     public String getAddress1() {
         return address1;
