@@ -40,6 +40,7 @@ import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
+import transactionView.StockTransferOutsideView;
 
 /**
  *
@@ -58,6 +59,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     javax.swing.JTextField jtxtItem = null;
     private ReportTable viewTable = null;
     private JLabel jlblTotQty;
+    private StockTransferOutsideView stockTransferOutsideView;
 
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -133,6 +135,14 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
             }
         });
+    }
+
+    public StockTransferOutsideView getStockTransferOutsideView() {
+        return stockTransferOutsideView;
+    }
+
+    public void setStockTransferOutsideView(StockTransferOutsideView stockTransferOutsideView) {
+        this.stockTransferOutsideView = stockTransferOutsideView;
     }
 
     private void setPopUp() {
@@ -566,6 +576,9 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 if (object.get("result").getAsInt() == 1) {
                     lb.showMessageDailog("Voucher saved successfully");
                     StockTransferOutsideController.this.dispose();
+                    if(getStockTransferOutsideView()!= null){
+                        getStockTransferOutsideView().setData();
+                    }
                 } else {
                     lb.showMessageDailog(object.get("Cause").getAsString());
                 }

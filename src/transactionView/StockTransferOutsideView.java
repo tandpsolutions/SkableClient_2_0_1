@@ -89,7 +89,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
         }
     }
 
-    private void setData() throws IOException {
+    public void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = stkTrAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                 lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
@@ -162,6 +162,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
 
     private void addSalesReturnController() {
         StockTransferOutsideController pc = new StockTransferOutsideController(null, true, vType);
+        pc.setStockTransferOutsideView(this);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }

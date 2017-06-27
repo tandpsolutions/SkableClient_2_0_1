@@ -113,6 +113,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
                     row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("from_loc").getAsInt() - 1).getBranch_name());
                     row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("to_loc").getAsInt() - 1).getBranch_name());
                     row.add(header.get(i).getAsJsonObject().get("approve_by").getAsString());
+                    row.add(header.get(i).getAsJsonObject().get("user_name").getAsString());
                     dtm.addRow(row);
                 }
             } else {
@@ -374,11 +375,11 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "From Location", "To Location", "Arrpove Status"
+                "ref no", "INV No", "Date", "From Location", "To Location", "Arrpove Status", "Entry By"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -405,6 +406,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
