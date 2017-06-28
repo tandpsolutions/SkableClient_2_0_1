@@ -38,14 +38,23 @@ public class TaxMasterModel {
     @SerializedName("EDIT_NO")
     @Expose
     private String EDITNO;
-
     @SerializedName("USER_ID")
     @Expose
     private String USERID;
-
     @SerializedName("TIME_STAMP")
     @Expose
     private String TIMESTAMP;
+    @SerializedName("IGST")
+    @Expose
+    private String IGST;
+
+    public String getIGST() {
+        return IGST;
+    }
+
+    public void setIGST(String IGST) {
+        this.IGST = IGST;
+    }
 
     public String getTAXCD() {
         return TAXCD;
@@ -126,5 +135,4 @@ public class TaxMasterModel {
     public void setTIMESTAMP(String TIMESTAMP) {
         this.TIMESTAMP = TIMESTAMP;
     }
-
 }

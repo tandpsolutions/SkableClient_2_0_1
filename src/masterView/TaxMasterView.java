@@ -16,8 +16,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import masterController.BrandMasterController;
-import model.BrandMasterModel;
+import masterController.TaxMasterController;
 import model.TaxMasterModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +26,7 @@ import skable.SkableHome;
 import support.Library;
 import support.SmallNavigation;
 
-public class TaxMaster extends javax.swing.JInternalFrame {
+public class TaxMasterView extends javax.swing.JInternalFrame {
 
     private DefaultTableModel dtm = null;
     private SmallNavigation navLoad = null;
@@ -36,7 +35,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> rowSorter;
     private JTextField jtfFilter = new JTextField();
 
-    public TaxMaster(int formCD) {
+    public TaxMasterView(int formCD) {
         initComponents();
         taxMasterAPI = lb.getRetrofit().create(TaxMasterAPI.class);
         connectToNavigation();
@@ -109,10 +108,10 @@ public class TaxMaster extends javax.swing.JInternalFrame {
         }
     }
 
-    private void showDailogeAdd(String brand_cd, String brand_name) {
-        BrandMasterController bmc = new BrandMasterController(null, true, this, brand_cd, brand_name);
+    private void showDailogeAdd(String tax_cd) {
+        TaxMasterController bmc = new TaxMasterController(null, true, this);
         bmc.setLocationRelativeTo(null);
-        bmc.show();
+        bmc.setTaxMasterData(tax_cd);
     }
 
     public void addRow(String bran_cd, String brand_name) {
@@ -136,7 +135,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
                 if (navLoad.getModel().getADDS().equalsIgnoreCase("1")) {
                     navLoad.setMode("N");
                     jTable1.clearSelection();
-                    showDailogeAdd("", "");
+                    showDailogeAdd("");
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
                 }
@@ -148,9 +147,9 @@ public class TaxMaster extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         navLoad.setMode("E");
-                        lb.confirmDialog("Do you want to Edit This Brand?");
+                        lb.confirmDialog("Do you want to Edit This Tax?");
                         if (lb.type) {
-                            showDailogeAdd(jTable1.getValueAt(row, 0).toString(), jTable1.getValueAt(row, 1).toString());
+                            showDailogeAdd(jTable1.getValueAt(row, 0).toString());
                         }
                     }
                 } else {
@@ -170,7 +169,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
                                 } catch (Exception ex) {
                                     lb.printToLogFile("Exception at callDelete at BrandMasterView", ex);
                                 } finally {
-                                    lb.removeGlassPane(TaxMaster.this);
+                                    lb.removeGlassPane(TaxMasterView.this);
                                 }
                             }
 
@@ -205,7 +204,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                lb.removeGlassPane(TaxMaster.this);
+                lb.removeGlassPane(TaxMasterView.this);
                 if (rspns.isSuccessful()) {
                     JsonObject result = rspns.body();
                     if (result.get("result").getAsInt() == 1) {
@@ -219,7 +218,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
                             row.add(detail.get(i).getTAXNAME());
                             row.add(detail.get(i).getTAXPER());
                             row.add(detail.get(i).getADDTAXPER());
-                            row.add(detail.get(i).getADDTAXPER());
+                            row.add(detail.get(i).getIGST());
                             dtm.addRow(row);
                         }
                     } else {
@@ -232,7 +231,7 @@ public class TaxMaster extends javax.swing.JInternalFrame {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                lb.removeGlassPane(TaxMaster.this);
+                lb.removeGlassPane(TaxMasterView.this);
             }
         });
     }
@@ -281,16 +280,14 @@ public class TaxMaster extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(469);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(469);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 

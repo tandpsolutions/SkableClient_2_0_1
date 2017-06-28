@@ -121,6 +121,7 @@ import masterView.RefMasterView;
 import masterView.SalesmanMaster;
 import masterView.SchemeMasterView;
 import masterView.SeriesMasterView;
+import masterView.TaxMasterView;
 import masterView.TidMasterView;
 import masterView.TypeMasterView;
 import masterView.UserGroupMasterView;
@@ -514,6 +515,7 @@ public class SkableHome extends javax.swing.JFrame {
         jmnReferalMaster = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
         jmnTransaction = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jmnRDPurchase = new javax.swing.JMenuItem();
@@ -805,6 +807,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnMaster.add(jMenuItem24);
+
+        jMenuItem27.setText("Tax Master");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jMenuItem27);
 
         jMenuBar3.add(jmnMaster);
 
@@ -2793,6 +2803,12 @@ public class SkableHome extends javax.swing.JFrame {
         bl.setVisible(true);
     }//GEN-LAST:event_jmnBranchWiseCreditLimit1ActionPerformed
 
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        TaxMasterView tv = new TaxMasterView(31);
+        addOnScreen(tv, "Tax Master");
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2827,6 +2843,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
@@ -2848,7 +2865,6 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnBankBook;
     private javax.swing.JMenuItem jmnBankPmt;
     private javax.swing.JMenuItem jmnBankRcpt;
-    private javax.swing.JMenuItem jmnBranchWiseCreditLimit;
     private javax.swing.JMenuItem jmnBranchWiseCreditLimit1;
     private javax.swing.JMenuItem jmnBrandMst;
     private javax.swing.JMenuItem jmnBrandWiseItemLedger;
