@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cashReport" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fd3ba35-2b9e-4726-ac0c-a8e5d6a208a7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="dir" class="java.lang.String"/>
 	<parameter name="add1" class="java.lang.String"/>
 	<parameter name="tin_no" class="java.lang.String"/>
@@ -76,7 +76,7 @@
 			</staticText>
 			<image onErrorType="Blank">
 				<reportElement uuid="181b267a-e8ce-49ba-8df4-e6ed2463fbf3" x="1" y="41" width="187" height="56"/>
-				<imageExpression><![CDATA[$P{dir}+File.separator+"Resources"+File.separator+"Images"+File.separator+"logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{dir}+File.separator+"Resources"+File.separator+"Images"+File.separator+"logo.png"]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="0ec9299d-983f-496e-9906-72af0d7cabab" stretchType="RelativeToBandHeight" x="236" y="68" width="320" height="28"/>
