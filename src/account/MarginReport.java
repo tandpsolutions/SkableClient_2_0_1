@@ -1065,9 +1065,9 @@ public class MarginReport extends javax.swing.JInternalFrame {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
                 int column = jTable1.getSelectedColumn();
-                if (column == 8) {
+                if (column == 5) {
                     lb.openVoucherBook(jTable1.getValueAt(row, 8).toString());
-                } else if (column == 9) {
+                } else if (column == 6) {
                     lb.openVoucherBook(jTable1.getValueAt(row, 9).toString());
                 }
             }

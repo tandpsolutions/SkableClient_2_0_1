@@ -467,7 +467,7 @@ public class SnapShot extends javax.swing.JInternalFrame {
                     
                      row = new Vector();
                     row.add("Insurance Amount");
-                    row.add(result.get("ins_amt").getAsString());
+                    row.add(lb.Convert2DecFmtForRs(result.get("ins_amt").getAsDouble()));
                     dtm.addRow(row);
 
                     lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
