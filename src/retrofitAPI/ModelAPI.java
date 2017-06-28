@@ -33,6 +33,6 @@ public interface ModelAPI {
     @POST("AppUpdateModelMaster")
     Call<JsonObject> AppUpdateModelMaster(@Field("model_cd") String model_cd, @Field("model_name") String model_name,
             @Field("brand_cd") String brand_cd, @Field("type_cd") String type_cd, @Field("tax_cd") String tax_cd, @Field("user_id") String user_id,
-            @Field("sub_type_cd") String sub_type_cd, @Field("AC_YEAR") String ac_year);
+            @Field("sub_type_cd") String sub_type_cd, @Field("AC_YEAR") String ac_year, @Field("hsn_code") String hsn_code);
 
 }

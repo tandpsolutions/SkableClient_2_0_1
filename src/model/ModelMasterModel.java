@@ -17,6 +17,7 @@ public class ModelMasterModel {
     private String TAX_NAME;
     private String TYPE_NAME;
     private String SUB_TYPE_NAME;
+    private String HSN_CODE;
 
     public String getSUB_TYPE_NAME() {
         return SUB_TYPE_NAME;
@@ -66,4 +67,11 @@ public class ModelMasterModel {
         this.TYPE_NAME = TYPE_NAME;
     }
 
+    public String getHSN_CODE() {
+        return HSN_CODE;
+    }
+
+    public void setHSN_CODE(String HSN_CODE) {
+        this.HSN_CODE = HSN_CODE;
+    }
 }
