@@ -521,6 +521,9 @@ public class SkableHome extends javax.swing.JFrame {
         jMenu12 = new javax.swing.JMenu();
         jmnRDPurchase1 = new javax.swing.JMenuItem();
         jmnRDPurchase2 = new javax.swing.JMenuItem();
+        jMenu13 = new javax.swing.JMenu();
+        jmnRetailInvoice1 = new javax.swing.JMenuItem();
+        jmnRetailInvoice4 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jmnCashPayment = new javax.swing.JMenuItem();
         jmnCashRcpt = new javax.swing.JMenuItem();
@@ -851,6 +854,31 @@ public class SkableHome extends javax.swing.JFrame {
         jMenu12.add(jmnRDPurchase2);
 
         jmnTransaction.add(jMenu12);
+
+        jMenu13.setMnemonic('S');
+        jMenu13.setText("Sales Imvoice");
+
+        jmnRetailInvoice1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        jmnRetailInvoice1.setMnemonic('R');
+        jmnRetailInvoice1.setText("Sales Invoice Local");
+        jmnRetailInvoice1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnRetailInvoice1ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnRetailInvoice1);
+
+        jmnRetailInvoice4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        jmnRetailInvoice4.setMnemonic('R');
+        jmnRetailInvoice4.setText("Sales Invoice Outside");
+        jmnRetailInvoice4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnRetailInvoice4ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnRetailInvoice4);
+
+        jmnTransaction.add(jMenu13);
 
         jMenu1.setText("Cash Entry");
 
@@ -2070,13 +2098,13 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnRDPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRDPurchaseActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(0, 10,0);
+        PurchaseView pv = new PurchaseView(0, 10, 0);
         addOnScreen(pv, "RD Purchase View");
     }//GEN-LAST:event_jmnRDPurchaseActionPerformed
 
     private void jmnURDPurchseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnURDPurchseActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(1, 11,0);
+        PurchaseView pv = new PurchaseView(1, 11, 0);
         addOnScreen(pv, "URD Purchase Bill View");
     }//GEN-LAST:event_jmnURDPurchseActionPerformed
 
@@ -2088,13 +2116,13 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnRetailInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(0, 13);
+        SalesView sb = new SalesView(0, 13, 0);
         addOnScreen(sb, "Retail Invoice View");
     }//GEN-LAST:event_jmnRetailInvoiceActionPerformed
 
     private void jmnTaxInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxInvoiceActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(1, 14);
+        SalesView sb = new SalesView(1, 14, 0);
         addOnScreen(sb, "Tax Invoice View");
     }//GEN-LAST:event_jmnTaxInvoiceActionPerformed
 
@@ -2106,7 +2134,7 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnSalesBillNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesBillNumberActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(2, 16);
+        SalesView sb = new SalesView(2, 16, 0);
         addOnScreen(sb, "Sales Insurance View");
     }//GEN-LAST:event_jmnSalesBillNumberActionPerformed
 
@@ -2600,7 +2628,7 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnSalesDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesDotActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(3, 89);
+        SalesView sb = new SalesView(3, 89, 0);
         addOnScreen(sb, "Retail Invoice . View");
     }//GEN-LAST:event_jmnSalesDotActionPerformed
 
@@ -2690,13 +2718,13 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnRetailInvoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice2ActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(0, 130);
+        SalesView sb = new SalesView(0, 130, 0);
         addOnScreen(sb, "Retail Invoice Edit View");
     }//GEN-LAST:event_jmnRetailInvoice2ActionPerformed
 
     private void jmnTaxInvoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxInvoice1ActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(1, 130);
+        SalesView sb = new SalesView(1, 130, 0);
         addOnScreen(sb, "Tax Invoice Edit View");
     }//GEN-LAST:event_jmnTaxInvoice1ActionPerformed
 
@@ -2884,6 +2912,18 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(pv, "RD Purchase View");
     }//GEN-LAST:event_jmnRDPurchase2ActionPerformed
 
+    private void jmnRetailInvoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice1ActionPerformed
+        // TODO add your handling code here:
+        SalesView sb = new SalesView(0, 13, 1);
+        addOnScreen(sb, "Sales Invoice Local View");
+    }//GEN-LAST:event_jmnRetailInvoice1ActionPerformed
+
+    private void jmnRetailInvoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice4ActionPerformed
+        // TODO add your handling code here:
+        SalesView sb = new SalesView(0, 13, 2);
+        addOnScreen(sb, "Sales Invoice Outside View");
+    }//GEN-LAST:event_jmnRetailInvoice4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -2891,6 +2931,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu12;
+    private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -2998,7 +3039,9 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnRDPurchase2;
     private javax.swing.JMenuItem jmnReferalMaster;
     private javax.swing.JMenuItem jmnRetailInvoice;
+    private javax.swing.JMenuItem jmnRetailInvoice1;
     private javax.swing.JMenuItem jmnRetailInvoice2;
+    private javax.swing.JMenuItem jmnRetailInvoice4;
     private javax.swing.JMenuItem jmnSalesBillNumber;
     private javax.swing.JMenuItem jmnSalesDot;
     private javax.swing.JMenuItem jmnSalesRegister;

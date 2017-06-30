@@ -21,10 +21,12 @@ import retrofit2.http.Query;
 public interface SalesAPI {
 
     @GET("GetSalesDetail")
-    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
+    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd
+            , @Query("tax_type") String tax_type);
 
     @GET("GetSalesDetailOLD")
-    Call<PurchaseHead> getDataHeaderOLD(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
+    Call<PurchaseHead> getDataHeaderOLD(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd
+            , @Query("tax_type") String tax_type);
 
     @GET("GetDataFromServer")
     Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code);

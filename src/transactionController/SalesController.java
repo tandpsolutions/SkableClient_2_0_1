@@ -92,7 +92,6 @@ public class SalesController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ac_cd = "";
     private int add_sr_no = 1;
@@ -123,14 +122,16 @@ public class SalesController extends javax.swing.JDialog {
     private int formCD;
     private SalesView sv = null;
     private ArrayList<SchemeMasterModel> detail;
+    private int tax_type;
 
     /**
      * Creates new form PurchaseController
      */
-    public SalesController(java.awt.Frame parent, boolean modal, int type, int formCD, SalesView sv) {
+    public SalesController(java.awt.Frame parent, boolean modal, int type, int formCD, SalesView sv, int tax_type) {
         super(parent, modal);
         initComponents();
         this.sv = sv;
+        this.tax_type = tax_type;
         final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
         try {
             final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
@@ -177,7 +178,6 @@ public class SalesController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -207,8 +207,7 @@ public class SalesController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -310,7 +309,6 @@ public class SalesController extends javax.swing.JDialog {
                 jcmbScheme.addItem(detail.get(i).getSCHEME_NAME());
             }
         } catch (IOException ex) {
-
         }
     }
 
@@ -342,7 +340,6 @@ public class SalesController extends javax.swing.JDialog {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -369,7 +366,6 @@ public class SalesController extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -378,7 +374,6 @@ public class SalesController extends javax.swing.JDialog {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("36", sr_cd, ac_cd);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SalesController.this);
@@ -406,8 +401,7 @@ public class SalesController extends javax.swing.JDialog {
                     lb.removeGlassPane(SalesController.this);
 
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -487,7 +481,11 @@ public class SalesController extends javax.swing.JDialog {
                                                 item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
                                                 pur_rate = 0.00;
                                                 jtxtQty.setText("1");
-                                                jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                                if (tax_type == 0) {
+                                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                                } else {
+                                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                                }
                                                 getLastRate();
 
                                             } else {
@@ -499,7 +497,11 @@ public class SalesController extends javax.swing.JDialog {
                                                 model.setQTY(1);
                                                 model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
                                                 model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                                model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                                if (tax_type == 0) {
+                                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                                } else {
+                                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                                }
                                                 model.setBASIC_AMT(0.00);
                                                 model.setTAX_AMT(0.00);
                                                 model.setADD_TAX_AMT(0.00);
@@ -528,7 +530,11 @@ public class SalesController extends javax.swing.JDialog {
                                             item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
                                             pur_rate = 0.00;
                                             jtxtQty.setText("1");
-                                            jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                            if (tax_type == 0) {
+                                                jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                            } else {
+                                                jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                            }
                                             getLastRate();
                                         } else {
                                             SalesControllerDetailModel model = new SalesControllerDetailModel();
@@ -539,7 +545,11 @@ public class SalesController extends javax.swing.JDialog {
                                             model.setQTY(1);
                                             model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
                                             model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                            model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                            if (tax_type == 0) {
+                                                model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                            } else {
+                                                model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                            }
                                             model.setBASIC_AMT(0.00);
                                             model.setTAX_AMT(0.00);
                                             model.setADD_TAX_AMT(0.00);
@@ -564,7 +574,6 @@ public class SalesController extends javax.swing.JDialog {
 
         jtxtItem = new javax.swing.JTextField();
         jtxtItem.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 lb.selectAll(e);
@@ -574,11 +583,9 @@ public class SalesController extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
                 lb.toUpper(e);
             }
-
         });
 
         jtxtItem.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -592,7 +599,6 @@ public class SalesController extends javax.swing.JDialog {
                     setSeriesData("3", jtxtItem.getText().toUpperCase(), "1");
                 }
             }
-
         });
 
         jtxtIMEI = new javax.swing.JTextField();
@@ -618,7 +624,6 @@ public class SalesController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.onlyNumber(e, 15);
             }
-
         });
 
         jtxtSerialNo = new javax.swing.JTextField();
@@ -644,7 +649,6 @@ public class SalesController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.fixLength(e, 20);
             }
-
         });
 
         jtxtQty = new javax.swing.JTextField();
@@ -758,9 +762,9 @@ public class SalesController extends javax.swing.JDialog {
                     if (lb.isNumber2(jtxtRate.getText()) > 0) {
 //                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
 //                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                            jtxtDiscPer.setText("0.00");
-                            jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                        jtxtDiscPer.setText("0.00");
+                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
 //                        } else {
 //                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
 //                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
@@ -971,7 +975,6 @@ public class SalesController extends javax.swing.JDialog {
         jtxtAmount = new javax.swing.JTextField();
 
         jtxtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 lb.selectAll(e);
@@ -1095,8 +1098,13 @@ public class SalesController extends javax.swing.JDialog {
                                 Vector row = new Vector();
                                 row.add(series.get(i).getSRCD());
                                 row.add(series.get(i).getSRNAME());
-                                row.add(series.get(i).getTAXCD());
-                                row.add(series.get(i).getTAXNAME());
+                                if (tax_type == 0) {
+                                    row.add(series.get(i).getTAXCD());
+                                    row.add(series.get(i).getTAXNAME());
+                                } else {
+                                    row.add(series.get(i).getGSTCD());
+                                    row.add(series.get(i).getGSTNAME());
+                                }
                                 sa.getDtmHeader().addRow(row);
                             }
                             lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
@@ -1137,8 +1145,7 @@ public class SalesController extends javax.swing.JDialog {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SalesController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -1360,7 +1367,6 @@ public class SalesController extends javax.swing.JDialog {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SalesController.this);
@@ -1654,6 +1660,7 @@ public class SalesController extends javax.swing.JDialog {
             header.setSm_cd("");
 
         }
+        header.setTax_type(tax_type);
         final ArrayList<SalesControllerDetailModel> detail = new ArrayList<SalesControllerDetailModel>();
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             SalesControllerDetailModel model = new SalesControllerDetailModel();
@@ -1699,7 +1706,6 @@ public class SalesController extends javax.swing.JDialog {
                         if (ref_no.equalsIgnoreCase("")) {
                             sv.setData();
                             SwingWorker worker = new SwingWorker() {
-
                                 @Override
                                 protected Object doInBackground() throws Exception {
 //                                    lb.displayPurchaseVoucherEmail(header, detail);
@@ -1709,7 +1715,6 @@ public class SalesController extends javax.swing.JDialog {
                             worker.execute();
 
                             worker = new SwingWorker() {
-
                                 @Override
                                 protected Object doInBackground() throws Exception {
                                     lb.getSalesBillPrint(object.get("ref_no").getAsString());
@@ -3008,7 +3013,11 @@ public class SalesController extends javax.swing.JDialog {
             if (tm != null) {
                 double tax_rate = Double.parseDouble(tm.getTAXPER());
                 double add_tax_rate = Double.parseDouble(tm.getADDTAXPER());
-                int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+//                int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+                if (tax_type == 2) {
+                    tax_rate += add_tax_rate;
+                    add_tax_rate = 0.00;
+                }
                 if (tm.getTAXCD().equalsIgnoreCase("T000003")) {
                     try {
                         final Calendar cal = Calendar.getInstance();
@@ -3016,7 +3025,7 @@ public class SalesController extends javax.swing.JDialog {
                         cal.set(Calendar.DATE, 1);
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         java.util.Date dt = sdf.parse(jtxtVouDate.getText());
-                        add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+//                        add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
                         if (dt.before(sdf.parse(sdf.format(cal.getTime())))) {
                             add_tax_rate = 0.00;
                         }
@@ -3028,11 +3037,11 @@ public class SalesController extends javax.swing.JDialog {
                 jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
                 jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
                 double tax = lb.isNumber(jlblTax);
-                if (add_tax_rate_On == 1) {
+//                if (add_tax_rate_On == 1) {
                     jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
-                } else {
-                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * tax) / 100));
-                }
+//                } else {
+//                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * tax) / 100));
+//                }
             }
         }
     }//GEN-LAST:event_jcmbTaxItemStateChanged
@@ -3349,7 +3358,6 @@ public class SalesController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtAcAliasFocusGained
 
     private void jtxtAcAliasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcAliasFocusLost
-
     }//GEN-LAST:event_jtxtAcAliasFocusLost
 
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
@@ -3384,7 +3392,6 @@ public class SalesController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtAcAliasKeyPressed
 
     private void jtxtAcAliasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyReleased
-
     }//GEN-LAST:event_jtxtAcAliasKeyReleased
 
     private void jtxtCardNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCardNoKeyPressed
@@ -3762,6 +3769,5 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVoucher;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

@@ -61,11 +61,13 @@ public class SalesView extends javax.swing.JInternalFrame {
     private SalesAPI salesAPI;
     private int vType;
     private int formCd;
+    private int tax_type;
 
-    public SalesView(int type, int formCd) {
+    public SalesView(int type, int formCd, int tax_type) {
         initComponents();
         setUpData();
         vType = type;
+        this.tax_type = tax_type;
         this.formCd = formCd;
         salesAPI = lb.getRetrofit().create(SalesAPI.class);
         lb.setDateChooserPropertyInit(jtxtFromDate);
@@ -120,10 +122,10 @@ public class SalesView extends javax.swing.JInternalFrame {
             PurchaseHead call;
             if (formCd == 130) {
                 call = salesAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
             } else {
                 call = salesAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
             }
             if (call != null) {
                 System.out.println(call.toString());
@@ -175,7 +177,6 @@ public class SalesView extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -202,12 +203,11 @@ public class SalesView extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
     private void addPurchaseConroller() {
-        SalesController pc = new SalesController(null, true, vType, formCd, this);
+        SalesController pc = new SalesController(null, true, vType, formCd, this,tax_type);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }
@@ -692,8 +692,6 @@ public class SalesView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         lb.enterFocus(evt, jButton1);
     }//GEN-LAST:event_jComboBox1KeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

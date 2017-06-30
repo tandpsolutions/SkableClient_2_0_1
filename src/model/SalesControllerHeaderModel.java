@@ -60,6 +60,15 @@ public class SalesControllerHeaderModel {
     private String card_no;
     private String tid_no;
     private int add_sr_no;
+    private int tax_type;
+
+    public int getTax_type() {
+        return tax_type;
+    }
+
+    public void setTax_type(int tax_type) {
+        this.tax_type = tax_type;
+    }
 
     public String getRef_cd() {
         return ref_cd;
@@ -452,5 +461,4 @@ public class SalesControllerHeaderModel {
     public void setAdd_sr_no(int add_sr_no) {
         this.add_sr_no = add_sr_no;
     }
-
 }

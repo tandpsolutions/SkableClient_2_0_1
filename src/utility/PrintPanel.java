@@ -98,6 +98,16 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
+                            if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
+                                params.put("tax_title", "Vat");
+                                params.put("add_tax_title", "Add Vat");
+                            } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
+                                params.put("tax_title", "SGST");
+                                params.put("add_tax_title", "CGST");
+                            }else{
+                                params.put("tax_title", "IGST");
+                                params.put("add_tax_title", "");
+                            }
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
@@ -120,8 +130,7 @@ public class PrintPanel extends javax.swing.JDialog {
             Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public void getBulkSalesBillPrint(String ref_no) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
@@ -323,7 +332,6 @@ public class PrintPanel extends javax.swing.JDialog {
                                 lb.reportGenerator("DCPrint.jasper", params, dataSource, jPanel1);
                             }
                         } catch (Exception ex) {
-
                         }
                     }
                 }
@@ -494,7 +502,6 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("dir", System.getProperty("user.dir"));
                             lb.reportGenerator("DCPrintWoAmt.jasper", params, dataSource, jPanel1);
                         } catch (Exception ex) {
-
                         }
                     }
 
