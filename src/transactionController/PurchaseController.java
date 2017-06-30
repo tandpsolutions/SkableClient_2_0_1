@@ -856,6 +856,7 @@ public class PurchaseController extends javax.swing.JDialog {
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         jtxtBillNo.setText(array.get(i).getAsJsonObject().get("BILL_NO").getAsString());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
+                                        tax_type = array.get(i).getAsJsonObject().get("TAX_TYPE").getAsInt();
                                         jtxtName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
 //                                    jtxtAddress.setText(array.get(i).getAsJsonObject().get("ADD1").getAsString());
 //                                    jtxtMobile.setText(array.get(i).getAsJsonObject().get("MOBILE1").getAsString());
@@ -2430,9 +2431,9 @@ public class PurchaseController extends javax.swing.JDialog {
             if (tm != null) {
                 double tax_rate = Double.parseDouble(tm.getTAXPER());
                 double add_tax_rate = Double.parseDouble(tm.getADDTAXPER());
-                if(tax_type == 2){
-                    tax_rate +=add_tax_rate;
-                    add_tax_rate=0;
+                if (tax_type == 2) {
+                    tax_rate += add_tax_rate;
+                    add_tax_rate = 0;
                 }
 //                int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
                 if (tm.getTAXCD().equalsIgnoreCase("T000003")) {
