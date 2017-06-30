@@ -161,6 +161,7 @@ import utility.IMEISearch;
 import utility.NotesView;
 import utility.TagPrint;
 import utility.TagTransfer;
+import utility.UpdateHSN;
 import utility.UserPermission;
 
 /**
@@ -660,6 +661,7 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1935,6 +1937,14 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem29);
 
+        jMenuItem28.setText("Update HSN");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jmnUtility.add(jMenuItem28);
+
         jMenuBar3.add(jmnUtility);
 
         setJMenuBar(jMenuBar3);
@@ -2809,6 +2819,12 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(tv, "Tax Master");
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        // TODO add your handling code here:
+        UpdateHSN updateHSN = new UpdateHSN();
+        addOnScreen(updateHSN, "Update HSN");
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2844,6 +2860,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;

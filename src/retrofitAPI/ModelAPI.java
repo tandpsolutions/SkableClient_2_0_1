@@ -25,6 +25,11 @@ public interface ModelAPI {
     @FormUrlEncoded
     @POST("GetModel")
     Call<JsonObject> GetModel(@Field("model_cd") String model_cd);
+    
+    
+     @FormUrlEncoded
+    @POST("UpdateBulkHSN")
+    Call<JsonObject> updateBulkHSN(@Field("detail") String detail);
 
     @GET("getSetUpData")
     Call<JsonObject> getSetUpData();

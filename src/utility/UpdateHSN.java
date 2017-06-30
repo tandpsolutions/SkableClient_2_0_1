@@ -3,36 +3,36 @@
  * and open the template in the editor.
  */
 
- /*
+/*
  * StockLedger.java
  *
  * Created on Oct 16, 2012, 12:58:30 PM
  */
 package utility;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
+import model.ModelMasterModel;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofitAPI.InventoryAPI;
-import retrofitAPI.SupportAPI;
+import retrofitAPI.ModelAPI;
 import skable.SkableHome;
 import support.Library;
 
@@ -98,7 +98,6 @@ public class UpdateHSN extends javax.swing.JInternalFrame {
         jtxtFilePath = new javax.swing.JTextField();
         jbtnView = new javax.swing.JButton();
         jbtnClose = new javax.swing.JButton();
-        jtxtBranch = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -112,7 +111,7 @@ public class UpdateHSN extends javax.swing.JInternalFrame {
             }
         });
 
-        jbtnView.setText("Transfer");
+        jbtnView.setText("Update");
         jbtnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnViewActionPerformed(evt);
@@ -141,12 +140,10 @@ public class UpdateHSN extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtxtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtxtBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnView, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbtnClose, jbtnView});
@@ -156,10 +153,8 @@ public class UpdateHSN extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtnClose)
-                        .addComponent(jbtnView))
+                    .addComponent(jbtnClose)
+                    .addComponent(jbtnView)
                     .addComponent(jtxtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -194,9 +189,33 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
                 sheetData.add(data);
             }
+            ArrayList<ModelMasterModel> data = new ArrayList<>();
             for (int i = 0; i < sheetData.size(); i++) {
-                
+                final ArrayList row = (ArrayList) sheetData.get(i);
+                final ModelMasterModel model = new ModelMasterModel();
+                model.setMODEL_CD(row.get(1).toString());
+                model.setHSN_CODE(((int) Double.parseDouble(row.get(7).toString())) + "");
+                data.add(model);
             }
+            String dataJson = new Gson().toJson(data);
+
+            try {
+                ModelAPI inventoryAPI = lb.getRetrofit().create(ModelAPI.class);
+                JsonObject call = inventoryAPI.updateBulkHSN(dataJson).execute().body();
+
+                if (call != null) {
+                    JsonObject result = call;
+                    if (result.get("result").getAsInt() == 1) {
+                        this.dispose();
+                    } else {
+                        lb.showMessageDailog(call.get("Cause").getAsString());
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(IMEISearch.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
         } else {
             System.out.println("File access cancelled by user.");
         }
@@ -224,13 +243,11 @@ private void jbtnViewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             jbtnView.requestFocusInWindow();
         }
     }//GEN-LAST:event_jtxtFilePathKeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnView;
-    private javax.swing.JLabel jtxtBranch;
     private javax.swing.JTextField jtxtFilePath;
     // End of variables declaration//GEN-END:variables
 }
