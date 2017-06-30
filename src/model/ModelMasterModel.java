@@ -18,6 +18,15 @@ public class ModelMasterModel {
     private String TYPE_NAME;
     private String SUB_TYPE_NAME;
     private String HSN_CODE;
+    private String GST_CD;
+
+    public String getGST_CD() {
+        return GST_CD;
+    }
+
+    public void setGST_CD(String GST_CD) {
+        this.GST_CD = GST_CD;
+    }
 
     public String getSUB_TYPE_NAME() {
         return SUB_TYPE_NAME;

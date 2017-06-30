@@ -161,6 +161,7 @@ import utility.IMEISearch;
 import utility.NotesView;
 import utility.TagPrint;
 import utility.TagTransfer;
+import utility.UpdateGST;
 import utility.UpdateHSN;
 import utility.UserPermission;
 
@@ -662,6 +663,7 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1945,6 +1947,14 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem28);
 
+        jMenuItem31.setText("Update GST");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jmnUtility.add(jMenuItem31);
+
         jMenuBar3.add(jmnUtility);
 
         setJMenuBar(jMenuBar3);
@@ -2825,6 +2835,12 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(updateHSN, "Update HSN");
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        // TODO add your handling code here:
+        UpdateGST updategst = new UpdateGST();
+        addOnScreen(updategst, "Update GST");
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
@@ -2864,6 +2880,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem5;

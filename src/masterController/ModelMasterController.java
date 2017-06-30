@@ -50,6 +50,7 @@ public class ModelMasterController extends javax.swing.JDialog {
     private String sub_type_cd = "";
     private String brand_cd = "";
     private String tax_cd = "";
+    private String gst_cd = "";
     private ReportTable viewTable = null;
     private TypeAPI typeAPI;
     private ArrayList<TypeMasterModel> typeList;
@@ -99,6 +100,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                             model_cd = array.get(i).getAsJsonObject().get("MODEL_CD").getAsString();
                             brand_cd = array.get(i).getAsJsonObject().get("BRAND_CD").getAsString();
                             tax_cd = array.get(i).getAsJsonObject().get("TAX_NAME").getAsString();
+                            gst_cd = array.get(i).getAsJsonObject().get("GST_CD").getAsString();
                             type_cd = array.get(i).getAsJsonObject().get("TYPE_CD").getAsString();
                             if (!array.get(i).getAsJsonObject().get("SUB_TYPE_CD").isJsonNull()) {
                                 sub_type_cd = array.get(i).getAsJsonObject().get("SUB_TYPE_CD").getAsString();
@@ -111,6 +113,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                             jtxtHsnCode.setText(array.get(i).getAsJsonObject().get("HSN_CODE").getAsString());
                             jcmbType.setSelectedItem(array.get(i).getAsJsonObject().get("TYPE_NAME").getAsString());
                             jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                            jcmbTax1.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
                         }
                         ModelMasterController.this.setVisible(true);
                     }
@@ -123,7 +126,6 @@ public class ModelMasterController extends javax.swing.JDialog {
             public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                 lb.removeGlassPane(ModelMasterController.this);
             }
-
         });
     }
 
@@ -174,6 +176,11 @@ public class ModelMasterController extends javax.swing.JDialog {
 
         if (tax_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Select Valid Tax Code");
+            return;
+        }
+
+        if (gst_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Select Valid GST Code");
             return;
         }
 
@@ -242,9 +249,8 @@ public class ModelMasterController extends javax.swing.JDialog {
         Call<JsonObject> call = modelAPI.AppUpdateModelMaster(model_cd, jtxtModelName.getText(),
                 brand_cd,
                 type_cd,
-                tax_cd, SkableHome.user_id, sub_type_cd,SkableHome.selected_year,jtxtHsnCode.getText());
+                tax_cd, SkableHome.user_id, sub_type_cd, SkableHome.selected_year, jtxtHsnCode.getText(), gst_cd);
         call.enqueue(new Callback<JsonObject>() {
-
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                 lb.removeGlassPane(ModelMasterController.this);
@@ -255,7 +261,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                             mmv.addRow(rspns.body().get("model_cd").getAsString(), jtxtModelName.getText(),
                                     jtxtBrandName.getText(),
                                     (jcmbType.getSelectedItem().toString()).toString(),
-                                    (jcmbTax.getSelectedItem().toString()).toString(),jtxtHsnCode.getText());
+                                    (jcmbTax.getSelectedItem().toString()).toString(), jtxtHsnCode.getText());
                         }
                         ModelMasterController.this.dispose();
                     } else {
@@ -276,8 +282,10 @@ public class ModelMasterController extends javax.swing.JDialog {
 
     private void addTaxCombo() {
         jcmbTax.removeAllItems();
+        jcmbTax1.removeAllItems();
         for (int i = 0; i < Constants.TAX.size(); i++) {
             jcmbTax.addItem(Constants.TAX.get(i).getTAXNAME());
+            jcmbTax1.addItem(Constants.TAX.get(i).getTAXNAME());
         }
     }
 
@@ -326,8 +334,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(ModelMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -352,6 +359,8 @@ public class ModelMasterController extends javax.swing.JDialog {
         jcmbType1 = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jtxtHsnCode = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jcmbTax1 = new javax.swing.JComboBox();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -456,6 +465,20 @@ public class ModelMasterController extends javax.swing.JDialog {
             }
         });
 
+        jLabel7.setText("GST Code");
+
+        jcmbTax1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbTax1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcmbTax1ItemStateChanged(evt);
+            }
+        });
+        jcmbTax1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcmbTax1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -491,7 +514,11 @@ public class ModelMasterController extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtHsnCode)))
+                        .addComponent(jtxtHsnCode))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcmbTax1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -516,6 +543,10 @@ public class ModelMasterController extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcmbTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbTax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -543,7 +574,6 @@ public class ModelMasterController extends javax.swing.JDialog {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         doClose(RET_CANCEL);
     }//GEN-LAST:event_cancelButtonActionPerformed
-
 
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
@@ -574,6 +604,14 @@ public class ModelMasterController extends javax.swing.JDialog {
         for (int i = 0; i < Constants.TAX.size(); i++) {
             if (Constants.TAX.get(i).getTAXNAME().equalsIgnoreCase(jcmbTax.getSelectedItem().toString())) {
                 tax_cd = (Constants.TAX.get(i).getTAXCD());
+                break;
+            }
+        }
+
+
+        for (int i = 0; i < Constants.TAX.size(); i++) {
+            if (Constants.TAX.get(i).getTAXNAME().equalsIgnoreCase(jcmbTax1.getSelectedItem().toString())) {
+                gst_cd = (Constants.TAX.get(i).getTAXCD());
                 break;
             }
         }
@@ -659,7 +697,7 @@ public class ModelMasterController extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             evt.consume();
             jcmbTaxItemStateChanged(null);
-            jcmbType.requestFocusInWindow();
+            jcmbTax1.requestFocusInWindow();
         }
     }//GEN-LAST:event_jcmbTaxKeyPressed
 
@@ -680,15 +718,40 @@ public class ModelMasterController extends javax.swing.JDialog {
 
     private void jtxtHsnCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtHsnCodeFocusGained
         // TODO add your handling code here:
+        lb.selectAll(evt);
     }//GEN-LAST:event_jtxtHsnCodeFocusGained
 
     private void jtxtHsnCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtHsnCodeKeyPressed
         // TODO add your handling code here:
+        lb.enterFocus(evt, jcmbTax);
     }//GEN-LAST:event_jtxtHsnCodeKeyPressed
 
     private void jtxtHsnCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtHsnCodeKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtHsnCodeKeyReleased
+
+    private void jcmbTax1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbTax1ItemStateChanged
+        // TODO add your handling code here:
+        if (formLoad) {
+            for (int i = 0; i < Constants.TAX.size(); i++) {
+                if (Constants.TAX.get(i).getTAXNAME().equalsIgnoreCase(jcmbTax1.getSelectedItem().toString())) {
+                    gst_cd = (Constants.TAX.get(i).getTAXCD());
+                    break;
+                } else {
+                    gst_cd = "";
+                }
+            }
+        }
+    }//GEN-LAST:event_jcmbTax1ItemStateChanged
+
+    private void jcmbTax1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbTax1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            evt.consume();
+            jcmbTaxItemStateChanged(null);
+            jcmbType.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcmbTax1KeyPressed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -703,14 +766,15 @@ public class ModelMasterController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbtnSave;
     private javax.swing.JComboBox jcmbTax;
+    private javax.swing.JComboBox jcmbTax1;
     private javax.swing.JComboBox jcmbType;
     private javax.swing.JComboBox jcmbType1;
     private javax.swing.JTextField jtxtBrandName;
     private javax.swing.JTextField jtxtHsnCode;
     private javax.swing.JTextField jtxtModelName;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

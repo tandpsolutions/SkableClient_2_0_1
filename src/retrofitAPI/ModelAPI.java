@@ -29,6 +29,10 @@ public interface ModelAPI {
     @FormUrlEncoded
     @POST("UpdateBulkHSN")
     Call<JsonObject> updateBulkHSN(@Field("detail") String detail);
+    
+    @FormUrlEncoded
+    @POST("UpdateBulkGstCode")
+    Call<JsonObject> updateBulkGSTCode(@Field("detail") String detail);
 
     @GET("getSetUpData")
     Call<JsonObject> getSetUpData();
@@ -37,5 +41,5 @@ public interface ModelAPI {
     @POST("AppUpdateModelMaster")
     Call<JsonObject> AppUpdateModelMaster(@Field("model_cd") String model_cd, @Field("model_name") String model_name,
             @Field("brand_cd") String brand_cd, @Field("type_cd") String type_cd, @Field("tax_cd") String tax_cd, @Field("user_id") String user_id,
-            @Field("sub_type_cd") String sub_type_cd, @Field("AC_YEAR") String ac_year, @Field("hsn_code") String hsn_code);
+            @Field("sub_type_cd") String sub_type_cd, @Field("AC_YEAR") String ac_year, @Field("hsn_code") String hsn_code, @Field("GST_CD") String gst_cd);
 }
