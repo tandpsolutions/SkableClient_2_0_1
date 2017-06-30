@@ -57,14 +57,16 @@ public class BulkPurchase extends javax.swing.JDialog {
     private String item_name = "";
     boolean flag = false;
     private DefaultTableModel dtm;
+    private int tax_type;
 
     /**
      * Creates new form BulkPurchase
      */
-    public BulkPurchase(java.awt.Frame parent, boolean modal, PurchaseController pc) {
+     public BulkPurchase(java.awt.Frame parent, boolean modal, PurchaseController pc,int tax_type) {
         super(parent, modal);
         initComponents();
         this.pc = pc;
+        this.tax_type =tax_type;
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -132,8 +134,13 @@ public class BulkPurchase extends javax.swing.JDialog {
                                 Vector row = new Vector();
                                 row.add(series.get(i).getSRCD());
                                 row.add(series.get(i).getSRNAME());
-                                row.add(series.get(i).getTAXCD());
-                                row.add(series.get(i).getTAXNAME());
+                                if (tax_type == 0) {
+                                    row.add(series.get(i).getTAXCD());
+                                    row.add(series.get(i).getTAXNAME());
+                                } else {
+                                    row.add(series.get(i).getGSTCD());
+                                    row.add(series.get(i).getGSTNAME());
+                                }
                                 sa.getDtmHeader().addRow(row);
                             }
                             lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
@@ -731,6 +738,10 @@ public class BulkPurchase extends javax.swing.JDialog {
                 double tax_rate = Double.parseDouble(tm.getTAXPER());
                 double add_tax_rate = Double.parseDouble(tm.getADDTAXPER());
                 int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+                if(tax_type == 2){
+                    tax_rate +=add_tax_rate;
+                    add_tax_rate=0;
+                }
                 if (tm.getTAXCD().equalsIgnoreCase("T000003")) {
                     try {
                         final Calendar cal = Calendar.getInstance();

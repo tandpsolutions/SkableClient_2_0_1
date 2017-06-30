@@ -57,11 +57,13 @@ public class PurchaseView extends javax.swing.JInternalFrame {
     private JTextField jtfFilter = new JTextField();
     private PurchaseAPI purchasAPI;
     private int vType;
+    private int tax_type;
 
-    public PurchaseView(int type, int formCd) {
+    public PurchaseView(int type, int formCd, int tax_type) {
         initComponents();
         setUpData();
         vType = type;
+        this.tax_type = tax_type;
         purchasAPI = lb.getRetrofit().create(PurchaseAPI.class);
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
@@ -113,7 +115,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
     public void setData() {
         lb.addGlassPane(this);
         Call<PurchaseHead> call = purchasAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "",
-                 (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "");
+                (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "");
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -164,7 +166,6 @@ public class PurchaseView extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -191,12 +192,11 @@ public class PurchaseView extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
     private void addPurchaseConroller() {
-        PurchaseController pc = new PurchaseController(null, true, vType, this);
+        PurchaseController pc = new PurchaseController(null, true, vType, this, tax_type);
         pc.setLocationRelativeTo(null);
         pc.setData(purchasAPI, ref_no);
         jButton1.doClick();
@@ -455,8 +455,8 @@ public class PurchaseView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,9 +466,9 @@ public class PurchaseView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addContainerGap())))
+                        .addGap(8, 8, 8))))
         );
 
         jpanelNav.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -505,24 +505,22 @@ public class PurchaseView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -676,8 +674,6 @@ public class PurchaseView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         lb.enterFocus(evt, jButton1);
     }//GEN-LAST:event_jComboBox1KeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

@@ -99,7 +99,6 @@ public class PurchaseController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     public String ac_cd = "";
     private String ref_no = "";
@@ -126,13 +125,15 @@ public class PurchaseController extends javax.swing.JDialog {
     private PurchaseView pbv;
     private ArrayList<SchemeMasterModel> detail;
     private HashMap<String, Integer> data;
+    private int tax_type;
 
     /**
      * Creates new form PurchaseController
      */
-    public PurchaseController(java.awt.Frame parent, boolean modal, int type, PurchaseView pbv) {
+    public PurchaseController(java.awt.Frame parent, boolean modal, int type, PurchaseView pbv, int tax_type) {
         super(parent, modal);
         initComponents();
+        this.tax_type = tax_type;
         dtm = (DefaultTableModel) jTable1.getModel();
         dtmTax = (DefaultTableModel) jTable2.getModel();
         this.pbv = pbv;
@@ -169,7 +170,6 @@ public class PurchaseController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -187,8 +187,7 @@ public class PurchaseController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -242,7 +241,6 @@ public class PurchaseController extends javax.swing.JDialog {
                 jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
             }
         } catch (IOException ex) {
-
         }
     }
 
@@ -274,7 +272,6 @@ public class PurchaseController extends javax.swing.JDialog {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -301,7 +298,6 @@ public class PurchaseController extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -328,7 +324,6 @@ public class PurchaseController extends javax.swing.JDialog {
 
         jtxtItem = new javax.swing.JTextField();
         jtxtItem.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 lb.selectAll(e);
@@ -338,11 +333,9 @@ public class PurchaseController extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
                 lb.toUpper(e);
             }
-
         });
 
         jtxtItem.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -358,7 +351,6 @@ public class PurchaseController extends javax.swing.JDialog {
                     }
                 }
             }
-
         });
 
         jtxtIMEI = new javax.swing.JTextField();
@@ -384,7 +376,6 @@ public class PurchaseController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.onlyNumber(e, 15);
             }
-
         });
 
         jtxtSerialNo = new javax.swing.JTextField();
@@ -410,7 +401,6 @@ public class PurchaseController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.fixLength(e, 20);
             }
-
         });
 
         jtxtQty = new javax.swing.JTextField();
@@ -623,7 +613,6 @@ public class PurchaseController extends javax.swing.JDialog {
         jtxtAmount = new javax.swing.JTextField();
 
         jtxtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 lb.selectAll(e);
@@ -731,8 +720,13 @@ public class PurchaseController extends javax.swing.JDialog {
                                 Vector row = new Vector();
                                 row.add(series.get(i).getSRCD());
                                 row.add(series.get(i).getSRNAME());
-                                row.add(series.get(i).getTAXCD());
-                                row.add(series.get(i).getTAXNAME());
+                                if (tax_type == 0) {
+                                    row.add(series.get(i).getTAXCD());
+                                    row.add(series.get(i).getTAXNAME());
+                                } else {
+                                    row.add(series.get(i).getGSTCD());
+                                    row.add(series.get(i).getGSTNAME());
+                                }
                                 row.add(series.get(i).getSRALIAS());
                                 sa.getDtmHeader().addRow(row);
                             }
@@ -766,8 +760,7 @@ public class PurchaseController extends javax.swing.JDialog {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(PurchaseController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -779,7 +772,6 @@ public class PurchaseController extends javax.swing.JDialog {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, ac_cd);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(PurchaseController.this);
@@ -807,8 +799,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     lb.removeGlassPane(PurchaseController.this);
 
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -952,7 +943,6 @@ public class PurchaseController extends javax.swing.JDialog {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(PurchaseController.this);
@@ -1232,6 +1222,7 @@ public class PurchaseController extends javax.swing.JDialog {
         header.setV_DATE(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
         header.setSCHEME_CD(detail.get(jcmbPmt1.getSelectedIndex()).getSCHEME_CD());
         header.setV_TYPE(jcmbType.getSelectedIndex());
+        header.setTAX_TYPE(tax_type);
 
         final ArrayList<PurchaseControllerDetailModel> detail = new ArrayList<PurchaseControllerDetailModel>();
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -1280,7 +1271,6 @@ public class PurchaseController extends javax.swing.JDialog {
                         }
                         if (ref_no.equalsIgnoreCase("")) {
                             SwingWorker worker = new SwingWorker() {
-
                                 @Override
                                 protected Object doInBackground() throws Exception {
 //                                    lb.displayPurchaseVoucherEmail(header, detail);
@@ -1518,11 +1508,11 @@ public class PurchaseController extends javax.swing.JDialog {
             }
         });
         jtxtBillNo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtBillNoKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtBillNoKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtBillNoKeyPressed(evt);
             }
         });
 
@@ -1842,47 +1832,45 @@ public class PurchaseController extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(130);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(7).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(7).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(11).setResizable(false);
-            jTable1.getColumnModel().getColumn(11).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(12).setResizable(false);
-            jTable1.getColumnModel().getColumn(12).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(13).setResizable(false);
-            jTable1.getColumnModel().getColumn(13).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(14).setResizable(false);
-            jTable1.getColumnModel().getColumn(14).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(15).setResizable(false);
-            jTable1.getColumnModel().getColumn(15).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(16).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(16).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(16).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(17).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(17).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(17).setMaxWidth(0);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(130);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(7).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(11).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(12).setResizable(false);
+        jTable1.getColumnModel().getColumn(12).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(13).setResizable(false);
+        jTable1.getColumnModel().getColumn(13).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(14).setResizable(false);
+        jTable1.getColumnModel().getColumn(14).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(15).setResizable(false);
+        jTable1.getColumnModel().getColumn(15).setPreferredWidth(50);
+        jTable1.getColumnModel().getColumn(16).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(16).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(16).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(17).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(17).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(17).setMaxWidth(0);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -2102,7 +2090,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1333, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1357, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -2169,11 +2157,11 @@ public class PurchaseController extends javax.swing.JDialog {
                                 .addGap(33, 33, 33))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jbtnBulkPurchase)
-                                        .addComponent(jButton2)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton1)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jbtnBulkPurchase, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -2442,7 +2430,11 @@ public class PurchaseController extends javax.swing.JDialog {
             if (tm != null) {
                 double tax_rate = Double.parseDouble(tm.getTAXPER());
                 double add_tax_rate = Double.parseDouble(tm.getADDTAXPER());
-                int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+                if(tax_type == 2){
+                    tax_rate +=add_tax_rate;
+                    add_tax_rate=0;
+                }
+//                int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
                 if (tm.getTAXCD().equalsIgnoreCase("T000003")) {
                     try {
                         final Calendar cal = Calendar.getInstance();
@@ -2450,7 +2442,7 @@ public class PurchaseController extends javax.swing.JDialog {
                         cal.set(Calendar.DATE, 1);
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         java.util.Date dt = sdf.parse(jtxtVouDate.getText());
-                        add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
+//                        add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
                         if (dt.before(sdf.parse(sdf.format(cal.getTime())))) {
                             add_tax_rate = 0.00;
                         }
@@ -2462,11 +2454,11 @@ public class PurchaseController extends javax.swing.JDialog {
                 jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
                 jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
                 double tax = lb.isNumber(jlblTax);
-                if (add_tax_rate_On == 1) {
-                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
-                } else {
-                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * tax) / 100));
-                }
+//                if (add_tax_rate_On == 1) {
+//                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
+//                } else {
+                jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * tax) / 100));
+//                }
             }
         }
     }//GEN-LAST:event_jcmbTaxItemStateChanged
@@ -2803,7 +2795,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
     private void jbtnBulkPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBulkPurchaseActionPerformed
         // TODO add your handling code here:
-        BulkPurchase bp = new BulkPurchase(null, true, this);
+        BulkPurchase bp = new BulkPurchase(null, true, this, tax_type);
         bp.setLocationRelativeTo(null);
         bp.setVisible(true);
     }//GEN-LAST:event_jbtnBulkPurchaseActionPerformed
@@ -2917,6 +2909,5 @@ public class PurchaseController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVoucher;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }
