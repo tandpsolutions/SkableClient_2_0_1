@@ -225,6 +225,10 @@ public class SkableHome extends javax.swing.JFrame {
 
         InactivityListener listener = new InactivityListener(this, logout, 10);
 //        listener.start();
+        
+        jMenu12.setVisible(false);
+        jMenu13.setVisible(false);
+        jMenu10.setVisible(false);
     }
 
     private void setTrayIcon() {

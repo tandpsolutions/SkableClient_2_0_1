@@ -94,7 +94,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "IPearl");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -104,7 +104,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
                                 params.put("tax_title", "SGST");
                                 params.put("add_tax_title", "CGST");
-                            }else{
+                            } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
                             }
@@ -156,7 +156,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "IPearl");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -208,7 +208,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "IPearl");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -260,7 +260,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "IPearl");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -290,11 +290,11 @@ public class PrintPanel extends javax.swing.JDialog {
     public void generateDummyPrint(String data, String to, String mobile, String imei, String rs, String days, String item) {
         HashMap params = new HashMap();
         params.put("dir", System.getProperty("user.dir"));
-        params.put("comp_name", "iPearl");
-        params.put("add1", "GF: 3,4 Goyal Terrace,OPP. :: N.R.I Tower, Judges Bunglow Road,");
-        params.put("add2", "Bodakdev");
-        params.put("city", "Ahmedabad");
-        params.put("pin", "380015");
+        params.put("comp_name", Constants.COMPANY_NAME);
+        params.put("add1", SkableHome.selected_branch.getAddress1());
+        params.put("add2", SkableHome.selected_branch.getAddress2());
+        params.put("city", SkableHome.selected_branch.getAddress3());
+        params.put("pin", "");
         params.put("data", data);
         params.put("for", to);
         params.put("mobile", mobile);
@@ -410,7 +410,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "IPEARL");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             if (type == 0) {
                                 params.put("title", "Debit Note");
                             } else {

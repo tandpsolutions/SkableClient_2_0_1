@@ -48,6 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.AccountAPI;
 import retrofitAPI.StartUpAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
@@ -87,8 +88,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -121,7 +121,6 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -148,7 +147,6 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -184,8 +182,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
     private void jbtnViewActionPerformedRoutine() {
         try {
-            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
-            );
+            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -226,7 +223,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
                         if (!array.get(i).getAsJsonObject().get("FNAME").isJsonNull()) {
                             row.add(array.get(i).getAsJsonObject().get("FNAME").getAsString());
-                        }else{
+                        } else {
                             row.add("");
                         }
                         dtm.addRow(row);
@@ -271,8 +268,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
     private void jbtnPreviewActionPerformedRoutine() {
         try {
-            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
-            );
+            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -296,14 +292,13 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                         params.put("fromDate", jtxtFromDate.getText());
                         params.put("toDate", jtxtToDate.getText());
                         params.put("ac_name", jtxtAcName.getText());
-                        params.put("comp_name", "iPearl");
-                        params.put("add1", "GF: 3,4 Goyal Terrace,OPP. :: N.R.I Tower, Judges Bunglow Road,");
-                        params.put("add2", "Bodakdev");
-                        params.put("city", "Ahmedabad");
-                        params.put("pin", "380015");
+                        params.put("comp_name", Constants.COMPANY_NAME);
+                        params.put("add1", SkableHome.selected_branch.getAddress1());
+                        params.put("add2", SkableHome.selected_branch.getAddress2());
+                        params.put("city", SkableHome.selected_branch.getAddress3());
+                        params.put("pin", "");
                         lb.reportGenerator("GeneralLedgerNew.jasper", params, dataSource, jPanel1);
                     } catch (Exception ex) {
-
                     }
                 } else {
                     lb.showMessageDailog(call.get("Cause").getAsString());
@@ -316,8 +311,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
     private void jbtnEmailActionPerformedRoutine() {
         try {
-            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
-            );
+            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
@@ -341,14 +335,13 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
                         params.put("fromDate", jtxtFromDate.getText());
                         params.put("toDate", jtxtToDate.getText());
                         params.put("ac_name", jtxtAcName.getText());
-                        params.put("comp_name", "iPearl");
-                        params.put("add1", "GF: 3,4 Goyal Terrace,OPP. :: N.R.I Tower, Judges Bunglow Road,");
-                        params.put("add2", "Bodakdev");
-                        params.put("city", "Ahmedabad");
-                        params.put("pin", "380015");
+                        params.put("comp_name", Constants.COMPANY_NAME);
+                        params.put("add1", SkableHome.selected_branch.getAddress1());
+                        params.put("add2", SkableHome.selected_branch.getAddress2());
+                        params.put("city", SkableHome.selected_branch.getAddress3());
+                        params.put("pin", "");
                         lb.reportGeneratorEmail("GeneralLedgerNew.jasper", params, dataSource, email, ac_cd);
                     } catch (Exception ex) {
-
                     }
                 } else {
                     lb.showMessageDailog(call.get("Cause").getAsString());
@@ -364,7 +357,6 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(GeneralLedger1.this);
@@ -725,7 +717,6 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnCloseKeyPressed
 
-
     private void jbtnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPreviewActionPerformed
         // TODO add your handling code here:
         jbtnPreviewActionPerformedRoutine();
@@ -879,7 +870,6 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 //            }
 //        }
     }//GEN-LAST:event_jTable1KeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

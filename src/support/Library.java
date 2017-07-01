@@ -500,7 +500,7 @@ public class Library {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "iPearl");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             reportGeneratorEmail("SalesInvoicePDF.jasper", params, dataSource, array.get(0).getAsJsonObject().get("EMAIL").getAsString(), ref_no);

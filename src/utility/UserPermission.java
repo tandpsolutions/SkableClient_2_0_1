@@ -21,6 +21,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import retrofitAPI.UserAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 
@@ -54,7 +55,7 @@ public class UserPermission extends javax.swing.JInternalFrame {
 
     private void setUserValues() {
         try {
-            root = new DefaultMutableTreeNode("IPearl", true);
+            root = new DefaultMutableTreeNode(Constants.COMPANY_NAME, true);
             jTree1.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
             jTree1.setModel(new DefaultTreeModel(root));
             model = (DefaultTreeModel) (jTree1.getModel());
@@ -209,13 +210,12 @@ public class UserPermission extends javax.swing.JInternalFrame {
         try {
             JsonObject call = userAPI.
                     ApplyUserRights(form_cd, user_grp_cd, getPrivilegesValues()[0], getPrivilegesValues()[1], getPrivilegesValues()[2],
-                            getPrivilegesValues()[3], getPrivilegesValues()[4]).execute().body();
+                    getPrivilegesValues()[3], getPrivilegesValues()[4]).execute().body();
 
             boolean[] flag = new boolean[6];
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
-
                 } else {
                     lb.showMessageDailog(call.get("Cause").getAsString());
                     setPrivilegesValues(flag);
@@ -419,7 +419,6 @@ public class UserPermission extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jbtnCloseActionPerformed
 
-
     private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
         changePath = evt.getPath();
         DefaultMutableTreeNode selectedNode = new DefaultMutableTreeNode(changePath.getLastPathComponent());
@@ -444,7 +443,6 @@ public class UserPermission extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jTree1ValueChanged
-
 
     private void jbtnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnApplyActionPerformed
         // TODO add your handling code here:
@@ -501,8 +499,6 @@ public class UserPermission extends javax.swing.JInternalFrame {
     private void jCheckBox5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox5StateChanged
         jbtnApply.requestFocusInWindow();
     }//GEN-LAST:event_jCheckBox5StateChanged
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
