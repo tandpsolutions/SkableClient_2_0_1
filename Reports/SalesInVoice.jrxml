@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.3310000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="1040"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -10,6 +10,8 @@
 	<parameter name="tax_data" class="net.sf.jasperreports.engine.data.JsonDataSource">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tax_title" class="java.lang.String"/>
+	<parameter name="add_tax_title" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select INV_NO,V_TYPE,V_DATE,(a.FNAME||a.mname||a.lname) as ac_name,(a1.ADD1||a1.add2||a1.add3) as address,p.EMAIL,p.MOBILE1,s.SR_NAME,v1.IMEI_NO,
 v1.SERAIL_NO,v1.QTY,v1.RATE,v1.AMT,v.DET_TOT,v.TAX_AMT,v.ADD_TAX_AMT,v.ADVANCE_AMT,v.NET_AMT,p1.CASH_AMT,p1.BANK_AMT,p1.CARD_AMT,p1.CHEQUE_NO,
@@ -135,6 +137,12 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<field name="DISCOUNT" class="java.lang.Double">
 		<fieldDescription><![CDATA[DISCOUNT]]></fieldDescription>
 	</field>
+	<field name="HSN_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[HSN_CODE]]></fieldDescription>
+	</field>
+	<field name="GST_NO" class="java.lang.String">
+		<fieldDescription><![CDATA[GST_NO]]></fieldDescription>
+	</field>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{AMT}]]></variableExpression>
 	</variable>
@@ -206,7 +214,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Retail Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Retail Insurance Invoice"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Sales Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Sales Invoice"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="0" y="91" width="555" height="15"/>
@@ -225,7 +233,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?$F{INV_NO}:($F{V_TYPE}==1)?"TI-"+$F{INV_NO}:"RI-"+$F{INV_NO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?$F{INV_NO}:($F{V_TYPE}==1)?"TI-"+$F{INV_NO}:"SI-"+$F{INV_NO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="dbeabd35-2542-47cb-acd2-2adf79798d32" mode="Transparent" x="89" y="185" width="80" height="15"/>
@@ -297,7 +305,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Customer's Tin :"+$F{TIN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Customer's GST : "+$F{GST_NO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="151" width="555" height="15"/>
@@ -308,7 +316,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's Email :"+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6fa65429-5664-4cdd-bc7b-5364aa5e3984" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="166" width="555" height="15">
+				<reportElement uuid="6fa65429-5664-4cdd-bc7b-5364aa5e3984" stretchType="RelativeToBandHeight" mode="Transparent" x="216" y="166" width="339" height="15">
 					<printWhenExpression><![CDATA[$F{V_TYPE}==1 && $F{PMT_DAYS} != 0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="4" rightPadding="2"/>
@@ -316,6 +324,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Payment Terms "+$F{PMT_DAYS}+" Days"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="166" width="215" height="15"/>
+				<box leftPadding="4" rightPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Customer's State Code: 24"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -412,7 +428,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tax]]></text>
+				<text><![CDATA[Tax Amt]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="120b4e32-7951-429d-9bee-d70ad0137b06" x="447" y="0" width="53" height="30" forecolor="#000000"/>
@@ -424,12 +440,12 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Vat]]></text>
+				<text><![CDATA[Tax Type]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="13" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="58952e66-cc1a-4ffd-a171-83739ef8b9b8" stretchType="RelativeToTallestObject" x="500" y="0" width="53" height="13"/>
 				<box rightPadding="2"/>
@@ -494,6 +510,13 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TAX}+$F{ADD_TAX}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8941f662-6ba1-46ad-80bb-c4b1d0cb7362" stretchType="RelativeToTallestObject" x="19" y="13" width="197" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["HSN : "+$F{HSN_CODE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -683,7 +706,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Tax : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tax_title}+" : "]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="71" width="79" height="13" forecolor="#000000"/>
@@ -731,14 +754,14 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Add Tax : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{add_tax_title}+" : "]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f" x="0" y="255" width="318" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Tin "+$P{tin_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["GST No "+$P{tin_no}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="3" width="101" height="15"/>
@@ -977,7 +1000,15 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[IMEI NO]]></text>
 			</staticText>
 			<subreport isUsingCache="false" runToBottom="true">
-				<reportElement uuid="895f1a1c-24f7-475d-8016-3650e23faf00" positionType="Float" mode="Transparent" x="0" y="113" width="169" height="39"/>
+				<reportElement uuid="895f1a1c-24f7-475d-8016-3650e23faf00" positionType="Float" mode="Transparent" x="0" y="113" width="169" height="39">
+					<propertyExpression name="add_tax_title"><![CDATA[$P{add_tax_title}]]></propertyExpression>
+				</reportElement>
+				<subreportParameter name="tax_title">
+					<subreportParameterExpression><![CDATA[$P{tax_title}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="add_tax_title">
+					<subreportParameterExpression><![CDATA[$P{add_tax_title}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[$P{tax_data}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{dir} + File.separatorChar+"Reports"+File.separatorChar+"sales_tax.jasper"]]></subreportExpression>
 			</subreport>
@@ -1003,13 +1034,6 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sum_disc}+$F{DISCOUNT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="2379f1f5-cb4c-4b48-a08e-eaebdc935418" x="0" y="275" width="318" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["CST 24573608828"]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
