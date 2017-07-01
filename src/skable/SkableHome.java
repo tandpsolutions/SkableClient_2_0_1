@@ -226,9 +226,6 @@ public class SkableHome extends javax.swing.JFrame {
         InactivityListener listener = new InactivityListener(this, logout, 10);
 //        listener.start();
         
-        jMenu12.setVisible(false);
-        jMenu13.setVisible(false);
-        jMenu10.setVisible(false);
     }
 
     private void setTrayIcon() {
@@ -2918,13 +2915,13 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnRetailInvoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice1ActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(0, 13, 1);
+        SalesView sb = new SalesView(4, 13, 1);
         addOnScreen(sb, "Sales Invoice Local View");
     }//GEN-LAST:event_jmnRetailInvoice1ActionPerformed
 
     private void jmnRetailInvoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice4ActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(0, 13, 2);
+        SalesView sb = new SalesView(4, 13, 2);
         addOnScreen(sb, "Sales Invoice Outside View");
     }//GEN-LAST:event_jmnRetailInvoice4ActionPerformed
 

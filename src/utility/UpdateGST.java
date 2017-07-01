@@ -194,7 +194,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             for (int i = 0; i < sheetData.size(); i++) {
                 final ArrayList row = (ArrayList) sheetData.get(i);
                 final ModelMasterModel model = new ModelMasterModel();
-                model.setMODEL_CD(row.get(0).toString());
+                model.setMODEL_CD(row.get(1).toString());
                 String gst_cd = "";
                 for (int j = 0; j < Constants.TAX.size(); j++) {
                     if (Constants.TAX.get(j).getTAXNAME().equalsIgnoreCase(row.get(8).toString())) {
