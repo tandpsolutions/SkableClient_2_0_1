@@ -65,7 +65,7 @@ public class SelectIP extends javax.swing.JFrame {
 
     private void validateLogin() {
         Constants.HOST1 = jComboBox3.getSelectedItem().toString();
-        Constants.BASE_URL = "http://" + Constants.HOST1 + "/" + Constants.FOLDER + "/";
+        Constants.BASE_URL = "http://" + Constants.HOST1 + "/" + Constants.FOLDER_NEW + "/";
         Library.getInstance().makeConnection();
         try {
             setUpBaseData();
