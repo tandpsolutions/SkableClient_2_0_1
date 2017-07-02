@@ -104,11 +104,11 @@ public class PrintPanel extends javax.swing.JDialog {
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
                                 params.put("tax_title", "SGST");
                                 params.put("add_tax_title", "CGST");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("GST_NO").getAsString()));
+                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("GST_NO").getAsString()));
+                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
