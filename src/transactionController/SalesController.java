@@ -1538,21 +1538,21 @@ public class SalesController extends javax.swing.JDialog {
             }
         }
 
-        if (jcmbType.getSelectedIndex() == 1) {
-            if (lb.isBlank(jtxtTin)) {
-                lb.showMessageDailog("Please enter tin number");
-                return false;
-            }
-            if (lb.isBlank(jtxtPmtDays)) {
-                lb.showMessageDailog("Please enter pmt days");
-                return false;
-            }
-        } else {
-            if (!lb.isBlank(jtxtTin)) {
-                lb.showMessageDailog("Please create tax invoice");
-                return false;
-            }
-        }
+//        if (jcmbType.getSelectedIndex() == 1) {
+//            if (lb.isBlank(jtxtTin)) {
+//                lb.showMessageDailog("Please enter tin number");
+//                return false;
+//            }
+//            if (lb.isBlank(jtxtPmtDays)) {
+//                lb.showMessageDailog("Please enter pmt days");
+//                return false;
+//            }
+//        } else {
+//            if (!lb.isBlank(jtxtTin)) {
+//                lb.showMessageDailog("Please create tax invoice");
+//                return false;
+//            }
+//        }
 
         if (jcmbPmt.getSelectedIndex() == 1) {
             if (jcmbRefBy.getSelectedIndex() == 0) {
@@ -1566,15 +1566,15 @@ public class SalesController extends javax.swing.JDialog {
             return false;
         }
 
-        if (lb.isNumber(jtxtInsAmt) > 0) {
-            if (jcmbType.getSelectedIndex() != 2) {
-                lb.showMessageDailog("Please make Retail Insurance Bill");
-                return false;
-            } else if ((!lb.isBlank(jtxtInstItemName)) && ins_cd.equalsIgnoreCase("")) {
-                lb.showMessageDailog("Please select valid insurance product");
-                return false;
-            }
-        }
+//        if (lb.isNumber(jtxtInsAmt) > 0) {
+//            if (jcmbType.getSelectedIndex() != 2) {
+//                lb.showMessageDailog("Please make Retail Insurance Bill");
+//                return false;
+//            } else if ((!lb.isBlank(jtxtInstItemName)) && ins_cd.equalsIgnoreCase("")) {
+//                lb.showMessageDailog("Please select valid insurance product");
+//                return false;
+//            }
+//        }
 
         if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
             lb.showMessageDailog("Invalid Voucher Date");
