@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="944"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -214,7 +214,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Sales Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Sales Invoice"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Retail Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Sales Invoice"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="0" y="91" width="555" height="15"/>
@@ -766,7 +766,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["GST No "+$P{tin_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tin_no}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="75d574ac-cda5-4bf0-b5ac-f35a7bcb47bf" x="452" y="3" width="101" height="15"/>
