@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
-	<property name="ireport.zoom" value="0.8467108950806702"/>
+	<property name="ireport.zoom" value="1.8150000000000097"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="706"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -10,6 +10,8 @@
 	<parameter name="tax_data" class="net.sf.jasperreports.engine.data.JsonDataSource">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tax_title" class="java.lang.String"/>
+	<parameter name="add_tax_title" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select INV_NO,V_TYPE,V_DATE,(a.FNAME||a.mname||a.lname) as ac_name,(a1.ADD1||a1.add2||a1.add3) as address,p.EMAIL,p.MOBILE1,s.SR_NAME,v1.IMEI_NO,
 v1.SERAIL_NO,v1.QTY,v1.RATE,v1.AMT,v.DET_TOT,v.TAX_AMT,v.ADD_TAX_AMT,v.ADVANCE_AMT,v.NET_AMT,p1.CASH_AMT,p1.BANK_AMT,p1.CARD_AMT,p1.CHEQUE_NO,
@@ -95,6 +97,12 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	</field>
 	<field name="TAG_NO" class="java.lang.String">
 		<fieldDescription><![CDATA[TAG_NO]]></fieldDescription>
+	</field>
+	<field name="HSN_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[HSN_CODE]]></fieldDescription>
+	</field>
+	<field name="GST_NO" class="java.lang.String">
+		<fieldDescription><![CDATA[GST_NO]]></fieldDescription>
 	</field>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{AMT}]]></variableExpression>
@@ -391,7 +399,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")+"\n"+"HSN : "+$F{HSN_CODE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -581,7 +589,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Tax : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tax_title}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="373" y="45" width="79" height="13" forecolor="#000000"/>
@@ -629,7 +637,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Add Tax : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{add_tax_title}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f" x="0" y="265" width="318" height="20"/>
@@ -743,6 +751,12 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 			</textField>
 			<subreport isUsingCache="false" runToBottom="true">
 				<reportElement uuid="895f1a1c-24f7-475d-8016-3650e23faf00" positionType="Float" mode="Transparent" x="0" y="113" width="169" height="39"/>
+				<subreportParameter name="tax_title">
+					<subreportParameterExpression><![CDATA[$P{tax_title}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="add_tax_title">
+					<subreportParameterExpression><![CDATA[$P{add_tax_title}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[$P{tax_data}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{dir} + "/Reports/sales_tax.jasper"]]></subreportExpression>
 			</subreport>
