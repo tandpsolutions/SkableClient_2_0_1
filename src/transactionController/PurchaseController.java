@@ -780,7 +780,9 @@ public class PurchaseController extends javax.swing.JDialog {
                         JsonObject header = (JsonObject) response.body();
                         if (header.get("result").getAsInt() == 1) {
                             if (header.get("data").getAsJsonArray().size() != 0) {
-                                jtxtRate.setText(header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").getAsString());
+                                if(!header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").isJsonNull()){
+                                    jtxtRate.setText(header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").getAsString());
+                                }
                             } else {
                                 jtxtRate.setText("0.00");
                             }

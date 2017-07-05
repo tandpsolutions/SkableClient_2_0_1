@@ -676,8 +676,6 @@ public class SkableHome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane1.setLayout(null);
-
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
 
@@ -783,7 +781,7 @@ public class SkableHome extends javax.swing.JFrame {
         jmnMaster.add(jmnSeriesMst);
 
         jmnTaxMst.setMnemonic('T');
-        jmnTaxMst.setText("Tax Master");
+        jmnTaxMst.setText("Type Master");
         jmnTaxMst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmnTaxMstActionPerformed(evt);
@@ -2117,6 +2115,8 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnTaxMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxMstActionPerformed
         // TODO add your handling code here:
+        TypeMasterView tmv = new TypeMasterView(9);
+        addOnScreen(tmv, "Type Master");
     }//GEN-LAST:event_jmnTaxMstActionPerformed
 
     private void jmnRDPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRDPurchaseActionPerformed

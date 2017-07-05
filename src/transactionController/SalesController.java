@@ -1717,7 +1717,7 @@ public class SalesController extends javax.swing.JDialog {
                             worker = new SwingWorker() {
                                 @Override
                                 protected Object doInBackground() throws Exception {
-                                    lb.getSalesBillPrint(object.get("ref_no").getAsString());
+//                                    lb.getSalesBillPrint(object.get("ref_no").getAsString());
                                     return null;
                                 }
                             };

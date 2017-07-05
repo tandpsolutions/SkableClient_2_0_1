@@ -119,7 +119,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jmnTaxMst">
               <Properties>
                 <Property name="mnemonic" type="int" value="84"/>
-                <Property name="text" type="java.lang.String" value="Tax Master"/>
+                <Property name="text" type="java.lang.String" value="Type Master"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmnTaxMstActionPerformed"/>
@@ -1556,9 +1556,7 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
       </AuxValues>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
     </Container>
   </SubComponents>
 </Form>
