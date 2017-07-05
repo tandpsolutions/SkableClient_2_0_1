@@ -225,7 +225,7 @@ public class SkableHome extends javax.swing.JFrame {
 
         InactivityListener listener = new InactivityListener(this, logout, 10);
 //        listener.start();
-        
+
     }
 
     private void setTrayIcon() {
@@ -525,6 +525,8 @@ public class SkableHome extends javax.swing.JFrame {
         jMenu13 = new javax.swing.JMenu();
         jmnRetailInvoice1 = new javax.swing.JMenuItem();
         jmnRetailInvoice4 = new javax.swing.JMenuItem();
+        jmnSalesReturn1 = new javax.swing.JMenuItem();
+        jmnSalesReturn2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jmnCashPayment = new javax.swing.JMenuItem();
         jmnCashRcpt = new javax.swing.JMenuItem();
@@ -673,6 +675,8 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem31 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jDesktopPane1.setLayout(null);
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
@@ -878,6 +882,24 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jMenu13.add(jmnRetailInvoice4);
+
+        jmnSalesReturn1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jmnSalesReturn1.setText("Sales Return Local");
+        jmnSalesReturn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnSalesReturn1ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnSalesReturn1);
+
+        jmnSalesReturn2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jmnSalesReturn2.setText("Sales Return Outside");
+        jmnSalesReturn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnSalesReturn2ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnSalesReturn2);
 
         jmnTransaction.add(jMenu13);
 
@@ -2129,7 +2151,7 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnSalesReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturnActionPerformed
         // TODO add your handling code here:
-        SalesReturnView srv = new SalesReturnView(0, 15);
+        SalesReturnView srv = new SalesReturnView(0, 15, 0);
         addOnScreen(srv, "Sales Return View");
     }//GEN-LAST:event_jmnSalesReturnActionPerformed
 
@@ -2925,6 +2947,18 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(sb, "Sales Invoice Outside View");
     }//GEN-LAST:event_jmnRetailInvoice4ActionPerformed
 
+    private void jmnSalesReturn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturn1ActionPerformed
+        // TODO add your handling code here:
+        SalesReturnView srv = new SalesReturnView(0, 15, 1);
+        addOnScreen(srv, "Sales Return Local View");
+    }//GEN-LAST:event_jmnSalesReturn1ActionPerformed
+
+    private void jmnSalesReturn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturn2ActionPerformed
+        // TODO add your handling code here:
+        SalesReturnView srv = new SalesReturnView(0, 15, 2);
+        addOnScreen(srv, "Sales Return Outside View");
+    }//GEN-LAST:event_jmnSalesReturn2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -3055,6 +3089,8 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnSalesReportTax1;
     private javax.swing.JMenuItem jmnSalesReportTax2;
     private javax.swing.JMenuItem jmnSalesReturn;
+    private javax.swing.JMenuItem jmnSalesReturn1;
+    private javax.swing.JMenuItem jmnSalesReturn2;
     private javax.swing.JMenuItem jmnSalesReturnRegister;
     private javax.swing.JMenuItem jmnSalesReturnRegisterDetail;
     private javax.swing.JMenuItem jmnSalesmanMaster;

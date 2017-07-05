@@ -1398,7 +1398,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("05")) {
             if (SkableHome.userRightsMap.get(10).getEDITS().equalsIgnoreCase("1")) {
-                PurchaseController sbc = new PurchaseController(null, true, 0, null,-1);
+                PurchaseController sbc = new PurchaseController(null, true, 0, null, -1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
             } else {
@@ -1462,7 +1462,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("SR")) {
             if (SkableHome.userRightsMap.get(15).getEDITS().equalsIgnoreCase("1")) {
-                SalesReturnController sbc = new SalesReturnController(null, true, null);
+                SalesReturnController sbc = new SalesReturnController(null, true, null, -1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {
