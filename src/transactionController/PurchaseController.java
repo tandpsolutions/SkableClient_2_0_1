@@ -780,7 +780,7 @@ public class PurchaseController extends javax.swing.JDialog {
                         JsonObject header = (JsonObject) response.body();
                         if (header.get("result").getAsInt() == 1) {
                             if (header.get("data").getAsJsonArray().size() != 0) {
-                                if(!header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").isJsonNull()){
+                                if (!header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").isJsonNull()) {
                                     jtxtRate.setText(header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").getAsString());
                                 }
                             } else {
@@ -2456,12 +2456,7 @@ public class PurchaseController extends javax.swing.JDialog {
                 double taxable = (lb.isNumber2(jtxtRate.getText()) * 100) / (100 + tax_rate + add_tax_rate);
                 jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
                 jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
-                double tax = lb.isNumber(jlblTax);
-//                if (add_tax_rate_On == 1) {
-//                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
-//                } else {
-                jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * tax) / 100));
-//                }
+                jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
             }
         }
     }//GEN-LAST:event_jcmbTaxItemStateChanged
