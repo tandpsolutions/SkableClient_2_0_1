@@ -170,7 +170,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     public void setData(final String sr_cd, final String sr_alias, final String sr_name, final String brand_name, final String model_name,
-            final String memory_name, final String color_name, final String type, final String sub_type, final String tax_name) {
+            final String memory_name, final String color_name, final String type, final String sub_type, final String tax_name,final String ram_name,final String camera_name,final String battery_name) {
 
         Call<JsonObject> call = seriesAPI.getSetUpData(sr_cd);
         lb.addGlassPane(this);
@@ -183,6 +183,9 @@ public class SeriesMasterController extends javax.swing.JDialog {
                         model_cd = rspns.body().get("MODEL_CD").getAsString();
                         memory_cd = rspns.body().get("MEMORY_CD").getAsString();
                         color_cd = rspns.body().get("COLOUR_CD").getAsString();
+                        ram_cd = rspns.body().get("RAM_CD").getAsString();
+                        camera_cd = rspns.body().get("CAMERA_CD").getAsString();
+                        battery_cd = rspns.body().get("BATTERY_CD").getAsString();
                         SeriesMasterController.this.sr_cd = sr_cd;
                         jtxtItemName.setText(sr_name);
                         jtxtSeriesAlias.setText(sr_alias);
@@ -193,6 +196,9 @@ public class SeriesMasterController extends javax.swing.JDialog {
                         jlblTypeName.setText(type);
                         jlblSubTypeName.setText(sub_type);
                         jlblTaxName.setText(tax_name);
+                        jtxtRam.setText(ram_name);
+                        jtxtCamera.setText(camera_name);
+                        jtxtBattery.setText(battery_name);
                         jtxtQty.setText(rspns.body().get("OPB_QTY").getAsString());
                         jtxtVal.setText(rspns.body().get("OPB_VAL").getAsString());
                         final String detailJson = rspns.body().get("data").getAsString();
@@ -227,7 +233,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     private void addName() {
-        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtMemoryName.getText() + " " + jtxtColorName.getText());
+        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtMemoryName.getText() + " " + jtxtColorName.getText()+ " " + jtxtRam.getText()+ " " + jtxtCamera.getText()+ " " + jtxtBattery.getText());
     }
 
     private void setModelData(String param_cd, String value) {
@@ -676,6 +682,22 @@ public class SeriesMasterController extends javax.swing.JDialog {
             lb.showMessageDailog("Enter valid Color Name");
             return;
         }
+        
+        
+        if (ram_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Enter valid Ram Name");
+            return;
+        }
+        
+        if (camera_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Enter valid Camera Name");
+            return;
+        }
+        
+        if (battery_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Enter valid Battery Name");
+            return;
+        }
 
         if (jTable1.getRowCount() != 0) {
             if (lb.isNumber(jlblTotal) != lb.isNumber(jtxtVal)) {
@@ -771,7 +793,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
         }
         String detailJson = new Gson().toJson(detail);
         Call<JsonObject> call = seriesAPI.appUpdateSeriesMaster(sr_cd, jtxtSeriesAlias.getText(), jtxtItemName.getText(),
-                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal),SkableHome.selected_year);
+                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal),SkableHome.selected_year,ram_cd,camera_cd,battery_cd);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1643,7 +1665,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private void jtxtRamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtRamKeyPressed
         // TODO add your handling code here:
         if(lb.isEnter(evt)){
-            setRamMaster(ram_cd, jtxtRam.getText());
+            setRamMaster("40", jtxtRam.getText());
         }
     }//GEN-LAST:event_jtxtRamKeyPressed
 
@@ -1656,7 +1678,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private void jtxtCameraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCameraKeyPressed
         // TODO add your handling code here:
         if(lb.isEnter(evt)){
-            setcameraMaster(ram_cd, jtxtCamera.getText());
+            setcameraMaster("41", jtxtCamera.getText());
         }
     }//GEN-LAST:event_jtxtCameraKeyPressed
 
@@ -1669,7 +1691,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private void jtxtBatteryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBatteryKeyPressed
         // TODO add your handling code here:
         if(lb.isEnter(evt)){
-            setRamMaster(ram_cd, jtxtBattery.getText());
+            setBatteryMaster("42", jtxtBattery.getText());
         }
     }//GEN-LAST:event_jtxtBatteryKeyPressed
 

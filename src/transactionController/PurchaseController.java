@@ -1373,7 +1373,7 @@ public class PurchaseController extends javax.swing.JDialog {
                         for (int i = 0; i < detail.size(); i++) {
                             SeriesMasterController smc = new SeriesMasterController(null, true);
                             smc.setLocationRelativeTo(null);
-                            smc.setData(detail.get(i).getSR_CD(), detail.get(i).getSR_ALIAS(), detail.get(i).getSR_NAME(), detail.get(i).getBRAND_NAME(), detail.get(i).getMODEL_NAME(), detail.get(i).getMEMORY_NAME(), detail.get(i).getCOLOUR_NAME(), detail.get(i).getTYPE_NAME(), detail.get(i).getSUB_TYPE_NAME(), detail.get(i).getTAX_NAME());
+                            smc.setData(detail.get(i).getSR_CD(), detail.get(i).getSR_ALIAS(), detail.get(i).getSR_NAME(), detail.get(i).getBRAND_NAME(), detail.get(i).getMODEL_NAME(), detail.get(i).getMEMORY_NAME(), detail.get(i).getCOLOUR_NAME(), detail.get(i).getTYPE_NAME(), detail.get(i).getSUB_TYPE_NAME(), detail.get(i).getTAX_NAME(),detail.get(i).getRAM_NAME(),detail.get(i).getCAMERA_NAME(),detail.get(i).getBATTERY_NAME());
                             smc.setVisible(true);
                             break;
                         }

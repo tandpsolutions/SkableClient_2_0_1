@@ -208,14 +208,14 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
         }
     }
 
-    private void showDailogeAdd(String sr_cd, String sr_alias, String sr_name, String brand_name, String model_name, String memory_name, String color_name, String type_name, String sub_type, String tax_name) {
+    private void showDailogeAdd(String sr_cd, String sr_alias, String sr_name, String brand_name, String model_name, String memory_name, String color_name, String type_name, String sub_type, String tax_name,final String ram_name,final String camera_name,final String battery_name) {
         SeriesMasterController bmc = new SeriesMasterController(null, true, this);
         bmc.setLocationRelativeTo(null);
-        bmc.setData(sr_cd, sr_alias, sr_name, brand_name, model_name, memory_name, color_name, type_name, sub_type, tax_name);
+        bmc.setData(sr_cd, sr_alias, sr_name, brand_name, model_name, memory_name, color_name, type_name, sub_type, tax_name,ram_name,camera_name,battery_name);
         bmc.show();
     }
 
-    public void addRow(String sr_cd, String sr_ales, String sr_name, String brand_name, String model_name, String memory_name, String color_name) {
+    public void addRow(String sr_cd, String sr_ales, String sr_name, String brand_name, String model_name, String memory_name, String color_name,String ram_name,String camera_name,String battery_name) {
         int selRow = jTable1.getSelectedRow();
         if (selRow == -1) {
             Vector row = new Vector();
@@ -229,6 +229,9 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
             row.add(model_name);
             row.add(memory_name);
             row.add(color_name);
+            row.add(ram_name);
+            row.add(camera_name);
+            row.add(battery_name);
             dtm.addRow(row);
         } else {
             jTable1.setValueAt(sr_cd, selRow, 1);
@@ -238,6 +241,9 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
             jTable1.setValueAt(model_name, selRow, 7);
             jTable1.setValueAt(memory_name, selRow, 8);
             jTable1.setValueAt(color_name, selRow, 9);
+            jTable1.setValueAt(ram_name, selRow, 10);
+            jTable1.setValueAt(camera_name, selRow, 11);
+            jTable1.setValueAt(battery_name, selRow, 12);
         }
     }
 
@@ -249,7 +255,7 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
                 if (navLoad.getModel().getADDS().equalsIgnoreCase("1")) {
                     navLoad.setMode("N");
                     jTable1.clearSelection();
-                    showDailogeAdd("", "", "", "", "", "", "", "", "", "");
+                    showDailogeAdd("", "", "", "", "", "", "", "", "", "","","","");
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
                 }
@@ -266,7 +272,7 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
                             showDailogeAdd(jTable1.getValueAt(row, 1).toString(), jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 3).toString(),
                                     jTable1.getValueAt(row, 7).toString(), jTable1.getValueAt(row, 8).toString(), jTable1.getValueAt(row, 9).toString(),
                                     jTable1.getValueAt(row, 10).toString(), jTable1.getValueAt(row, 4).toString(), jTable1.getValueAt(row, 5).toString(),
-                                    jTable1.getValueAt(row, 6).toString());
+                                    jTable1.getValueAt(row, 6).toString(),jTable1.getValueAt(row, 11).toString(),jTable1.getValueAt(row, 12).toString(),jTable1.getValueAt(row, 13).toString());
                         }
                     }
                 } else {
@@ -343,6 +349,9 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
                                 row.add(detail.get(i).getMODEL_NAME());
                                 row.add(detail.get(i).getMEMORY_NAME());
                                 row.add(detail.get(i).getCOLOUR_NAME());
+                                row.add(detail.get(i).getRAM_NAME());
+                                row.add(detail.get(i).getCAMERA_NAME());
+                                row.add(detail.get(i).getBATTERY_NAME());
                                 dtm.addRow(row);
                             }
                             lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
@@ -389,11 +398,11 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr No", "sr_cd", "Series Alias", "Series Name", "Type Name", "Sub Type", "Tax Name", "Brand Name", "Model  Name", "Memory Name", "Color Name"
+                "Sr No", "sr_cd", "Series Alias", "Series Name", "Type Name", "Sub Type", "Tax Name", "Brand Name", "Model  Name", "Memory Name", "Color Name", "Ram Name", "Camera Name", "Battery Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -426,6 +435,9 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(8).setResizable(false);
             jTable1.getColumnModel().getColumn(9).setResizable(false);
             jTable1.getColumnModel().getColumn(10).setResizable(false);
+            jTable1.getColumnModel().getColumn(11).setResizable(false);
+            jTable1.getColumnModel().getColumn(12).setResizable(false);
+            jTable1.getColumnModel().getColumn(13).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
