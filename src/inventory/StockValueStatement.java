@@ -1108,7 +1108,7 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            lb.reportGenerator("stockVal.jasper", params, dataSource, jPanel1);
+                            lb.reportGenerator("StockValueStatement.jasper", params, dataSource, jPanel1);
                             lb.removeGlassPane(StockValueStatement.this);
                         } catch (Exception ex) {
                             lb.removeGlassPane(StockValueStatement.this);

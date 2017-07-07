@@ -118,6 +118,7 @@ public class PurchaseController extends javax.swing.JDialog {
     private ReportTable viewTableSummary = null;
     private String sr_cd = "";
     private String item_name = "";
+    private int isMain = -1;
     private ArrayList<PurchaseControllerDetailModel> subDetail = new ArrayList<PurchaseControllerDetailModel>();
     private HashMap<String, String> itemCode = new HashMap<String, String>();
     private DefaultTableModel dtmTax;
@@ -1068,6 +1069,7 @@ public class PurchaseController extends javax.swing.JDialog {
             jtxtNlc.setText(lb.Convert2DecFmtForRs(model.getNLC()));
             jtxtMRP.setText(lb.Convert2DecFmtForRs(model.getMRP()));
             sr_cd = model.getSR_CD();
+            isMain = model.getIsMain();
 
             String tag = "";
             if (!jtxtIMEI.getText().equalsIgnoreCase("")) {
@@ -1077,11 +1079,22 @@ public class PurchaseController extends javax.swing.JDialog {
             } else {
                 tag = "";
             }
-            if (validateRow(tag)) {
-                addRow(tag);
-                flag = true;
+            if (model.getIsMain() == 1) {
+                if (validateRow(tag)) {
+                    addRow(tag);
+                    flag = true;
+                } else {
+                    flag = false;
+                }
             } else {
-                flag = false;
+                jtxtIMEI.setText("");
+                jtxtSerialNo.setText("");
+                if (validateSubRow(tag)) {
+                    addRow(tag);
+                    flag = true;
+                } else {
+                    flag = false;
+                }
             }
             clear();
         }
@@ -1090,15 +1103,32 @@ public class PurchaseController extends javax.swing.JDialog {
         return flag;
     }
 
+    public boolean validateSubRow(String tag) {
+        boolean flag = true;
+
+        if (sr_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Invalid Product Name");
+            jtxtItem.requestFocusInWindow();
+            flag = false;
+        }
+        if (!tag.equalsIgnoreCase("")) {
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                if (i != jTable1.getSelectedRow()
+                        && tag.equalsIgnoreCase(jTable1.getValueAt(i, 0).toString())
+                        && jTable1.getValueAt(i, 16).toString().equalsIgnoreCase("0")
+                        && jTable1.getValueAt(i, 17).toString().equalsIgnoreCase(sr_cd)) {
+                    lb.showMessageDailog("Item already present");
+                    jtxtIMEI.requestFocusInWindow();
+                    return false;
+                }
+            }
+        }
+        return flag;
+    }
+
     private void addRow(String tag) {
         Vector row = new Vector();
-        if (!jtxtIMEI.getText().equalsIgnoreCase("")) {
-            row.add(jtxtIMEI.getText());
-        } else if (!jtxtSerialNo.getText().equalsIgnoreCase("")) {
-            row.add(jtxtSerialNo.getText());
-        } else {
-            row.add("");
-        }
+        row.add(tag);
         row.add(item_name);
         row.add(jtxtIMEI.getText());
         row.add(jtxtSerialNo.getText());
@@ -1114,7 +1144,7 @@ public class PurchaseController extends javax.swing.JDialog {
         row.add(lb.isNumber2(jtxtNlc.getText()));
         row.add(lb.isNumber2(jtxtMRP.getText()));
         row.add(lb.isNumber2(jtxtRate.getText()));
-        row.add(lb.isNumber2("1"));
+        row.add(isMain + "");
         row.add(sr_cd);
         dtm.addRow(row);
         if (taxInfo.get(jcmbTax.getSelectedItem().toString()) != null) {
