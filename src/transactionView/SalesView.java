@@ -207,7 +207,7 @@ public class SalesView extends javax.swing.JInternalFrame {
     }
 
     private void addPurchaseConroller() {
-        SalesController pc = new SalesController(null, true, vType, formCd, this,tax_type);
+        SalesController pc = new SalesController(null, true, vType, formCd, this, tax_type);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }
@@ -291,11 +291,20 @@ public class SalesView extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
-                        lb.confirmDialog("Do you want to print normal sales bill?");
-                        if (lb.type) {
-                            pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString());
-                        } else {
-                            pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
+                        if (Constants.BILL_TYPE.equalsIgnoreCase("0")) {
+                            lb.confirmDialog("Do you want to print normal sales bill?");
+                            if (lb.type) {
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"0");
+                            } else {
+                                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
+                            }
+                        }else{
+                            lb.confirmDialog("Do you want to print customer print?");
+                            if (lb.type) {
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"1");
+                            }else{
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"0");
+                            }
                         }
                         pp.setVisible(true);
                     }

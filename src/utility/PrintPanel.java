@@ -69,7 +69,7 @@ public class PrintPanel extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
 
-    public void getSalesBillPrint(String ref_no) {
+    public void getSalesBillPrint(String ref_no,String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
             JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
@@ -117,9 +117,17 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("tax_data", dataSource1);
                             lb.confirmDialog("Do you want to print sales Bill with header?");
                             if (lb.type) {
-                                lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
+                                if(type.equalsIgnoreCase("0")){
+                                    lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
+                                }else{
+                                    lb.reportGenerator("SalesInVoicePDFWoCalc.jasper", params, dataSource, jPanel1);
+                                }
                             } else {
-                                lb.reportGenerator("SalesInVoice.jasper", params, dataSource, jPanel1);
+                                if(type.equalsIgnoreCase("0")){
+                                    lb.reportGenerator("SalesInVoice.jasper", params, dataSource, jPanel1);
+                                }else{
+                                    lb.reportGenerator("SalesInVoiceWoCalc.jasper", params, dataSource, jPanel1);
+                                }
                             }
                         } catch (Exception ex) {
                         }

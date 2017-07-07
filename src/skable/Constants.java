@@ -29,6 +29,7 @@ public class Constants {
     public static final String VER = "2";
     public static String BASE_URL = "";
     public static String COMPANY_NAME = "";
+    public static String BILL_TYPE = "";
     public static final String UPDATE_BASE_URL = "http://" + UPDATE_host + "/" + UPDATE_FOLDER + "/";
     public static final ArrayList<TaxMasterModel> TAX = new ArrayList<TaxMasterModel>();
     public static final ArrayList<BranchMasterModel> BRANCH = new ArrayList<BranchMasterModel>();
