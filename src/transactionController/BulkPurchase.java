@@ -62,11 +62,11 @@ public class BulkPurchase extends javax.swing.JDialog {
     /**
      * Creates new form BulkPurchase
      */
-     public BulkPurchase(java.awt.Frame parent, boolean modal, PurchaseController pc,int tax_type) {
+    public BulkPurchase(java.awt.Frame parent, boolean modal, PurchaseController pc, int tax_type) {
         super(parent, modal);
         initComponents();
         this.pc = pc;
-        this.tax_type =tax_type;
+        this.tax_type = tax_type;
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -738,9 +738,9 @@ public class BulkPurchase extends javax.swing.JDialog {
                 double tax_rate = Double.parseDouble(tm.getTAXPER());
                 double add_tax_rate = Double.parseDouble(tm.getADDTAXPER());
                 int add_tax_rate_On = (int) lb.isNumber2(tm.getTAXONSALES());
-                if(tax_type == 2){
-                    tax_rate +=add_tax_rate;
-                    add_tax_rate=0;
+                if (tax_type == 2) {
+                    tax_rate += add_tax_rate;
+                    add_tax_rate = 0;
                 }
                 if (tm.getTAXCD().equalsIgnoreCase("T000003")) {
                     try {
@@ -828,7 +828,16 @@ public class BulkPurchase extends javax.swing.JDialog {
     private void jtxtIMEIKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtIMEIKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if (validateRow(jtxtIMEI.getText())) {
+            if (lb.isBlank(jtxtIMEI)) {
+                if (jTable1.getRowCount() > 0) {
+                    lb.confirmDialog("Do you want to add this item to purchase bill");
+                    if (lb.type) {
+                        jbtnAdd.requestFocusInWindow();
+                    } else {
+                        jtxtIMEI.requestFocusInWindow();
+                    }
+                }
+            } else if (validateRow(jtxtIMEI.getText())) {
                 Vector row = new Vector();
                 row.add(jtxtIMEI.getText().toUpperCase());
                 dtm.addRow(row);
