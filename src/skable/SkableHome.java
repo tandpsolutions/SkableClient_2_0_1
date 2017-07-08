@@ -162,6 +162,7 @@ import utility.NotesView;
 import utility.TagPrint;
 import utility.TagTransfer;
 import utility.UpdateGST;
+import utility.UpdateGSTNo;
 import utility.UpdateHSN;
 import utility.UserPermission;
 
@@ -673,8 +674,11 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jDesktopPane1.setLayout(null);
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
@@ -2027,13 +2031,21 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem28);
 
-        jMenuItem31.setText("Update GST");
+        jMenuItem31.setText("Update GST Tax");
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem31ActionPerformed(evt);
             }
         });
         jmnUtility.add(jMenuItem31);
+
+        jMenuItem32.setText("Update GST No");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jmnUtility.add(jMenuItem32);
 
         jMenuBar3.add(jmnUtility);
 
@@ -2959,6 +2971,12 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(srv, "Sales Return Outside View");
     }//GEN-LAST:event_jmnSalesReturn2ActionPerformed
 
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        UpdateGSTNo updateGSTNo = new UpdateGSTNo();
+        addOnScreen(updateGSTNo, "Update Hst No For Account");
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -3001,6 +3019,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem5;

@@ -24,7 +24,11 @@ public interface AccountMasterAPI {
 
     @GET("GetAccountMasterCode")
     Call<JsonObject> getAccountMasterCode(@Query("ac_cd") String ac_cd);
+    
 
+    @FormUrlEncoded
+    @POST("UpdateGstNo")
+    Call<JsonObject> updateGstNo(@Field("detail") String ac_model);
     
     @FormUrlEncoded
     @POST("AddUpdateAccountMaster")
