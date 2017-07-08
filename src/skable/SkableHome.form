@@ -1525,7 +1525,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem31">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Update GST"/>
+                <Property name="text" type="java.lang.String" value="Update GST Tax"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem31ActionPerformed"/>

@@ -256,6 +256,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
                             row.add(detailAc.get(i).getADD1());
                             row.add(detailAc.get(i).getEMAIL());
                             row.add(i);
+                            row.add(detailAc.get(i).getGST_NO());
                             dtm.addRow(row);
                         }
                         lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
@@ -300,11 +301,11 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ac_cd", "Name", "Group", "Mobile", "CST", "TIN", "Address", "Email", "index"
+                "ac_cd", "Name", "Group", "Mobile", "CST", "TIN", "Address", "Email", "index", "GST No"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -337,6 +338,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(8).setMinWidth(0);
             jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
             jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);

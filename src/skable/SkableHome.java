@@ -165,6 +165,7 @@ import utility.NotesView;
 import utility.TagPrint;
 import utility.TagTransfer;
 import utility.UpdateGST;
+import utility.UpdateGSTNo;
 import utility.UpdateHSN;
 import utility.UserPermission;
 
@@ -2059,7 +2060,7 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem28);
 
-        jMenuItem31.setText("Update GST");
+        jMenuItem31.setText("Update GST Tax");
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem31ActionPerformed(evt);
