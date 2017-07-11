@@ -101,8 +101,15 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("tax_title", "Vat");
                                 params.put("add_tax_title", "Add Vat");
                                 params.put("tin_no", "Tin No : "+(array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
+                                    params.put("bill_type", "Retail Invoice");
+                                }else{
+                                    params.put("bill_type", "Tax Invoice");
+                                }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
                                 params.put("tax_title", "SGST");
+                                params.put("tax_title", "SGST");
+                                params.put("bill_type", "Tax Invoice");
                                 params.put("add_tax_title", "CGST");
                                 params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
