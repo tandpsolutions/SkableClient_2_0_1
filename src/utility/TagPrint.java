@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import retrofitAPI.PurchaseAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 
@@ -95,7 +96,11 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected()).execute().body();
             if (call != null) {
                 result = call;
-                processResult();
+                if (Constants.TAG_TYPE.equalsIgnoreCase("0")) {
+                    processResult();
+                } else {
+                    processResult2();
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(TagPrint.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,12 +121,12 @@ public class TagPrint extends javax.swing.JInternalFrame {
                 for (; i < array.size();) {
                     if (i == 0) {
                         tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
-                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString();
                         nlc1 = array.get(i).getAsJsonObject().get("NLC").getAsString();
                         RATE1 = array.get(i).getAsJsonObject().get("RATE").getAsString();
                     } else if (i % 2 == 0) {
                         tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
-                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString();
                         nlc1 = array.get(i).getAsJsonObject().get("NLC").getAsString();
                         RATE1 = array.get(i).getAsJsonObject().get("RATE").getAsString();
                     }
@@ -130,13 +135,34 @@ public class TagPrint extends javax.swing.JInternalFrame {
                         if (i >= array.size()) {
                             break;
                         }
-                        lb.PrintLabel(array.get(i).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i).getAsJsonObject().get("SR_NAME").getAsString(), array.get(i).getAsJsonObject().get("RATE").getAsString(), array.get(i).getAsJsonObject().get("NLC").getAsString(), tag1, SR_NAME1, RATE1, nlc1);
+                        lb.PrintLabel(array.get(i).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString(), array.get(i).getAsJsonObject().get("RATE").getAsString(), array.get(i).getAsJsonObject().get("NLC").getAsString(), tag1, SR_NAME1, RATE1, nlc1);
                         i++;
                     }
                 }
                 if (array.size() % 2 == 1) {
-                    lb.PrintLabel(array.get(i - 1).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i - 1).getAsJsonObject().get("SR_NAME").getAsString(), array.get(i - 1).getAsJsonObject().get("RATE").getAsString(), array.get(i - 1).getAsJsonObject().get("NLC").getAsString());
+                    lb.PrintLabel(array.get(i - 1).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i - 1).getAsJsonObject().get("SR_ALIAS").getAsString(), array.get(i - 1).getAsJsonObject().get("RATE").getAsString(), array.get(i - 1).getAsJsonObject().get("NLC").getAsString());
 
+                }
+            }
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at jbtnPrintActionPerformedRoutine", ex);
+        } finally {
+            lb.removeGlassPane(this);
+        }
+    }
+
+    private void processResult2() {
+        try {
+            JsonArray array = result.getAsJsonArray("data");
+            if (array != null) {
+                String tag1 = "", SR_NAME1 = "";
+                String nlc1 = "", RATE1 = "";
+                int i = 0;
+                for (i = 0; i < array.size(); i++) {
+                    tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
+                    SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                    nlc1 = array.get(i).getAsJsonObject().get("PUR_RATE").getAsString();
+                    lb.PrintLabel(tag1, SR_NAME1);
                 }
             }
         } catch (Exception ex) {

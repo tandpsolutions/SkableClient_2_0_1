@@ -20,16 +20,17 @@ public class Constants {
 
     public static String HOST1 = "";
 //    public static final String HOST1 = "127.0.0.1:8084";
-//    public static final String FOLDER = "SkableServer2.0.1";
-    public static final String FOLDER = "SkableServer2.0.1_Git";
-//    public static final String FOLDER_NEW = "SkableServer2.0.1_2";
-    public static final String FOLDER_NEW = "SkableServer2.0.1_2_Git";
+    public static final String FOLDER = "SkableServer2.0.1";
+//    public static final String FOLDER = "SkableServer2.0.1_Git";
+    public static final String FOLDER_NEW = "SkableServer2.0.1_2";
+//    public static final String FOLDER_NEW = "SkableServer2.0.1_2_Git";
     public static final String UPDATE_FOLDER = "Skable_ipearl";
     public static final String UPDATE_host = "tandpsolutions.in";
     public static final String VER = "2";
     public static String BASE_URL = "";
     public static String COMPANY_NAME = "";
     public static String BILL_TYPE = "";
+    public static String TAG_TYPE = "";
     public static final String UPDATE_BASE_URL = "http://" + UPDATE_host + "/" + UPDATE_FOLDER + "/";
     public static final ArrayList<TaxMasterModel> TAX = new ArrayList<TaxMasterModel>();
     public static final ArrayList<BranchMasterModel> BRANCH = new ArrayList<BranchMasterModel>();
