@@ -146,7 +146,7 @@
 	<columnHeader>
 		<band height="29" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="5fc84e53-0b02-431a-9e1c-4927c08c7870" x="345" y="7" width="71" height="22"/>
+				<reportElement uuid="5fc84e53-0b02-431a-9e1c-4927c08c7870" x="345" y="7" width="85" height="22"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
@@ -212,7 +212,7 @@
 				<text><![CDATA[Credit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5fc84e53-0b02-431a-9e1c-4927c08c7870" x="416" y="7" width="139" height="22"/>
+				<reportElement uuid="5fc84e53-0b02-431a-9e1c-4927c08c7870" x="430" y="7" width="125" height="22"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
@@ -246,7 +246,7 @@
 				<textFieldExpression><![CDATA[($V{REPORT_COUNT} == 1)?$F{OPB} <0?Math.abs($F{OPB}):0:""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement uuid="913986d6-d91b-49a2-8376-067dd2da13c9" stretchType="RelativeToTallestObject" x="345" y="0" width="71" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="913986d6-d91b-49a2-8376-067dd2da13c9" stretchType="RelativeToTallestObject" x="345" y="0" width="85" height="20" isRemoveLineWhenBlank="true"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($V{REPORT_COUNT} == 1)?$F{OPB}:""]]></textFieldExpression>
@@ -278,7 +278,7 @@
 				<textFieldExpression><![CDATA[($F{DR})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="10e5fc8c-1f84-4ec2-b88c-669f220a3346" stretchType="RelativeToTallestObject" x="416" y="20" width="139" height="20"/>
+				<reportElement uuid="10e5fc8c-1f84-4ec2-b88c-669f220a3346" stretchType="RelativeToTallestObject" x="430" y="20" width="125" height="20"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{PARTICULAR}]]></textFieldExpression>
@@ -291,7 +291,7 @@
 				<textFieldExpression><![CDATA[$F{DOC_DATE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement uuid="2b924539-c261-4407-ba25-7da08254e120" stretchType="RelativeToTallestObject" x="345" y="20" width="71" height="20"/>
+				<reportElement uuid="2b924539-c261-4407-ba25-7da08254e120" stretchType="RelativeToTallestObject" x="345" y="20" width="85" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($V{bal})]]></textFieldExpression>
@@ -323,7 +323,7 @@
 				<textFieldExpression><![CDATA[$V{CR_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement uuid="7ad65bee-7ef2-4f14-aa24-c18a78ab0e45" x="345" y="0" width="71" height="22"/>
+				<reportElement uuid="7ad65bee-7ef2-4f14-aa24-c18a78ab0e45" x="345" y="0" width="85" height="22"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -347,7 +347,7 @@
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7a1fe814-e490-4035-b51e-368649fe0a85" x="416" y="0" width="139" height="22"/>
+				<reportElement uuid="7a1fe814-e490-4035-b51e-368649fe0a85" x="430" y="0" width="125" height="22"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
