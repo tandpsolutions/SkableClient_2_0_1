@@ -411,7 +411,7 @@ public class Library {
     
     
     
-    public void PrintLabel(String tag1, String item_name1) {
+    public void PrintLabel(String tag1, String item_name1,String pur) {
 
         // Prepare date to print in dd/mm/yyyy format
         // Search for an installed zebra printer...
