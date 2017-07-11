@@ -12,6 +12,7 @@
 	</parameter>
 	<parameter name="tax_title" class="java.lang.String"/>
 	<parameter name="add_tax_title" class="java.lang.String"/>
+	<parameter name="bill_type" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select INV_NO,V_TYPE,V_DATE,(a.FNAME||a.mname||a.lname) as ac_name,(a1.ADD1||a1.add2||a1.add3) as address,p.EMAIL,p.MOBILE1,s.SR_NAME,v1.IMEI_NO,
 v1.SERAIL_NO,v1.QTY,v1.RATE,v1.AMT,v.DET_TOT,v.TAX_AMT,v.ADD_TAX_AMT,v.ADVANCE_AMT,v.NET_AMT,p1.CASH_AMT,p1.BANK_AMT,p1.CARD_AMT,p1.CHEQUE_NO,
@@ -214,7 +215,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{V_TYPE}==0)?"Retail Invoice":($F{V_TYPE}==1)?"Tax Invoice":"Sales Invoice"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{bill_type}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="0" y="91" width="555" height="15"/>
@@ -445,7 +446,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="58952e66-cc1a-4ffd-a171-83739ef8b9b8" stretchType="RelativeToTallestObject" x="500" y="0" width="53" height="13"/>
 				<box rightPadding="2"/>
@@ -491,7 +492,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")+"\n"+"HSN : "+$F{HSN_CODE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
 				<reportElement uuid="10c74bb4-d750-4506-a290-fe30656b646e" stretchType="RelativeToTallestObject" x="342" y="0" width="52" height="13"/>
@@ -510,13 +511,6 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TAX}+$F{ADD_TAX}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8941f662-6ba1-46ad-80bb-c4b1d0cb7362" stretchType="RelativeToTallestObject" x="19" y="13" width="197" height="13"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["HSN : "+$F{HSN_CODE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
