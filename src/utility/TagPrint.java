@@ -156,13 +156,12 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonArray array = result.getAsJsonArray("data");
             if (array != null) {
                 String tag1 = "", SR_NAME1 = "";
-                String nlc1 = "", RATE1 = "";
                 int i = 0;
                 for (i = 0; i < array.size(); i++) {
                     tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
                     SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
-                    nlc1 = array.get(i).getAsJsonObject().get("PUR_RATE").getAsString();
-                    lb.PrintLabel(tag1, SR_NAME1);
+                    String[] data = (((int) array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble()) + "").split("(?!^)");
+                    lb.PrintLabel(tag1, SR_NAME1, generateCode(data));
                 }
             }
         } catch (Exception ex) {
@@ -170,6 +169,45 @@ public class TagPrint extends javax.swing.JInternalFrame {
         } finally {
             lb.removeGlassPane(this);
         }
+    }
+
+    private String generateCode(String[] array) {
+        String code = "";
+        for (int i = 0; i < array.length; i++) {
+            switch (array[i]) {
+                case "1":
+                    code += "M";
+                    break;
+                case "2":
+                    code += "A";
+                    break;
+                case "3":
+                    code += "L";
+                    break;
+                case "4":
+                    code += "I";
+                    break;
+                case "5":
+                    code += "Y";
+                    break;
+                case "6":
+                    code += "O";
+                    break;
+                case "7":
+                    code += "G";
+                    break;
+                case "8":
+                    code += "E";
+                    break;
+                case "9":
+                    code += "S";
+                    break;
+                case "0":
+                    code += "H";
+                    break;
+            }
+        }
+        return code;
     }
 
     /**
