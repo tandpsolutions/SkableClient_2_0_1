@@ -58,6 +58,9 @@ public class TagPrint extends javax.swing.JInternalFrame {
             for (int i = 0; i < array.size(); i++) {
                 Vector row = new Vector();
                 row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                 dtmTag.addRow(row);
             }
         } catch (Exception ex) {
@@ -254,7 +257,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, Short.MAX_VALUE)
                     .addComponent(jrbtRandom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jrbtRange, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,11 +285,11 @@ public class TagPrint extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tag No"
+                "Tag No", "IMEI", "Serial No", "Item Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -301,6 +304,9 @@ public class TagPrint extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);

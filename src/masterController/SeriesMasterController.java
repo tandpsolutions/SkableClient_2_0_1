@@ -170,7 +170,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     public void setData(final String sr_cd, final String sr_alias, final String sr_name, final String brand_name, final String model_name,
-            final String memory_name, final String color_name, final String type, final String sub_type, final String tax_name,final String ram_name,final String camera_name,final String battery_name) {
+            final String memory_name, final String color_name, final String type, final String sub_type, final String tax_name, final String ram_name, final String camera_name, final String battery_name) {
 
         Call<JsonObject> call = seriesAPI.getSetUpData(sr_cd);
         lb.addGlassPane(this);
@@ -233,7 +233,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     private void addName() {
-        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtMemoryName.getText() + " " + jtxtColorName.getText()+ " " + jtxtRam.getText()+ " " + jtxtCamera.getText()+ " " + jtxtBattery.getText());
+        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtMemoryName.getText() + " " + jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
     }
 
     private void setModelData(String param_cd, String value) {
@@ -244,59 +244,59 @@ public class SeriesMasterController extends javax.swing.JDialog {
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable1);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("MODEL_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("MODEL_NAME").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("BRAND_NAME").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("TYPE_NAME").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("SUB_TYPE_NAME").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable1, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable1.getSelectedRow();
-                                        if (row != -1) {
-                                            model_cd = viewTable1.getValueAt(row, 0).toString();
-                                            jtxtModelName.setText(viewTable1.getValueAt(row, 1).toString());
-                                            jtxtBrandName.setText(viewTable1.getValueAt(row, 2).toString());
-                                            jlblTypeName.setText(viewTable1.getValueAt(row, 3).toString());
-                                            jlblSubTypeName.setText(viewTable1.getValueAt(row, 4).toString());
-                                            jlblTaxName.setText(viewTable1.getValueAt(row, 5).toString());
-                                            jtxtMemoryName.requestFocusInWindow();
-                                            addName();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable1);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("MODEL_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("MODEL_NAME").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("BRAND_NAME").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("TYPE_NAME").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("SUB_TYPE_NAME").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable1, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable1.getSelectedRow();
+                                if (row != -1) {
+                                    model_cd = viewTable1.getValueAt(row, 0).toString();
+                                    jtxtModelName.setText(viewTable1.getValueAt(row, 1).toString());
+                                    jtxtBrandName.setText(viewTable1.getValueAt(row, 2).toString());
+                                    jlblTypeName.setText(viewTable1.getValueAt(row, 3).toString());
+                                    jlblSubTypeName.setText(viewTable1.getValueAt(row, 4).toString());
+                                    jlblTaxName.setText(viewTable1.getValueAt(row, 5).toString());
+                                    jtxtMemoryName.requestFocusInWindow();
+                                    addName();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -313,50 +313,50 @@ public class SeriesMasterController extends javax.swing.JDialog {
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("MEMORY_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("MEMORY_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable.getSelectedRow();
-                                        if (row != -1) {
-                                            memory_cd = viewTable.getValueAt(row, 0).toString();
-                                            jtxtMemoryName.setText(viewTable.getValueAt(row, 1).toString());
-                                            jtxtColorName.requestFocusInWindow();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("MEMORY_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("MEMORY_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable.getSelectedRow();
+                                if (row != -1) {
+                                    memory_cd = viewTable.getValueAt(row, 0).toString();
+                                    jtxtMemoryName.setText(viewTable.getValueAt(row, 1).toString());
+                                    jtxtColorName.requestFocusInWindow();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -374,50 +374,50 @@ public class SeriesMasterController extends javax.swing.JDialog {
             call.enqueue(
                     new Callback<JsonObject>() {
 
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("COLOUR_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable.getSelectedRow();
-                                        if (row != -1) {
-                                            color_cd = viewTable.getValueAt(row, 0).toString();
-                                            jtxtColorName.setText(viewTable.getValueAt(row, 1).toString());
-                                            jtxtRam.requestFocusInWindow();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("COLOUR_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable.getSelectedRow();
+                                if (row != -1) {
+                                    color_cd = viewTable.getValueAt(row, 0).toString();
+                                    jtxtColorName.setText(viewTable.getValueAt(row, 1).toString());
+                                    jtxtRam.requestFocusInWindow();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -425,7 +425,6 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     }
 
-    
     private void setRamMaster(String param_cd, String value) {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
@@ -435,50 +434,50 @@ public class SeriesMasterController extends javax.swing.JDialog {
             call.enqueue(
                     new Callback<JsonObject>() {
 
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("RAM_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("RAM_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable.getSelectedRow();
-                                        if (row != -1) {
-                                            ram_cd = viewTable.getValueAt(row, 0).toString();
-                                            jtxtRam.setText(viewTable.getValueAt(row, 1).toString());
-                                            jtxtCamera.requestFocusInWindow();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("RAM_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("RAM_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable.getSelectedRow();
+                                if (row != -1) {
+                                    ram_cd = viewTable.getValueAt(row, 0).toString();
+                                    jtxtRam.setText(viewTable.getValueAt(row, 1).toString());
+                                    jtxtCamera.requestFocusInWindow();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -486,7 +485,6 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     }
 
-    
     private void setcameraMaster(String param_cd, String value) {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
@@ -496,50 +494,50 @@ public class SeriesMasterController extends javax.swing.JDialog {
             call.enqueue(
                     new Callback<JsonObject>() {
 
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("CAMERA_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("CAMERA_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable.getSelectedRow();
-                                        if (row != -1) {
-                                            camera_cd = viewTable.getValueAt(row, 0).toString();
-                                            jtxtCamera.setText(viewTable.getValueAt(row, 1).toString());
-                                            jtxtBattery.requestFocusInWindow();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("CAMERA_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("CAMERA_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable.getSelectedRow();
+                                if (row != -1) {
+                                    camera_cd = viewTable.getValueAt(row, 0).toString();
+                                    jtxtCamera.setText(viewTable.getValueAt(row, 1).toString());
+                                    jtxtBattery.requestFocusInWindow();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -547,7 +545,6 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     }
 
-    
     private void setBatteryMaster(String param_cd, String value) {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
@@ -557,50 +554,50 @@ public class SeriesMasterController extends javax.swing.JDialog {
             call.enqueue(
                     new Callback<JsonObject>() {
 
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (response.isSuccessful()) {
-                                System.out.println(response.body().toString());
-                                if (response.body().get("result").getAsInt() == 1) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(viewTable);
-                                    sa.setLocationRelativeTo(null);
-                                    JsonArray array = response.body().getAsJsonArray("data");
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(array.get(i).getAsJsonObject().get("BATTERY_CD").getAsString());
-                                        row.add(array.get(i).getAsJsonObject().get("BATTERY_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                    if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                        int row = viewTable.getSelectedRow();
-                                        if (row != -1) {
-                                            battery_cd = viewTable.getValueAt(row, 0).toString();
-                                            jtxtBattery.setText(viewTable.getValueAt(row, 1).toString());
-                                            jtxtQty.requestFocusInWindow();
-                                        }
-                                        sa.dispose();
-                                    }
-                                } else {
-                                    lb.showMessageDailog(response.body().get("Cause").toString());
-                                }
-                            } else {
-                                // handle request errors yourself
-                                lb.showMessageDailog(response.message());
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(viewTable);
+                            sa.setLocationRelativeTo(null);
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            sa.getDtmHeader().setRowCount(0);
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(array.get(i).getAsJsonObject().get("BATTERY_CD").getAsString());
+                                row.add(array.get(i).getAsJsonObject().get("BATTERY_NAME").getAsString());
+                                sa.getDtmHeader().addRow(row);
                             }
+                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                int row = viewTable.getSelectedRow();
+                                if (row != -1) {
+                                    battery_cd = viewTable.getValueAt(row, 0).toString();
+                                    jtxtBattery.setText(viewTable.getValueAt(row, 1).toString());
+                                    jtxtQty.requestFocusInWindow();
+                                }
+                                sa.dispose();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
@@ -682,18 +679,17 @@ public class SeriesMasterController extends javax.swing.JDialog {
             lb.showMessageDailog("Enter valid Color Name");
             return;
         }
-        
-        
+
         if (ram_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Enter valid Ram Name");
             return;
         }
-        
+
         if (camera_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Enter valid Camera Name");
             return;
         }
-        
+
         if (battery_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Enter valid Battery Name");
             return;
@@ -716,28 +712,28 @@ public class SeriesMasterController extends javax.swing.JDialog {
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (rspns.isSuccessful()) {
-                                if (rspns.body().get("result").getAsInt() == 0) {
-                                    lb.showMessageDailog("item already exist");
-                                    return;
-                                } else {
-                                    saveVoucher();
-                                }
-                            } else {
-                                lb.showMessageDailog(rspns.message());
-                            }
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (rspns.isSuccessful()) {
+                        if (rspns.body().get("result").getAsInt() == 0) {
+                            lb.showMessageDailog("item already exist");
+                            return;
+                        } else {
+                            saveVoucher();
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        lb.showMessageDailog(rspns.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
         } else {
             Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class
@@ -747,28 +743,28 @@ public class SeriesMasterController extends javax.swing.JDialog {
             call.enqueue(
                     new Callback<JsonObject>() {
 
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                            if (rspns.isSuccessful()) {
-                                if (rspns.body().get("result").getAsInt() == 0) {
-                                    lb.showMessageDailog("Alias already exist");
-                                    return;
-                                } else {
-                                    saveVoucher();
-                                }
-                            } else {
-                                lb.showMessageDailog(rspns.message());
-                            }
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (rspns.isSuccessful()) {
+                        if (rspns.body().get("result").getAsInt() == 0) {
+                            lb.showMessageDailog("Alias already exist");
+                            return;
+                        } else {
+                            saveVoucher();
                         }
-
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                        ) {
-                            lb.removeGlassPane(SeriesMasterController.this);
-                        }
+                    } else {
+                        lb.showMessageDailog(rspns.message());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl
+                ) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            }
             );
 
         }
@@ -793,7 +789,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
         }
         String detailJson = new Gson().toJson(detail);
         Call<JsonObject> call = seriesAPI.appUpdateSeriesMaster(sr_cd, jtxtSeriesAlias.getText(), jtxtItemName.getText(),
-                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal),SkableHome.selected_year,ram_cd,camera_cd,battery_cd);
+                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal), SkableHome.selected_year, ram_cd, camera_cd, battery_cd);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1664,7 +1660,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtRamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtRamKeyPressed
         // TODO add your handling code here:
-        if(lb.isEnter(evt)){
+        if (lb.isEnter(evt)) {
             setRamMaster("40", jtxtRam.getText());
         }
     }//GEN-LAST:event_jtxtRamKeyPressed
@@ -1677,7 +1673,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtCameraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCameraKeyPressed
         // TODO add your handling code here:
-        if(lb.isEnter(evt)){
+        if (lb.isEnter(evt)) {
             setcameraMaster("41", jtxtCamera.getText());
         }
     }//GEN-LAST:event_jtxtCameraKeyPressed
@@ -1690,7 +1686,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtBatteryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBatteryKeyPressed
         // TODO add your handling code here:
-        if(lb.isEnter(evt)){
+        if (lb.isEnter(evt)) {
             setBatteryMaster("42", jtxtBattery.getText());
         }
     }//GEN-LAST:event_jtxtBatteryKeyPressed
