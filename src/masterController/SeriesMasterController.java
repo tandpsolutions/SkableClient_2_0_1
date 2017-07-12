@@ -25,7 +25,6 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import masterView.SeriesMasterView;
 import model.OPBSrVal;
-import model.SeriesMasterModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -233,7 +232,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     private void addName() {
-        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtMemoryName.getText() + " " + jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
+        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtRam.getText() + " " + jtxtMemoryName.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
     }
 
     private void setModelData(String param_cd, String value) {

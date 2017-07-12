@@ -57,12 +57,14 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonArray array = result.getAsJsonArray("data");
             for (int i = 0; i < array.size(); i++) {
                 Vector row = new Vector();
-                row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                row.add(i+1);
                 row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
                 dtmTag.addRow(row);
             }
+            lb.setColumnSizeForTable(jTable2, jPanel3.getWidth());
         } catch (Exception ex) {
             lb.printToLogFile("Exception at loadData in TagPrint", ex);
         }
@@ -91,7 +93,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
                 }
             } else {
                 for (int i = 0; i < jTable2.getRowCount(); i++) {
-                    tagListForRandom += ("'" + jTable2.getValueAt(i, 0).toString() + "',");
+                    tagListForRandom += ("'" + jTable2.getValueAt(i, 3).toString() + "',");
                 }
             }
             tagListForRandom = tagListForRandom.substring(0, tagListForRandom.length() - 1);
@@ -158,13 +160,14 @@ public class TagPrint extends javax.swing.JInternalFrame {
         try {
             JsonArray array = result.getAsJsonArray("data");
             if (array != null) {
-                String tag1 = "", SR_NAME1 = "";
+                String tag1 = "", SR_NAME1 = "",SR_NAME2 = "";
                 int i = 0;
                 for (i = 0; i < array.size(); i++) {
                     tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
                     SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(" "))+"\\&"+SR_NAME1.substring(SR_NAME1.lastIndexOf(" "));
                     String[] data = (((int) array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble()) + "").split("(?!^)");
-                    lb.PrintLabel(tag1, SR_NAME1, generateCode(data));
+                    lb.PrintLabel(tag1, SR_NAME2, generateCode(data));
                 }
             }
         } catch (Exception ex) {
@@ -285,11 +288,11 @@ public class TagPrint extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tag No", "IMEI", "Serial No", "Item Name"
+                "Sr No", "Item Name", "Imei No", "Tag No", "Serial No"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -307,6 +310,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             jTable2.getColumnModel().getColumn(1).setResizable(false);
             jTable2.getColumnModel().getColumn(2).setResizable(false);
             jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
