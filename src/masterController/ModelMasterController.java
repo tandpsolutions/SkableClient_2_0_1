@@ -317,7 +317,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                                 if (row != -1) {
                                     brand_cd = viewTable.getValueAt(row, 0).toString();
                                     jtxtBrandName.setText(viewTable.getValueAt(row, 1).toString());
-                                    jcmbTax.requestFocusInWindow();
+                                    jtxtHsnCode.requestFocusInWindow();
                                 }
                                 sa.dispose();
                             }
