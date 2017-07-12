@@ -69,7 +69,7 @@ public class PrintPanel extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
 
-    public void getSalesBillPrint(String ref_no,String type) {
+    public void getSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
             JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
@@ -100,10 +100,10 @@ public class PrintPanel extends javax.swing.JDialog {
                             if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
                                 params.put("tax_title", "Vat");
                                 params.put("add_tax_title", "Add Vat");
-                                params.put("tin_no", "Tin No : "+(array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                                 if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
                                     params.put("bill_type", "Retail Invoice");
-                                }else{
+                                } else {
                                     params.put("bill_type", "Tax Invoice");
                                 }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
@@ -111,11 +111,12 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("tax_title", "SGST");
                                 params.put("bill_type", "Tax Invoice");
                                 params.put("add_tax_title", "CGST");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
@@ -124,15 +125,15 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("tax_data", dataSource1);
                             lb.confirmDialog("Do you want to print sales Bill with header?");
                             if (lb.type) {
-                                if(type.equalsIgnoreCase("0")){
+                                if (type.equalsIgnoreCase("0")) {
                                     lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
-                                }else{
+                                } else {
                                     lb.reportGenerator("SalesInVoicePDFWoCalc.jasper", params, dataSource, jPanel1);
                                 }
                             } else {
-                                if(type.equalsIgnoreCase("0")){
+                                if (type.equalsIgnoreCase("0")) {
                                     lb.reportGenerator("SalesInVoice.jasper", params, dataSource, jPanel1);
-                                }else{
+                                } else {
                                     lb.reportGenerator("SalesInVoiceWoCalc.jasper", params, dataSource, jPanel1);
                                 }
                             }
@@ -174,9 +175,29 @@ public class PrintPanel extends javax.swing.JDialog {
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", Constants.COMPANY_NAME);
-                            params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
+                            if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
+                                params.put("tax_title", "Vat");
+                                params.put("add_tax_title", "Add Vat");
+                                params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
+                                    params.put("bill_type", "Retail Invoice");
+                                } else {
+                                    params.put("bill_type", "Tax Invoice");
+                                }
+                            } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
+                                params.put("tax_title", "SGST");
+                                params.put("tax_title", "SGST");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("add_tax_title", "CGST");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            } else {
+                                params.put("tax_title", "IGST");
+                                params.put("add_tax_title", "");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            }
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
@@ -227,15 +248,15 @@ public class PrintPanel extends javax.swing.JDialog {
                             if (array.get(0).getAsJsonObject().get("TAX_TYPE").getAsInt() == 0) {
                                 params.put("tax_title", "Vat");
                                 params.put("add_tax_title", "Add Vat");
-                                params.put("tin_no", "Tin No : "+(array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             } else if (array.get(0).getAsJsonObject().get("TAX_TYPE").getAsInt() == 1) {
                                 params.put("tax_title", "SGST");
                                 params.put("add_tax_title", "CGST");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
-                                params.put("tin_no", "GST No : "+(array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", Constants.COMPANY_NAME);
