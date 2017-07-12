@@ -316,8 +316,8 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				</textElement>
 				<textFieldExpression><![CDATA["Customer's Email :"+$F{EMAIL}]]></textFieldExpression>
 			</textField>
-			<image onErrorType="Blank">
-				<reportElement uuid="cc927c62-6b5f-439b-8242-b9f0e87c69af" x="307" y="0" width="248" height="54"/>
+			<image scaleImage="RealHeight" vAlign="Bottom" onErrorType="Blank">
+				<reportElement uuid="cc927c62-6b5f-439b-8242-b9f0e87c69af" x="282" y="0" width="273" height="49"/>
 				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"logo.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
@@ -339,7 +339,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's State Code: 24"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9811bc9d-25e2-4d26-8643-8324e9f0f671" x="1" y="54" width="552" height="37"/>
+				<reportElement uuid="9811bc9d-25e2-4d26-8643-8324e9f0f671" x="282" y="61" width="271" height="30"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
