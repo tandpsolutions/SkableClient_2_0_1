@@ -336,7 +336,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Customer's State Code: 24"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Customer's State Code: "+(($F{GST_NO}.equalsIgnoreCase( "" ))?"":$F{GST_NO}.substring( 0, 2 ))]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
