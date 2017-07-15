@@ -534,6 +534,7 @@ public class SkableHome extends javax.swing.JFrame {
         jmnRetailInvoice4 = new javax.swing.JMenuItem();
         jmnSalesReturn1 = new javax.swing.JMenuItem();
         jmnSalesReturn2 = new javax.swing.JMenuItem();
+        jmnJobSheet = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jmnCashPayment = new javax.swing.JMenuItem();
         jmnCashRcpt = new javax.swing.JMenuItem();
@@ -682,8 +683,6 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem31 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jDesktopPane1.setLayout(null);
 
         jmenuLogin.setMnemonic('L');
         jmenuLogin.setText("Login");
@@ -933,6 +932,14 @@ public class SkableHome extends javax.swing.JFrame {
         jMenu13.add(jmnSalesReturn2);
 
         jmnTransaction.add(jMenu13);
+
+        jmnJobSheet.setText("Job Sheet");
+        jmnJobSheet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnJobSheetActionPerformed(evt);
+            }
+        });
+        jmnTransaction.add(jmnJobSheet);
 
         jMenu1.setText("Cash Entry");
 
@@ -3010,6 +3017,10 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(bmv, "Battery Master View");
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
+    private void jmnJobSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJobSheetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmnJobSheetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -3103,6 +3114,7 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnIMIEPSOnPurchaseWoRate;
     private javax.swing.JMenuItem jmnInsuranceRegister;
     private javax.swing.JMenu jmnInventory;
+    private javax.swing.JMenuItem jmnJobSheet;
     private javax.swing.JMenuItem jmnJournalEntry;
     private javax.swing.JMenuItem jmnMarginReport;
     private javax.swing.JMenuItem jmnMarginReport2;
