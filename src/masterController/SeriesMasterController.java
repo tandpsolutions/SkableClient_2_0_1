@@ -1037,11 +1037,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
         jtxtQty.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtQtyKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtQtyKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtQtyKeyPressed(evt);
             }
         });
 
@@ -1091,20 +1091,18 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -1148,7 +1146,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         jlblTaxName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel13.setText("Ram");
+        jLabel13.setText("Line 1");
 
         jtxtRam.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1164,7 +1162,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
 
-        jLabel14.setText("Camera");
+        jLabel14.setText("Line 2");
 
         jtxtCamera.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1180,7 +1178,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
 
-        jLabel15.setText("Battery");
+        jLabel15.setText("Line 3");
 
         jtxtBattery.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

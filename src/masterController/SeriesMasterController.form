@@ -534,7 +534,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ram"/>
+        <Property name="text" type="java.lang.String" value="Line 1"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtRam">
@@ -546,7 +546,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel14">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Camera"/>
+        <Property name="text" type="java.lang.String" value="Line 2"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtCamera">
@@ -558,7 +558,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Battery"/>
+        <Property name="text" type="java.lang.String" value="Line 3"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtBattery">
