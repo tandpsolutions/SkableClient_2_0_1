@@ -644,6 +644,28 @@ public class Library {
         //}
         return strConvDate;
     }
+    
+    public String convertTimestampToTime(String strOrgDate) {
+        //Changed
+        String strConvDate = "";
+        //try
+        //{
+        strOrgDate = strOrgDate.trim();
+        if (!strOrgDate.startsWith("/")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+            java.util.Date dt = new Date();
+            try {
+                dt = sdf.parse(strOrgDate);
+            } catch (ParseException ex) {
+            }
+            SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm");
+            strConvDate = sdf2.format(dt);
+        }
+        //} catch(Exception ex){
+        //printToLogFile("Error in ConvertDateFormetForDB in clSysLib...:",ex);
+        //}
+        return strConvDate;
+    }
 
     public boolean isBlank(Component comp) {
         JTextField jText = (JTextField) comp;

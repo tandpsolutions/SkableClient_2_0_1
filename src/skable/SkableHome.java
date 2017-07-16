@@ -144,6 +144,7 @@ import transactionView.ContraVoucherView;
 import transactionView.CreditNoteListReport;
 import transactionView.DCView;
 import transactionView.DNCNView;
+import transactionView.JobSheetView;
 import transactionView.JournalVoucherView;
 import transactionView.ListBill;
 import transactionView.OrderBookView;
@@ -3019,6 +3020,8 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnJobSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJobSheetActionPerformed
         // TODO add your handling code here:
+        JobSheetView jsv  = new JobSheetView(13);
+        addOnScreen(jsv, "Jobsheet view");
     }//GEN-LAST:event_jmnJobSheetActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
