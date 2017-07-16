@@ -227,7 +227,6 @@ public class SeriesMasterController extends javax.swing.JDialog {
             public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                 lb.removeGlassPane(SeriesMasterController.this);
             }
-
         });
     }
 
@@ -237,15 +236,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setModelData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -291,12 +288,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
 
@@ -306,15 +301,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setMemoryMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -351,12 +344,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
 
@@ -366,16 +357,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setColorMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -412,12 +400,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -426,16 +412,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setRamMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -472,12 +455,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -486,16 +467,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setcameraMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -532,12 +510,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -546,16 +522,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setBatteryMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class
-            ).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
@@ -592,12 +565,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -614,8 +585,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         if (sr_cd.equalsIgnoreCase("")) {
             try {
-                JsonObject call = lb.getRetrofit().create(SupportAPI.class
-                ).validateData("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText()).execute().body();
+                JsonObject call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText()).execute().body();
                 if (call
                         != null) {
                     if (call.get("result").getAsInt() == 0) {
@@ -633,8 +603,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         } else {
             try {
-                JsonObject call = lb.getRetrofit().create(SupportAPI.class
-                ).ValidateDataEdit("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText(), "sr_cd", sr_cd).execute().body();
+                JsonObject call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText(), "sr_cd", sr_cd).execute().body();
 
                 if (call
                         != null) {
@@ -705,15 +674,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
         addName();
 
         if (sr_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class
-            ).validateData("seriesmst", "sr_cd", "sr_name", jtxtItemName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "sr_name", jtxtItemName.getText());
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (rspns.isSuccessful()) {
                         if (rspns.body().get("result").getAsInt() == 0) {
@@ -728,23 +695,18 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class
-            ).ValidateDataEdit("seriesmst", "sr_cd", "sr_name", jtxtSeriesAlias.getText(), "sr_cd", sr_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "sr_name", jtxtSeriesAlias.getText(), "sr_cd", sr_cd);
             lb.addGlassPane(
                     this);
             call.enqueue(
                     new Callback<JsonObject>() {
-
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns
-                ) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                     lb.removeGlassPane(SeriesMasterController.this);
                     if (rspns.isSuccessful()) {
                         if (rspns.body().get("result").getAsInt() == 0) {
@@ -759,18 +721,17 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl
-                ) {
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SeriesMasterController.this);
                 }
-            }
-            );
+            });
 
         }
 
     }
 
     private void saveVoucher() {
+        addName();
         final ArrayList<OPBSrVal> detail = new ArrayList<>();
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             OPBSrVal data = new OPBSrVal();
@@ -1392,7 +1353,6 @@ public class SeriesMasterController extends javax.swing.JDialog {
         doClose(RET_CANCEL);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
@@ -1516,6 +1476,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtQtyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtQtyFocusGained
         // TODO add your handling code here:
+        addName();
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtQtyFocusGained
 
@@ -1659,6 +1620,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtRamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtRamKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_N) {
+            if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+                RamMasterController smc = new RamMasterController(null, true, null, "", "");
+                smc.setLocationRelativeTo(null);
+                smc.setVisible(true);
+            }
+        }
         if (lb.isEnter(evt)) {
             setRamMaster("40", jtxtRam.getText());
         }
@@ -1672,6 +1640,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtCameraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCameraKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_N) {
+            if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+                CameraMasterController smc = new CameraMasterController(null, true, null, "", "");
+                smc.setLocationRelativeTo(null);
+                smc.setVisible(true);
+            }
+        }
         if (lb.isEnter(evt)) {
             setcameraMaster("41", jtxtCamera.getText());
         }
@@ -1685,6 +1660,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void jtxtBatteryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBatteryKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_N) {
+            if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+                BatteryMasterController smc = new BatteryMasterController(null, true, null, "", "");
+                smc.setLocationRelativeTo(null);
+                smc.setVisible(true);
+            }
+        }
         if (lb.isEnter(evt)) {
             setBatteryMaster("42", jtxtBattery.getText());
         }
@@ -1753,6 +1735,5 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtSeriesAlias;
     private javax.swing.JTextField jtxtVal;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

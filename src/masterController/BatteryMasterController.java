@@ -22,7 +22,7 @@ import retrofitAPI.SupportAPI;
 import skable.SkableHome;
 import support.Library;
 
-public class BaterryMasterController extends javax.swing.JDialog {
+public class BatteryMasterController extends javax.swing.JDialog {
 
     public static final int RET_CANCEL = 0;
     public static final int RET_OK = 1;
@@ -32,7 +32,7 @@ public class BaterryMasterController extends javax.swing.JDialog {
     private BatteryMasterView bmv = null;
     private BateryMasterAPI bateryMasterAPI;
 
-    public BaterryMasterController(java.awt.Frame parent, boolean modal, BatteryMasterView bmv, String battery_cd, String battery_name) {
+    public BatteryMasterController(java.awt.Frame parent, boolean modal, BatteryMasterView bmv, String battery_cd, String battery_name) {
         super(parent, modal);
         initComponents();
 
@@ -116,14 +116,14 @@ public class BaterryMasterController extends javax.swing.JDialog {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                lb.removeGlassPane(BaterryMasterController.this);
+                lb.removeGlassPane(BatteryMasterController.this);
                 if (rspns.isSuccessful()) {
                     if (rspns.body().get("result").getAsInt() == 1) {
                         lb.showMessageDailog(rspns.body().get("Cause").getAsString());
                         if (bmv != null) {
                             bmv.addRow(rspns.body().get("battery_cd").getAsString(), jtxtBaterryName.getText());
                         }
-                        BaterryMasterController.this.dispose();
+                        BatteryMasterController.this.dispose();
                     } else {
                         lb.showMessageDailog(rspns.body().get("Cause").getAsString());
                     }
@@ -134,7 +134,7 @@ public class BaterryMasterController extends javax.swing.JDialog {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                lb.removeGlassPane(BaterryMasterController.this);
+                lb.removeGlassPane(BatteryMasterController.this);
             }
         });
 

@@ -16,7 +16,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import masterController.BaterryMasterController;
+import masterController.BatteryMasterController;
 import model.BateryMasterModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,7 +106,7 @@ public class BatteryMasterView extends javax.swing.JInternalFrame {
     }
 
     private void showDailogeAdd(String battery_cd, String battery_name) {
-        BaterryMasterController bmc = new BaterryMasterController(null, true, this, battery_cd, battery_name);
+        BatteryMasterController bmc = new BatteryMasterController(null, true, this, battery_cd, battery_name);
         bmc.setLocationRelativeTo(null);
         bmc.setVisible(true);
     }
