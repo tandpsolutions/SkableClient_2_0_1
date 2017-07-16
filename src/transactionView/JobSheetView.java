@@ -6,8 +6,10 @@
 package transactionView;
 
 import account.GeneralLedger1;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import java.awt.BorderLayout;
 import java.awt.MouseInfo;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,18 +33,16 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import model.PurchaseHead;
+import model.JobSheetViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.JobSheetAPI;
-import retrofitAPI.SalesAPI;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.SmallNavigation;
-import transactionController.SalesController;
 import utility.PrintPanel;
 //import utility.TagPrint;
 
@@ -61,17 +62,14 @@ public class JobSheetView extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> rowSorter;
     private JTextField jtfFilter = new JTextField();
     private JobSheetAPI jobSheetAPI;
-    private int vType;
     private int formCd;
-    private int tax_type;
 
-    public JobSheetView(int type, int formCd, int tax_type) {
+    public JobSheetView(int formCd) {
         initComponents();
-        setUpData();
-        vType = type;
-        this.tax_type = tax_type;
-        this.formCd = formCd;
         jobSheetAPI = lb.getRetrofit().create(JobSheetAPI.class);
+        setUpData();
+        this.formCd = formCd;
+        
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -94,20 +92,20 @@ public class JobSheetView extends javax.swing.JInternalFrame {
         } else {
             jComboBox1.setEnabled(false);
         }
-        
-        Call<JsonObject> call = jobSheetAPI.getJobStatus();
+
+        Call<JsonObject> call = jobSheetAPI.getJobType();
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
-
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                 lb.removeGlassPane(JobSheetView.this);
-                if(rspns.isSuccessful()){
+                if (rspns.isSuccessful()) {
                     final JsonObject ob = rspns.body();
-                    final JsonArray json =ob.get("data").getAsJsonArray();
+                    final String[] json = ob.get("data").getAsString().split(",");
                     jComboBox2.removeAllItems();
-                    for (int i = 0; i < json.size(); i++) {
-                        jComboBox2.addItem(json.get(i).getAsString());
+                    jComboBox2.addItem("");
+                    for (int i = 0; i < json.length; i++) {
+                        jComboBox2.addItem(json[i]);
                     }
                 }
             }
@@ -144,47 +142,35 @@ public class JobSheetView extends javax.swing.JInternalFrame {
 
     public void setData() {
         try {
-            PurchaseHead call;
-            if (formCd == 130) {
-                call = jobSheetAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
-            } else {
-                call = jobSheetAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
-            }
+            JsonObject call;
+
+            call = jobSheetAPI.getJobSheetView(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), jComboBox2.getSelectedItem().toString(), (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
             if (call != null) {
                 System.out.println(call.toString());
-                PurchaseHead header = (PurchaseHead) call;
-                if (header.getResult() == 1) {
+                TypeToken<List<JobSheetViewModel>> token = new TypeToken<List<JobSheetViewModel>>() {
+                };
+                List<JobSheetViewModel> detail = new Gson().fromJson(call.getAsJsonArray("data"), token.getType());
+                if (call.get("result").getAsInt() == 1) {
                     dtm.setRowCount(0);
-                    for (int i = 0; i < header.getPurchaseHeader().size(); i++) {
+                    for (int i = 0; i < detail.size(); i++) {
                         Vector row = new Vector();
-                        row.add(header.getPurchaseHeader().get(i).getREFNO());
-                        row.add(header.getPurchaseHeader().get(i).getINVNO());
-                        row.add(lb.ConvertDateFormetForDisplay(header.getPurchaseHeader().get(i).getVDATE()));
-                        row.add(header.getPurchaseHeader().get(i).getVTYPE());
-                        row.add(header.getPurchaseHeader().get(i).getACNAME());
-                        row.add(header.getPurchaseHeader().get(i).getNETAMT());
-                        row.add(header.getPurchaseHeader().get(i).getCASHAMT());
-                        row.add(header.getPurchaseHeader().get(i).getBANKAMT());
-                        row.add(header.getPurchaseHeader().get(i).getCARDAMT());
-                        row.add(header.getPurchaseHeader().get(i).getBankCharges());
-                        row.add(header.getPurchaseHeader().get(i).getBAJAJAMT());
-                        row.add(header.getPurchaseHeader().get(i).getSFID());
-                        row.add(header.getPurchaseHeader().get(i).getREMARK());
-                        row.add(header.getPurchaseHeader().get(i).getINS_AMT());
-                        row.add(header.getPurchaseHeader().get(i).getBUY_BACK_AMT());
-                        row.add(header.getPurchaseHeader().get(i).getACCD());
-                        row.add(header.getPurchaseHeader().get(i).getPARTNO());
-                        row.add(header.getPurchaseHeader().get(i).getCARD_NAME());
+                        row.add(detail.get(i).getREFNO());
+                        row.add(detail.get(i).getINVNO());
+                        row.add(detail.get(i).getACNAME());
+                        row.add(detail.get(i).getMODELCD());
+                        row.add(detail.get(i).getJOBTYPE());
+                        row.add(lb.ConvertDateFormetForDisplay(detail.get(i).getJOBDATE()));
+                        row.add(detail.get(i).getJOBSTATUS());
+                        row.add(lb.convertTimestampToTime(detail.get(i).getINITTIMESTAMP()));
                         dtm.addRow(row);
                     }
                     lb.setColumnSizeForTable(jTable1, jPanel2.getWidth());
                 } else {
-                    lb.showMessageDailog(call.getCause());
+                    lb.showMessageDailog(call.get("cause").getAsString());
                 }
             } else {
-                lb.showMessageDailog(call.getCause());
+                lb.showMessageDailog(call.get("cause").getAsString());
             }
         } catch (IOException ex) {
             Logger.getLogger(JobSheetView.class.getName()).log(Level.SEVERE, null, ex);
@@ -232,9 +218,9 @@ public class JobSheetView extends javax.swing.JInternalFrame {
     }
 
     private void addPurchaseConroller() {
-        SalesController pc = new SalesController(null, true, vType, formCd, this, tax_type);
-        pc.setLocationRelativeTo(null);
-        pc.setData(ref_no);
+//        SalesController pc = new SalesController(null, true, vType, formCd, this, tax_type);
+//        pc.setLocationRelativeTo(null);
+//        pc.setData(ref_no);
     }
 
     private void connectNavigation() {
@@ -273,36 +259,36 @@ public class JobSheetView extends javax.swing.JInternalFrame {
 
             @Override
             public void callDelete() {
-                if (navLoad.getModel().getDELETES().equalsIgnoreCase("1")) {
-                    final int row = jTable1.getSelectedRow();
-                    if (row != -1) {
-                        lb.confirmDialog("Do you want to delete this voucher?");
-                        if (lb.type) {
-                            String ref_no = jTable1.getValueAt(row, 0).toString();
-                            lb.addGlassPane(JobSheetView.this);
-                            salesAPI.DeleteSalesBill(ref_no).enqueue(new Callback<JsonObject>() {
-                                @Override
-                                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                                    lb.removeGlassPane(JobSheetView.this);
-                                    JsonObject object = rspns.body();
-                                    if (object.get("result").getAsInt() == 1) {
-                                        lb.showMessageDailog("Delete successfull");
-                                        dtm.removeRow(row);
-                                    } else {
-                                        lb.showMessageDailog(object.get("Cause").getAsString());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                                    lb.removeGlassPane(JobSheetView.this);
-                                }
-                            });
-                        }
-                    }
-                } else {
-                    lb.showMessageDailog("You don't have rights to perform this action");
-                }
+//                if (navLoad.getModel().getDELETES().equalsIgnoreCase("1")) {
+//                    final int row = jTable1.getSelectedRow();
+//                    if (row != -1) {
+//                        lb.confirmDialog("Do you want to delete this voucher?");
+//                        if (lb.type) {
+//                            String ref_no = jTable1.getValueAt(row, 0).toString();
+//                            lb.addGlassPane(JobSheetView.this);
+//                            salesAPI.DeleteSalesBill(ref_no).enqueue(new Callback<JsonObject>() {
+//                                @Override
+//                                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
+//                                    lb.removeGlassPane(JobSheetView.this);
+//                                    JsonObject object = rspns.body();
+//                                    if (object.get("result").getAsInt() == 1) {
+//                                        lb.showMessageDailog("Delete successfull");
+//                                        dtm.removeRow(row);
+//                                    } else {
+//                                        lb.showMessageDailog(object.get("Cause").getAsString());
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+//                                    lb.removeGlassPane(JobSheetView.this);
+//                                }
+//                            });
+//                        }
+//                    }
+//                } else {
+//                    lb.showMessageDailog("You don't have rights to perform this action");
+//                }
             }
 
             @Override
@@ -319,16 +305,16 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                         if (Constants.BILL_TYPE.equalsIgnoreCase("0")) {
                             lb.confirmDialog("Do you want to print normal sales bill?");
                             if (lb.type) {
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"0");
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
                             } else {
                                 pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
                             }
-                        }else{
+                        } else {
                             lb.confirmDialog("Do you want to print customer print?");
                             if (lb.type) {
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"1");
-                            }else{
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(),"0");
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
+                            } else {
+                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
                             }
                         }
                         pp.setVisible(true);
@@ -476,33 +462,31 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addGap(14, 14, 14))
+                        .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,11 +530,11 @@ public class JobSheetView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "Type", "Name", "Net Amt", "Cash", "Bank", "Card", "Bank Charges", "Bajaj", "SFID", "Remark", "Insurance Amt", "Buy Back Amt", "AC CD", "Part No", "Card Bank"
+                "ref no", "Job No", "Customer Name", "Model", "Service Type", "Date", "Status", "Time", "AC CD"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -568,29 +552,20 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(1).setResizable(false);
         jTable1.getColumnModel().getColumn(2).setResizable(false);
-        jTable1.getColumnModel().getColumn(3).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(0);
-        jTable1.getColumnModel().getColumn(3).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
         jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(0);
         jTable1.getColumnModel().getColumn(5).setResizable(false);
         jTable1.getColumnModel().getColumn(6).setResizable(false);
         jTable1.getColumnModel().getColumn(7).setResizable(false);
-        jTable1.getColumnModel().getColumn(8).setResizable(false);
-        jTable1.getColumnModel().getColumn(9).setResizable(false);
-        jTable1.getColumnModel().getColumn(10).setResizable(false);
-        jTable1.getColumnModel().getColumn(11).setResizable(false);
-        jTable1.getColumnModel().getColumn(12).setResizable(false);
-        jTable1.getColumnModel().getColumn(13).setResizable(false);
-        jTable1.getColumnModel().getColumn(14).setResizable(false);
-        jTable1.getColumnModel().getColumn(15).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(15).setPreferredWidth(0);
-        jTable1.getColumnModel().getColumn(15).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(16).setResizable(false);
-        jTable1.getColumnModel().getColumn(17).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -748,7 +723,6 @@ public class JobSheetView extends javax.swing.JInternalFrame {
     private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2KeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

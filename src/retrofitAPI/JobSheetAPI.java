@@ -6,12 +6,8 @@
 package retrofitAPI;
 
 import com.google.gson.JsonObject;
-import model.PurchaseHead;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -20,9 +16,9 @@ import retrofit2.http.Query;
  */
 public interface JobSheetAPI {
 
-    @GET("GetJobStatus")
-    Call<JsonObject> getJobStatus();
+    @GET("GetJobType")
+    Call<JsonObject> getJobType();
 
-    
-
+    @GET("GetJobSheetView")
+    Call<JsonObject> getJobSheetView(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("job_type") String job_type, @Query("branch_cd") String branch_cd);
 }
