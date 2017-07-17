@@ -43,6 +43,7 @@ import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.SmallNavigation;
+import transactionController.JobSheetController;
 import utility.PrintPanel;
 //import utility.TagPrint;
 
@@ -69,7 +70,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
         jobSheetAPI = lb.getRetrofit().create(JobSheetAPI.class);
         setUpData();
         this.formCd = formCd;
-        
+
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -123,17 +124,29 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             public void actionPerformed(ActionEvent event) {
                 popup.setVisible(false);
                 int row = jTable1.getSelectedRow();
-                int column = jTable1.getSelectedColumn();
-                if (row != -1 && column != -1) {
-                    String ac_cd = jTable1.getValueAt(row, 15).toString();
-                    String ac_name = jTable1.getValueAt(row, 4).toString();
-                    GeneralLedger1 gl = new GeneralLedger1(ac_cd, ac_name);
-                    SkableHome.addOnScreen(gl, "General Ledger");
+                if (row != -1 ) {
+                    String ref_no = jTable1.getValueAt(row, 0).toString();
+                    Call<JsonObject> call = jobSheetAPI.closeJobSheet(ref_no);
+                    lb.addGlassPane(JobSheetView.this);
+                    call.enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
+                            lb.removeGlassPane(JobSheetView.this);
+                            if (rspns.isSuccessful()) {
+                                jButton1.doClick();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                            lb.removeGlassPane(JobSheetView.this);
+                        }
+                    });
                 }
             }
         };
         final JMenuItem item;
-        popup.add(item = new JMenuItem("Open Ledger"));
+        popup.add(item = new JMenuItem("Close Job Sheet"));
         item.setHorizontalTextPosition(JMenuItem.RIGHT);
         item.addActionListener(menuListener);
         popup.setLocation(MouseInfo.getPointerInfo().getLocation());
@@ -157,7 +170,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                         Vector row = new Vector();
                         row.add(detail.get(i).getREFNO());
                         row.add(detail.get(i).getINVNO());
-                        row.add(detail.get(i).getACNAME());
+                        row.add(detail.get(i).getFNAME());
                         row.add(detail.get(i).getMODELCD());
                         row.add(detail.get(i).getJOBTYPE());
                         row.add(lb.ConvertDateFormetForDisplay(detail.get(i).getJOBDATE()));
@@ -218,9 +231,9 @@ public class JobSheetView extends javax.swing.JInternalFrame {
     }
 
     private void addPurchaseConroller() {
-//        SalesController pc = new SalesController(null, true, vType, formCd, this, tax_type);
-//        pc.setLocationRelativeTo(null);
-//        pc.setData(ref_no);
+        JobSheetController pc = new JobSheetController(null, true, jobSheetAPI);
+        pc.setLocationRelativeTo(null);
+        pc.setData(ref_no);
     }
 
     private void connectNavigation() {
@@ -259,36 +272,36 @@ public class JobSheetView extends javax.swing.JInternalFrame {
 
             @Override
             public void callDelete() {
-//                if (navLoad.getModel().getDELETES().equalsIgnoreCase("1")) {
-//                    final int row = jTable1.getSelectedRow();
-//                    if (row != -1) {
-//                        lb.confirmDialog("Do you want to delete this voucher?");
-//                        if (lb.type) {
-//                            String ref_no = jTable1.getValueAt(row, 0).toString();
-//                            lb.addGlassPane(JobSheetView.this);
-//                            salesAPI.DeleteSalesBill(ref_no).enqueue(new Callback<JsonObject>() {
-//                                @Override
-//                                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-//                                    lb.removeGlassPane(JobSheetView.this);
-//                                    JsonObject object = rspns.body();
-//                                    if (object.get("result").getAsInt() == 1) {
-//                                        lb.showMessageDailog("Delete successfull");
-//                                        dtm.removeRow(row);
-//                                    } else {
-//                                        lb.showMessageDailog(object.get("Cause").getAsString());
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-//                                    lb.removeGlassPane(JobSheetView.this);
-//                                }
-//                            });
-//                        }
-//                    }
-//                } else {
-//                    lb.showMessageDailog("You don't have rights to perform this action");
-//                }
+                if (navLoad.getModel().getDELETES().equalsIgnoreCase("1")) {
+                    final int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        lb.confirmDialog("Do you want to delete this Job Sheet?");
+                        if (lb.type) {
+                            String ref_no = jTable1.getValueAt(row, 0).toString();
+                            lb.addGlassPane(JobSheetView.this);
+                            jobSheetAPI.deleteJobSheet(ref_no).enqueue(new Callback<JsonObject>() {
+                                @Override
+                                public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
+                                    lb.removeGlassPane(JobSheetView.this);
+                                    JsonObject object = rspns.body();
+                                    if (object.get("result").getAsInt() == 1) {
+                                        lb.showMessageDailog("Delete successfull");
+                                        dtm.removeRow(row);
+                                    } else {
+                                        lb.showMessageDailog(object.get("Cause").getAsString());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                                    lb.removeGlassPane(JobSheetView.this);
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog("You don't have rights to perform this action");
+                }
             }
 
             @Override
