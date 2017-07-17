@@ -13,29 +13,28 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-import masterView.MemoryMasterView;
+import masterView.CameraMasterView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofitAPI.MemoryAPI;
+import retrofitAPI.CameraAPI;
 import retrofitAPI.SupportAPI;
 import skable.SkableHome;
 import support.Library;
 
-public class MemoryMasterController extends javax.swing.JDialog {
+public class CameraMasterController extends javax.swing.JDialog {
 
     public static final int RET_CANCEL = 0;
     public static final int RET_OK = 1;
     boolean formLoad = false;
-    Library lb = Library.getInstance();
-    String memory_cd = "";
-    MemoryMasterView mmv = null;
-    private MemoryAPI memoryAPI;
+    private Library lb = Library.getInstance();
+    private String camera_cd = "";
+    private CameraMasterView bmv = null;
+    private CameraAPI cameraAPI;
 
-    public MemoryMasterController(java.awt.Frame parent, boolean modal, MemoryMasterView bmv, String memory_cd, String memory_name) {
+    public CameraMasterController(java.awt.Frame parent, boolean modal, CameraMasterView cmv, String camera_cd, String camera_name) {
         super(parent, modal);
         initComponents();
-        memoryAPI = lb.getRetrofit().create(MemoryAPI.class);
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -47,10 +46,11 @@ public class MemoryMasterController extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
-        this.mmv = bmv;
-        jtxtMemoryName.setText(memory_name);
-        this.memory_cd = memory_cd;
-        jtxtMemoryName.requestFocusInWindow();
+        this.bmv = cmv;
+        cameraAPI = lb.getRetrofit().create(CameraAPI.class);
+        jtxtCameraName.setText(camera_name);
+        this.camera_cd = camera_cd;
+        jtxtCameraName.requestFocusInWindow();
     }
 
     public int getReturnStatus() {
@@ -58,22 +58,19 @@ public class MemoryMasterController extends javax.swing.JDialog {
     }
 
     private void validateVoucher() {
-        if (lb.isBlank(jtxtMemoryName)) {
-            lb.showMessageDailog("Memory name can not be left blank");
-            jtxtMemoryName.requestFocusInWindow();
+        if (lb.isBlank(jtxtCameraName)) {
+            lb.showMessageDailog("Camera name can not be left blank");
+            jtxtCameraName.requestFocusInWindow();
             return;
         }
-        if (memory_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText());
-            lb.addGlassPane(this);
+        if (camera_cd.equalsIgnoreCase("")) {
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("cameramst", "camera_cd", "camera_name", jtxtCameraName.getText());
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                    lb.removeGlassPane(MemoryMasterController.this);
                     if (rspns.isSuccessful()) {
                         if (rspns.body().get("result").getAsInt() == 0) {
-                            lb.showMessageDailog("Memory already exist");
+                            lb.showMessageDailog("Camera already exist");
                             return;
                         } else {
                             saveVoucher();
@@ -89,15 +86,13 @@ public class MemoryMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText(), "MEMORY_CD", memory_cd);
-            lb.addGlassPane(this);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("cameramst", "camera_cd", "camera_name", jtxtCameraName.getText(), "camera_cd", camera_cd);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                    lb.removeGlassPane(MemoryMasterController.this);
                     if (rspns.isSuccessful()) {
                         if (rspns.body().get("result").getAsInt() == 0) {
-                            lb.showMessageDailog("Memory already exist");
+                            lb.showMessageDailog("Camera already exist");
                             return;
                         } else {
                             saveVoucher();
@@ -109,8 +104,6 @@ public class MemoryMasterController extends javax.swing.JDialog {
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                    lb.removeGlassPane(MemoryMasterController.this);
-
                 }
             });
 
@@ -118,19 +111,19 @@ public class MemoryMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = memoryAPI.addUpdateColorMaster(memory_cd, jtxtMemoryName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = cameraAPI.addUpdateCameraMaster(camera_cd, jtxtCameraName.getText(), SkableHome.user_id,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
-                lb.removeGlassPane(MemoryMasterController.this);
+                lb.removeGlassPane(CameraMasterController.this);
                 if (rspns.isSuccessful()) {
                     if (rspns.body().get("result").getAsInt() == 1) {
                         lb.showMessageDailog(rspns.body().get("Cause").getAsString());
-                        if (mmv != null) {
-                            mmv.addRow(rspns.body().get("memory_cd").getAsString(), jtxtMemoryName.getText());
+                        if (bmv != null) {
+                            bmv.addRow(rspns.body().get("camera_cd").getAsString(), jtxtCameraName.getText());
                         }
-                        MemoryMasterController.this.dispose();
+                        CameraMasterController.this.dispose();
                     } else {
                         lb.showMessageDailog(rspns.body().get("Cause").getAsString());
                     }
@@ -141,7 +134,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                lb.removeGlassPane(MemoryMasterController.this);
+                lb.removeGlassPane(CameraMasterController.this);
             }
         });
 
@@ -154,7 +147,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         jbtnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jtxtMemoryName = new javax.swing.JTextField();
+        jtxtCameraName = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -181,19 +174,19 @@ public class MemoryMasterController extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("memory Name");
+        jLabel1.setText("Camera Name");
 
-        jtxtMemoryName.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtxtCameraName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtMemoryNameFocusGained(evt);
+                jtxtCameraNameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtMemoryNameFocusLost(evt);
+                jtxtCameraNameFocusLost(evt);
             }
         });
-        jtxtMemoryName.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtxtCameraName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtMemoryNameKeyPressed(evt);
+                jtxtCameraNameKeyPressed(evt);
             }
         });
 
@@ -202,16 +195,17 @@ public class MemoryMasterController extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(198, Short.MAX_VALUE)
+                        .addGap(0, 192, Short.MAX_VALUE)
                         .addComponent(jbtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtMemoryName)))
+                        .addComponent(jtxtCameraName)))
                 .addContainerGap())
         );
 
@@ -222,7 +216,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtMemoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtCameraName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -231,7 +225,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jtxtMemoryName});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jtxtCameraName});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -246,27 +240,6 @@ public class MemoryMasterController extends javax.swing.JDialog {
     }//GEN-LAST:event_closeDialog
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
-//        try {
-//            if (validateVoucher()) {
-//                List<BasicNameValuePair> ls = new LinkedList<BasicNameValuePair>();
-//                ls.add(new BasicNameValuePair("BRAND_CD", brand_cd));
-//                ls.add(new BasicNameValuePair("BRAND_NAME", jtxtBrandName.getText()));
-//                ls.add(new BasicNameValuePair("USER_ID", MaisHome.user_id + ""));
-//                JSONObject jsonResult = lb.getDataFromServer("/" + MAIS101.folder + "/brand/addUpdateBrandName.php?", ls);
-//                if (jsonResult != null) {
-//                    if (jsonResult.getInt("status") == 1) {
-//                        this.dispose();
-//                        bmv.getData();
-//                    } else {
-//                        lb.showMessageDailog("Brand name is not saved on server");
-//                        jtxtBrandName.requestFocusInWindow();
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            lb.printToLogFile("Exception at saveVoucher at Brand Controller", ex);
-//            this.dispose();
-//        }
         validateVoucher();
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
@@ -274,20 +247,20 @@ public class MemoryMasterController extends javax.swing.JDialog {
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnSaveKeyPressed
 
-    private void jtxtMemoryNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtMemoryNameFocusGained
+    private void jtxtCameraNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtCameraNameFocusGained
         // TODO add your handling code here:
         lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtMemoryNameFocusGained
+    }//GEN-LAST:event_jtxtCameraNameFocusGained
 
-    private void jtxtMemoryNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtMemoryNameFocusLost
+    private void jtxtCameraNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtCameraNameFocusLost
         // TODO add your handling code here:
         lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtMemoryNameFocusLost
+    }//GEN-LAST:event_jtxtCameraNameFocusLost
 
-    private void jtxtMemoryNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtMemoryNameKeyPressed
+    private void jtxtCameraNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCameraNameKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jbtnSave);
-    }//GEN-LAST:event_jtxtMemoryNameKeyPressed
+    }//GEN-LAST:event_jtxtCameraNameKeyPressed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -298,7 +271,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbtnSave;
-    private javax.swing.JTextField jtxtMemoryName;
+    private javax.swing.JTextField jtxtCameraName;
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;

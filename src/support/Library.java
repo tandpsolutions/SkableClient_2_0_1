@@ -408,6 +408,68 @@ public class Library {
 
     }
 
+    public void PrintLabel(String tag1, String item_name1, String pur) {
+
+        // Prepare date to print in dd/mm/yyyy format
+        // Search for an installed zebra printer...
+        // is a printer with "zebra" in its name
+        try {
+            PrintService psZebra = null;
+            String sPrinterName = null;
+            PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+            for (int i = 0; i < services.length; i++) {
+                if ((services[i].getName().toString().equalsIgnoreCase("Zebra")
+                        || services[i].getName().toString().equalsIgnoreCase("TTP-244"))) {
+                    psZebra = services[i];
+                    PrintServiceAttributeSet printServiceAttributes = psZebra.getAttributes();
+                    PrinterState printerState = (PrinterState) printServiceAttributes.get(PrinterState.class);
+                    if (printerState != null) {
+                    } else {
+                    }
+                    break;
+
+                }
+            }
+
+            if (psZebra == null) {
+                System.out.println("Zebra printer is not found.");
+                return;
+            }
+
+            System.out.println("Found printer: " + sPrinterName);
+            DocPrintJob job = psZebra.createPrintJob();
+
+            // Prepare string to send to the printer
+            String s = "^XA\n"
+                    + "^FO210,125^BY3\n"
+                    + "^BCN,50,N,N,N\n"
+                    + "^FD" + tag1 + "^FS\n"
+                    + "^CF0,35"
+                    + "^FO330,185^FD" + tag1 + "^FS"
+                    + "^CF0,30"
+                    + "^FO210,30"
+                    + "^FB400,80"
+                    + "^FD" + item_name1 + "^FS"
+                    + "^FO210,5\n"
+                    + "^FB320,80\n"
+                    + "^FDManav Mandir^FS^"
+                    + "^FO510,90\n"
+                    + "^FB260,80\n"
+                    + "^FD" + pur + "^FS^"
+                    + "^XZ";   // Print content of buffer, 1 label
+            byte[] by = s.getBytes();
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            // MIME type = "application/octet-stream",
+            // print data representation class name = "[B" (byte array).
+            Doc doc = new SimpleDoc(by, flavor, null);
+            job.print(doc, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void PrintLabel(String tag1, String item_name1, String Rate1, String nlRate1) {
 
         // Prepare date to print in dd/mm/yyyy format

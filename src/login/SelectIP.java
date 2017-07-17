@@ -51,6 +51,7 @@ public class SelectIP extends javax.swing.JFrame {
                 String ip = properties.getProperty("ip");
                 Constants.COMPANY_NAME = properties.getProperty("company_name");
                 Constants.BILL_TYPE = properties.getProperty("bill_type", "0");
+                Constants.TAG_TYPE = properties.getProperty("tag_type", "0");
                 String[] ipList = ip.split(",");
                 jComboBox3.removeAllItems();
                 for (int i = 0; i < ipList.length; i++) {

@@ -107,10 +107,9 @@ public class PrintPanel extends javax.swing.JDialog {
                                     params.put("bill_type", "Tax Invoice");
                                 }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
-                                params.put("tax_title", "SGST");
-                                params.put("tax_title", "SGST");
+                                params.put("tax_title", "State GST");
                                 params.put("bill_type", "Tax Invoice");
-                                params.put("add_tax_title", "CGST");
+                                params.put("add_tax_title", "Central GST");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
@@ -126,7 +125,8 @@ public class PrintPanel extends javax.swing.JDialog {
                             lb.confirmDialog("Do you want to print sales Bill with header?");
                             if (lb.type) {
                                 if (type.equalsIgnoreCase("0")) {
-                                    lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
+//                                    lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator("SalesInVoicePDF_PART1.jasper", params, dataSource, jPanel1);
                                 } else {
                                     lb.reportGenerator("SalesInVoicePDFWoCalc.jasper", params, dataSource, jPanel1);
                                 }
@@ -187,10 +187,9 @@ public class PrintPanel extends javax.swing.JDialog {
                                     params.put("bill_type", "Tax Invoice");
                                 }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
-                                params.put("tax_title", "SGST");
-                                params.put("tax_title", "SGST");
+                                params.put("tax_title", "State GST");
                                 params.put("bill_type", "Tax Invoice");
-                                params.put("add_tax_title", "CGST");
+                                params.put("add_tax_title", "Central GST");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
@@ -250,8 +249,8 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("add_tax_title", "Add Vat");
                                 params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             } else if (array.get(0).getAsJsonObject().get("TAX_TYPE").getAsInt() == 1) {
-                                params.put("tax_title", "SGST");
-                                params.put("add_tax_title", "CGST");
+                                params.put("tax_title", "State GST");
+                                params.put("add_tax_title", "Central GST");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");

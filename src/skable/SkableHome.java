@@ -112,11 +112,14 @@ import javax.swing.border.LineBorder;
 import login.ChangeYear;
 import login.Login;
 import masterView.AccountMasterView;
+import masterView.BatteryMasterView;
 import masterView.BrandMasterView;
+import masterView.CameraMasterView;
 import masterView.ColorMasterView;
 import masterView.GroupMasterView;
 import masterView.MemoryMasterView;
 import masterView.ModelMasterView;
+import masterView.RamMasterView;
 import masterView.RefMasterView;
 import masterView.SalesmanMaster;
 import masterView.SchemeMasterView;
@@ -520,6 +523,9 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
         jmnTransaction = new javax.swing.JMenu();
         jMenu12 = new javax.swing.JMenu();
         jmnRDPurchase1 = new javax.swing.JMenuItem();
@@ -676,7 +682,6 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -832,6 +837,30 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnMaster.add(jMenuItem27);
+
+        jMenuItem32.setText("Ram Master");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jMenuItem32);
+
+        jMenuItem33.setText("Camera Master");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jMenuItem33);
+
+        jMenuItem34.setText("Battery Master");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jMenuItem34);
 
         jMenuBar3.add(jmnMaster);
 
@@ -2047,14 +2076,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem31);
 
-        jMenuItem32.setText("Update GST No");
-        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem32ActionPerformed(evt);
-            }
-        });
-        jmnUtility.add(jMenuItem32);
-
         jMenuBar3.add(jmnUtility);
 
         setJMenuBar(jMenuBar3);
@@ -2981,9 +3002,21 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
-        UpdateGSTNo updateGSTNo = new UpdateGSTNo();
-        addOnScreen(updateGSTNo, "Update Hst No For Account");
+        RamMasterView rm = new RamMasterView(13);
+        addOnScreen(rm, "Ram Master View");
     }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        // TODO add your handling code here:
+        CameraMasterView cmv = new CameraMasterView(13);
+        addOnScreen(cmv, "Camera Master View");
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+        BatteryMasterView bmv = new BatteryMasterView(13);
+        addOnScreen(bmv, "Battery Master View");
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jmnJobSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJobSheetActionPerformed
         // TODO add your handling code here:
@@ -3034,6 +3067,8 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem5;

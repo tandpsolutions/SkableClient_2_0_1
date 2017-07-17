@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import retrofitAPI.PurchaseAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 
@@ -56,9 +57,14 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonArray array = result.getAsJsonArray("data");
             for (int i = 0; i < array.size(); i++) {
                 Vector row = new Vector();
+                row.add(i+1);
+                row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
                 row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                row.add(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
                 dtmTag.addRow(row);
             }
+            lb.setColumnSizeForTable(jTable2, jPanel3.getWidth());
         } catch (Exception ex) {
             lb.printToLogFile("Exception at loadData in TagPrint", ex);
         }
@@ -87,7 +93,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
                 }
             } else {
                 for (int i = 0; i < jTable2.getRowCount(); i++) {
-                    tagListForRandom += ("'" + jTable2.getValueAt(i, 0).toString() + "',");
+                    tagListForRandom += ("'" + jTable2.getValueAt(i, 3).toString() + "',");
                 }
             }
             tagListForRandom = tagListForRandom.substring(0, tagListForRandom.length() - 1);
@@ -95,7 +101,11 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected()).execute().body();
             if (call != null) {
                 result = call;
-                processResult();
+                if (Constants.TAG_TYPE.equalsIgnoreCase("0")) {
+                    processResult();
+                } else {
+                    processResult2();
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(TagPrint.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,12 +126,12 @@ public class TagPrint extends javax.swing.JInternalFrame {
                 for (; i < array.size();) {
                     if (i == 0) {
                         tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
-                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString();
                         nlc1 = array.get(i).getAsJsonObject().get("NLC").getAsString();
                         RATE1 = array.get(i).getAsJsonObject().get("RATE").getAsString();
                     } else if (i % 2 == 0) {
                         tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
-                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                        SR_NAME1 = array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString();
                         nlc1 = array.get(i).getAsJsonObject().get("NLC").getAsString();
                         RATE1 = array.get(i).getAsJsonObject().get("RATE").getAsString();
                     }
@@ -130,12 +140,12 @@ public class TagPrint extends javax.swing.JInternalFrame {
                         if (i >= array.size()) {
                             break;
                         }
-                        lb.PrintLabel(array.get(i).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i).getAsJsonObject().get("SR_NAME").getAsString(), array.get(i).getAsJsonObject().get("RATE").getAsString(), array.get(i).getAsJsonObject().get("NLC").getAsString(), tag1, SR_NAME1, RATE1, nlc1);
+                        lb.PrintLabel(array.get(i).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString(), array.get(i).getAsJsonObject().get("RATE").getAsString(), array.get(i).getAsJsonObject().get("NLC").getAsString(), tag1, SR_NAME1, RATE1, nlc1);
                         i++;
                     }
                 }
                 if (array.size() % 2 == 1) {
-                    lb.PrintLabel(array.get(i - 1).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i - 1).getAsJsonObject().get("SR_NAME").getAsString(), array.get(i - 1).getAsJsonObject().get("RATE").getAsString(), array.get(i - 1).getAsJsonObject().get("NLC").getAsString());
+                    lb.PrintLabel(array.get(i - 1).getAsJsonObject().get("TAG_NO").getAsString(), array.get(i - 1).getAsJsonObject().get("SR_ALIAS").getAsString(), array.get(i - 1).getAsJsonObject().get("RATE").getAsString(), array.get(i - 1).getAsJsonObject().get("NLC").getAsString());
 
                 }
             }
@@ -144,6 +154,66 @@ public class TagPrint extends javax.swing.JInternalFrame {
         } finally {
             lb.removeGlassPane(this);
         }
+    }
+
+    private void processResult2() {
+        try {
+            JsonArray array = result.getAsJsonArray("data");
+            if (array != null) {
+                String tag1 = "", SR_NAME1 = "",SR_NAME2 = "";
+                int i = 0;
+                for (i = 0; i < array.size(); i++) {
+                    tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
+                    SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
+                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()))+"\\&"+SR_NAME1.substring(SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()));
+                    String[] data = (((int) array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble()) + "").split("(?!^)");
+                    lb.PrintLabel(tag1, SR_NAME2, generateCode(data));
+                }
+            }
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at jbtnPrintActionPerformedRoutine", ex);
+        } finally {
+            lb.removeGlassPane(this);
+        }
+    }
+
+    private String generateCode(String[] array) {
+        String code = "";
+        for (int i = 0; i < array.length; i++) {
+            switch (array[i]) {
+                case "1":
+                    code += "M";
+                    break;
+                case "2":
+                    code += "A";
+                    break;
+                case "3":
+                    code += "L";
+                    break;
+                case "4":
+                    code += "I";
+                    break;
+                case "5":
+                    code += "Y";
+                    break;
+                case "6":
+                    code += "O";
+                    break;
+                case "7":
+                    code += "G";
+                    break;
+                case "8":
+                    code += "E";
+                    break;
+                case "9":
+                    code += "S";
+                    break;
+                case "0":
+                    code += "H";
+                    break;
+            }
+        }
+        return code;
     }
 
     /**
@@ -190,7 +260,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, Short.MAX_VALUE)
                     .addComponent(jrbtRandom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jrbtRange, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,11 +288,11 @@ public class TagPrint extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tag No"
+                "Sr No", "Item Name", "Imei No", "Tag No", "Serial No"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -237,6 +307,10 @@ public class TagPrint extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);

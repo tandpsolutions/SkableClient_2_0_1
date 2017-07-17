@@ -21,6 +21,35 @@ public class SeriesMasterModel {
     private String TYPE_NAME;
     private String SUB_TYPE_NAME;
     private String TAX_NAME;
+    private String RAM_NAME;
+    private String CAMERA_NAME;
+    private String BATTERY_NAME;
+
+    public String getRAM_NAME() {
+        return RAM_NAME;
+    }
+
+    public void setRAM_NAME(String RAM_NAME) {
+        this.RAM_NAME = RAM_NAME;
+    }
+
+    public String getCAMERA_NAME() {
+        return CAMERA_NAME;
+    }
+
+    public void setCAMERA_NAME(String CAMERA_NAME) {
+        this.CAMERA_NAME = CAMERA_NAME;
+    }
+
+    public String getBATTERY_NAME() {
+        return BATTERY_NAME;
+    }
+
+    public void setBATTERY_NAME(String BATTERY_NAME) {
+        this.BATTERY_NAME = BATTERY_NAME;
+    }
+    
+    
 
     public void setSUB_TYPE_NAME(String SUB_TYPE_NAME) {
         this.SUB_TYPE_NAME = SUB_TYPE_NAME;
