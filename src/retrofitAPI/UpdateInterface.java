@@ -28,6 +28,10 @@ public interface UpdateInterface {
     
     @GET("GetCreditLimit")
     Call<JsonObject> GetCreditLimit(@Query("branch_cd") String branch_cd);
+    
+    
+     @GET("GetStartUpData")
+    Call<JsonObject> getStartUpData();
 
     @FormUrlEncoded
     @POST("UpdateBranchMaster")

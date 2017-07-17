@@ -6,6 +6,7 @@
 package skable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import model.BranchMasterModel;
 import model.DBYearModel;
 import model.RefModel;
@@ -36,4 +37,5 @@ public class Constants {
     public static final ArrayList<DBYearModel> DBYMS = new ArrayList<DBYearModel>();
     public static final ArrayList<RefModel> REFERAL = new ArrayList<RefModel>();
     public static final ArrayList<SalesManMasterModel> SALESMAN = new ArrayList<SalesManMasterModel>();
+    public static final HashMap params = new HashMap();
 }

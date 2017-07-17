@@ -90,11 +90,13 @@ public class SelectIP extends javax.swing.JFrame {
         final JsonObject branchMaster = update1.GetBranchMaster().execute().body();
         final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
         final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+        final JsonObject systemVariables = update1.getStartUpData().execute().body();
 
         final JsonArray branchArray = branchMaster.getAsJsonArray("data");
         final JsonArray yearArray = branchMaster.getAsJsonArray("year");
         final JsonArray refMaster = refmaster.getAsJsonArray("data");
         final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
+        final JsonArray variables = systemVariables.getAsJsonArray("data");
 
         if (branchArray.size() > 0) {
             for (int i = 0; i < branchArray.size(); i++) {
@@ -121,6 +123,11 @@ public class SelectIP extends javax.swing.JFrame {
             for (int i = 0; i < salesmanMaster.size(); i++) {
                 SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
                 Constants.SALESMAN.add(model);
+            }
+        }
+        if (variables.size() > 0) {
+            for (int i = 0; i < variables.size(); i++) {
+                Constants.params.put(variables.get(i).getAsJsonObject().get("PARAM_NAME").getAsString(), variables.get(i).getAsJsonObject().get("PARAM_VALUE").getAsString());
             }
         }
         getTaxMaster();
