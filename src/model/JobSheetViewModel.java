@@ -19,24 +19,51 @@ public class JobSheetViewModel {
     @SerializedName("INV_NO")
     @Expose
     private String iNVNO;
-    @SerializedName("JOB_TYPE")
-    @Expose
-    private String jOBTYPE;
-    @SerializedName("AC_NAME")
-    @Expose
-    private Object aCNAME;
     @SerializedName("JOB_DATE")
     @Expose
     private String jOBDATE;
+    @SerializedName("JOB_TYPE")
+    @Expose
+    private String jOBTYPE;
     @SerializedName("JOB_STATUS")
     @Expose
     private String jOBSTATUS;
     @SerializedName("AC_CD")
     @Expose
     private String aCCD;
+    @SerializedName("FNAME")
+    @Expose
+    private String fNAME;
     @SerializedName("MODEL_CD")
     @Expose
     private String mODELCD;
+    @SerializedName("IMEI_NO")
+    @Expose
+    private String iMEINO;
+    @SerializedName("DEFECT_DESC")
+    @Expose
+    private String dEFECTDESC;
+    @SerializedName("ITEMS")
+    @Expose
+    private String iTEMS;
+    @SerializedName("ESTIMATED_AMT")
+    @Expose
+    private String eSTIMATEDAMT;
+    @SerializedName("DEPOSIT_AMT")
+    @Expose
+    private String dEPOSITAMT;
+    @SerializedName("BRANCH_CD")
+    @Expose
+    private String bRANCHCD;
+    @SerializedName("EDIT_NO")
+    @Expose
+    private String eDITNO;
+    @SerializedName("USER_ID")
+    @Expose
+    private String uSERID;
+    @SerializedName("TIME_STAMP")
+    @Expose
+    private String tIMESTAMP;
     @SerializedName("INIT_TIMESTAMP")
     @Expose
     private String iNITTIMESTAMP;
@@ -57,28 +84,20 @@ public class JobSheetViewModel {
         this.iNVNO = iNVNO;
     }
 
-    public String getJOBTYPE() {
-        return jOBTYPE;
-    }
-
-    public void setJOBTYPE(String jOBTYPE) {
-        this.jOBTYPE = jOBTYPE;
-    }
-
-    public Object getACNAME() {
-        return aCNAME;
-    }
-
-    public void setACNAME(Object aCNAME) {
-        this.aCNAME = aCNAME;
-    }
-
     public String getJOBDATE() {
         return jOBDATE;
     }
 
     public void setJOBDATE(String jOBDATE) {
         this.jOBDATE = jOBDATE;
+    }
+
+    public String getJOBTYPE() {
+        return jOBTYPE;
+    }
+
+    public void setJOBTYPE(String jOBTYPE) {
+        this.jOBTYPE = jOBTYPE;
     }
 
     public String getJOBSTATUS() {
@@ -97,12 +116,92 @@ public class JobSheetViewModel {
         this.aCCD = aCCD;
     }
 
+    public String getFNAME() {
+        return fNAME;
+    }
+
+    public void setFNAME(String fNAME) {
+        this.fNAME = fNAME;
+    }
+
     public String getMODELCD() {
         return mODELCD;
     }
 
     public void setMODELCD(String mODELCD) {
         this.mODELCD = mODELCD;
+    }
+
+    public String getIMEINO() {
+        return iMEINO;
+    }
+
+    public void setIMEINO(String iMEINO) {
+        this.iMEINO = iMEINO;
+    }
+
+    public String getDEFECTDESC() {
+        return dEFECTDESC;
+    }
+
+    public void setDEFECTDESC(String dEFECTDESC) {
+        this.dEFECTDESC = dEFECTDESC;
+    }
+
+    public String getITEMS() {
+        return iTEMS;
+    }
+
+    public void setITEMS(String iTEMS) {
+        this.iTEMS = iTEMS;
+    }
+
+    public String getESTIMATEDAMT() {
+        return eSTIMATEDAMT;
+    }
+
+    public void setESTIMATEDAMT(String eSTIMATEDAMT) {
+        this.eSTIMATEDAMT = eSTIMATEDAMT;
+    }
+
+    public String getDEPOSITAMT() {
+        return dEPOSITAMT;
+    }
+
+    public void setDEPOSITAMT(String dEPOSITAMT) {
+        this.dEPOSITAMT = dEPOSITAMT;
+    }
+
+    public String getBRANCHCD() {
+        return bRANCHCD;
+    }
+
+    public void setBRANCHCD(String bRANCHCD) {
+        this.bRANCHCD = bRANCHCD;
+    }
+
+    public String getEDITNO() {
+        return eDITNO;
+    }
+
+    public void setEDITNO(String eDITNO) {
+        this.eDITNO = eDITNO;
+    }
+
+    public String getUSERID() {
+        return uSERID;
+    }
+
+    public void setUSERID(String uSERID) {
+        this.uSERID = uSERID;
+    }
+
+    public String getTIMESTAMP() {
+        return tIMESTAMP;
+    }
+
+    public void setTIMESTAMP(String tIMESTAMP) {
+        this.tIMESTAMP = tIMESTAMP;
     }
 
     public String getINITTIMESTAMP() {
