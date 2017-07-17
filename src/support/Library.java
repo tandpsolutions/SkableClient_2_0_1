@@ -453,7 +453,7 @@ public class Library {
                     + "^FO210,5\n"
                     + "^FB320,80\n"
                     + "^FDManav Mandir^FS^"
-                    + "^FO490,90\n"
+                    + "^FO510,90\n"
                     + "^FB260,80\n"
                     + "^FD" + pur + "^FS^"
                     + "^XZ";   // Print content of buffer, 1 label

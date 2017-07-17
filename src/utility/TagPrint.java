@@ -165,7 +165,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
                 for (i = 0; i < array.size(); i++) {
                     tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
                     SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString();
-                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(" "))+"\\&"+SR_NAME1.substring(SR_NAME1.lastIndexOf(" "));
+                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()))+"\\&"+SR_NAME1.substring(SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()));
                     String[] data = (((int) array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble()) + "").split("(?!^)");
                     lb.PrintLabel(tag1, SR_NAME2, generateCode(data));
                 }

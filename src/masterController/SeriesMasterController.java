@@ -78,6 +78,8 @@ public class SeriesMasterController extends javax.swing.JDialog {
         tableForView();
         tableForViewModel();
         jtxtSeriesAlias.requestFocusInWindow();
+        jtxtMemoryName.setVisible(false);
+        jLabel4.setVisible(false);
     }
 
     public SeriesMasterController(java.awt.Frame parent, boolean modal) {
@@ -231,7 +233,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     private void addName() {
-        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtRam.getText() + " " + jtxtMemoryName.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
+        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
     }
 
     private void setModelData(String param_cd, String value) {
@@ -273,7 +275,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
                                     jlblTypeName.setText(viewTable1.getValueAt(row, 3).toString());
                                     jlblSubTypeName.setText(viewTable1.getValueAt(row, 4).toString());
                                     jlblTaxName.setText(viewTable1.getValueAt(row, 5).toString());
-                                    jtxtMemoryName.requestFocusInWindow();
+                                    jtxtColorName.requestFocusInWindow();
                                     addName();
                                 }
                                 sa.dispose();
@@ -1356,6 +1358,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }//GEN-LAST:event_closeDialog
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
+       memory_cd= "M17G001";
         validateVoucher();
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
