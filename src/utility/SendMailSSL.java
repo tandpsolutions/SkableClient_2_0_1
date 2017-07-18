@@ -7,6 +7,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import skable.Constants;
 
 public class SendMailSSL {
 
@@ -30,16 +31,16 @@ public class SendMailSSL {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("bill.ipearl@gmail.com", "billipearl");//change accordingly
+                        return new PasswordAuthentication(Constants.params.get("BILL_MAIL_ID").toString(), Constants.params.get("BILL_MAIL_PASSWORD").toString());//change accordingly
                     }
                 });
 
 //compose message
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("iPearl"));//change accordingly
+            message.setFrom(new InternetAddress(Constants.params.get("BILL_MAIL_ID").toString()));//change accordingly
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("iPearl");
+            message.setSubject(Constants.COMPANY_NAME);
 
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
@@ -86,16 +87,16 @@ public class SendMailSSL {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("bill.ipearl@gmail.com", "billipearl");//change accordingly
+                        return new PasswordAuthentication(Constants.params.get("BILL_MAIL_ID").toString(), Constants.params.get("BILL_MAIL_PASSWORD").toString());//change accordingly
                     }
                 });
 
 //compose message
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("iPearl"));//change accordingly
+            message.setFrom(new InternetAddress(Constants.COMPANY_NAME));//change accordingly
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("iPearl");
+            message.setSubject(Constants.COMPANY_NAME);
 
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
@@ -142,16 +143,16 @@ public class SendMailSSL {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("bill.ipearl@gmail.com", "billipearl");//change accordingly
+                        return new PasswordAuthentication(Constants.params.get("BILL_MAIL_ID").toString(), Constants.params.get("BILL_MAIL_PASSWORD").toString());//change accordingly
                     }
                 });
 
 //compose message
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("iPearl"));//change accordingly
+            message.setFrom(new InternetAddress(Constants.COMPANY_NAME));//change accordingly
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("iPearl");
+            message.setSubject(Constants.COMPANY_NAME);
             message.setContent(content, "text/html");
 
             // Create the message part

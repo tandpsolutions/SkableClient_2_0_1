@@ -111,7 +111,6 @@ public class Library {
     private Library() {
         makeConnection();
     }
-
     private static boolean isWindows = false;
     private static boolean isLinux = false;
     private static boolean isMac = false;
@@ -548,24 +547,61 @@ public class Library {
         try {
             SalesAPI salesAPI = getRetrofit().create(SalesAPI.class);
             JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
+                    JsonArray array1 = call1.getAsJsonArray("data");
                     if (array != null) {
                         try {
                             FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            FileWriter file2 = new FileWriter(System.getProperty("user.dir") + File.separator + "file2.txt");
                             file.write(array.toString());
+                            file2.write(array1.toString());
                             file.close();
+                            file2.close();
                             File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            File jsonFile1 = new File(System.getProperty("user.dir") + File.separator + "file2.txt");
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            JsonDataSource dataSource1 = new JsonDataSource(jsonFile1);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", Constants.COMPANY_NAME);
-                            params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
-                            reportGeneratorEmail("SalesInvoicePDF.jasper", params, dataSource, array.get(0).getAsJsonObject().get("EMAIL").getAsString(), ref_no);
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
+                                params.put("tax_title", "Vat");
+                                params.put("add_tax_title", "Add Vat");
+                                params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
+                                    params.put("bill_type", "Retail Invoice");
+                                } else {
+                                    params.put("bill_type", "Tax Invoice");
+                                }
+                            } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
+                                params.put("tax_title", "State GST");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("add_tax_title", "Central GST");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            } else {
+                                params.put("tax_title", "IGST");
+                                params.put("add_tax_title", "");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            }
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            params.put("tax_data", dataSource1);
+                            if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("0")) {
+                                reportGeneratorEmail(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, array.get(0).getAsJsonObject().get("EMAIL").getAsString(), ref_no);
+                            } else {
+                                reportGeneratorEmail(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, array.get(0).getAsJsonObject().get("EMAIL").getAsString(), ref_no);
+                            }
+
                         } catch (Exception ex) {
                         }
                     }
@@ -574,7 +610,6 @@ public class Library {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Library.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -644,7 +679,7 @@ public class Library {
         //}
         return strConvDate;
     }
-    
+
     public String convertTimestampToTime(String strOrgDate) {
         //Changed
         String strConvDate = "";
