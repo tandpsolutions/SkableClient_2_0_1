@@ -239,23 +239,17 @@ public class BillTrack extends javax.swing.JInternalFrame {
                 if (navLoad.getModel().getPRINTS().equalsIgnoreCase("1")) {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
-                        PrintPanel pp = new PrintPanel(null, true);
-                        if (Constants.BILL_TYPE.equalsIgnoreCase("0")) {
+
+                        if (Constants.params.get("BULK_PRINT").toString().equalsIgnoreCase("1")) {
                             lb.confirmDialog("Do you want to print normal sales bill?");
                             if (lb.type) {
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+                                normalSalesBill(row);
                             } else {
-                                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
+                                bulkSalesBill(row);
                             }
                         } else {
-                            lb.confirmDialog("Do you want to print customer print?");
-                            if (lb.type) {
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
-                            } else {
-                                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
-                            }
+                            normalSalesBill(row);
                         }
-                        pp.setVisible(true);
                     }
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
@@ -270,33 +264,36 @@ public class BillTrack extends javax.swing.JInternalFrame {
                 true);
     }
 
-    public void callPrint(final int vType) {
-        if (navLoad.getModel().getPRINTS().equalsIgnoreCase("1")) {
-            int row = jTable1.getSelectedRow();
-            if (row != -1) {
-                PrintPanel pp = new PrintPanel(null, true);
-                if (Constants.BILL_TYPE.equalsIgnoreCase("0")) {
-                    lb.confirmDialog("Do you want to print normal sales bill?");
-                    if (lb.type) {
-                        pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
-                    } else {
-                        pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString());
-                    }
-                } else {
-                    lb.confirmDialog("Do you want to print customer print?");
-                    if (lb.type) {
-                        pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
-                    } else {
-                        pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
-                    }
-                }
-                pp.setVisible(true);
+     private void normalSalesBill(int row) {
+        PrintPanel pp = new PrintPanel(null, true);
+        if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
+            lb.confirmDialog("Do you want to print customer print?");
+            if (lb.type) {
+                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
+            } else {
+                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
             }
         } else {
-            lb.showMessageDailog("You don't have rights to perform this action");
+            pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
         }
+        pp.setVisible(true);
     }
-
+    
+    
+    private void bulkSalesBill(int row) {
+        PrintPanel pp = new PrintPanel(null, true);
+        if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
+            lb.confirmDialog("Do you want to print customer print?");
+            if (lb.type) {
+                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
+            } else {
+                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+            }
+        } else {
+            pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+        }
+        pp.setVisible(true);
+    }
     private void close() {
         this.dispose();
     }

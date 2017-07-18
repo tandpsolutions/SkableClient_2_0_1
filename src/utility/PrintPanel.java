@@ -122,19 +122,32 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
                             params.put("tax_data", dataSource1);
-                            lb.confirmDialog("Do you want to print sales Bill with header?");
-                            if (lb.type) {
+                            if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
                                 if (type.equalsIgnoreCase("0")) {
-//                                    lb.reportGenerator("SalesInVoicePDF.jasper", params, dataSource, jPanel1);
-                                    lb.reportGenerator("SalesInVoicePDF_PART1.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
                                 } else {
-                                    lb.reportGenerator("SalesInVoicePDFWoCalc.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                }
+                            } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
+                                if (type.equalsIgnoreCase("0")) {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
                                 }
                             } else {
-                                if (type.equalsIgnoreCase("0")) {
-                                    lb.reportGenerator("SalesInVoice.jasper", params, dataSource, jPanel1);
+                                lb.confirmDialog("Do you want to print sales Bill with header?");
+                                if (lb.type) {
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
+                                    }
                                 } else {
-                                    lb.reportGenerator("SalesInVoiceWoCalc.jasper", params, dataSource, jPanel1);
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                    }
                                 }
                             }
                         } catch (Exception ex) {
@@ -145,16 +158,16 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void getBulkSalesBillPrint(String ref_no) {
+    public void getBulkSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
             JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no).execute().body();
             JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
-
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
@@ -202,11 +215,33 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
                             params.put("tax_data", dataSource1);
-                            lb.confirmDialog("Do you want to print sales Bill with header?");
-                            if (lb.type) {
-                                lb.reportGenerator("BulkSalesBillPDF.jasper", params, dataSource, jPanel1);
+                            if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
+                                if (type.equalsIgnoreCase("0")) {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "Bulk.jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "Bulkwocalc.jasper", params, dataSource, jPanel1);
+                                }
+                            } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
+                                if (type.equalsIgnoreCase("0")) {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "BulkPDF.jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "BulkPDFwocalc.jasper", params, dataSource, jPanel1);
+                                }
                             } else {
-                                lb.reportGenerator("BulkSalesBill.jasper", params, dataSource, jPanel1);
+                                lb.confirmDialog("Do you want to print sales Bill with header?");
+                                if (lb.type) {
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "BulkPDF.jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "BulkPDFwocalc.jasper", params, dataSource, jPanel1);
+                                    }
+                                } else {
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "Bulk.jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "Bulkwocalc.jasper", params, dataSource, jPanel1);
+                                    }
+                                }
                             }
                         } catch (Exception ex) {
                         }
@@ -216,7 +251,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -225,8 +261,8 @@ public class PrintPanel extends javax.swing.JDialog {
             SalesReturnAPI salesAPI = lb.getRetrofit().create(SalesReturnAPI.class);
             JsonObject call = salesAPI.GetSalesReturnPrint(ref_no).execute().body();
             JsonObject call1 = salesAPI.GetSalesReturnTaxPrint(ref_no).execute().body();
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -280,7 +316,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -289,8 +326,8 @@ public class PrintPanel extends javax.swing.JDialog {
             PurchaseReturnAPI salesAPI = lb.getRetrofit().create(PurchaseReturnAPI.class);
             JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no).execute().body();
             JsonObject call1 = salesAPI.GetPurchaseReturnTaxPrint(ref_no).execute().body();
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -332,7 +369,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -357,7 +395,8 @@ public class PrintPanel extends javax.swing.JDialog {
 
     public void printDCVoucher(final String ref_no) {
         DCAPI dcAPI = lb.getRetrofit().create(DCAPI.class);
-        if (!ref_no.equalsIgnoreCase("")) {
+        if (!ref_no.equalsIgnoreCase(
+                "")) {
             try {
                 JsonObject call = dcAPI.getBill(ref_no).execute().body();
 
@@ -396,13 +435,14 @@ public class PrintPanel extends javax.swing.JDialog {
         try {
             CashPRAPI cashPRAPI = lb.getRetrofit().create(CashPRAPI.class);
             JsonObject call;
-            if (type == 0) {
+            if (type
+                    == 0) {
                 call = cashPRAPI.getCashDetail(ref_no, "9").execute().body();
             } else {
                 call = cashPRAPI.getCashDetail(ref_no, "28").execute().body();
             }
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -432,7 +472,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -440,13 +481,14 @@ public class PrintPanel extends javax.swing.JDialog {
         try {
             DNCNApi cashPRAPI = lb.getRetrofit().create(DNCNApi.class);
             JsonObject call;
-            if (type == 0) {
+            if (type
+                    == 0) {
                 call = cashPRAPI.getBankDetail(ref_no, "30").execute().body();
             } else {
                 call = cashPRAPI.getBankDetail(ref_no, "31").execute().body();
             }
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -481,7 +523,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -489,13 +532,14 @@ public class PrintPanel extends javax.swing.JDialog {
         try {
             BankAPI bankAPI = lb.getRetrofit().create(BankAPI.class);
             JsonObject call;
-            if (type == 0) {
+            if (type
+                    == 0) {
                 call = bankAPI.getBankDetail(ref_no, "10").execute().body();
             } else {
                 call = bankAPI.getBankDetail(ref_no, "29").execute().body();
             }
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -525,13 +569,15 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void printDCVoucherWithoutAmt(final String ref_no) {
         DCAPI dcAPI = lb.getRetrofit().create(DCAPI.class);
-        if (!ref_no.equalsIgnoreCase("")) {
+        if (!ref_no.equalsIgnoreCase(
+                "")) {
             try {
                 JsonObject call = dcAPI.getBill(ref_no).execute().body();
 
@@ -567,8 +613,8 @@ public class PrintPanel extends javax.swing.JDialog {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
             JsonObject call = salesAPI.GetInsuranceBill(ref_no).execute().body();
-
-            if (call != null) {
+            if (call
+                    != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
                     JsonArray array = call.getAsJsonArray("data");
@@ -598,7 +644,8 @@ public class PrintPanel extends javax.swing.JDialog {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
