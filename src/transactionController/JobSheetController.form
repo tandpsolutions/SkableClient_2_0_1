@@ -369,22 +369,24 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcb6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcb0" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcb3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb0" linkSize="6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb3" linkSize="6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb6" linkSize="6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb9" linkSize="6" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcb4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcb1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcb7" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcb5" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jcb2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb7" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb4" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb1" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jcb8" linkSize="8" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="jcb5" linkSize="8" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb2" linkSize="8" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -407,8 +409,11 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jcb6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jcb7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb8" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="jcb9" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -460,6 +465,18 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Flip Cover"/>
                 <Property name="name" type="java.lang.String" value="7" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jcb8">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="USB Dock"/>
+                <Property name="name" type="java.lang.String" value="8" noResource="true"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jcb9">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Car Dock"/>
+                <Property name="name" type="java.lang.String" value="9" noResource="true"/>
               </Properties>
             </Component>
           </SubComponents>

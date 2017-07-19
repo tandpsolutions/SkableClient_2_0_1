@@ -207,6 +207,10 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	</background>
 	<pageHeader>
 		<band height="170">
+			<image scaleImage="FillFrame">
+				<reportElement uuid="ef4bc1b1-0768-44a7-824b-c06a45338c20" x="1" y="0" width="552" height="170"/>
+				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"logo.png"]]></imageExpression>
+			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="5ffac756-7a8e-4f58-8479-3809722bb462" mode="Transparent" x="159" y="155" width="236" height="15" forecolor="#000000"/>
 				<box>
@@ -316,10 +320,6 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				</textElement>
 				<textFieldExpression><![CDATA["Customer's State Code: 24"]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealHeight">
-				<reportElement uuid="ef4bc1b1-0768-44a7-824b-c06a45338c20" x="336" y="0" width="217" height="106"/>
-				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>

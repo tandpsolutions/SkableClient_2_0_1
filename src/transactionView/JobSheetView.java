@@ -180,10 +180,10 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                     }
                     lb.setColumnSizeForTable(jTable1, jPanel2.getWidth());
                 } else {
-                    lb.showMessageDailog(call.get("cause").getAsString());
+                    lb.showMessageDailog(call.get("Cause").getAsString());
                 }
             } else {
-                lb.showMessageDailog(call.get("cause").getAsString());
+                lb.showMessageDailog(call.get("Cause").getAsString());
             }
         } catch (IOException ex) {
             Logger.getLogger(JobSheetView.class.getName()).log(Level.SEVERE, null, ex);
@@ -315,7 +315,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
-                        pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+                        pp.getJobSheetPrint(jTable1.getValueAt(row, 0).toString());
                         pp.setVisible(true);
                     }
                 } else {

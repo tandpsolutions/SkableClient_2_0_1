@@ -346,6 +346,8 @@ public class JobSheetController extends javax.swing.JDialog {
         jcb2 = new javax.swing.JCheckBox();
         jcb5 = new javax.swing.JCheckBox();
         jcb7 = new javax.swing.JCheckBox();
+        jcb8 = new javax.swing.JCheckBox();
+        jcb9 = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
         jtxtEstimated = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -522,6 +524,12 @@ public class JobSheetController extends javax.swing.JDialog {
         jcb7.setText("Flip Cover");
         jcb7.setName("7"); // NOI18N
 
+        jcb8.setText("USB Dock");
+        jcb8.setName("8"); // NOI18N
+
+        jcb9.setText("Car Dock");
+        jcb9.setName("9"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -529,20 +537,29 @@ public class JobSheetController extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcb6)
                     .addComponent(jcb0)
-                    .addComponent(jcb3))
+                    .addComponent(jcb3)
+                    .addComponent(jcb6)
+                    .addComponent(jcb9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcb7)
                     .addComponent(jcb4)
                     .addComponent(jcb1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcb7)
+                    .addComponent(jcb8, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcb5)
                     .addComponent(jcb2))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb0, jcb3, jcb6, jcb9});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb1, jcb4, jcb7});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jcb2, jcb5, jcb8});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -559,8 +576,11 @@ public class JobSheetController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcb6)
-                    .addComponent(jcb7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcb7)
+                    .addComponent(jcb8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcb9)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jLabel11.setText("Estimated Rs");
@@ -1038,6 +1058,8 @@ public class JobSheetController extends javax.swing.JDialog {
     private javax.swing.JCheckBox jcb5;
     private javax.swing.JCheckBox jcb6;
     private javax.swing.JCheckBox jcb7;
+    private javax.swing.JCheckBox jcb8;
+    private javax.swing.JCheckBox jcb9;
     private javax.swing.JComboBox jcmbServiceType;
     private javax.swing.JLabel jlblEditNo;
     private javax.swing.JLabel jlblTimeStamp;
