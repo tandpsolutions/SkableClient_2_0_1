@@ -28,6 +28,9 @@ import model.OPBSrVal;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofitAPI.BateryMasterAPI;
+import retrofitAPI.CameraAPI;
+import retrofitAPI.RamAPI;
 import retrofitAPI.SeriesAPI;
 import retrofitAPI.StartUpAPI;
 import retrofitAPI.SupportAPI;
@@ -78,8 +81,13 @@ public class SeriesMasterController extends javax.swing.JDialog {
         tableForView();
         tableForViewModel();
         jtxtSeriesAlias.requestFocusInWindow();
-        jtxtMemoryName.setVisible(false);
-        jLabel4.setVisible(false);
+        if (Constants.params.get("SHOW_MEMORY").toString().equalsIgnoreCase("0")) {
+            jtxtMemoryName.setVisible(false);
+            jlblMemoryName.setVisible(false);
+        }
+        jlblLine1.setText(Constants.params.get("LINE1").toString());
+        jlblLine2.setText(Constants.params.get("LINE2").toString());
+        jlblLine3.setText(Constants.params.get("LINE3").toString());
     }
 
     public SeriesMasterController(java.awt.Frame parent, boolean modal) {
@@ -233,7 +241,12 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }
 
     private void addName() {
-        jtxtItemName.setText(jtxtBrandName.getText() + " " + jtxtModelName.getText() + " " + jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText());
+        String name = jtxtBrandName.getText() + " " + jtxtModelName.getText() + " ";
+        if (Constants.params.get("SHOW_MEMORY").toString().equalsIgnoreCase("1")) {
+            name += jtxtMemoryName.getText() + " ";
+        } else {
+            name += jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText();
+        }
     }
 
     private void setModelData(String param_cd, String value) {
@@ -275,7 +288,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
                                     jlblTypeName.setText(viewTable1.getValueAt(row, 3).toString());
                                     jlblSubTypeName.setText(viewTable1.getValueAt(row, 4).toString());
                                     jlblTaxName.setText(viewTable1.getValueAt(row, 5).toString());
-                                    jtxtColorName.requestFocusInWindow();
+                                    if (Constants.params.get("SHOW_MEMORY").toString().equalsIgnoreCase("0")) {
+                                        jtxtColorName.requestFocusInWindow();
+                                    } else {
+                                        jtxtMemoryName.requestFocusInWindow();
+                                    }
                                     addName();
                                 }
                                 sa.dispose();
@@ -811,6 +828,125 @@ public class SeriesMasterController extends javax.swing.JDialog {
         return true;
     }
 
+    private void setDefaultRamValue() {
+        try {
+            Call<JsonObject> call = lb.getRetrofit().create(RamAPI.class).getDefaultRamValue();
+            lb.addGlassPane(
+                    this);
+            call.enqueue(
+                    new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                ram_cd = (array.get(i).getAsJsonObject().get("RAM_CD").getAsString());
+                                jtxtRam.setText(array.get(i).getAsJsonObject().get("RAM_NAME").getAsString());
+                                jtxtCamera.requestFocusInWindow();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
+                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            });
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
+        }
+
+    }
+
+    private void setDefaultCameraValue() {
+        try {
+            Call<JsonObject> call = lb.getRetrofit().create(CameraAPI.class).getDefaultCameraValue();
+            lb.addGlassPane(
+                    this);
+            call.enqueue(
+                    new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            for (int i = 0; i < array.size(); i++) {
+                                Vector row = new Vector();
+                                camera_cd = (array.get(i).getAsJsonObject().get("CAMERA_CD").getAsString());
+                                jtxtCamera.setText(array.get(i).getAsJsonObject().get("CAMERA_NAME").getAsString());
+                                jtxtBattery.requestFocusInWindow();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
+                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            });
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
+        }
+
+    }
+
+    private void setDefaultBatteryValue() {
+        try {
+            Call<JsonObject> call = lb.getRetrofit().create(BateryMasterAPI.class).getDefaultBatteryMaster();
+            lb.addGlassPane(
+                    this);
+            call.enqueue(
+                    new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                    if (response.isSuccessful()) {
+                        System.out.println(response.body().toString());
+                        if (response.body().get("result").getAsInt() == 1) {
+                            JsonArray array = response.body().getAsJsonArray("data");
+                            for (int i = 0; i < array.size(); i++) {
+                                battery_cd = (array.get(i).getAsJsonObject().get("BATTERY_CD").getAsString());
+                                jtxtBattery.setText(array.get(i).getAsJsonObject().get("BATTERY_NAME").getAsString());
+                                jtxtQty.requestFocusInWindow();
+                            }
+                        } else {
+                            lb.showMessageDailog(response.body().get("Cause").toString());
+                        }
+                    } else {
+                        // handle request errors yourself
+                        lb.showMessageDailog(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
+                    lb.removeGlassPane(SeriesMasterController.this);
+                }
+            });
+        } catch (Exception ex) {
+            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -821,7 +957,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
         jtxtSeriesAlias = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jlblMemoryName = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jtxtItemName = new javax.swing.JTextField();
@@ -850,11 +986,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
         jlblSubTypeName = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jlblTaxName = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jlblLine1 = new javax.swing.JLabel();
         jtxtRam = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
+        jlblLine2 = new javax.swing.JLabel();
         jtxtCamera = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
+        jlblLine3 = new javax.swing.JLabel();
         jtxtBattery = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -904,7 +1040,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         jLabel3.setText("Model Name");
 
-        jLabel4.setText("Memory Name");
+        jlblMemoryName.setText("Memory Name");
 
         jLabel5.setText("Colour Name");
 
@@ -1148,7 +1284,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         jlblTaxName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel13.setText("Line 1");
+        jlblLine1.setText("Line 1");
 
         jtxtRam.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1164,7 +1300,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
 
-        jLabel14.setText("Line 2");
+        jlblLine2.setText("Line 2");
 
         jtxtCamera.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1180,7 +1316,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         });
 
-        jLabel15.setText("Line 3");
+        jlblLine3.setText("Line 3");
 
         jtxtBattery.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1214,10 +1350,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlblMemoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblLine2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblLine3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -1277,7 +1413,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
                             .addComponent(jtxtModelName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblMemoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtMemoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1285,15 +1421,15 @@ public class SeriesMasterController extends javax.swing.JDialog {
                             .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtRam, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblLine2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblLine3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtBattery, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1358,7 +1494,9 @@ public class SeriesMasterController extends javax.swing.JDialog {
     }//GEN-LAST:event_closeDialog
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
-       memory_cd= "M17G001";
+        if (Constants.params.get("SHOW_MEMORY").toString().equalsIgnoreCase("0")) {
+            memory_cd = "M17G001";
+        }
         validateVoucher();
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
@@ -1629,7 +1767,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         }
         if (lb.isEnter(evt)) {
-            setRamMaster("40", jtxtRam.getText());
+            if (jtxtRam.getText().isEmpty()) {
+                setDefaultRamValue();
+            } else {
+                setRamMaster("40", jtxtRam.getText());
+            }
         }
     }//GEN-LAST:event_jtxtRamKeyPressed
 
@@ -1649,7 +1791,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         }
         if (lb.isEnter(evt)) {
-            setcameraMaster("41", jtxtCamera.getText());
+            if (jtxtCamera.getText().isEmpty()) {
+                setDefaultCameraValue();
+            } else {
+                setcameraMaster("41", jtxtCamera.getText());
+            }
         }
     }//GEN-LAST:event_jtxtCameraKeyPressed
 
@@ -1669,7 +1815,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
             }
         }
         if (lb.isEnter(evt)) {
-            setBatteryMaster("42", jtxtBattery.getText());
+            if (jtxtBattery.getText().isEmpty()) {
+                setDefaultBatteryValue();
+            } else {
+                setBatteryMaster("42", jtxtBattery.getText());
+            }
         }
     }//GEN-LAST:event_jtxtBatteryKeyPressed
 
@@ -1699,12 +1849,8 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1717,6 +1863,10 @@ public class SeriesMasterController extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnSave;
     private javax.swing.JComboBox jcmbBranch;
+    private javax.swing.JLabel jlblLine1;
+    private javax.swing.JLabel jlblLine2;
+    private javax.swing.JLabel jlblLine3;
+    private javax.swing.JLabel jlblMemoryName;
     private javax.swing.JLabel jlblSubTypeName;
     private javax.swing.JLabel jlblTaxName;
     private javax.swing.JLabel jlblTotal;

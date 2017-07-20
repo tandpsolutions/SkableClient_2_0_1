@@ -18,6 +18,9 @@ public interface CameraAPI {
 
     @GET("GetCameraMaster")
     Call<JsonObject> getCameraMaster();
+    
+    @GET("GetDefaultCameraValue")
+    Call<JsonObject> getDefaultCameraValue();
 
     @GET("AddUpdateCameraMaster")
     Call<JsonObject> addUpdateCameraMaster(@Query("camera_cd") String brand_cd, @Query("camera_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);

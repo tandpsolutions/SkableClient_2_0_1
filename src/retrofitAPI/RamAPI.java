@@ -18,6 +18,9 @@ public interface RamAPI {
 
     @GET("GetRamMaster")
     Call<JsonObject> getRamMaster();
+    
+    @GET("GetDefaultRamValue")
+    Call<JsonObject> getDefaultRamValue();
 
     @GET("AddUpdateRamMaster")
     Call<JsonObject> addUpdateRamMaster(@Query("ram_cd") String ram_cd, @Query("ram_name") String ram_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);

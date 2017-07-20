@@ -101,7 +101,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected()).execute().body();
             if (call != null) {
                 result = call;
-                if (Constants.TAG_TYPE.equalsIgnoreCase("0")) {
+                if (Constants.params.get("TAG_GENERATION").toString().equalsIgnoreCase("0")) {
                     processResult();
                 } else {
                     processResult2();
