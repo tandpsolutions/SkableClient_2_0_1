@@ -106,7 +106,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["JOB SHEET"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="1" y="42" width="280" height="15"/>
+				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="1" y="32" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -135,7 +135,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["JOB DATE : "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="57" width="280" height="15"/>
+				<reportElement uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="47" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -143,7 +143,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Address : "+$F{ADD1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="72" width="280" height="15"/>
+				<reportElement uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="62" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -151,7 +151,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Mobile : "+$F{MOBILE1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="87" width="281" height="15"/>
+				<reportElement uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="77" width="281" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -159,7 +159,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's GST : "+$F{GST_NO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="102" width="552" height="15"/>
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="92" width="281" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -167,7 +167,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's Email :"+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="117" width="215" height="15"/>
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="107" width="215" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>

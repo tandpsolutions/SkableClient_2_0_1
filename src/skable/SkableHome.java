@@ -209,13 +209,14 @@ public class SkableHome extends javax.swing.JFrame {
         createMenuList();
         setTitle(user_name + " - " + selected_branch.getBranch_name() + " - YEAR " + selected_year);
         if (!user_grp_cd.equalsIgnoreCase("1")) {
-            jmnMarginReportModelWise.setVisible(false);
-            jMenuItem3.setVisible(false);
-            jMenuItem4.setVisible(false);
-            jmnAvgSalesReport.setVisible(false);
-            jmnRetailInvoice2.setVisible(false);
-            jmnTaxInvoice1.setVisible(false);
-            jmnMarginReportSummary1.setVisible(false);
+            jmnCreateUser.setVisible(false);
+            jmnUpdateUser.setVisible(false);
+            jmnUserRights.setVisible(false);
+            jmnUserGroupMaster.setVisible(false);
+            jmnRetailInvoiceEdit.setVisible(false);
+            jmnTaxInvoiceEdit.setVisible(false);
+            jmnUpdateGST.setVisible(false);
+            jmnUpdateHSN.setVisible(false);
         }
 
         Action logout = new AbstractAction() {
@@ -350,118 +351,146 @@ public class SkableHome extends javax.swing.JFrame {
     private void createMenuList() {
         hashMenu = new HashMap<Integer, JMenuItem>();
         hashMenu.put(1, jmnGroupMst);
-        hashMenu.put(2, jmnAccountMst);
-        hashMenu.put(3, jmnBrandMst);
-        hashMenu.put(4, jmnTypeMst);
-        hashMenu.put(5, jmnModelMst);
-        hashMenu.put(6, jmnColorMst);
-        hashMenu.put(7, jmnMemoryMst);
-        hashMenu.put(8, jmnSeriesMst);
-        hashMenu.put(9, jmnTaxMst);
-        hashMenu.put(86, jmnSalesmanMaster);
-        hashMenu.put(87, jmnReferalMaster);
+        hashMenu.put(2, jmnReferalMaster);
+        hashMenu.put(3, jmnAccountMst);
+        hashMenu.put(4, jmnBrandMst);
+        hashMenu.put(5, jmnTypeMst);
+        hashMenu.put(6, jmnTaxMaster);
+        hashMenu.put(7, jmnModelMst);
+        hashMenu.put(8, jmnColorMst);
+        hashMenu.put(9, jmnMemoryMst);
+        hashMenu.put(10, jmnRamMaster);
+        hashMenu.put(11, jmnCameraMaster);
+        hashMenu.put(12, jmnBatteryMaster);
+        hashMenu.put(13, jmnSeriesMst);
+        hashMenu.put(14, jmnSalesmanMaster);
+        hashMenu.put(15, jmnSchemeMaster);
+        hashMenu.put(16, jmnTIDMaster);
+        
 //
-        hashMenu.put(10, jmnRDPurchase);
-        hashMenu.put(11, jmnURDPurchse);
-        hashMenu.put(12, jmnPurchaseReturn);
-        hashMenu.put(13, jmnRetailInvoice);
-        hashMenu.put(14, jmnTaxInvoice);
-        hashMenu.put(15, jmnSalesReturn);
-        hashMenu.put(16, jmnSalesBillNumber);
-        hashMenu.put(17, jmnCashPayment);
-        hashMenu.put(18, jmnCashRcpt);
-        hashMenu.put(19, jmnBankPmt);
-        hashMenu.put(20, jmnBankRcpt);
-        hashMenu.put(21, jmnJournalEntry);
-        hashMenu.put(22, jmnContra);
-        hashMenu.put(23, jmnStockTransfer);
-        hashMenu.put(24, jmnDcVoucher);
-        hashMenu.put(25, jmnStockAdjst);
-        hashMenu.put(26, jmnCreditNoteList);
-        hashMenu.put(88, jmnPurchaseDot);
-        hashMenu.put(89, jmnSalesDot);
-        hashMenu.put(90, jmnCrediNote);
-        hashMenu.put(91, jmnDebitNote);
-        hashMenu.put(92, jmnOrderBook);
+        hashMenu.put(17, jmnRdPurchaseLocal);
+        hashMenu.put(18, jmnRdPurchaseOutside);
+        hashMenu.put(19, jmnSalesInvoiceLocal);
+        hashMenu.put(20, jmnSalesInvoiceOutside);
+        hashMenu.put(21, jmnSalesReturnLocal);
+        hashMenu.put(22, jmnSalesReturnOutside);
+        hashMenu.put(23, jmnJobSheet);
+        hashMenu.put(24, jmnCashPayment);
+        hashMenu.put(25, jmnCashRcpt);
+        hashMenu.put(26, jmnBankPmt);
+        hashMenu.put(27, jmnBankRcpt);
+        hashMenu.put(28, jmnJournalEntry);
+        hashMenu.put(29, jmnContra);
+        hashMenu.put(30, jmnStockTransfer);
+        hashMenu.put(31, jmnDcVoucher);
+        hashMenu.put(32, jmnStockAdjst);
+        hashMenu.put(34, jmnBillADjustment);
+        hashMenu.put(35, jmnCrediNote);
+        hashMenu.put(36, jmnDebitNote);
+        hashMenu.put(37, jmnOrderBook);
+        hashMenu.put(38, jmnStockTransferOutside);
+        hashMenu.put(39, jmnVisitorBook);
+        hashMenu.put(40, jmnQuoatationBook);
+        hashMenu.put(41, jmnBranchwiseInsuranceAmt);
+        hashMenu.put(42, jmnRDPurchase);
+        hashMenu.put(43, jmnURDPurchse);
+        hashMenu.put(44, jmnPurchaseReturn);
+        hashMenu.put(45, jmnPurchaseDot);
+        hashMenu.put(46, jmnRetailInvoice);
+        hashMenu.put(47, jmnTaxInvoice);
+        hashMenu.put(48, jmnSalesInsuranceBill);
+        hashMenu.put(49, jmnSalesReturn);
+        hashMenu.put(50, jmnSalesDot);
 
-        hashMenu.put(27, jmnStockLedger);
-        hashMenu.put(28, jmnStockLedgerRate);
-        hashMenu.put(29, jmnStockItemMonth);
-        hashMenu.put(30, jmnStockSummary);
-        hashMenu.put(31, jmnStockSummaryBal);
-        hashMenu.put(32, jmnStockStatementIMEI);
-        hashMenu.put(33, jmnStockValueStatementIMEI);
-        hashMenu.put(34, jmnstockStatementAcc);
-        hashMenu.put(35, jmnStockValueStmtAcc);
-        hashMenu.put(36, jmnStckStmtDateWise);
-        hashMenu.put(37, jmnStockStmtDateWise);
-        hashMenu.put(38, jmnTagTrackTransaction);
-        hashMenu.put(93, jmnBrandWiseItemLedger);
-        hashMenu.put(94, jmnDatewiseStockOnHand);
-        hashMenu.put(96, jMenuItem13);
-        hashMenu.put(97, jMenuItem11);
-        hashMenu.put(98, jMenuItem15);
+        hashMenu.put(51, jmnStockInTransit);
+        hashMenu.put(52, jmnStockInoutReport);
+        hashMenu.put(53, jmnBrandWiseItemLedger);
+        hashMenu.put(54, jmnStockLedger);
+        hashMenu.put(55, jmnStockLedgerRate);
+        hashMenu.put(56, jmnStockItemMonth);
+        hashMenu.put(57, jmnStockSummary);
+        hashMenu.put(58, jmnStockSummaryBal);
+        hashMenu.put(59, jmnStockOnHandItemQtyBranch);
+        hashMenu.put(60, jmnStockStatementIMEI);
+        hashMenu.put(61, jmnStockValueStatementIMEI);
+        hashMenu.put(62, jmnstockStatementAcc);
+        hashMenu.put(63, jmnStockValueStmtAcc);
+        hashMenu.put(64, jmnStkValStmtDateWise);
+        hashMenu.put(65, jmnStockStmtDateWise);
+        hashMenu.put(66, jmnTagTrackTransaction);
+        hashMenu.put(67, jmnHighestStkValStmt);
+        hashMenu.put(68, jmnDatewiseStockOnHand);
+        hashMenu.put(69, jmnItemWiseDateMonthWiseSales);
+        hashMenu.put(70, jmnModelWiseMonthWisePurchase);
+        hashMenu.put(71, jmnModelWiseMonthWiseSales);
+        hashMenu.put(72, jmnStockStatement);
 //
-        hashMenu.put(39, jmnSalesRegister);
-        hashMenu.put(40, jmnSalesRegisterDetail);
-        hashMenu.put(41, jmnSalesRegisterDetailACcount);
-        hashMenu.put(42, jmnInsuranceRegister);
-        hashMenu.put(43, jmnPurchaseRegister);
-        hashMenu.put(44, jmnPurchaseRegisterDetail);
-        hashMenu.put(45, jmnPurchaseRegisterDetailACcount);
-        hashMenu.put(46, jmnSalesReturnRegister);
-        hashMenu.put(47, jmnSalesReturnRegisterDetail);
-        hashMenu.put(48, jmnSrRegAcc);
-        hashMenu.put(49, jmnPurchaseReturnRegister);
-        hashMenu.put(50, jmnPurchaseReturnRegisterDetail);
-        hashMenu.put(51, jmnPurRetRegAcc);
-        hashMenu.put(52, jmnBuyBackRegister);
-        hashMenu.put(53, jmnDCRegister);
-        hashMenu.put(54, jmnCreditNoteRegister);
-        hashMenu.put(55, jmnStockAdjustmentRegister);
-        hashMenu.put(56, jmnSalesRegisterCardWise);
-        hashMenu.put(57, jmnSalesRegisterCardWiseDetail);
-        hashMenu.put(58, jmnGeneralLedger);
-        hashMenu.put(59, jmnGroupSummary);
-        hashMenu.put(60, jmnCashBook);
-        hashMenu.put(61, jmnBankBook);
-        hashMenu.put(62, jmnDailySalesStatement);
-        hashMenu.put(63, jmnDailySalesStatementDetail);
-        hashMenu.put(64, jmnTypeWiseSalesStatement);
-        hashMenu.put(65, jmnTypeWiseSalesStatementDetail);
-        hashMenu.put(66, jmnTypeWisePurchase);
-        hashMenu.put(67, jmnTypeWisePurchaseDetail);
-        hashMenu.put(68, jmnMarginReport);
-        hashMenu.put(69, jmnMarginReportByTag);
-        hashMenu.put(70, jmnIMEIPSSales);
-        hashMenu.put(71, jmnIMIEPSOnPurchase);
-        hashMenu.put(72, jmnTypeWiseProfitStatement);
-        hashMenu.put(73, jmnTypeWiseBrandWiseProfit);
-        hashMenu.put(99, jMenuItem1);
-        hashMenu.put(100, jMenu4);
-        hashMenu.put(101, jMenuItem19);
-        hashMenu.put(102, jMenuItem20);
-        hashMenu.put(103, jmnTypeWiseSalesStatementDetail1);
-        hashMenu.put(104, jmnMarginReport2);
+        hashMenu.put(73, jmnBrachWisePendingCollection);
+        hashMenu.put(74, jmnTaxReport);
+        hashMenu.put(75, jmnSalesRegister);
+        hashMenu.put(76, jmnSalesRegisterDetail);
+        hashMenu.put(77, jmnSalesRegisterDetailACcount);
+        hashMenu.put(78, jmnInsuranceRegister);
+        hashMenu.put(79, jmnPurchaseRegister);
+        hashMenu.put(80, jmnPurchaseRegisterDetail);
+        hashMenu.put(81, jmnPurchaseRegisterDetailACcount);
+        hashMenu.put(82, jmnSalesReturnRegister);
+        hashMenu.put(83, jmnSalesReturnRegisterDetail);
+        hashMenu.put(84, jmnSrRegAcc);
+        hashMenu.put(85, jmnPurchaseReturnRegister);
+        hashMenu.put(86, jmnPurchaseReturnRegisterDetail);
+        hashMenu.put(87, jmnPurRetRegAcc);
+        hashMenu.put(88, jmnBuyBackRegister);
+        hashMenu.put(89, jmnDCRegister);
+        hashMenu.put(90, jmnCreditNoteRegister);
+        hashMenu.put(91, jmnStockAdjustmentRegister);
+        hashMenu.put(92, jmnJournalRegister);
+        hashMenu.put(93, jmnOPBBalaneRegister);
+        hashMenu.put(94, jmnOrderBookRegister);
+        hashMenu.put(95, jmnBajajRegister);
+        hashMenu.put(96, jmnCardChargesRegister);
+        hashMenu.put(97, jmnSalesRegisterCardWise);
+        hashMenu.put(98, jmnSalesRegisterCardWiseDetail);
+        hashMenu.put(99, jmnGeneralLedger);
+        hashMenu.put(100, jmnGroupSummary);
+        hashMenu.put(101, jmnCashBook);
+        hashMenu.put(102, jmnBankBook);
+        hashMenu.put(103, jmnDailySalesStatement);
+        hashMenu.put(104, jmnDailySalesStatementDetail);
+        hashMenu.put(105, jmnTypeWiseSalesStatement);
+        hashMenu.put(106, jmnTypeWiseSalesStatementDetail);
+        hashMenu.put(107, jmnPartyTypeSalesWOTag);
+        hashMenu.put(108, jmnTypeWisePurchase);
+        hashMenu.put(109, jmnTypeWisePurchaseDetail);
+        hashMenu.put(110, jmnMarginReport);
+        hashMenu.put(111, jmnMarginReportByTag);
+        hashMenu.put(112, jmnMarginReportModelWise);
+        hashMenu.put(113, jmnMarginReportSummary);
+        hashMenu.put(114, jmnMarginReportMonthSummary);
+        hashMenu.put(115, jmnRateToMRPReport);
+        hashMenu.put(116, jmnAveragePurchaseReport);
+        hashMenu.put(117, jmnAverageSalesReport);
+        hashMenu.put(118, jmnPartyWiseStockOnHand);
+        hashMenu.put(119, jmnIMIEPSOnPurchase);
+        hashMenu.put(120, jmnIMEIPSSales);
+        hashMenu.put(121, jmnTypeWiseProfitStatement);
+        hashMenu.put(122, jmnTypeWiseBrandWiseProfit);
+        hashMenu.put(123, jmnPurchaseRateByTag);
+        hashMenu.put(124, jmnSnapShot);
 
-        hashMenu.put(74, jmnIMEISearch);
-        hashMenu.put(75, jmnTagTrack);
-        hashMenu.put(76, jmnCreateUser);
-        hashMenu.put(77, jmnDummyPrint);
-        hashMenu.put(78, jmnUpdateUser);
-        hashMenu.put(79, jmnUserRights);
-        hashMenu.put(80, jmnUserGroupMaster);
-        hashMenu.put(105, jMenuItem16);
-        hashMenu.put(106, jMenuItem18);
-        hashMenu.put(107, jMenuItem21);
-        hashMenu.put(108, jMenuItem22);
+        hashMenu.put(125, jmnIMEISearch);
+        hashMenu.put(126, jmnTagTrack);
+        hashMenu.put(127, jmnDummyPrint);
+        hashMenu.put(128,jmnTagPrint);
+        hashMenu.put(129, jmnBillTrack);
+        hashMenu.put(130, jmnPhoneBook);
+        hashMenu.put(131, jmnPhoneBookView);
+        hashMenu.put(132, jmnEOD);
+        hashMenu.put(133, jmnBuyBackTrack);
+        hashMenu.put(134, jmnVisitorBookReport);
+        hashMenu.put(135, jmnStockTransferForReturn);
 
-        hashMenu.put(81, jmnStockInTransit);
-        hashMenu.put(82, jmnStockInoutReport);
-        hashMenu.put(83, jmnIMIEPSOnPurchaseWoRate);
-        hashMenu.put(84, jmnPurchaseRateByTag);
-        hashMenu.put(85, jmnSnapShot);
-        hashMenu.put(95, jMenuItem8);
+
 
         getData();
     }
@@ -510,31 +539,30 @@ public class SkableHome extends javax.swing.JFrame {
         jmnExit = new javax.swing.JMenuItem();
         jmnMaster = new javax.swing.JMenu();
         jmnGroupMst = new javax.swing.JMenuItem();
+        jmnReferalMaster = new javax.swing.JMenuItem();
         jmnAccountMst = new javax.swing.JMenuItem();
         jmnBrandMst = new javax.swing.JMenuItem();
         jmnTypeMst = new javax.swing.JMenuItem();
+        jmnTaxMaster = new javax.swing.JMenuItem();
         jmnModelMst = new javax.swing.JMenuItem();
         jmnColorMst = new javax.swing.JMenuItem();
         jmnMemoryMst = new javax.swing.JMenuItem();
+        jmnRamMaster = new javax.swing.JMenuItem();
+        jmnCameraMaster = new javax.swing.JMenuItem();
+        jmnBatteryMaster = new javax.swing.JMenuItem();
         jmnSeriesMst = new javax.swing.JMenuItem();
-        jmnTaxMst = new javax.swing.JMenuItem();
         jmnSalesmanMaster = new javax.swing.JMenuItem();
-        jmnReferalMaster = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
-        jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
-        jMenuItem33 = new javax.swing.JMenuItem();
-        jMenuItem34 = new javax.swing.JMenuItem();
+        jmnSchemeMaster = new javax.swing.JMenuItem();
+        jmnTIDMaster = new javax.swing.JMenuItem();
         jmnTransaction = new javax.swing.JMenu();
         jMenu12 = new javax.swing.JMenu();
-        jmnRDPurchase1 = new javax.swing.JMenuItem();
-        jmnRDPurchase2 = new javax.swing.JMenuItem();
+        jmnRdPurchaseLocal = new javax.swing.JMenuItem();
+        jmnRdPurchaseOutside = new javax.swing.JMenuItem();
         jMenu13 = new javax.swing.JMenu();
-        jmnRetailInvoice1 = new javax.swing.JMenuItem();
-        jmnRetailInvoice4 = new javax.swing.JMenuItem();
-        jmnSalesReturn1 = new javax.swing.JMenuItem();
-        jmnSalesReturn2 = new javax.swing.JMenuItem();
+        jmnSalesInvoiceLocal = new javax.swing.JMenuItem();
+        jmnSalesInvoiceOutside = new javax.swing.JMenuItem();
+        jmnSalesReturnLocal = new javax.swing.JMenuItem();
+        jmnSalesReturnOutside = new javax.swing.JMenuItem();
         jmnJobSheet = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jmnCashPayment = new javax.swing.JMenuItem();
@@ -551,17 +579,17 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem52 = new javax.swing.JMenuItem();
         jMenuItem53 = new javax.swing.JMenuItem();
         jmnStockAdjst = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jmnBillADjustment = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jmnCrediNote = new javax.swing.JMenuItem();
         jmnDebitNote = new javax.swing.JMenuItem();
         jmnOrderBook = new javax.swing.JMenuItem();
-        jmnStockTransfer1 = new javax.swing.JMenu();
+        jmnStockTransferOutside = new javax.swing.JMenu();
         jmnsds1 = new javax.swing.JMenuItem();
         jMenuItem60 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem25 = new javax.swing.JMenuItem();
-        jmnBranchWiseCreditLimit1 = new javax.swing.JMenuItem();
+        jmnVisitorBook = new javax.swing.JMenuItem();
+        jmnQuoatationBook = new javax.swing.JMenuItem();
+        jmnBranchwiseInsuranceAmt = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jmnRDPurchase = new javax.swing.JMenuItem();
@@ -570,10 +598,10 @@ public class SkableHome extends javax.swing.JFrame {
         jmnPurchaseDot = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jmnRetailInvoice = new javax.swing.JMenuItem();
-        jmnRetailInvoice2 = new javax.swing.JMenuItem();
+        jmnRetailInvoiceEdit = new javax.swing.JMenuItem();
         jmnTaxInvoice = new javax.swing.JMenuItem();
-        jmnTaxInvoice1 = new javax.swing.JMenuItem();
-        jmnSalesBillNumber = new javax.swing.JMenuItem();
+        jmnTaxInvoiceEdit = new javax.swing.JMenuItem();
+        jmnSalesInsuranceBill = new javax.swing.JMenuItem();
         jmnSalesReturn = new javax.swing.JMenuItem();
         jmnSalesDot = new javax.swing.JMenuItem();
         jmnInventory = new javax.swing.JMenu();
@@ -585,23 +613,23 @@ public class SkableHome extends javax.swing.JFrame {
         jmnStockItemMonth = new javax.swing.JMenuItem();
         jmnStockSummary = new javax.swing.JMenuItem();
         jmnStockSummaryBal = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        jmnStockOnHandItemQtyBranch = new javax.swing.JMenuItem();
         jmnStockStatementIMEI = new javax.swing.JMenuItem();
         jmnStockValueStatementIMEI = new javax.swing.JMenuItem();
         jmnstockStatementAcc = new javax.swing.JMenuItem();
         jmnStockValueStmtAcc = new javax.swing.JMenuItem();
-        jmnStckStmtDateWise = new javax.swing.JMenuItem();
+        jmnStkValStmtDateWise = new javax.swing.JMenuItem();
         jmnStockStmtDateWise = new javax.swing.JMenuItem();
         jmnTagTrackTransaction = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jmnHighestStkValStmt = new javax.swing.JMenuItem();
         jmnDatewiseStockOnHand = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jmnCreditNoteList = new javax.swing.JMenuItem();
+        jmnItemWiseDateMonthWiseSales = new javax.swing.JMenuItem();
+        jmnModelWiseMonthWisePurchase = new javax.swing.JMenuItem();
+        jmnModelWiseMonthWiseSales = new javax.swing.JMenuItem();
+        jmnStockStatement = new javax.swing.JMenuItem();
         jmnAccounts = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jmnBrachWisePendingCollection = new javax.swing.JMenuItem();
+        jmnTaxReport = new javax.swing.JMenu();
         jmnSalesReport = new javax.swing.JMenuItem();
         jmnSalesReportTax = new javax.swing.JMenuItem();
         jmnSalesReportTax1 = new javax.swing.JMenuItem();
@@ -621,14 +649,14 @@ public class SkableHome extends javax.swing.JFrame {
         jmnPurchaseReturnRegisterDetail = new javax.swing.JMenuItem();
         jmnPurRetRegAcc = new javax.swing.JMenuItem();
         jmnBuyBackRegister = new javax.swing.JMenuItem();
-        jmnCreditNoteRegister = new javax.swing.JMenuItem();
         jmnDCRegister = new javax.swing.JMenuItem();
+        jmnCreditNoteRegister = new javax.swing.JMenuItem();
         jmnStockAdjustmentRegister = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
+        jmnJournalRegister = new javax.swing.JMenuItem();
+        jmnOPBBalaneRegister = new javax.swing.JMenuItem();
+        jmnOrderBookRegister = new javax.swing.JMenuItem();
+        jmnBajajRegister = new javax.swing.JMenuItem();
+        jmnCardChargesRegister = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
         jmnSalesRegisterCardWise = new javax.swing.JMenuItem();
         jmnSalesRegisterCardWiseDetail = new javax.swing.JMenuItem();
@@ -642,7 +670,7 @@ public class SkableHome extends javax.swing.JFrame {
         trthg = new javax.swing.JMenu();
         jmnTypeWiseSalesStatement = new javax.swing.JMenuItem();
         jmnTypeWiseSalesStatementDetail = new javax.swing.JMenuItem();
-        jmnTypeWiseSalesStatementDetail1 = new javax.swing.JMenuItem();
+        jmnPartyTypeSalesWOTag = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jmnTypeWisePurchase = new javax.swing.JMenuItem();
         jmnTypeWisePurchaseDetail = new javax.swing.JMenuItem();
@@ -651,13 +679,13 @@ public class SkableHome extends javax.swing.JFrame {
         jmnMarginReportByTag = new javax.swing.JMenuItem();
         jmnMarginReportModelWise = new javax.swing.JMenuItem();
         jmnMarginReportSummary = new javax.swing.JMenuItem();
-        jmnMarginReportSummary1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jmnMarginReport2 = new javax.swing.JMenuItem();
-        jmnAvgSalesReport = new javax.swing.JMenuItem();
-        jmnIMIEPSOnPurchase = new javax.swing.JMenuItem();
-        jmnIMIEPSOnPurchaseWoRate = new javax.swing.JMenuItem();
+        jmnMarginReportMonthSummary = new javax.swing.JMenuItem();
+        jmnRateToMRPReport = new javax.swing.JMenuItem();
+        jmnAveragePurchaseReport = new javax.swing.JMenuItem();
+        jmnAverageSalesReport = new javax.swing.JMenuItem();
+        jmnPartyWiseStockOnHand = new javax.swing.JMenuItem();
         jmnIMEIPSSales = new javax.swing.JMenuItem();
+        jmnIMIEPSOnPurchase = new javax.swing.JMenuItem();
         jmnTypeWiseProfitStatement = new javax.swing.JMenuItem();
         jmnTypeWiseBrandWiseProfit = new javax.swing.JMenuItem();
         jmnPurchaseRateByTag = new javax.swing.JMenuItem();
@@ -671,17 +699,17 @@ public class SkableHome extends javax.swing.JFrame {
         jmnUpdateUser = new javax.swing.JMenuItem();
         jmnUserRights = new javax.swing.JMenuItem();
         jmnUserGroupMaster = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
+        jmnTagPrint = new javax.swing.JMenuItem();
+        jmnBillTrack = new javax.swing.JMenuItem();
+        jmnPhoneBook = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem29 = new javax.swing.JMenuItem();
-        jMenuItem28 = new javax.swing.JMenuItem();
-        jMenuItem31 = new javax.swing.JMenuItem();
+        jmnPhoneBookView = new javax.swing.JMenuItem();
+        jmnEOD = new javax.swing.JMenuItem();
+        jmnBuyBackTrack = new javax.swing.JMenuItem();
+        jmnVisitorBookReport = new javax.swing.JMenuItem();
+        jmnStockTransferForReturn = new javax.swing.JMenuItem();
+        jmnUpdateHSN = new javax.swing.JMenuItem();
+        jmnUpdateGST = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -728,6 +756,14 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnMaster.add(jmnGroupMst);
 
+        jmnReferalMaster.setText("Referal Master");
+        jmnReferalMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnReferalMasterActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jmnReferalMaster);
+
         jmnAccountMst.setMnemonic('A');
         jmnAccountMst.setText("Account Master");
         jmnAccountMst.addActionListener(new java.awt.event.ActionListener() {
@@ -753,6 +789,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnMaster.add(jmnTypeMst);
+
+        jmnTaxMaster.setText("Tax Master");
+        jmnTaxMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnTaxMasterActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jmnTaxMaster);
 
         jmnModelMst.setMnemonic('M');
         jmnModelMst.setText("Model Master");
@@ -781,6 +825,30 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnMaster.add(jmnMemoryMst);
 
+        jmnRamMaster.setText("Ram Master");
+        jmnRamMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnRamMasterActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jmnRamMaster);
+
+        jmnCameraMaster.setText("Camera Master");
+        jmnCameraMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnCameraMasterActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jmnCameraMaster);
+
+        jmnBatteryMaster.setText("Battery Master");
+        jmnBatteryMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnBatteryMasterActionPerformed(evt);
+            }
+        });
+        jmnMaster.add(jmnBatteryMaster);
+
         jmnSeriesMst.setText("Series Master");
         jmnSeriesMst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -788,15 +856,6 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jmnMaster.add(jmnSeriesMst);
-
-        jmnTaxMst.setMnemonic('T');
-        jmnTaxMst.setText("Type Master");
-        jmnTaxMst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnTaxMstActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jmnTaxMst);
 
         jmnSalesmanMaster.setText("Salesman Master");
         jmnSalesmanMaster.addActionListener(new java.awt.event.ActionListener() {
@@ -806,61 +865,21 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnMaster.add(jmnSalesmanMaster);
 
-        jmnReferalMaster.setText("Referal Master");
-        jmnReferalMaster.addActionListener(new java.awt.event.ActionListener() {
+        jmnSchemeMaster.setText("Scheme Master");
+        jmnSchemeMaster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnReferalMasterActionPerformed(evt);
+                jmnSchemeMasterActionPerformed(evt);
             }
         });
-        jmnMaster.add(jmnReferalMaster);
+        jmnMaster.add(jmnSchemeMaster);
 
-        jMenuItem10.setText("Scheme Master");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jmnTIDMaster.setText("TID Master");
+        jmnTIDMaster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                jmnTIDMasterActionPerformed(evt);
             }
         });
-        jmnMaster.add(jMenuItem10);
-
-        jMenuItem24.setText("TID Master");
-        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem24ActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jMenuItem24);
-
-        jMenuItem27.setText("Tax Master");
-        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem27ActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jMenuItem27);
-
-        jMenuItem32.setText("Ram Master");
-        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem32ActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jMenuItem32);
-
-        jMenuItem33.setText("Camera Master");
-        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem33ActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jMenuItem33);
-
-        jMenuItem34.setText("Battery Master");
-        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem34ActionPerformed(evt);
-            }
-        });
-        jmnMaster.add(jMenuItem34);
+        jmnMaster.add(jmnTIDMaster);
 
         jMenuBar3.add(jmnMaster);
 
@@ -869,68 +888,66 @@ public class SkableHome extends javax.swing.JFrame {
 
         jMenu12.setText("Purchase");
 
-        jmnRDPurchase1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jmnRDPurchase1.setMnemonic('R');
-        jmnRDPurchase1.setText("RD Purchase Bill Local");
-        jmnRDPurchase1.addActionListener(new java.awt.event.ActionListener() {
+        jmnRdPurchaseLocal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jmnRdPurchaseLocal.setMnemonic('R');
+        jmnRdPurchaseLocal.setText("RD Purchase Bill Local");
+        jmnRdPurchaseLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnRDPurchase1ActionPerformed(evt);
+                jmnRdPurchaseLocalActionPerformed(evt);
             }
         });
-        jMenu12.add(jmnRDPurchase1);
+        jMenu12.add(jmnRdPurchaseLocal);
 
-        jmnRDPurchase2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jmnRDPurchase2.setMnemonic('R');
-        jmnRDPurchase2.setText("RD Purchase Bill Outside");
-        jmnRDPurchase2.addActionListener(new java.awt.event.ActionListener() {
+        jmnRdPurchaseOutside.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jmnRdPurchaseOutside.setMnemonic('R');
+        jmnRdPurchaseOutside.setText("RD Purchase Bill Outside");
+        jmnRdPurchaseOutside.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnRDPurchase2ActionPerformed(evt);
+                jmnRdPurchaseOutsideActionPerformed(evt);
             }
         });
-        jMenu12.add(jmnRDPurchase2);
+        jMenu12.add(jmnRdPurchaseOutside);
 
         jmnTransaction.add(jMenu12);
 
         jMenu13.setMnemonic('S');
         jMenu13.setText("Sales Imvoice");
 
-        jmnRetailInvoice1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-        jmnRetailInvoice1.setMnemonic('R');
-        jmnRetailInvoice1.setText("Sales Invoice Local");
-        jmnRetailInvoice1.addActionListener(new java.awt.event.ActionListener() {
+        jmnSalesInvoiceLocal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        jmnSalesInvoiceLocal.setMnemonic('R');
+        jmnSalesInvoiceLocal.setText("Sales Invoice Local");
+        jmnSalesInvoiceLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnRetailInvoice1ActionPerformed(evt);
+                jmnSalesInvoiceLocalActionPerformed(evt);
             }
         });
-        jMenu13.add(jmnRetailInvoice1);
+        jMenu13.add(jmnSalesInvoiceLocal);
 
-        jmnRetailInvoice4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-        jmnRetailInvoice4.setMnemonic('R');
-        jmnRetailInvoice4.setText("Sales Invoice Outside");
-        jmnRetailInvoice4.addActionListener(new java.awt.event.ActionListener() {
+        jmnSalesInvoiceOutside.setMnemonic('R');
+        jmnSalesInvoiceOutside.setText("Sales Invoice Outside");
+        jmnSalesInvoiceOutside.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnRetailInvoice4ActionPerformed(evt);
+                jmnSalesInvoiceOutsideActionPerformed(evt);
             }
         });
-        jMenu13.add(jmnRetailInvoice4);
+        jMenu13.add(jmnSalesInvoiceOutside);
 
-        jmnSalesReturn1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-        jmnSalesReturn1.setText("Sales Return Local");
-        jmnSalesReturn1.addActionListener(new java.awt.event.ActionListener() {
+        jmnSalesReturnLocal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jmnSalesReturnLocal.setText("Sales Return Local");
+        jmnSalesReturnLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnSalesReturn1ActionPerformed(evt);
+                jmnSalesReturnLocalActionPerformed(evt);
             }
         });
-        jMenu13.add(jmnSalesReturn1);
+        jMenu13.add(jmnSalesReturnLocal);
 
-        jmnSalesReturn2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-        jmnSalesReturn2.setText("Sales Return Outside");
-        jmnSalesReturn2.addActionListener(new java.awt.event.ActionListener() {
+        jmnSalesReturnOutside.setText("Sales Return Outside");
+        jmnSalesReturnOutside.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnSalesReturn2ActionPerformed(evt);
+                jmnSalesReturnOutsideActionPerformed(evt);
             }
         });
-        jMenu13.add(jmnSalesReturn2);
+        jMenu13.add(jmnSalesReturnOutside);
 
         jmnTransaction.add(jMenu13);
 
@@ -1050,13 +1067,13 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnTransaction.add(jmnStockAdjst);
 
-        jMenuItem8.setText("Bill Adjustment");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        jmnBillADjustment.setText("Bill Adjustment");
+        jmnBillADjustment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jmnBillADjustmentActionPerformed(evt);
             }
         });
-        jmnTransaction.add(jMenuItem8);
+        jmnTransaction.add(jmnBillADjustment);
 
         jMenu9.setText("DNCN");
 
@@ -1086,7 +1103,7 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnTransaction.add(jmnOrderBook);
 
-        jmnStockTransfer1.setText("Stock Transfer");
+        jmnStockTransferOutside.setText("Stock Transfer");
 
         jmnsds1.setText("Stock OUT");
         jmnsds1.addActionListener(new java.awt.event.ActionListener() {
@@ -1094,7 +1111,7 @@ public class SkableHome extends javax.swing.JFrame {
                 jmnsds1ActionPerformed(evt);
             }
         });
-        jmnStockTransfer1.add(jmnsds1);
+        jmnStockTransferOutside.add(jmnsds1);
 
         jMenuItem60.setText("Stock IN");
         jMenuItem60.addActionListener(new java.awt.event.ActionListener() {
@@ -1102,40 +1119,39 @@ public class SkableHome extends javax.swing.JFrame {
                 jMenuItem60ActionPerformed(evt);
             }
         });
-        jmnStockTransfer1.add(jMenuItem60);
+        jmnStockTransferOutside.add(jMenuItem60);
 
-        jmnTransaction.add(jmnStockTransfer1);
+        jmnTransaction.add(jmnStockTransferOutside);
 
-        jMenuItem9.setText("Visitor Book");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jmnVisitorBook.setText("Visitor Book");
+        jmnVisitorBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                jmnVisitorBookActionPerformed(evt);
             }
         });
-        jmnTransaction.add(jMenuItem9);
+        jmnTransaction.add(jmnVisitorBook);
 
-        jMenuItem25.setText("Quoatation");
-        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+        jmnQuoatationBook.setText("Quoatation");
+        jmnQuoatationBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem25ActionPerformed(evt);
+                jmnQuoatationBookActionPerformed(evt);
             }
         });
-        jmnTransaction.add(jMenuItem25);
+        jmnTransaction.add(jmnQuoatationBook);
 
-        jmnBranchWiseCreditLimit1.setText("Branch Wise Credit Limit");
-        jmnBranchWiseCreditLimit1.addActionListener(new java.awt.event.ActionListener() {
+        jmnBranchwiseInsuranceAmt.setText("Branchwise Insurance Amount");
+        jmnBranchwiseInsuranceAmt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnBranchWiseCreditLimit1ActionPerformed(evt);
+                jmnBranchwiseInsuranceAmtActionPerformed(evt);
             }
         });
-        jmnTransaction.add(jmnBranchWiseCreditLimit1);
+        jmnTransaction.add(jmnBranchwiseInsuranceAmt);
 
         jMenu10.setText("Archive");
 
         jMenu7.setMnemonic('P');
         jMenu7.setText("Purchase");
 
-        jmnRDPurchase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jmnRDPurchase.setMnemonic('R');
         jmnRDPurchase.setText("RD Purchase Bill");
         jmnRDPurchase.addActionListener(new java.awt.event.ActionListener() {
@@ -1154,7 +1170,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu7.add(jmnURDPurchse);
 
-        jmnPurchaseReturn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         jmnPurchaseReturn.setText("Purchase Return");
         jmnPurchaseReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1163,7 +1178,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu7.add(jmnPurchaseReturn);
 
-        jmnPurchaseDot.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jmnPurchaseDot.setMnemonic('R');
         jmnPurchaseDot.setText("Purchase Bill .");
         jmnPurchaseDot.addActionListener(new java.awt.event.ActionListener() {
@@ -1178,7 +1192,6 @@ public class SkableHome extends javax.swing.JFrame {
         jMenu6.setMnemonic('S');
         jMenu6.setText("Sales Imvoice");
 
-        jmnRetailInvoice.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         jmnRetailInvoice.setMnemonic('R');
         jmnRetailInvoice.setText("Retail Invoice");
         jmnRetailInvoice.addActionListener(new java.awt.event.ActionListener() {
@@ -1188,17 +1201,15 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu6.add(jmnRetailInvoice);
 
-        jmnRetailInvoice2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-        jmnRetailInvoice2.setMnemonic('R');
-        jmnRetailInvoice2.setText("Retail Invoice Edit");
-        jmnRetailInvoice2.addActionListener(new java.awt.event.ActionListener() {
+        jmnRetailInvoiceEdit.setMnemonic('R');
+        jmnRetailInvoiceEdit.setText("Retail Invoice Edit");
+        jmnRetailInvoiceEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnRetailInvoice2ActionPerformed(evt);
+                jmnRetailInvoiceEditActionPerformed(evt);
             }
         });
-        jMenu6.add(jmnRetailInvoice2);
+        jMenu6.add(jmnRetailInvoiceEdit);
 
-        jmnTaxInvoice.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
         jmnTaxInvoice.setMnemonic('T');
         jmnTaxInvoice.setText("Tax Invoice");
         jmnTaxInvoice.addActionListener(new java.awt.event.ActionListener() {
@@ -1208,25 +1219,23 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu6.add(jmnTaxInvoice);
 
-        jmnTaxInvoice1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
-        jmnTaxInvoice1.setMnemonic('T');
-        jmnTaxInvoice1.setText("Tax Invoice Edit");
-        jmnTaxInvoice1.addActionListener(new java.awt.event.ActionListener() {
+        jmnTaxInvoiceEdit.setMnemonic('T');
+        jmnTaxInvoiceEdit.setText("Tax Invoice Edit");
+        jmnTaxInvoiceEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnTaxInvoice1ActionPerformed(evt);
+                jmnTaxInvoiceEditActionPerformed(evt);
             }
         });
-        jMenu6.add(jmnTaxInvoice1);
+        jMenu6.add(jmnTaxInvoiceEdit);
 
-        jmnSalesBillNumber.setText("Sales Insurance Bill");
-        jmnSalesBillNumber.addActionListener(new java.awt.event.ActionListener() {
+        jmnSalesInsuranceBill.setText("Sales Insurance Bill");
+        jmnSalesInsuranceBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnSalesBillNumberActionPerformed(evt);
+                jmnSalesInsuranceBillActionPerformed(evt);
             }
         });
-        jMenu6.add(jmnSalesBillNumber);
+        jMenu6.add(jmnSalesInsuranceBill);
 
-        jmnSalesReturn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
         jmnSalesReturn.setText("Sales Return");
         jmnSalesReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1235,7 +1244,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu6.add(jmnSalesReturn);
 
-        jmnSalesDot.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         jmnSalesDot.setMnemonic('R');
         jmnSalesDot.setText("Retail Invoice .");
         jmnSalesDot.addActionListener(new java.awt.event.ActionListener() {
@@ -1321,13 +1329,13 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnInventory.add(jmnStockSummaryBal);
 
-        jMenuItem14.setText("Stock On Hand Item/Qty/Branch Wise");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        jmnStockOnHandItemQtyBranch.setText("Stock On Hand Item/Qty/Branch Wise");
+        jmnStockOnHandItemQtyBranch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                jmnStockOnHandItemQtyBranchActionPerformed(evt);
             }
         });
-        jmnInventory.add(jMenuItem14);
+        jmnInventory.add(jmnStockOnHandItemQtyBranch);
 
         jmnStockStatementIMEI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.SHIFT_MASK));
         jmnStockStatementIMEI.setText("Stock Statement IMEI");
@@ -1363,13 +1371,13 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnInventory.add(jmnStockValueStmtAcc);
 
-        jmnStckStmtDateWise.setText("Stock Value Statement Date Wise");
-        jmnStckStmtDateWise.addActionListener(new java.awt.event.ActionListener() {
+        jmnStkValStmtDateWise.setText("Stock Value Statement Date Wise");
+        jmnStkValStmtDateWise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnStckStmtDateWiseActionPerformed(evt);
+                jmnStkValStmtDateWiseActionPerformed(evt);
             }
         });
-        jmnInventory.add(jmnStckStmtDateWise);
+        jmnInventory.add(jmnStkValStmtDateWise);
 
         jmnStockStmtDateWise.setText("Stock Statement Multi Brand Date Wise");
         jmnStockStmtDateWise.addActionListener(new java.awt.event.ActionListener() {
@@ -1388,13 +1396,13 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnInventory.add(jmnTagTrackTransaction);
 
-        jMenuItem4.setText("Highest Stock Value Statement");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jmnHighestStkValStmt.setText("Highest Stock Value Statement");
+        jmnHighestStkValStmt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jmnHighestStkValStmtActionPerformed(evt);
             }
         });
-        jmnInventory.add(jMenuItem4);
+        jmnInventory.add(jmnHighestStkValStmt);
 
         jmnDatewiseStockOnHand.setText("Day Wise Stock on hand (Ageing Analisis)");
         jmnDatewiseStockOnHand.addActionListener(new java.awt.event.ActionListener() {
@@ -1404,52 +1412,52 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnInventory.add(jmnDatewiseStockOnHand);
 
-        jMenuItem13.setText("Itemwise Date/Monthwise Sales Statement(Ageing Anylysis)");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jmnItemWiseDateMonthWiseSales.setText("Itemwise Date/Monthwise Sales Statement(Ageing Anylysis)");
+        jmnItemWiseDateMonthWiseSales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jmnItemWiseDateMonthWiseSalesActionPerformed(evt);
             }
         });
-        jmnInventory.add(jMenuItem13);
+        jmnInventory.add(jmnItemWiseDateMonthWiseSales);
 
-        jMenuItem11.setText("Model Wise Month Wise Purchase Statement");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        jmnModelWiseMonthWisePurchase.setText("Model Wise Month Wise Purchase Statement");
+        jmnModelWiseMonthWisePurchase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                jmnModelWiseMonthWisePurchaseActionPerformed(evt);
             }
         });
-        jmnInventory.add(jMenuItem11);
+        jmnInventory.add(jmnModelWiseMonthWisePurchase);
 
-        jMenuItem15.setText("Model Wise Month Wise Sales Statement");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+        jmnModelWiseMonthWiseSales.setText("Model Wise Month Wise Sales Statement");
+        jmnModelWiseMonthWiseSales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
+                jmnModelWiseMonthWiseSalesActionPerformed(evt);
             }
         });
-        jmnInventory.add(jMenuItem15);
+        jmnInventory.add(jmnModelWiseMonthWiseSales);
 
-        jmnCreditNoteList.setText("Stock Statement");
-        jmnCreditNoteList.addActionListener(new java.awt.event.ActionListener() {
+        jmnStockStatement.setText("Stock Statement");
+        jmnStockStatement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnCreditNoteListActionPerformed(evt);
+                jmnStockStatementActionPerformed(evt);
             }
         });
-        jmnInventory.add(jmnCreditNoteList);
+        jmnInventory.add(jmnStockStatement);
 
         jMenuBar3.add(jmnInventory);
 
         jmnAccounts.setMnemonic('A');
         jmnAccounts.setText("Accounts");
 
-        jMenuItem1.setText("Branch Wise Pending Collection Report");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmnBrachWisePendingCollection.setText("Branch Wise Pending Collection Report");
+        jmnBrachWisePendingCollection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmnBrachWisePendingCollectionActionPerformed(evt);
             }
         });
-        jmnAccounts.add(jMenuItem1);
+        jmnAccounts.add(jmnBrachWisePendingCollection);
 
-        jMenu4.setText("Tax report");
+        jmnTaxReport.setText("Tax report");
 
         jmnSalesReport.setText("Sales Report Retail");
         jmnSalesReport.addActionListener(new java.awt.event.ActionListener() {
@@ -1457,7 +1465,7 @@ public class SkableHome extends javax.swing.JFrame {
                 jmnSalesReportActionPerformed(evt);
             }
         });
-        jMenu4.add(jmnSalesReport);
+        jmnTaxReport.add(jmnSalesReport);
 
         jmnSalesReportTax.setText("Sales Report Tax");
         jmnSalesReportTax.addActionListener(new java.awt.event.ActionListener() {
@@ -1465,7 +1473,7 @@ public class SkableHome extends javax.swing.JFrame {
                 jmnSalesReportTaxActionPerformed(evt);
             }
         });
-        jMenu4.add(jmnSalesReportTax);
+        jmnTaxReport.add(jmnSalesReportTax);
 
         jmnSalesReportTax1.setText("Sales Return Report Tax");
         jmnSalesReportTax1.addActionListener(new java.awt.event.ActionListener() {
@@ -1473,7 +1481,7 @@ public class SkableHome extends javax.swing.JFrame {
                 jmnSalesReportTax1ActionPerformed(evt);
             }
         });
-        jMenu4.add(jmnSalesReportTax1);
+        jmnTaxReport.add(jmnSalesReportTax1);
 
         jmnSalesReportTax2.setText("Purchase Return Report Tax");
         jmnSalesReportTax2.addActionListener(new java.awt.event.ActionListener() {
@@ -1481,13 +1489,12 @@ public class SkableHome extends javax.swing.JFrame {
                 jmnSalesReportTax2ActionPerformed(evt);
             }
         });
-        jMenu4.add(jmnSalesReportTax2);
+        jmnTaxReport.add(jmnSalesReportTax2);
 
-        jmnAccounts.add(jMenu4);
+        jmnAccounts.add(jmnTaxReport);
 
         jMenu3.setText("Register");
 
-        jmnSalesRegister.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.ALT_MASK));
         jmnSalesRegister.setText("Sales Register");
         jmnSalesRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1512,7 +1519,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu3.add(jmnSalesRegisterDetailACcount);
 
-        jmnInsuranceRegister.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_MASK));
         jmnInsuranceRegister.setText("Insurance Register");
         jmnInsuranceRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1601,15 +1607,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu3.add(jmnBuyBackRegister);
 
-        jmnCreditNoteRegister.setText("Credit Note Register");
-        jmnCreditNoteRegister.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnCreditNoteRegisterActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jmnCreditNoteRegister);
-
-        jmnDCRegister.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jmnDCRegister.setText("DC Issue / Receipt Register");
         jmnDCRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1617,6 +1614,14 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jmnDCRegister);
+
+        jmnCreditNoteRegister.setText("Credit Note Register");
+        jmnCreditNoteRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnCreditNoteRegisterActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmnCreditNoteRegister);
 
         jmnStockAdjustmentRegister.setText("Stock Adjustment Register");
         jmnStockAdjustmentRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -1626,45 +1631,45 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu3.add(jmnStockAdjustmentRegister);
 
-        jMenuItem19.setText("Journal Register");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        jmnJournalRegister.setText("Journal Register");
+        jmnJournalRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                jmnJournalRegisterActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem19);
+        jMenu3.add(jmnJournalRegister);
 
-        jMenuItem20.setText("Opening Balance Register");
-        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+        jmnOPBBalaneRegister.setText("Opening Balance Register");
+        jmnOPBBalaneRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem20ActionPerformed(evt);
+                jmnOPBBalaneRegisterActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem20);
+        jMenu3.add(jmnOPBBalaneRegister);
 
-        jMenuItem5.setText("Order Book Register");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jmnOrderBookRegister.setText("Order Book Register");
+        jmnOrderBookRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jmnOrderBookRegisterActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem5);
+        jMenu3.add(jmnOrderBookRegister);
 
-        jMenuItem7.setText("Bajaj Register");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jmnBajajRegister.setText("Bajaj Register");
+        jmnBajajRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jmnBajajRegisterActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem7);
+        jMenu3.add(jmnBajajRegister);
 
-        jMenuItem23.setText("Card Charges Register");
-        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+        jmnCardChargesRegister.setText("Card Charges Register");
+        jmnCardChargesRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem23ActionPerformed(evt);
+                jmnCardChargesRegisterActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem23);
+        jMenu3.add(jmnCardChargesRegister);
 
         jmnAccounts.add(jMenu3);
 
@@ -1763,13 +1768,13 @@ public class SkableHome extends javax.swing.JFrame {
         });
         trthg.add(jmnTypeWiseSalesStatementDetail);
 
-        jmnTypeWiseSalesStatementDetail1.setText("Type Wise Sales Detail Without Tag");
-        jmnTypeWiseSalesStatementDetail1.addActionListener(new java.awt.event.ActionListener() {
+        jmnPartyTypeSalesWOTag.setText("Party Type Wise Sales Detail Without Tag");
+        jmnPartyTypeSalesWOTag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnTypeWiseSalesStatementDetail1ActionPerformed(evt);
+                jmnPartyTypeSalesWOTagActionPerformed(evt);
             }
         });
-        trthg.add(jmnTypeWiseSalesStatementDetail1);
+        trthg.add(jmnPartyTypeSalesWOTag);
 
         jmnAccounts.add(trthg);
 
@@ -1827,63 +1832,63 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu5.add(jmnMarginReportSummary);
 
-        jmnMarginReportSummary1.setText("Monthwise Margin Report Summary");
-        jmnMarginReportSummary1.addActionListener(new java.awt.event.ActionListener() {
+        jmnMarginReportMonthSummary.setText("Monthwise Margin Report Summary");
+        jmnMarginReportMonthSummary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnMarginReportSummary1ActionPerformed(evt);
+                jmnMarginReportMonthSummaryActionPerformed(evt);
             }
         });
-        jMenu5.add(jmnMarginReportSummary1);
+        jMenu5.add(jmnMarginReportMonthSummary);
 
         jmnAccounts.add(jMenu5);
 
-        jMenuItem3.setText("Rate To Mrp Percentage Report");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jmnRateToMRPReport.setText("Rate To Mrp Percentage Report");
+        jmnRateToMRPReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jmnRateToMRPReportActionPerformed(evt);
             }
         });
-        jmnAccounts.add(jMenuItem3);
+        jmnAccounts.add(jmnRateToMRPReport);
 
-        jmnMarginReport2.setText("Average Purchase Report");
-        jmnMarginReport2.addActionListener(new java.awt.event.ActionListener() {
+        jmnAveragePurchaseReport.setText("Average Purchase Report");
+        jmnAveragePurchaseReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnMarginReport2ActionPerformed(evt);
+                jmnAveragePurchaseReportActionPerformed(evt);
             }
         });
-        jmnAccounts.add(jmnMarginReport2);
+        jmnAccounts.add(jmnAveragePurchaseReport);
 
-        jmnAvgSalesReport.setText("Average Sales Report");
-        jmnAvgSalesReport.addActionListener(new java.awt.event.ActionListener() {
+        jmnAverageSalesReport.setText("Average Sales Report");
+        jmnAverageSalesReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnAvgSalesReportActionPerformed(evt);
+                jmnAverageSalesReportActionPerformed(evt);
             }
         });
-        jmnAccounts.add(jmnAvgSalesReport);
+        jmnAccounts.add(jmnAverageSalesReport);
 
-        jmnIMIEPSOnPurchase.setText("Date Range Wise Pur Sales and Profit Party Wise With IMEI");
-        jmnIMIEPSOnPurchase.addActionListener(new java.awt.event.ActionListener() {
+        jmnPartyWiseStockOnHand.setText("Party wise Stock On Hand");
+        jmnPartyWiseStockOnHand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnIMIEPSOnPurchaseActionPerformed(evt);
+                jmnPartyWiseStockOnHandActionPerformed(evt);
             }
         });
-        jmnAccounts.add(jmnIMIEPSOnPurchase);
+        jmnAccounts.add(jmnPartyWiseStockOnHand);
 
-        jmnIMIEPSOnPurchaseWoRate.setText("Stock on hand - purchase party wise date wise");
-        jmnIMIEPSOnPurchaseWoRate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnIMIEPSOnPurchaseWoRateActionPerformed(evt);
-            }
-        });
-        jmnAccounts.add(jmnIMIEPSOnPurchaseWoRate);
-
-        jmnIMEIPSSales.setText("Sales Bill Party IMEI Wise Pur Sales Rate Statement");
+        jmnIMEIPSSales.setText("IMEI Purchase Sales on Purchase");
         jmnIMEIPSSales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmnIMEIPSSalesActionPerformed(evt);
             }
         });
         jmnAccounts.add(jmnIMEIPSSales);
+
+        jmnIMIEPSOnPurchase.setText("IMEI Purchase Sales on Sales");
+        jmnIMIEPSOnPurchase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnIMIEPSOnPurchaseActionPerformed(evt);
+            }
+        });
+        jmnAccounts.add(jmnIMIEPSOnPurchase);
 
         jmnTypeWiseProfitStatement.setText("Type Wise Profit Statement");
         jmnTypeWiseProfitStatement.addActionListener(new java.awt.event.ActionListener() {
@@ -1988,29 +1993,29 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jmnUserGroupMaster);
 
-        jMenuItem2.setText("Tag Print");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jmnTagPrint.setText("Tag Print");
+        jmnTagPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jmnTagPrintActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem2);
+        jmnUtility.add(jmnTagPrint);
 
-        jMenuItem6.setText("Bill Track");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jmnBillTrack.setText("Bill Track");
+        jmnBillTrack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jmnBillTrackActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem6);
+        jmnUtility.add(jmnBillTrack);
 
-        jMenuItem16.setText("Phonebook");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        jmnPhoneBook.setText("Phonebook");
+        jmnPhoneBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                jmnPhoneBookActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem16);
+        jmnUtility.add(jmnPhoneBook);
 
         jMenuItem17.setText("Notes");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
@@ -2020,61 +2025,61 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnUtility.add(jMenuItem17);
 
-        jMenuItem18.setText("Phonebook View");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+        jmnPhoneBookView.setText("Phonebook View");
+        jmnPhoneBookView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
+                jmnPhoneBookViewActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem18);
+        jmnUtility.add(jmnPhoneBookView);
 
-        jMenuItem21.setText("EOD");
-        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+        jmnEOD.setText("EOD");
+        jmnEOD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem21ActionPerformed(evt);
+                jmnEODActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem21);
+        jmnUtility.add(jmnEOD);
 
-        jMenuItem22.setText("Buy Back Track");
-        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+        jmnBuyBackTrack.setText("Buy Back Track");
+        jmnBuyBackTrack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem22ActionPerformed(evt);
+                jmnBuyBackTrackActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem22);
+        jmnUtility.add(jmnBuyBackTrack);
 
-        jMenuItem12.setText("Visitor Book Report");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        jmnVisitorBookReport.setText("Visitor Book Report");
+        jmnVisitorBookReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                jmnVisitorBookReportActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem12);
+        jmnUtility.add(jmnVisitorBookReport);
 
-        jMenuItem29.setText("Stock Transfer For Return");
-        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+        jmnStockTransferForReturn.setText("Stock Transfer For Return");
+        jmnStockTransferForReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem29ActionPerformed(evt);
+                jmnStockTransferForReturnActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem29);
+        jmnUtility.add(jmnStockTransferForReturn);
 
-        jMenuItem28.setText("Update HSN");
-        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+        jmnUpdateHSN.setText("Update HSN");
+        jmnUpdateHSN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem28ActionPerformed(evt);
+                jmnUpdateHSNActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem28);
+        jmnUtility.add(jmnUpdateHSN);
 
-        jMenuItem31.setText("Update GST Tax");
-        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+        jmnUpdateGST.setText("Update GST Tax");
+        jmnUpdateGST.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem31ActionPerformed(evt);
+                jmnUpdateGSTActionPerformed(evt);
             }
         });
-        jmnUtility.add(jMenuItem31);
+        jmnUtility.add(jmnUpdateGST);
 
         jMenuBar3.add(jmnUtility);
 
@@ -2114,159 +2119,153 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnAccountMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnAccountMstActionPerformed
         // TODO add your handling code here:
-        AccountMasterView av = new AccountMasterView(2);
+        AccountMasterView av = new AccountMasterView(3);
         addOnScreen(av, "Account Master View");
     }//GEN-LAST:event_jmnAccountMstActionPerformed
 
     private void jmnBrandMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBrandMstActionPerformed
         // TODO add your handling code here:
-        BrandMasterView bmv = new BrandMasterView(3);
+        BrandMasterView bmv = new BrandMasterView(4);
         addOnScreen(bmv, "Brand Master");
     }//GEN-LAST:event_jmnBrandMstActionPerformed
 
     private void jmnTypeMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTypeMstActionPerformed
         // TODO add your handling code here:
-        TypeMasterView tmv = new TypeMasterView(4);
+        TypeMasterView tmv = new TypeMasterView(5);
         addOnScreen(tmv, "Type Master View");
     }//GEN-LAST:event_jmnTypeMstActionPerformed
 
     private void jmnModelMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnModelMstActionPerformed
         // TODO add your handling code here:
-        ModelMasterView mv = new ModelMasterView(5);
+        ModelMasterView mv = new ModelMasterView(7);
         addOnScreen(mv, "Model Master View");
     }//GEN-LAST:event_jmnModelMstActionPerformed
 
     private void jmnColorMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnColorMstActionPerformed
         // TODO add your handling code here:
-        ColorMasterView cmv = new ColorMasterView(6);
+        ColorMasterView cmv = new ColorMasterView(8);
         addOnScreen(cmv, "Color Master View");
     }//GEN-LAST:event_jmnColorMstActionPerformed
 
     private void jmnMemoryMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMemoryMstActionPerformed
         // TODO add your handling code here:
-        MemoryMasterView mmv = new MemoryMasterView(7);
+        MemoryMasterView mmv = new MemoryMasterView(9);
         addOnScreen(mmv, "Memory Master View");
     }//GEN-LAST:event_jmnMemoryMstActionPerformed
 
     private void jmnSeriesMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSeriesMstActionPerformed
         // TODO add your handling code here:
-        SeriesMasterView smv = new SeriesMasterView(8);
+        SeriesMasterView smv = new SeriesMasterView(13);
         addOnScreen(smv, "Series Master View");
     }//GEN-LAST:event_jmnSeriesMstActionPerformed
 
-    private void jmnTaxMstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxMstActionPerformed
-        // TODO add your handling code here:
-        TypeMasterView tmv = new TypeMasterView(9);
-        addOnScreen(tmv, "Type Master");
-    }//GEN-LAST:event_jmnTaxMstActionPerformed
-
     private void jmnRDPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRDPurchaseActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(0, 10, 0);
+        PurchaseView pv = new PurchaseView(0, 42, 0);
         addOnScreen(pv, "RD Purchase View");
     }//GEN-LAST:event_jmnRDPurchaseActionPerformed
 
     private void jmnURDPurchseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnURDPurchseActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(1, 11, 0);
+        PurchaseView pv = new PurchaseView(1, 43, 0);
         addOnScreen(pv, "URD Purchase Bill View");
     }//GEN-LAST:event_jmnURDPurchseActionPerformed
 
     private void jmnPurchaseReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPurchaseReturnActionPerformed
         // TODO add your handling code here:
-        PurchaseReturnView prv = new PurchaseReturnView(0, 12);
+        PurchaseReturnView prv = new PurchaseReturnView(0, 44);
         addOnScreen(prv, "Purchase Return View");
     }//GEN-LAST:event_jmnPurchaseReturnActionPerformed
 
     private void jmnRetailInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(0, 13, 0);
+        SalesView sb = new SalesView(0, 46, 0);
         addOnScreen(sb, "Retail Invoice View");
     }//GEN-LAST:event_jmnRetailInvoiceActionPerformed
 
     private void jmnTaxInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxInvoiceActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(1, 14, 0);
+        SalesView sb = new SalesView(1, 47, 0);
         addOnScreen(sb, "Tax Invoice View");
     }//GEN-LAST:event_jmnTaxInvoiceActionPerformed
 
     private void jmnSalesReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturnActionPerformed
         // TODO add your handling code here:
-        SalesReturnView srv = new SalesReturnView(0, 15, 0);
+        SalesReturnView srv = new SalesReturnView(0, 49, 0);
         addOnScreen(srv, "Sales Return View");
     }//GEN-LAST:event_jmnSalesReturnActionPerformed
 
-    private void jmnSalesBillNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesBillNumberActionPerformed
+    private void jmnSalesInsuranceBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesInsuranceBillActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(2, 16, 0);
+        SalesView sb = new SalesView(2, 48, 0);
         addOnScreen(sb, "Sales Insurance View");
-    }//GEN-LAST:event_jmnSalesBillNumberActionPerformed
+    }//GEN-LAST:event_jmnSalesInsuranceBillActionPerformed
 
     private void jmnCashPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCashPaymentActionPerformed
         // TODO add your handling code here:
-        CashPaymentReceiptView cprv = new CashPaymentReceiptView(0, 17);
+        CashPaymentReceiptView cprv = new CashPaymentReceiptView(0, 24);
         addOnScreen(cprv, "Cash Payment View");
     }//GEN-LAST:event_jmnCashPaymentActionPerformed
 
     private void jmnCashRcptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCashRcptActionPerformed
         // TODO add your handling code here:
-        CashPaymentReceiptView cprv = new CashPaymentReceiptView(1, 18);
+        CashPaymentReceiptView cprv = new CashPaymentReceiptView(1, 25);
         addOnScreen(cprv, "Cash Receipt View");
     }//GEN-LAST:event_jmnCashRcptActionPerformed
 
     private void jmnBankPmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBankPmtActionPerformed
         // TODO add your handling code here:
-        BankPaymentReceiptView bpr = new BankPaymentReceiptView(0, 19);
+        BankPaymentReceiptView bpr = new BankPaymentReceiptView(0, 26);
         addOnScreen(bpr, "Bank Payment View");
     }//GEN-LAST:event_jmnBankPmtActionPerformed
 
     private void jmnBankRcptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBankRcptActionPerformed
         // TODO add your handling code here:
-        BankPaymentReceiptView bpr = new BankPaymentReceiptView(1, 20);
+        BankPaymentReceiptView bpr = new BankPaymentReceiptView(1, 27);
         addOnScreen(bpr, "Bank Receipt View");
     }//GEN-LAST:event_jmnBankRcptActionPerformed
 
     private void jmnJournalEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJournalEntryActionPerformed
 //        // TODO add your handling code here:
-        JournalVoucherView jv = new JournalVoucherView(21);
+        JournalVoucherView jv = new JournalVoucherView(28);
         addOnScreen(jv, "Journal Voucher View");
     }//GEN-LAST:event_jmnJournalEntryActionPerformed
 
     private void jmnContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnContraActionPerformed
         // TODO add your handling code here:
-        ContraVoucherView cv = new ContraVoucherView(22);
+        ContraVoucherView cv = new ContraVoucherView(29);
         addOnScreen(cv, "Contra Voucher");
     }//GEN-LAST:event_jmnContraActionPerformed
 
     private void jmnsdsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnsdsActionPerformed
         // TODO add your handling code here:
-        StockTransferView stk = new StockTransferView(1, 23);
+        StockTransferView stk = new StockTransferView(1, 30);
         addOnScreen(stk, "Stock Transfer To Shop");
     }//GEN-LAST:event_jmnsdsActionPerformed
 
     private void jMenuItem59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem59ActionPerformed
         // TODO add your handling code here:
-        StockTransferView stk = new StockTransferView(0, 23);
+        StockTransferView stk = new StockTransferView(0, 30);
         addOnScreen(stk, "Stock Transfer To Godown");
     }//GEN-LAST:event_jMenuItem59ActionPerformed
 
     private void jMenuItem52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem52ActionPerformed
         // TODO add your handling code here:
-        DCView dcv = new DCView(0, 24);
+        DCView dcv = new DCView(0, 31);
         addOnScreen(dcv, "DC Issue View");
     }//GEN-LAST:event_jMenuItem52ActionPerformed
 
     private void jmnStockAdjstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockAdjstActionPerformed
         // TODO add your handling code here:
-        StockAdjustmentView stkvAdjustmentView = new StockAdjustmentView(0, 25);
+        StockAdjustmentView stkvAdjustmentView = new StockAdjustmentView(0, 32);
         addOnScreen(stkvAdjustmentView, "Stock Adjustment View");
     }//GEN-LAST:event_jmnStockAdjstActionPerformed
 
-    private void jmnCreditNoteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCreditNoteListActionPerformed
+    private void jmnStockStatementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockStatementActionPerformed
         // TODO add your handling code here:
         CreditNoteListReport cn = new CreditNoteListReport();
         addOnScreen(cn, "Stock Statement");
-    }//GEN-LAST:event_jmnCreditNoteListActionPerformed
+    }//GEN-LAST:event_jmnStockStatementActionPerformed
 
     private void jmnStockLedgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockLedgerActionPerformed
         // TODO add your handling code here:
@@ -2322,11 +2321,11 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(ssa, "Stock Value Statement Accessory");
     }//GEN-LAST:event_jmnStockValueStmtAccActionPerformed
 
-    private void jmnStckStmtDateWiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStckStmtDateWiseActionPerformed
+    private void jmnStkValStmtDateWiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStkValStmtDateWiseActionPerformed
         // TODO add your handling code here:
         StockValueStatementDateWise st = new StockValueStatementDateWise();
         addOnScreen(st, "Stock Value Statement Date Wise");
-    }//GEN-LAST:event_jmnStckStmtDateWiseActionPerformed
+    }//GEN-LAST:event_jmnStkValStmtDateWiseActionPerformed
 
     private void jmnStockStmtDateWiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockStmtDateWiseActionPerformed
         // TODO add your handling code here:
@@ -2528,11 +2527,11 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(ips, "Date Range Wise Pur Sales and Profit Party Wise With IMEI");
     }//GEN-LAST:event_jmnIMIEPSOnPurchaseActionPerformed
 
-    private void jmnIMIEPSOnPurchaseWoRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnIMIEPSOnPurchaseWoRateActionPerformed
+    private void jmnPartyWiseStockOnHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPartyWiseStockOnHandActionPerformed
         // TODO add your handling code here:
         ItemWisePSWoRate ips = new ItemWisePSWoRate();
         addOnScreen(ips, "Stock on hand - purchase party wise date wise");
-    }//GEN-LAST:event_jmnIMIEPSOnPurchaseWoRateActionPerformed
+    }//GEN-LAST:event_jmnPartyWiseStockOnHandActionPerformed
 
     private void jmnIMEIPSSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnIMEIPSSalesActionPerformed
         // TODO add your handling code here:
@@ -2624,11 +2623,11 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(sio, "Stock Inout Report");
     }//GEN-LAST:event_jmnStockInoutReportActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmnBrachWisePendingCollectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBrachWisePendingCollectionActionPerformed
         // TODO add your handling code here:
         BranchWisePendingReport brp = new BranchWisePendingReport();
         addOnScreen(brp, "Branch Wise Pending Collection Report");
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmnBrachWisePendingCollectionActionPerformed
 
     private void jmnMarginReportModelWiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMarginReportModelWiseActionPerformed
         // TODO add your handling code here:
@@ -2636,21 +2635,21 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(mrm, "Margin Report Model Wise");
     }//GEN-LAST:event_jmnMarginReportModelWiseActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jmnTagPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTagPrintActionPerformed
         // TODO add your handling code here:
         TagPrint tp = new TagPrint();
         addOnScreen(tp, "Tag Print");
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jmnTagPrintActionPerformed
 
-    private void jmnMarginReport2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMarginReport2ActionPerformed
+    private void jmnAveragePurchaseReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnAveragePurchaseReportActionPerformed
         // TODO add your handling code here:
         AveragePurchaseReport avr = new AveragePurchaseReport();
         addOnScreen(avr, "Average Purchase Report");
-    }//GEN-LAST:event_jmnMarginReport2ActionPerformed
+    }//GEN-LAST:event_jmnAveragePurchaseReportActionPerformed
 
     private void jMenuItem53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem53ActionPerformed
         // TODO add your handling code here:
-        DCView dv = new DCView(1, 24);
+        DCView dv = new DCView(1, 31);
         addOnScreen(dv, "Dc Inward");
     }//GEN-LAST:event_jMenuItem53ActionPerformed
 
@@ -2678,17 +2677,17 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(sr, "Purchase Return Report Tax");
     }//GEN-LAST:event_jmnSalesReportTax2ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jmnRateToMRPReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRateToMRPReportActionPerformed
         // TODO add your handling code here:
         MRPtoRateReport mtr = new MRPtoRateReport();
         addOnScreen(mtr, "Rate To MRP Percentage Report");
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jmnRateToMRPReportActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jmnHighestStkValStmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnHighestStkValStmtActionPerformed
         // TODO add your handling code here:
         HighestStockValueStatement hsv = new HighestStockValueStatement();
         addOnScreen(hsv, "Highest Stock Value Statement");
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jmnHighestStkValStmtActionPerformed
 
     private void jmnSalesDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesDotActionPerformed
         // TODO add your handling code here:
@@ -2698,7 +2697,7 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnPurchaseDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPurchaseDotActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(2, 88, 0);
+        PurchaseView pv = new PurchaseView(2, 50, 0);
         addOnScreen(pv, "Purchase View .");
     }//GEN-LAST:event_jmnPurchaseDotActionPerformed
 
@@ -2708,23 +2707,23 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(mrs, "Margin Report Summary");
     }//GEN-LAST:event_jmnMarginReportSummaryActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jmnBillTrackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBillTrackActionPerformed
         // TODO add your handling code here:
-        BillTrack bt = new BillTrack(0, 13);
+        BillTrack bt = new BillTrack(0, 129);
         addOnScreen(bt, "Bill Track");
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jmnBillTrackActionPerformed
 
-    private void jmnTypeWiseSalesStatementDetail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTypeWiseSalesStatementDetail1ActionPerformed
+    private void jmnPartyTypeSalesWOTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPartyTypeSalesWOTagActionPerformed
         // TODO add your handling code here:
         WithoutTagSalesReport wtsr = new WithoutTagSalesReport();
         addOnScreen(wtsr, "Without Tag Sales Report");
-    }//GEN-LAST:event_jmnTypeWiseSalesStatementDetail1ActionPerformed
+    }//GEN-LAST:event_jmnPartyTypeSalesWOTagActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void jmnBillADjustmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBillADjustmentActionPerformed
         // TODO add your handling code here:
         ListBill lb = new ListBill();
         addOnScreen(lb, "List Bill");
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_jmnBillADjustmentActionPerformed
 
     private void jmnDatewiseStockOnHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDatewiseStockOnHandActionPerformed
         // TODO add your handling code here:
@@ -2734,13 +2733,13 @@ public class SkableHome extends javax.swing.JFrame {
 
     private void jmnDebitNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDebitNoteActionPerformed
         // TODO add your handling code here:
-        DNCNView dncn = new DNCNView(0, 91);
+        DNCNView dncn = new DNCNView(0, 36);
         addOnScreen(dncn, "Debit Note View");
     }//GEN-LAST:event_jmnDebitNoteActionPerformed
 
     private void jmnCrediNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCrediNoteActionPerformed
         // TODO add your handling code here:
-        DNCNView dncn = new DNCNView(1, 90);
+        DNCNView dncn = new DNCNView(1, 35);
         addOnScreen(dncn, "Credit Note View");
     }//GEN-LAST:event_jmnCrediNoteActionPerformed
 
@@ -2750,65 +2749,65 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(bwil, "Brandwise Item Ledger");
     }//GEN-LAST:event_jmnBrandWiseItemLedgerActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void jmnModelWiseMonthWisePurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnModelWiseMonthWisePurchaseActionPerformed
         // TODO add your handling code here:
         MonthwiseModelWisePurchaseStatement mmp = new MonthwiseModelWisePurchaseStatement();
         addOnScreen(mmp, "Model Wise Month Wise Purchase Statement");
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_jmnModelWiseMonthWisePurchaseActionPerformed
 
     private void jmnSalesmanMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesmanMasterActionPerformed
         // TODO add your handling code here:
-        SalesmanMaster sm = new SalesmanMaster(86);
+        SalesmanMaster sm = new SalesmanMaster(14);
         addOnScreen(sm, "Salesman Master");
     }//GEN-LAST:event_jmnSalesmanMasterActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void jmnItemWiseDateMonthWiseSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnItemWiseDateMonthWiseSalesActionPerformed
         // TODO add your handling code here:
         ModelWiseMonthWiseSalesStatement mmss = new ModelWiseMonthWiseSalesStatement();
         addOnScreen(mmss, "Itemwise Date/Monthwise Sales Statement(Ageing Anylysis)");
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_jmnItemWiseDateMonthWiseSalesActionPerformed
 
-    private void jmnAvgSalesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnAvgSalesReportActionPerformed
+    private void jmnAverageSalesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnAverageSalesReportActionPerformed
         // TODO add your handling code here:
         AverageSalesReport avg = new AverageSalesReport();
         addOnScreen(avg, "Average Sales Report");
-    }//GEN-LAST:event_jmnAvgSalesReportActionPerformed
+    }//GEN-LAST:event_jmnAverageSalesReportActionPerformed
 
     private void jmnReferalMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnReferalMasterActionPerformed
         // TODO add your handling code here:
-        RefMasterView ref = new RefMasterView(87);
+        RefMasterView ref = new RefMasterView(2);
         addOnScreen(ref, "Refral Master");
     }//GEN-LAST:event_jmnReferalMasterActionPerformed
 
-    private void jmnRetailInvoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice2ActionPerformed
+    private void jmnRetailInvoiceEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceEditActionPerformed
         // TODO add your handling code here:
         SalesView sb = new SalesView(0, 130, 0);
         addOnScreen(sb, "Retail Invoice Edit View");
-    }//GEN-LAST:event_jmnRetailInvoice2ActionPerformed
+    }//GEN-LAST:event_jmnRetailInvoiceEditActionPerformed
 
-    private void jmnTaxInvoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxInvoice1ActionPerformed
+    private void jmnTaxInvoiceEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxInvoiceEditActionPerformed
         // TODO add your handling code here:
         SalesView sb = new SalesView(1, 130, 0);
         addOnScreen(sb, "Tax Invoice Edit View");
-    }//GEN-LAST:event_jmnTaxInvoice1ActionPerformed
+    }//GEN-LAST:event_jmnTaxInvoiceEditActionPerformed
 
-    private void jmnMarginReportSummary1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMarginReportSummary1ActionPerformed
+    private void jmnMarginReportMonthSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMarginReportMonthSummaryActionPerformed
         // TODO add your handling code here:
         MarginReportSummaryMonthWise mm = new MarginReportSummaryMonthWise();
         addOnScreen(mm, "Monthwise Margin Report Summary");
-    }//GEN-LAST:event_jmnMarginReportSummary1ActionPerformed
+    }//GEN-LAST:event_jmnMarginReportMonthSummaryActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+    private void jmnModelWiseMonthWiseSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnModelWiseMonthWiseSalesActionPerformed
         // TODO add your handling code here:
         MonthwiseModelWiseSalesStatement mm = new MonthwiseModelWiseSalesStatement();
         addOnScreen(mm, "Model wise month wise sales statement");
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
+    }//GEN-LAST:event_jmnModelWiseMonthWiseSalesActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+    private void jmnPhoneBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPhoneBookActionPerformed
         // TODO add your handling code here:
         PhoneBook mm = new PhoneBook();
         addOnScreen(mm, "Phonebook");
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
+    }//GEN-LAST:event_jmnPhoneBookActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
@@ -2816,107 +2815,107 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(nv, "Notes View");
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+    private void jmnPhoneBookViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPhoneBookViewActionPerformed
         // TODO add your handling code here:
         PhoneBookNew mm = new PhoneBookNew();
         addOnScreen(mm, "Phonebook New");
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
+    }//GEN-LAST:event_jmnPhoneBookViewActionPerformed
 
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+    private void jmnJournalRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJournalRegisterActionPerformed
         // TODO add your handling code here:
         JournalVoucherRegister jv = new JournalVoucherRegister();
         addOnScreen(jv, "Journal Voucher Register");
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
+    }//GEN-LAST:event_jmnJournalRegisterActionPerformed
 
-    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+    private void jmnOPBBalaneRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnOPBBalaneRegisterActionPerformed
         // TODO add your handling code here:
         OpeningBalanceRegister opb = new OpeningBalanceRegister();
         addOnScreen(opb, "Opening Balance Register");
-    }//GEN-LAST:event_jMenuItem20ActionPerformed
+    }//GEN-LAST:event_jmnOPBBalaneRegisterActionPerformed
 
-    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+    private void jmnEODActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEODActionPerformed
         // TODO add your handling code here:
         EOD eod = new EOD();
         addOnScreen(eod, "EOD Report");
-    }//GEN-LAST:event_jMenuItem21ActionPerformed
+    }//GEN-LAST:event_jmnEODActionPerformed
 
-    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+    private void jmnBuyBackTrackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBuyBackTrackActionPerformed
         // TODO add your handling code here:
         BuyBackTrack BBT = new BuyBackTrack();
         addOnScreen(BBT, "Buy Back Track");
-    }//GEN-LAST:event_jMenuItem22ActionPerformed
+    }//GEN-LAST:event_jmnBuyBackTrackActionPerformed
 
     private void jmnOrderBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnOrderBookActionPerformed
         // TODO add your handling code here:
-        OrderBookView odv = new OrderBookView(92);
+        OrderBookView odv = new OrderBookView(37);
         addOnScreen(odv, "Order Book View");
     }//GEN-LAST:event_jmnOrderBookActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void jmnOrderBookRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnOrderBookRegisterActionPerformed
         // TODO add your handling code here:
         OrderBookReport odbr = new OrderBookReport(93);
         addOnScreen(odbr, "Order Book Register");
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_jmnOrderBookRegisterActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void jmnBajajRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBajajRegisterActionPerformed
         // TODO add your handling code here:
         BajajReport br = new BajajReport();
         addOnScreen(br, "Bajaj Register");
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_jmnBajajRegisterActionPerformed
 
     private void jmnsds1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnsds1ActionPerformed
         // TODO add your handling code here:
-        StockTransferOutsideView stk = new StockTransferOutsideView(0, 23);
+        StockTransferOutsideView stk = new StockTransferOutsideView(0, 38);
         addOnScreen(stk, "Stock Transfer Out");
     }//GEN-LAST:event_jmnsds1ActionPerformed
 
     private void jMenuItem60ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem60ActionPerformed
         // TODO add your handling code here:
-        StockTransferOutsideView stk = new StockTransferOutsideView(1, 23);
+        StockTransferOutsideView stk = new StockTransferOutsideView(1, 38);
         addOnScreen(stk, "Stock Transfer In");
     }//GEN-LAST:event_jMenuItem60ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void jmnVisitorBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnVisitorBookActionPerformed
         // TODO add your handling code here:
-        VisitorBookView vbv = new VisitorBookView(13);
+        VisitorBookView vbv = new VisitorBookView(39);
         addOnScreen(vbv, "Visitor Book View");
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_jmnVisitorBookActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void jmnSchemeMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSchemeMasterActionPerformed
         // TODO add your handling code here:
-        SchemeMasterView smv = new SchemeMasterView(13);
+        SchemeMasterView smv = new SchemeMasterView(15);
         addOnScreen(smv, "Scheme Master View");
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_jmnSchemeMasterActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void jmnVisitorBookReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnVisitorBookReportActionPerformed
         // TODO add your handling code here:
         VisitorBookReport vbr = new VisitorBookReport();
         addOnScreen(vbr, "Visitor Book Report");
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_jmnVisitorBookReportActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void jmnStockOnHandItemQtyBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockOnHandItemQtyBranchActionPerformed
         // TODO add your handling code here:
         StockOnHandBranchWise so = new StockOnHandBranchWise();
         addOnScreen(so, "Stock On Hand Item/Qty/Branch Wise");
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_jmnStockOnHandItemQtyBranchActionPerformed
 
-    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+    private void jmnCardChargesRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCardChargesRegisterActionPerformed
         // TODO add your handling code here:
         CardChargesRegister crr = new CardChargesRegister();
         addOnScreen(crr, "Card Charges Register");
-    }//GEN-LAST:event_jMenuItem23ActionPerformed
+    }//GEN-LAST:event_jmnCardChargesRegisterActionPerformed
 
-    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+    private void jmnTIDMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTIDMasterActionPerformed
         // TODO add your handling code here:
-        TidMasterView tm = new TidMasterView(13);
+        TidMasterView tm = new TidMasterView(16);
         addOnScreen(tm, "TID Master View");
-    }//GEN-LAST:event_jMenuItem24ActionPerformed
+    }//GEN-LAST:event_jmnTIDMasterActionPerformed
 
-    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+    private void jmnQuoatationBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnQuoatationBookActionPerformed
         // TODO add your handling code here:
-        QuoatationView qv = new QuoatationView(13);
+        QuoatationView qv = new QuoatationView(40);
         addOnScreen(qv, "Quoatation View");
-    }//GEN-LAST:event_jMenuItem25ActionPerformed
+    }//GEN-LAST:event_jmnQuoatationBookActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
@@ -2926,11 +2925,11 @@ public class SkableHome extends javax.swing.JFrame {
         lg.setVisible(true);
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
-    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+    private void jmnStockTransferForReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnStockTransferForReturnActionPerformed
         // TODO add your handling code here:
         TagTransfer tt = new TagTransfer();
         addOnScreen(tt, "Tag Transfer");
-    }//GEN-LAST:event_jMenuItem29ActionPerformed
+    }//GEN-LAST:event_jmnStockTransferForReturnActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
@@ -2940,90 +2939,89 @@ public class SkableHome extends javax.swing.JFrame {
         lg.setVisible(true);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
-    private void jmnBranchWiseCreditLimit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBranchWiseCreditLimit1ActionPerformed
+    private void jmnBranchwiseInsuranceAmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBranchwiseInsuranceAmtActionPerformed
         // TODO add your handling code here:
         BranchWiseLimit bl = new BranchWiseLimit(null, true);
         bl.setVisible(true);
-    }//GEN-LAST:event_jmnBranchWiseCreditLimit1ActionPerformed
+    }//GEN-LAST:event_jmnBranchwiseInsuranceAmtActionPerformed
 
-    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+    private void jmnTaxMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnTaxMasterActionPerformed
         // TODO add your handling code here:
-        TaxMasterView tv = new TaxMasterView(31);
+        TaxMasterView tv = new TaxMasterView(6);
         addOnScreen(tv, "Tax Master");
-    }//GEN-LAST:event_jMenuItem27ActionPerformed
+    }//GEN-LAST:event_jmnTaxMasterActionPerformed
 
-    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+    private void jmnUpdateHSNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnUpdateHSNActionPerformed
         // TODO add your handling code here:
         UpdateHSN updateHSN = new UpdateHSN();
         addOnScreen(updateHSN, "Update HSN");
-    }//GEN-LAST:event_jMenuItem28ActionPerformed
+    }//GEN-LAST:event_jmnUpdateHSNActionPerformed
 
-    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+    private void jmnUpdateGSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnUpdateGSTActionPerformed
         // TODO add your handling code here:
         UpdateGST updategst = new UpdateGST();
         addOnScreen(updategst, "Update GST");
-    }//GEN-LAST:event_jMenuItem31ActionPerformed
+    }//GEN-LAST:event_jmnUpdateGSTActionPerformed
 
-    private void jmnRDPurchase1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRDPurchase1ActionPerformed
+    private void jmnRdPurchaseLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRdPurchaseLocalActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(0, 10, 1);
+        PurchaseView pv = new PurchaseView(0, 17, 1);
         addOnScreen(pv, "RD Purchase View");
-    }//GEN-LAST:event_jmnRDPurchase1ActionPerformed
+    }//GEN-LAST:event_jmnRdPurchaseLocalActionPerformed
 
-    private void jmnRDPurchase2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRDPurchase2ActionPerformed
+    private void jmnRdPurchaseOutsideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRdPurchaseOutsideActionPerformed
         // TODO add your handling code here:
-        PurchaseView pv = new PurchaseView(0, 10, 2);
+        PurchaseView pv = new PurchaseView(0, 18, 2);
         addOnScreen(pv, "RD Purchase View");
-    }//GEN-LAST:event_jmnRDPurchase2ActionPerformed
+    }//GEN-LAST:event_jmnRdPurchaseOutsideActionPerformed
 
-    private void jmnRetailInvoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice1ActionPerformed
+    private void jmnSalesInvoiceLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesInvoiceLocalActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(4, 13, 1);
+        SalesView sb = new SalesView(4, 19, 1);
         addOnScreen(sb, "Sales Invoice Local View");
-    }//GEN-LAST:event_jmnRetailInvoice1ActionPerformed
+    }//GEN-LAST:event_jmnSalesInvoiceLocalActionPerformed
 
-    private void jmnRetailInvoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoice4ActionPerformed
+    private void jmnSalesInvoiceOutsideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesInvoiceOutsideActionPerformed
         // TODO add your handling code here:
-        SalesView sb = new SalesView(4, 13, 2);
+        SalesView sb = new SalesView(4, 20, 2);
         addOnScreen(sb, "Sales Invoice Outside View");
-    }//GEN-LAST:event_jmnRetailInvoice4ActionPerformed
+    }//GEN-LAST:event_jmnSalesInvoiceOutsideActionPerformed
 
-    private void jmnSalesReturn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturn1ActionPerformed
+    private void jmnSalesReturnLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturnLocalActionPerformed
         // TODO add your handling code here:
-        SalesReturnView srv = new SalesReturnView(0, 15, 1);
+        SalesReturnView srv = new SalesReturnView(0, 21, 1);
         addOnScreen(srv, "Sales Return Local View");
-    }//GEN-LAST:event_jmnSalesReturn1ActionPerformed
+    }//GEN-LAST:event_jmnSalesReturnLocalActionPerformed
 
-    private void jmnSalesReturn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturn2ActionPerformed
+    private void jmnSalesReturnOutsideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesReturnOutsideActionPerformed
         // TODO add your handling code here:
-        SalesReturnView srv = new SalesReturnView(0, 15, 2);
+        SalesReturnView srv = new SalesReturnView(0, 22, 2);
         addOnScreen(srv, "Sales Return Outside View");
-    }//GEN-LAST:event_jmnSalesReturn2ActionPerformed
+    }//GEN-LAST:event_jmnSalesReturnOutsideActionPerformed
 
-    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+    private void jmnRamMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRamMasterActionPerformed
         // TODO add your handling code here:
-        RamMasterView rm = new RamMasterView(13);
+        RamMasterView rm = new RamMasterView(10);
         addOnScreen(rm, "Ram Master View");
-    }//GEN-LAST:event_jMenuItem32ActionPerformed
+    }//GEN-LAST:event_jmnRamMasterActionPerformed
 
-    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+    private void jmnCameraMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCameraMasterActionPerformed
         // TODO add your handling code here:
-        CameraMasterView cmv = new CameraMasterView(13);
+        CameraMasterView cmv = new CameraMasterView(11);
         addOnScreen(cmv, "Camera Master View");
-    }//GEN-LAST:event_jMenuItem33ActionPerformed
+    }//GEN-LAST:event_jmnCameraMasterActionPerformed
 
-    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+    private void jmnBatteryMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnBatteryMasterActionPerformed
         // TODO add your handling code here:
-        BatteryMasterView bmv = new BatteryMasterView(13);
+        BatteryMasterView bmv = new BatteryMasterView(12);
         addOnScreen(bmv, "Battery Master View");
-    }//GEN-LAST:event_jMenuItem34ActionPerformed
+    }//GEN-LAST:event_jmnBatteryMasterActionPerformed
 
     private void jmnJobSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnJobSheetActionPerformed
         // TODO add your handling code here:
-        JobSheetView jsv  = new JobSheetView(13);
+        JobSheetView jsv = new JobSheetView(23);
         addOnScreen(jsv, "Jobsheet view");
     }//GEN-LAST:event_jmnJobSheetActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -3034,63 +3032,40 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem29;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
-    private javax.swing.JMenuItem jMenuItem31;
-    private javax.swing.JMenuItem jMenuItem32;
-    private javax.swing.JMenuItem jMenuItem33;
-    private javax.swing.JMenuItem jMenuItem34;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem52;
     private javax.swing.JMenuItem jMenuItem53;
     private javax.swing.JMenuItem jMenuItem59;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem60;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu jmenuLogin;
     private javax.swing.JMenuItem jmnAccountMst;
     private javax.swing.JMenu jmnAccounts;
-    private javax.swing.JMenuItem jmnAvgSalesReport;
+    private javax.swing.JMenuItem jmnAveragePurchaseReport;
+    private javax.swing.JMenuItem jmnAverageSalesReport;
+    private javax.swing.JMenuItem jmnBajajRegister;
     private javax.swing.JMenuItem jmnBankBook;
     private javax.swing.JMenuItem jmnBankPmt;
     private javax.swing.JMenuItem jmnBankRcpt;
-    private javax.swing.JMenuItem jmnBranchWiseCreditLimit1;
+    private javax.swing.JMenuItem jmnBatteryMaster;
+    private javax.swing.JMenuItem jmnBillADjustment;
+    private javax.swing.JMenuItem jmnBillTrack;
+    private javax.swing.JMenuItem jmnBrachWisePendingCollection;
+    private javax.swing.JMenuItem jmnBranchwiseInsuranceAmt;
     private javax.swing.JMenuItem jmnBrandMst;
     private javax.swing.JMenuItem jmnBrandWiseItemLedger;
     private javax.swing.JMenuItem jmnBuyBackRegister;
+    private javax.swing.JMenuItem jmnBuyBackTrack;
+    private javax.swing.JMenuItem jmnCameraMaster;
+    private javax.swing.JMenuItem jmnCardChargesRegister;
     private javax.swing.JMenuItem jmnCashBook;
     private javax.swing.JMenuItem jmnCashPayment;
     private javax.swing.JMenuItem jmnCashRcpt;
@@ -3098,7 +3073,6 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnContra;
     private javax.swing.JMenuItem jmnCreateUser;
     private javax.swing.JMenuItem jmnCrediNote;
-    private javax.swing.JMenuItem jmnCreditNoteList;
     private javax.swing.JMenuItem jmnCreditNoteRegister;
     private javax.swing.JMenuItem jmnDCRegister;
     private javax.swing.JMenuItem jmnDailySalesStatement;
@@ -3107,28 +3081,38 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenu jmnDcVoucher;
     private javax.swing.JMenuItem jmnDebitNote;
     private javax.swing.JMenuItem jmnDummyPrint;
+    private javax.swing.JMenuItem jmnEOD;
     private javax.swing.JMenuItem jmnExit;
     private javax.swing.JMenuItem jmnGeneralLedger;
     private javax.swing.JMenuItem jmnGroupMst;
     private javax.swing.JMenuItem jmnGroupSummary;
+    private javax.swing.JMenuItem jmnHighestStkValStmt;
     private javax.swing.JMenuItem jmnIMEIPSSales;
     private javax.swing.JMenuItem jmnIMEISearch;
     private javax.swing.JMenuItem jmnIMIEPSOnPurchase;
-    private javax.swing.JMenuItem jmnIMIEPSOnPurchaseWoRate;
     private javax.swing.JMenuItem jmnInsuranceRegister;
     private javax.swing.JMenu jmnInventory;
+    private javax.swing.JMenuItem jmnItemWiseDateMonthWiseSales;
     private javax.swing.JMenuItem jmnJobSheet;
     private javax.swing.JMenuItem jmnJournalEntry;
+    private javax.swing.JMenuItem jmnJournalRegister;
     private javax.swing.JMenuItem jmnMarginReport;
-    private javax.swing.JMenuItem jmnMarginReport2;
     private javax.swing.JMenuItem jmnMarginReportByTag;
     private javax.swing.JMenuItem jmnMarginReportModelWise;
+    private javax.swing.JMenuItem jmnMarginReportMonthSummary;
     private javax.swing.JMenuItem jmnMarginReportSummary;
-    private javax.swing.JMenuItem jmnMarginReportSummary1;
     private javax.swing.JMenu jmnMaster;
     private javax.swing.JMenuItem jmnMemoryMst;
     private javax.swing.JMenuItem jmnModelMst;
+    private javax.swing.JMenuItem jmnModelWiseMonthWisePurchase;
+    private javax.swing.JMenuItem jmnModelWiseMonthWiseSales;
+    private javax.swing.JMenuItem jmnOPBBalaneRegister;
     private javax.swing.JMenuItem jmnOrderBook;
+    private javax.swing.JMenuItem jmnOrderBookRegister;
+    private javax.swing.JMenuItem jmnPartyTypeSalesWOTag;
+    private javax.swing.JMenuItem jmnPartyWiseStockOnHand;
+    private javax.swing.JMenuItem jmnPhoneBook;
+    private javax.swing.JMenuItem jmnPhoneBookView;
     private javax.swing.JMenuItem jmnPurRetRegAcc;
     private javax.swing.JMenuItem jmnPurchaseDot;
     private javax.swing.JMenuItem jmnPurchaseRateByTag;
@@ -3138,16 +3122,19 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnPurchaseReturn;
     private javax.swing.JMenuItem jmnPurchaseReturnRegister;
     private javax.swing.JMenuItem jmnPurchaseReturnRegisterDetail;
+    private javax.swing.JMenuItem jmnQuoatationBook;
     private javax.swing.JMenuItem jmnRDPurchase;
-    private javax.swing.JMenuItem jmnRDPurchase1;
-    private javax.swing.JMenuItem jmnRDPurchase2;
+    private javax.swing.JMenuItem jmnRamMaster;
+    private javax.swing.JMenuItem jmnRateToMRPReport;
+    private javax.swing.JMenuItem jmnRdPurchaseLocal;
+    private javax.swing.JMenuItem jmnRdPurchaseOutside;
     private javax.swing.JMenuItem jmnReferalMaster;
     private javax.swing.JMenuItem jmnRetailInvoice;
-    private javax.swing.JMenuItem jmnRetailInvoice1;
-    private javax.swing.JMenuItem jmnRetailInvoice2;
-    private javax.swing.JMenuItem jmnRetailInvoice4;
-    private javax.swing.JMenuItem jmnSalesBillNumber;
+    private javax.swing.JMenuItem jmnRetailInvoiceEdit;
     private javax.swing.JMenuItem jmnSalesDot;
+    private javax.swing.JMenuItem jmnSalesInsuranceBill;
+    private javax.swing.JMenuItem jmnSalesInvoiceLocal;
+    private javax.swing.JMenuItem jmnSalesInvoiceOutside;
     private javax.swing.JMenuItem jmnSalesRegister;
     private javax.swing.JMenuItem jmnSalesRegisterCardWise;
     private javax.swing.JMenuItem jmnSalesRegisterCardWiseDetail;
@@ -3158,15 +3145,16 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnSalesReportTax1;
     private javax.swing.JMenuItem jmnSalesReportTax2;
     private javax.swing.JMenuItem jmnSalesReturn;
-    private javax.swing.JMenuItem jmnSalesReturn1;
-    private javax.swing.JMenuItem jmnSalesReturn2;
+    private javax.swing.JMenuItem jmnSalesReturnLocal;
+    private javax.swing.JMenuItem jmnSalesReturnOutside;
     private javax.swing.JMenuItem jmnSalesReturnRegister;
     private javax.swing.JMenuItem jmnSalesReturnRegisterDetail;
     private javax.swing.JMenuItem jmnSalesmanMaster;
+    private javax.swing.JMenuItem jmnSchemeMaster;
     private javax.swing.JMenuItem jmnSeriesMst;
     private javax.swing.JMenuItem jmnSnapShot;
     private javax.swing.JMenuItem jmnSrRegAcc;
-    private javax.swing.JMenuItem jmnStckStmtDateWise;
+    private javax.swing.JMenuItem jmnStkValStmtDateWise;
     private javax.swing.JMenuItem jmnStockAdjst;
     private javax.swing.JMenuItem jmnStockAdjustmentRegister;
     private javax.swing.JMenuItem jmnStockInTransit;
@@ -3174,19 +3162,25 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnStockItemMonth;
     private javax.swing.JMenuItem jmnStockLedger;
     private javax.swing.JMenuItem jmnStockLedgerRate;
+    private javax.swing.JMenuItem jmnStockOnHandItemQtyBranch;
+    private javax.swing.JMenuItem jmnStockStatement;
     private javax.swing.JMenuItem jmnStockStatementIMEI;
     private javax.swing.JMenuItem jmnStockStmtDateWise;
     private javax.swing.JMenuItem jmnStockSummary;
     private javax.swing.JMenuItem jmnStockSummaryBal;
     private javax.swing.JMenu jmnStockTransfer;
-    private javax.swing.JMenu jmnStockTransfer1;
+    private javax.swing.JMenuItem jmnStockTransferForReturn;
+    private javax.swing.JMenu jmnStockTransferOutside;
     private javax.swing.JMenuItem jmnStockValueStatementIMEI;
     private javax.swing.JMenuItem jmnStockValueStmtAcc;
+    private javax.swing.JMenuItem jmnTIDMaster;
+    private javax.swing.JMenuItem jmnTagPrint;
     private javax.swing.JMenuItem jmnTagTrack;
     private javax.swing.JMenuItem jmnTagTrackTransaction;
     private javax.swing.JMenuItem jmnTaxInvoice;
-    private javax.swing.JMenuItem jmnTaxInvoice1;
-    private javax.swing.JMenuItem jmnTaxMst;
+    private javax.swing.JMenuItem jmnTaxInvoiceEdit;
+    private javax.swing.JMenuItem jmnTaxMaster;
+    private javax.swing.JMenu jmnTaxReport;
     private javax.swing.JMenu jmnTransaction;
     private javax.swing.JMenuItem jmnTypeMst;
     private javax.swing.JMenuItem jmnTypeWiseBrandWiseProfit;
@@ -3195,12 +3189,15 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnTypeWisePurchaseDetail;
     private javax.swing.JMenuItem jmnTypeWiseSalesStatement;
     private javax.swing.JMenuItem jmnTypeWiseSalesStatementDetail;
-    private javax.swing.JMenuItem jmnTypeWiseSalesStatementDetail1;
     private javax.swing.JMenuItem jmnURDPurchse;
+    private javax.swing.JMenuItem jmnUpdateGST;
+    private javax.swing.JMenuItem jmnUpdateHSN;
     private javax.swing.JMenuItem jmnUpdateUser;
     private javax.swing.JMenuItem jmnUserGroupMaster;
     private javax.swing.JMenuItem jmnUserRights;
     private javax.swing.JMenu jmnUtility;
+    private javax.swing.JMenuItem jmnVisitorBook;
+    private javax.swing.JMenuItem jmnVisitorBookReport;
     private javax.swing.JMenuItem jmnsds;
     private javax.swing.JMenuItem jmnsds1;
     private javax.swing.JMenuItem jmnstockStatementAcc;

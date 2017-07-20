@@ -244,9 +244,11 @@ public class SeriesMasterController extends javax.swing.JDialog {
         String name = jtxtBrandName.getText() + " " + jtxtModelName.getText() + " ";
         if (Constants.params.get("SHOW_MEMORY").toString().equalsIgnoreCase("1")) {
             name += jtxtMemoryName.getText() + " ";
-        } else {
+        } 
+        {
             name += jtxtRam.getText() + " " + jtxtCamera.getText() + " " + jtxtBattery.getText() + " " + jtxtColorName.getText();
         }
+        jtxtItemName.setText(name);
     }
 
     private void setModelData(String param_cd, String value) {

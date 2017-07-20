@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.9965000000000022"/>
-	<property name="ireport.x" value="4"/>
-	<property name="ireport.y" value="143"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -218,7 +218,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$P{bill_type}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="1" y="46" width="280" height="15"/>
+				<reportElement uuid="1b9375ee-b1ee-4d86-bb74-4eca7200068c" mode="Transparent" x="1" y="36" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -257,7 +257,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="61" width="280" height="15"/>
+				<reportElement uuid="aeba7f83-e22a-4e96-b959-eb6f8bb8b48d" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="51" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -265,7 +265,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Address : "+$F{ADD1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="76" width="280" height="15"/>
+				<reportElement uuid="e7ee236f-f6a6-4763-97c1-14eb5a0e563e" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="66" width="280" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -273,7 +273,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Mobile : "+$F{MOBILE1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="91" width="281" height="15"/>
+				<reportElement uuid="ab0ac6ec-d007-4177-9f26-3fb57d1d24b8" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="81" width="281" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -281,7 +281,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's GST : "+$F{GST_NO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="106" width="552" height="15"/>
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="96" width="281" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -309,7 +309,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Payment Terms "+$F{PMT_DAYS}+" Days"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="121" width="215" height="15"/>
+				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="1" y="111" width="215" height="15"/>
 				<box leftPadding="0" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
