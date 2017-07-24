@@ -42,7 +42,7 @@ public class SelectIP extends javax.swing.JFrame {
     public SelectIP() {
         initComponents();
 
-        File f = new File("system.properties");
+        File f = new File("System.properties");
         Properties properties = null;
         try {
             if (f.exists()) {

@@ -298,6 +298,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
                             }
                             row.add(array.get(i).getAsJsonObject().get("BAL").getAsString());
                             row.add(array.get(i).getAsJsonObject().get("REMARK").getAsString());
+                            row.add(array.get(i).getAsJsonObject().get("IS_EDITED").getAsString());
                             remark += "\n" + array.get(i).getAsJsonObject().get("REMARK").getAsString();
                             dtm.addRow(row);
                         }
@@ -424,10 +425,12 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
     private void deleteItem() {
         int row = jTable1.getSelectedRow();
         if (row != -1) {
-            if (JOptionPane.showConfirmDialog(this, "Do you want to Delete " + jTable1.getValueAt(row, 1).toString() + " A/c Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                dtm.removeRow(row);
-                setTotal();
-                jTable1.clearSelection();
+            if (jTable1.getValueAt(row, 5).toString().equalsIgnoreCase("1")) {
+                if (JOptionPane.showConfirmDialog(this, "Do you want to Delete " + jTable1.getValueAt(row, 1).toString() + " A/c Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    dtm.removeRow(row);
+                    setTotal();
+                    jTable1.clearSelection();
+                }
             }
         }
     }
@@ -966,12 +969,14 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
             evt.consume();
             int rowSel = jTable1.getSelectedRow();
             if (rowSel != -1) {
-                doc_ref_no = (jTable1.getValueAt(rowSel, 0).toString());
-                jtxtDocRefNo.setText(jTable1.getValueAt(rowSel, 1).toString());
-                doc_cd = (jTable1.getValueAt(rowSel, 2).toString());
-                jtxtAmount.setText(jTable1.getValueAt(rowSel, 3).toString());
-                jtxtRemark.setText(jTable1.getValueAt(rowSel, 4).toString());
-                jtxtDocRefNo.requestFocusInWindow();
+                if (jTable1.getValueAt(rowSel, 5).toString().equalsIgnoreCase("1")) {
+                    doc_ref_no = (jTable1.getValueAt(rowSel, 0).toString());
+                    jtxtDocRefNo.setText(jTable1.getValueAt(rowSel, 1).toString());
+                    doc_cd = (jTable1.getValueAt(rowSel, 2).toString());
+                    jtxtAmount.setText(jTable1.getValueAt(rowSel, 3).toString());
+                    jtxtRemark.setText(jTable1.getValueAt(rowSel, 4).toString());
+                    jtxtDocRefNo.requestFocusInWindow();
+                }
             } else {
                 lb.showMessageDailog("This item already adjusted");
             }
