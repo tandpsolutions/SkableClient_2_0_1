@@ -218,7 +218,7 @@ public class BankPaymentController extends javax.swing.JDialog {
         jlblTotAmt.setVisible(true);
         jPanel4.add(jlblTotAmt);
 
-        lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null});
+        lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null, null});
     }
 
     private void addJtextBox() {
@@ -232,12 +232,12 @@ public class BankPaymentController extends javax.swing.JDialog {
         jtxtAmount.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentMoved(java.awt.event.ComponentEvent e) {
-                lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark});
-                lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null});
+                lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark, null});
+                lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null, null});
             }
         });
 
-        lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark});
+        lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark, null});
     }
 
     /**
@@ -794,11 +794,11 @@ public class BankPaymentController extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Bill No", "Invoice No", "Doc Code", "Amount", "Remark"
+                "Bill No", "Invoice No", "Doc Code", "Amount", "Remark", "is_edited"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -825,6 +825,9 @@ public class BankPaymentController extends javax.swing.JDialog {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);

@@ -172,7 +172,7 @@ public class DNCNController extends javax.swing.JDialog {
         jlblTotAmt.setVisible(true);
         jPanel4.add(jlblTotAmt);
 
-        lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null});
+        lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null, null});
     }
 
     private void addJtextBox() {
@@ -186,12 +186,12 @@ public class DNCNController extends javax.swing.JDialog {
         jtxtAmount.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentMoved(java.awt.event.ComponentEvent e) {
-                lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark});
-                lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null});
+                lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark, null});
+                lb.setTable(jTable1, new JComponent[]{null, null, null, jlblTotAmt, null, null});
             }
         });
 
-        lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark});
+        lb.setTable(jTable1, new JComponent[]{null, jtxtDocRefNo, null, jtxtAmount, jtxtRemark, null});
     }
 
     /**
@@ -255,6 +255,7 @@ public class DNCNController extends javax.swing.JDialog {
                             }
                             row.add(array.get(i).getAsJsonObject().get("BAL").getAsString());
                             row.add(array.get(i).getAsJsonObject().get("REMARK").getAsString());
+                            row.add(array.get(i).getAsJsonObject().get("IS_EDITED").getAsString());
                             remark += "\n" + array.get(i).getAsJsonObject().get("REMARK").getAsString();
                             dtm.addRow(row);
 
@@ -374,10 +375,12 @@ public class DNCNController extends javax.swing.JDialog {
     private void deleteItem() {
         int row = jTable1.getSelectedRow();
         if (row != -1) {
-            if (JOptionPane.showConfirmDialog(this, "Do you want to Delete " + jTable1.getValueAt(row, 1).toString() + " A/c Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                dtm.removeRow(row);
-                setTotal();
-                jTable1.clearSelection();
+            if (jTable1.getValueAt(row, 5).toString().equalsIgnoreCase("1")) {
+                if (JOptionPane.showConfirmDialog(this, "Do you want to Delete " + jTable1.getValueAt(row, 1).toString() + " A/c Entry?", "Cash Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    dtm.removeRow(row);
+                    setTotal();
+                    jTable1.clearSelection();
+                }
             }
         }
     }
@@ -625,11 +628,11 @@ public class DNCNController extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Bill No", "Invoice No", "Doc Code", "Amount", "Remark"
+                "Bill No", "Invoice No", "Doc Code", "Amount", "Remark", "is_edited"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -656,6 +659,9 @@ public class DNCNController extends javax.swing.JDialog {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -926,12 +932,14 @@ public class DNCNController extends javax.swing.JDialog {
             evt.consume();
             int rowSel = jTable1.getSelectedRow();
             if (rowSel != -1) {
-                doc_ref_no = (jTable1.getValueAt(rowSel, 0).toString());
-                jtxtDocRefNo.setText(jTable1.getValueAt(rowSel, 1).toString());
-                doc_cd = (jTable1.getValueAt(rowSel, 2).toString());
-                jtxtAmount.setText(jTable1.getValueAt(rowSel, 3).toString());
-                jtxtRemark.setText(jTable1.getValueAt(rowSel, 4).toString());
-                jtxtDocRefNo.requestFocusInWindow();
+                if (jTable1.getValueAt(rowSel, 5).toString().equalsIgnoreCase("1")) {
+                    doc_ref_no = (jTable1.getValueAt(rowSel, 0).toString());
+                    jtxtDocRefNo.setText(jTable1.getValueAt(rowSel, 1).toString());
+                    doc_cd = (jTable1.getValueAt(rowSel, 2).toString());
+                    jtxtAmount.setText(jTable1.getValueAt(rowSel, 3).toString());
+                    jtxtRemark.setText(jTable1.getValueAt(rowSel, 4).toString());
+                    jtxtDocRefNo.requestFocusInWindow();
+                }
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked
@@ -939,7 +947,9 @@ public class DNCNController extends javax.swing.JDialog {
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             evt.consume();
+
             deleteItem();
+
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
