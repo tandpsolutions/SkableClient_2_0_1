@@ -31,11 +31,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.QuotationAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.SmallNavigation;
 import transactionController.QuotationController;
+import utility.PrintPanel;
 //import utility.TagPrint;
 
 /**
@@ -246,6 +248,16 @@ public class QuoatationView extends javax.swing.JInternalFrame {
 
             @Override
             public void callPrint() {
+                if (navLoad.getModel().getPRINTS().equalsIgnoreCase("1")) {
+                    int row = jTable1.getSelectedRow();
+                    if (row != -1) {
+                        PrintPanel pp = new PrintPanel(null, true);
+                        pp.getQuoatePrint(jTable1.getValueAt(row, 0).toString());
+                        pp.setVisible(true);
+                    }
+                } else {
+                    lb.showMessageDailog("You don't have rights to perform this action");
+                }
             }
         }
         navLoad = new navigation();

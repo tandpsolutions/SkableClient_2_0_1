@@ -26,6 +26,7 @@ import retrofitAPI.DCAPI;
 import retrofitAPI.DNCNApi;
 import retrofitAPI.JobSheetAPI;
 import retrofitAPI.PurchaseReturnAPI;
+import retrofitAPI.QuotationAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SalesReturnAPI;
 import skable.Constants;
@@ -164,6 +165,56 @@ public class PrintPanel extends javax.swing.JDialog {
         }
     }
 
+    public void getQuoatePrint(String ref_no) {
+        try {
+            QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
+            JsonObject call = salesAPI.getBill(ref_no, "39").execute().body();
+
+            if (call != null) {
+                JsonObject result = call;
+                if (result.get("result").getAsInt() == 1) {
+                    JsonArray array = call.getAsJsonArray("data");
+                    if (array != null) {
+                        try {
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            file.write(array.toString());
+                            file.close();
+                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            HashMap params = new HashMap();
+                            params.put("dir", System.getProperty("user.dir"));
+                            params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
+                                lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + ".jasper", params, dataSource, jPanel1);
+                            } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
+                                lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                            } else {
+                                lb.confirmDialog("Do you want to print sales Bill with header?");
+                                if (lb.type) {
+                                    lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + ".jasper", params, dataSource, jPanel1);
+                                }
+                            }
+                        } catch (Exception ex) {
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog(call.get("Cause").getAsString());
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void getJobSheetPrint(String ref_no) {
         try {
             JobSheetAPI salesAPI = lb.getRetrofit().create(JobSheetAPI.class);
@@ -175,7 +226,7 @@ public class PrintPanel extends javax.swing.JDialog {
                     JsonArray array = call.getAsJsonArray("data");
                     if (array != null) {
                         try {
-                                FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
                             file.write(array.toString());
                             file.close();
                             File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");

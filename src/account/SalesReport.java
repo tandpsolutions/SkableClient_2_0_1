@@ -110,7 +110,7 @@ public class SalesReport extends javax.swing.JInternalFrame {
                             File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             if (mode == 0) {
-                                lb.reportGenerator("Salesreport.jasper", null, dataSource, jPanel1);
+                                lb.reportGenerator("SalesReport.jasper", null, dataSource, jPanel1);
                             } else {
                                 HashMap params = new HashMap();
                                 if (mode == 1) {
@@ -120,7 +120,7 @@ public class SalesReport extends javax.swing.JInternalFrame {
                                 } else if (mode == 3) {
                                     params.put("title", "Purchase Return Report");
                                 }
-                                lb.reportGenerator("SalesreportTax.jasper", params, dataSource, jPanel1);
+                                lb.reportGenerator("SalesReportTax.jasper", params, dataSource, jPanel1);
                             }
                         } catch (Exception ex) {
                         }

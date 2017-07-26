@@ -1191,6 +1191,7 @@ public class SalesController extends javax.swing.JDialog {
                                 try {
                                     taxInfo.clear();
                                     for (int i = 0; i < array.size(); i++) {
+                                        tax_type = array.get(i).getAsJsonObject().get("TAX_TYPE").getAsInt();
                                         jtxtVoucher.setText(array.get(i).getAsJsonObject().get("INV_NO").getAsInt() + "");
                                         jtxtVouDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                                         jtxtDueDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("DUE_DATE").getAsString()));
@@ -1553,7 +1554,6 @@ public class SalesController extends javax.swing.JDialog {
 //                return false;
 //            }
 //        }
-
         if (jcmbPmt.getSelectedIndex() == 1) {
             if (jcmbRefBy.getSelectedIndex() == 0) {
                 lb.showMessageDailog("Please select ref by");
@@ -1575,7 +1575,6 @@ public class SalesController extends javax.swing.JDialog {
 //                return false;
 //            }
 //        }
-
         if (lb.ConvertDateFormetForDB(jtxtVouDate.getText()).equalsIgnoreCase("")) {
             lb.showMessageDailog("Invalid Voucher Date");
             jtxtVouDate.requestFocusInWindow();
@@ -3602,9 +3601,9 @@ public class SalesController extends javax.swing.JDialog {
 
     private void jcmbSchemeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbSchemeKeyPressed
         // TODO add your handling code here:
-        if(jcmbPmt.getSelectedIndex() == 0){
+        if (jcmbPmt.getSelectedIndex() == 0) {
             lb.enterFocus(evt, jtxtMobile);
-        }else{
+        } else {
             lb.enterFocus(evt, jcmbRefBy);
         }
     }//GEN-LAST:event_jcmbSchemeKeyPressed
