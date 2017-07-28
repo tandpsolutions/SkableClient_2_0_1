@@ -195,7 +195,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
                                 lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + "PDF.jasper", params, dataSource, jPanel1);
                             } else {
-                                lb.confirmDialog("Do you want to print sales Bill with header?");
+                                lb.confirmDialog("Do you want to print quoatation with header?");
                                 if (lb.type) {
                                     lb.reportGenerator(Constants.params.get("QUOATE_FILE").toString() + "PDF.jasper", params, dataSource, jPanel1);
                                 } else {
