@@ -187,7 +187,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GetVisitorBookHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex()) + "", jComboBox2.getSelectedIndex() - 1).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex()) + "", jComboBox2.getSelectedIndex() - 1,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(VisitorBookReport.this);
             if (call != null) {

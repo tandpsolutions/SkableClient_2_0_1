@@ -21,19 +21,19 @@ public interface VisitorBookAPI {
 
     @GET("GetVisitorBookHeader")
     Call<JsonObject> GetVisitorBookHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
-            @Query("branch_cd") String branch_cd);
+            @Query("branch_cd") String branch_cd, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetVisitorBookHeader")
     Call<JsonObject> GetVisitorBookHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
-            @Query("branch_cd") String branch_cd, @Query("is_del") int is_del);
+            @Query("branch_cd") String branch_cd, @Query("is_del") int is_del, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
     Call<JsonObject> getVisitorBookDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateVisitorBookVoucher")
-    Call<JsonObject> AddUpdateOrderBookVoucher(@Field("detail") String param_code);
+    Call<JsonObject> AddUpdateOrderBookVoucher(@Field("detail") String param_code, @Field("db_name") String db_name, @Field("ac_year") String ac_year);
 
     @GET("DeleteVoucherBook")
-    Call<JsonObject> DeleteOrderBookEntry(@Query("ref_no") String ref_no);
+    Call<JsonObject> DeleteOrderBookEntry(@Query("ref_no") String ref_no, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 }

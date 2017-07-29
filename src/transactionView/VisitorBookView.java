@@ -109,7 +109,7 @@ public class VisitorBookView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = visitorBookAPI.GetVisitorBookHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex() + 1) + "").execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
@@ -220,7 +220,7 @@ public class VisitorBookView extends javax.swing.JInternalFrame {
                             try {
                                 String ref_no = jTable1.getValueAt(row, 0).toString();
                                 lb.addGlassPane(VisitorBookView.this);
-                                JsonObject object = visitorBookAPI.DeleteOrderBookEntry(ref_no).execute().body();
+                                JsonObject object = visitorBookAPI.DeleteOrderBookEntry(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                                 lb.removeGlassPane(VisitorBookView.this);
 

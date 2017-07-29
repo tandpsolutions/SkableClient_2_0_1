@@ -189,7 +189,7 @@ public class VisitorBookController extends javax.swing.JDialog {
             model.setIs_del(jcmbStatus.getSelectedIndex());
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
-            JsonObject addUpdaCall = visitorBookAPI.AddUpdateOrderBookVoucher(detailJson).execute().body();
+            JsonObject addUpdaCall = visitorBookAPI.AddUpdateOrderBookVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(VisitorBookController.this);
 
             lb.removeGlassPane(VisitorBookController.this);
