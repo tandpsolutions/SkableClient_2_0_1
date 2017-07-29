@@ -181,7 +181,7 @@ public class StockAdjustmentRegister extends javax.swing.JInternalFrame {
     }
 
     private void getData() throws IOException {
-        JsonObject call = typeAPI.getTypeMaster().execute().body();
+        JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         if (call != null) {
             JsonObject result = call;

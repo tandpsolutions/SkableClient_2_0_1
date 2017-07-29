@@ -16,13 +16,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -30,7 +25,6 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -44,19 +38,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.SeriesHead;
-import model.SeriesMaster;
 import model.TypeMasterModel;
-import net.sf.jasperreports.engine.data.JsonDataSource;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.InventoryAPI;
 import retrofitAPI.StartUpAPI;
-import retrofitAPI.SupportAPI;
 import retrofitAPI.TypeAPI;
 import skable.Constants;
 import skable.SkableHome;
@@ -131,7 +118,7 @@ public class StockOnHandBranchWise extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = typeAPI.getTypeMaster();
+        Call<JsonObject> call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
 

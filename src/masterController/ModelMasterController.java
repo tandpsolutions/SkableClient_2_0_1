@@ -131,7 +131,7 @@ public class ModelMasterController extends javax.swing.JDialog {
 
     public void getData() {
         try {
-            JsonObject call = typeAPI.getTypeMaster().execute().body();
+            JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(ModelMasterController.this);

@@ -104,8 +104,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -129,7 +128,6 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -156,12 +154,11 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
     private void getData() throws IOException {
-        JsonObject call = typeAPI.getTypeMaster().execute().body();
+        JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name, SkableHome.selected_year).execute().body();
 
         if (call != null) {
             JsonObject result = call;
@@ -235,7 +232,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -274,7 +271,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call != null) {
                 System.out.println(call.toString());
                 SeriesHead header = (SeriesHead) new Gson().fromJson(call, SeriesHead.class);
@@ -304,7 +301,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
 
     private void setBrandData(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -345,7 +342,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
 
     private void setModelData(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -387,8 +384,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
             jPanel1.removeAll();
             jPanel1.add(jScrollPane1);
 
-            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
-            );
+            AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
             if (!jCheckBox1.isSelected()) {
                 ac_cd = "";
             }
@@ -1084,7 +1080,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
         if (lb.isEnter(evt)) {
             if (!lb.isBlank(jtxtAcAlias)) {
-                if(lb.validateInput(jtxtAcAlias.getText())){
+                if (lb.validateInput(jtxtAcAlias.getText())) {
                     setAccountDetailMobile("2", jtxtAcAlias.getText());
                 }
             }
@@ -1092,7 +1088,6 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtxtAcAliasKeyPressed
 
     private void jtxtAcAliasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyReleased
-
     }//GEN-LAST:event_jtxtAcAliasKeyReleased
 
     private void jtxtAcNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusGained
@@ -1106,7 +1101,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     private void jtxtProductNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtProductNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtProductName.getText())){
+            if (lb.validateInput(jtxtProductName.getText())) {
                 setSeriesData("3", jtxtProductName.getText().toUpperCase());
             }
         }
@@ -1124,7 +1119,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt) && jRadioButton2.isSelected()) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -1141,7 +1136,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     private void jtxtModelNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtModelNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
@@ -1163,7 +1158,6 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
     private void jcmbPmt1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbPmt1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbPmt1KeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBillDateBtn;

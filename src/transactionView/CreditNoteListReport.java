@@ -85,7 +85,7 @@ public class CreditNoteListReport extends javax.swing.JInternalFrame {
 
     public void getData() {
         try {
-            JsonObject call = typeAPI.getTypeMaster().execute().body();
+            JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {

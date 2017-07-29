@@ -177,7 +177,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = typeAPI.getTypeMaster();
+        Call<JsonObject> call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
 

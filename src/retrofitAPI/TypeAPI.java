@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface TypeAPI {
 
     @GET("GetTypeMsater")
-    Call<JsonObject> getTypeMaster();
+    Call<JsonObject> getTypeMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateTypeMaster")
-    Call<JsonObject> addUpdateTypeMaster(@Query("type_cd") String type_cd, @Query("type_name") String type_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateTypeMaster(@Query("type_cd") String type_cd, @Query("type_name") String type_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }
