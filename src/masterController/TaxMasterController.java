@@ -63,7 +63,7 @@ public class TaxMasterController extends javax.swing.JDialog {
                 setVisible(true);
                 return;
             }
-            JsonObject result = taxMasterAPI.GetTaxMaster(tax_cd).execute().body();
+            JsonObject result = taxMasterAPI.GetTaxMaster(tax_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (result.get("result").getAsInt() == 1) {
                 TypeToken<List<TaxMasterModel>> token = new TypeToken<List<TaxMasterModel>>() {
                 };
@@ -147,7 +147,7 @@ public class TaxMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = taxMasterAPI.addUpdateTaxMaster(tax_cd, jtxtTaxName.getText(), jtxtSgst.getText(), jtxtCgst.getText(), SkableHome.user_id, SkableHome.selected_year);
+        Call<JsonObject> call = taxMasterAPI.addUpdateTaxMaster(tax_cd, jtxtTaxName.getText(), jtxtSgst.getText(), jtxtCgst.getText(), SkableHome.user_id, SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

@@ -20,14 +20,14 @@ import retrofit2.http.Query;
 public interface TaxMasterAPI {
 
     @GET("GetTaxMasterView")
-    Call<JsonObject> getTaxMasterView();
+    Call<JsonObject> getTaxMasterView(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetTaxMaster")
-    Call<JsonObject> GetTaxMaster(@Query("tax_cd") String tax_cd);
+    Call<JsonObject> GetTaxMaster(@Query("tax_cd") String tax_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("AddUpdateTaxMaster")
     Call<JsonObject> addUpdateTaxMaster(@Field("tax_cd") String brand_cd, @Field("tax_name") String brand_name,
             @Field("sgst") String sgst, @Field("cgst") String cgst,
-            @Field("user_id") String user_id, @Field("AC_YEAR") String ac_year);
+            @Field("user_id") String user_id, @Field("AC_YEAR") String ac_year,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }
