@@ -196,7 +196,7 @@ public class TidMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = tidApi.GetTIDMaster();
+        Call<JsonObject> call = tidApi.GetTIDMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
