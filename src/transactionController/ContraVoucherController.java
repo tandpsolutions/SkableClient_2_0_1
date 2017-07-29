@@ -166,7 +166,7 @@ public class ContraVoucherController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                JsonObject call = contraAPI.getContraVoucher(ref_no, "18").execute().body();
+                JsonObject call = contraAPI.getContraVoucher(ref_no, "18",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -208,7 +208,7 @@ public class ContraVoucherController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());

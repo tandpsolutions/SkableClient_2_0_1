@@ -131,7 +131,7 @@ public class VisitorBookController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 JsonObject call;
-                call = orderAPI.getVisitorBookDetail(ref_no, "34").execute().body();
+                call = orderAPI.getVisitorBookDetail(ref_no, "34",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 if (call != null) {
                     System.out.println(call.toString());
                     JsonObject object = call;

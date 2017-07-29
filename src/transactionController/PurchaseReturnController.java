@@ -284,7 +284,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
-                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true, (jComboBox1.getSelectedIndex() + 1) + "").execute().body();
+                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true, (jComboBox1.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
@@ -733,7 +733,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
             lb.removeGlassPane(PurchaseReturnController.this);
             if (call != null) {
@@ -804,7 +804,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jComboBox1.setEnabled(false);
-                JsonObject call = purchaseReturnAPI.GetDataFromServer(ref_no, "16").execute().body();
+                JsonObject call = purchaseReturnAPI.GetDataFromServer(ref_no, "16",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 lb.addGlassPane(this);
 
                 lb.removeGlassPane(PurchaseReturnController.this);
@@ -942,7 +942,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(PurchaseReturnController.this);
             if (call != null) {

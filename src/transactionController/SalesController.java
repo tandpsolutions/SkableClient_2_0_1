@@ -134,7 +134,7 @@ public class SalesController extends javax.swing.JDialog {
         this.tax_type = tax_type;
         final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
         try {
-            final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
+            final JsonObject refmaster = refralAPI.getReferalMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
             final JsonArray refMaster = refmaster.getAsJsonArray("data");
             if (refMaster.size() > 0) {
                 Constants.REFERAL.clear();
@@ -371,7 +371,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void getLastRate() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("36", sr_cd, ac_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("36", sr_cd, ac_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -440,7 +440,7 @@ public class SalesController extends javax.swing.JDialog {
                     try {
                         JsonObject call;
                         if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
-                            call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox1.getSelectedIndex() + 1) + "").execute().body();
+                            call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox1.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
                         } else {
                             call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox1.getSelectedIndex() + 1) + "", "1").execute().body();
                         }
@@ -1079,7 +1079,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -1176,7 +1176,7 @@ public class SalesController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jComboBox1.setEnabled(false);
-                Call<JsonObject> call = salesAPI.GetDataFromServer(ref_no, (formCD == 130) ? "32" : "24");
+                Call<JsonObject> call = salesAPI.GetDataFromServer(ref_no, (formCD == 130) ? "32" : "24",SkableHome.db_name,SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -1366,7 +1366,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -3274,7 +3274,7 @@ public class SalesController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt) && !lb.isBlank(jtxtMobile)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesAPI.GetDataFromServer(jtxtMobile.getText(), "23");
+            Call<JsonObject> call = salesAPI.GetDataFromServer(jtxtMobile.getText(), "23",SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

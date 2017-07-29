@@ -256,9 +256,9 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
             try {
                 JsonObject call;
                 if (type == 0) {
-                    call = cashPRAPI.getCashDetail(ref_no, "9").execute().body();
+                    call = cashPRAPI.getCashDetail(ref_no, "9",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 } else {
-                    call = cashPRAPI.getCashDetail(ref_no, "28").execute().body();
+                    call = cashPRAPI.getCashDetail(ref_no, "28",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 }
                 if (call != null) {
                     System.out.println(call.toString());
@@ -318,7 +318,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(CashPaymentReceiptController.this);
@@ -437,7 +437,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
 
     private void getoldb2_4(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());

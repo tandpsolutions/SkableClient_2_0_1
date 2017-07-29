@@ -9,8 +9,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import model.RefModel;
+import model.SalesManMasterModel;
 import model.TaxMasterModel;
 import retrofit2.Call;
+import retrofitAPI.RefralAPI;
+import retrofitAPI.SalesmanAPI;
 import retrofitAPI.StartUpAPI;
 import skable.Constants;
 import skable.SkableHome;
@@ -59,6 +63,7 @@ public class Login extends javax.swing.JFrame {
                 SkableHome.user_grp_cd = data.get("USER_GRP_CD").getAsString();
                 SkableHome.selected_branch = Constants.BRANCH.get(jComboBox1.getSelectedIndex());
                 SkableHome.selected_year = jComboBox2.getSelectedItem().toString();
+                SkableHome.db_name =Constants.DBYMS.get(jComboBox2.getSelectedIndex()).getDb_name();
                 if (jComboBox2.getSelectedIndex() != 0) {
                     Constants.BASE_URL = "http://" + Constants.HOST1 + "/" + Constants.FOLDER + "/";
                 } else {
@@ -67,9 +72,10 @@ public class Login extends javax.swing.JFrame {
                 jtxtPassword.setText("");
                 Library.getInstance().makeConnection();
                 SkableHome home = new SkableHome();
+                
                 home.setVisible(true);
                 Login.this.dispose();
-                getTaxMaster();
+                
             } else {
                 lb.showMessageDailog(data.get("Cause").getAsString());
                 jbtnLogin.setEnabled(true);
@@ -80,26 +86,33 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    private void getTaxMaster() {
-        Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer("7");
-        try {
-            JsonObject data = call.execute().body();
-            System.out.println(data.toString());
-            int status = data.get("result").getAsInt();
-            if (status == 1) {
-                Constants.TAX.clear();
-                JsonArray array = data.getAsJsonArray("data");
-                for (int i = 0; i < array.size(); i++) {
-                    TaxMasterModel taxMasterModel = new Gson().fromJson(array.get(i), TaxMasterModel.class);
-                    Constants.TAX.add(taxMasterModel);
-                }
-            } else {
+    private void setUpBaseData() throws IOException {
+
+        final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
+        final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
+
+        final JsonObject refmaster = refralAPI.getReferalMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
+        final JsonObject salesMan = salesmanAPI.GetSalesmanMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
+
+        final JsonArray refMaster = refmaster.getAsJsonArray("data");
+        final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
+
+       
+
+        if (refMaster.size() > 0) {
+            for (int i = 0; i < refMaster.size(); i++) {
+                RefModel model = new Gson().fromJson(refMaster.get(i).getAsJsonObject().toString(), RefModel.class);
+                Constants.REFERAL.add(model);
             }
-        } catch (Exception ex) {
-            lb.showMessageDailog(ex.getMessage());
+        }
+
+        if (salesmanMaster.size() > 0) {
+            for (int i = 0; i < salesmanMaster.size(); i++) {
+                SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
+                Constants.SALESMAN.add(model);
+            }
         }
     }
-
     @Override
     public void dispose() {
         super.dispose(); //To change body of generated methods, choose Tools | Templates.

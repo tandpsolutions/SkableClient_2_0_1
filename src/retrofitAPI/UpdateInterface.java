@@ -23,7 +23,7 @@ public interface UpdateInterface {
     Call<JsonObject> getUpdateVersion(@Query("ver") String ver);
     
     @GET("GetBranchMaster")
-    Call<JsonObject> GetBranchMaster();
+    Call<JsonObject> GetBranchMaster(@Query("cmp_name") String cmp_name);
     
     
     @GET("GetCreditLimit")

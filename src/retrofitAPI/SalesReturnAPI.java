@@ -30,13 +30,13 @@ public interface SalesReturnAPI {
     Call<JsonObject> GetSalesRateByTag(@Query("tag_no") String tag_no);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag);
+    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetSalesReturnPrint")
     Call<JsonObject> GetSalesReturnPrint(@Query("ref_no") String ref_no);

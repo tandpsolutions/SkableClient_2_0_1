@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface RefralAPI {
 
     @GET("GetRefralMaster")
-    Call<JsonObject> GetSalesmanMaster();
+    Call<JsonObject> getReferalMaster(@Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("AddUpdateRefBy")
     Call<JsonObject> AddUpdateSalesmanMaster(@Query("sm_cd") String brand_cd, @Query("sm_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);

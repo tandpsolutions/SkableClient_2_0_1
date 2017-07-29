@@ -31,13 +31,13 @@ public interface StartUpAPI {
 
     @FormUrlEncoded
     @POST("GetDataFromServer")
-    Call<JsonObject> getDataFromServer(@Field("param_code") String param_code);
+    Call<JsonObject> getDataFromServer(@Field("param_code") String param_code, @Field("db_name") String db_name, @Field("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("GetDataFromServer")
-    Call<JsonObject> getDataFromServer(@Field("param_code") String param_code, @Field("value") String value);
-    
+    Call<JsonObject> getDataFromServer(@Field("param_code") String param_code, @Field("value") String value, @Field("db_name") String db_name, @Field("ac_year") String ac_year);
+
     @FormUrlEncoded
     @POST("GetDataFromServer")
-    Call<JsonObject> GetDataFromServer(@Field("param_code") String param_code, @Field("sr_cd") String sr_cd, @Field("ac_cd") String ac_cd);
+    Call<JsonObject> GetDataFromServer(@Field("param_code") String param_code, @Field("sr_cd") String sr_cd, @Field("ac_cd") String ac_cd, @Field("db_name") String db_name, @Field("ac_year") String ac_year);
 }

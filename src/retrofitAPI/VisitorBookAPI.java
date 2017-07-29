@@ -28,7 +28,7 @@ public interface VisitorBookAPI {
             @Query("branch_cd") String branch_cd, @Query("is_del") int is_del);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getVisitorBookDetail(@Query("value") String value, @Query("param_code") String param_code);
+    Call<JsonObject> getVisitorBookDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateVisitorBookVoucher")

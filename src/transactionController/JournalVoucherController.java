@@ -168,7 +168,7 @@ public class JournalVoucherController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                JsonObject call = journalAPI.getJournalVoucher(ref_no, "17").execute().body();
+                JsonObject call = journalAPI.getJournalVoucher(ref_no, "17",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -211,7 +211,7 @@ public class JournalVoucherController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());

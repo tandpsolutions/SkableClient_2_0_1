@@ -24,7 +24,7 @@ public interface OrderBookAPI {
             @Query("branch_cd") String branch_cd, @Query("model_cd") String model_cd, @Query("memory_cd") String memory_cd, @Query("colour_cd") String colour_cd);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getOrderBookDetail(@Query("value") String value, @Query("param_code") String param_code);
+    Call<JsonObject> getOrderBookDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateOrderBookVoucher")

@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public interface DCAPI {
 
     @GET("GetDCHeader")
-    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type,@Query("branch_cd") String branch_cd);
+    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetDCBill")
     Call<JsonObject> getBill(@Query("ref_no") String ref_no);
@@ -29,10 +29,10 @@ public interface DCAPI {
     Call<JsonObject> DeleteDCBill(@Query("ref_no") String ref_no);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag);
+    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateDCDetail")

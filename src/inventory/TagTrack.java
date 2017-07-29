@@ -153,7 +153,7 @@ public class TagTrack extends javax.swing.JInternalFrame {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 System.out.println(call.toString());
                 TagHead header = (TagHead) new Gson().fromJson(call, TagHead.class);

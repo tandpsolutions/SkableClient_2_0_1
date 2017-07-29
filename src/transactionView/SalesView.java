@@ -358,7 +358,7 @@ public class SalesView extends javax.swing.JInternalFrame {
     public void getQuoatationPrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, "39").execute().body();
+            JsonObject call = salesAPI.getBill(ref_no, "39",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

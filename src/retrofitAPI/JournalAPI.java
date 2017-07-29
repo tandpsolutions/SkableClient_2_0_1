@@ -23,11 +23,11 @@ public interface JournalAPI {
     Call<JsonObject> GetJournalVoucher(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("branch_cd") String branch_cd);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getJournalVoucher(@Query("value") String value, @Query("param_code") String param_code);
+    Call<JsonObject> getJournalVoucher(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("DeleteJournalEntry")
     Call<JsonObject> deleteJournalEntry(@Query("ref_no") String ref_no);
-    
+
     @FormUrlEncoded
     @POST("AddUpdateJournalVoucher")
     Call<JsonObject> addUpdateCashVoucher(@Field("detail") String param_code);

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface SalesmanAPI {
 
     @GET("GetSalesmanMaster")
-    Call<JsonObject> GetSalesmanMaster();
+    Call<JsonObject> GetSalesmanMaster(@Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("AddUpdateSalesmanMaster")
     Call<JsonObject> AddUpdateSalesmanMaster(@Query("sm_cd") String brand_cd, @Query("sm_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);

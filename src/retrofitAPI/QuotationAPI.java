@@ -24,16 +24,16 @@ public interface QuotationAPI {
     Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getBill(@Query("ref_no") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> getBill(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("DeleteQuotationBill")
     Call<JsonObject> DeleteQuotationBill(@Query("ref_no") String ref_no);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNoDetail(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag);
+    Call<JsonObject> getTagNoDetail(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateQuotation")

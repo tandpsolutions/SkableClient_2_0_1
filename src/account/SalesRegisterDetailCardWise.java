@@ -391,7 +391,7 @@ public class SalesRegisterDetailCardWise extends javax.swing.JInternalFrame {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -739,7 +739,7 @@ public class SalesRegisterDetailCardWise extends javax.swing.JInternalFrame {
         if (lb.isEnter(evt) && !lb.isBlank(jtxtCardNo)) {
             try {
                 lb.addGlassPane(this);
-                JsonObject call = lb.getRetrofit().create(SalesAPI.class).GetDataFromServer(jtxtCardNo.getText(), "22").execute().body();
+                JsonObject call = lb.getRetrofit().create(SalesAPI.class).GetDataFromServer(jtxtCardNo.getText(), "22",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 lb.removeGlassPane(SalesRegisterDetailCardWise.this);
                 if (call != null) {
                     JsonArray array = call.getAsJsonArray("data");

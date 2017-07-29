@@ -183,7 +183,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     try {
                         jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                        JsonObject call = StkAdjAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true).execute().body();
+                        JsonObject call = StkAdjAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
@@ -345,7 +345,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
 

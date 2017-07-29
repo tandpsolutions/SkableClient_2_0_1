@@ -21,10 +21,10 @@ public interface CashPRAPI {
 
     @GET("GetCashPaymentHeader")
     Call<JsonObject> GetCashPaymentHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
-            @Query("v_type") String v_type,@Query("branch_cd") String branch_cd);
+            @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getCashDetail(@Query("value") String value, @Query("param_code") String param_code);
+    Call<JsonObject> getCashDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateCashVoucher")

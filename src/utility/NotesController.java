@@ -22,6 +22,7 @@ import javax.swing.KeyStroke;
 import model.AccountHead;
 import retrofitAPI.StartUpAPI;
 import retrofitAPI.SupportAPI;
+import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import transactionController.SelectAccount;
@@ -77,7 +78,7 @@ public class NotesController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());

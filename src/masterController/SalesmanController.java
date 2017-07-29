@@ -132,7 +132,7 @@ public class SalesmanController extends javax.swing.JDialog {
                                 smv.addRow(rspns.body().get("sm_cd").getAsString(), jtxtSmName.getText());
                             }
                             final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
-                            final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+                            final JsonObject salesMan = salesmanAPI.GetSalesmanMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
                             final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
                             Constants.SALESMAN.clear();
                             if (salesmanMaster.size() > 0) {

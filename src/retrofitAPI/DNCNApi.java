@@ -20,11 +20,11 @@ import retrofit2.http.Query;
 public interface DNCNApi {
 
     @GET("GetDNCNHeader")
-    Call<JsonObject> GetBankPaymentHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, 
-            @Query("v_type") String v_type,@Query("branch_cd") String branch_cd);
+    Call<JsonObject> GetBankPaymentHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
+            @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getBankDetail(@Query("value") String value, @Query("param_code") String param_code);
+    Call<JsonObject> getBankDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateDNCNDetail")

@@ -289,7 +289,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                    Call<JsonObject> call = salesReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", false);
+                    Call<JsonObject> call = salesReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", false,SkableHome.db_name,SkableHome.selected_year);
                     call.enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -752,7 +752,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -842,7 +842,7 @@ public class SalesReturnController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jComboBox1.setEnabled(false);
-                Call<JsonObject> call = salesReturnAPI.GetDataFromServer(ref_no, "25");
+                Call<JsonObject> call = salesReturnAPI.GetDataFromServer(ref_no, "25",SkableHome.db_name,SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -1000,7 +1000,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
 
                 @Override
@@ -2472,7 +2472,7 @@ public class SalesReturnController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt) && !lb.isBlank(jtxtMobile)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtMobile.getText(), "23");
+            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtMobile.getText(), "23",SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -2577,7 +2577,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         if (lb.isEnter(evt) && !lb.isBlank(jtxtCardNo)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtCardNo.getText(), "22");
+            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtCardNo.getText(), "22",SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

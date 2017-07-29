@@ -26,11 +26,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import masterController.CreateSalesAccount;
-import masterController.SeriesMasterController;
 import model.AccountHead;
 import model.SalesBillDetail;
-import model.SeriesHead;
-import model.SeriesMaster;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +38,6 @@ import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
-import support.SelectDailog;
 import transactionView.DCView;
 
 /**
@@ -214,7 +210,7 @@ public class DCController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     try {
                         jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                        JsonObject call = dcAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true).execute().body();
+                        JsonObject call = dcAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
@@ -543,7 +539,7 @@ public class DCController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase());
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
 

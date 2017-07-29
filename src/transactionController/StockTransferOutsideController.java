@@ -197,7 +197,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     try {
                         jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox2.getSelectedIndex() + 1) + "").execute().body();
+                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox2.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {

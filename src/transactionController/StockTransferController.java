@@ -139,7 +139,7 @@ public class StockTransferController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
-                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, SkableHome.selected_branch.getBranch_cd(), (jComboBox1.getSelectedIndex() == 0 ? "1" : "0")).execute().body();
+                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, SkableHome.selected_branch.getBranch_cd(), (jComboBox1.getSelectedIndex() == 0 ? "1" : "0"),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {

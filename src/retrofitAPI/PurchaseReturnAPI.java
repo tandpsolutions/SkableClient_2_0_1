@@ -24,11 +24,11 @@ public interface PurchaseReturnAPI {
     Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code);
+    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code,@Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetDataFromServer")
     Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code,
-            @Query("only_stock") boolean flag, @Query("branch_cd") String branch_cd);
+            @Query("only_stock") boolean flag, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("ac_year") String ac_year);
 
     @GET("GetPurchaseRateByTag")
     Call<JsonObject> GetPurchaseRateByTag(@Query("tag_no") String tag_no);

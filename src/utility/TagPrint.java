@@ -98,7 +98,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             }
             tagListForRandom = tagListForRandom.substring(0, tagListForRandom.length() - 1);
 
-            JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected()).execute().body();
+            JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 result = call;
                 if (Constants.params.get("TAG_GENERATION").toString().equalsIgnoreCase("0")) {

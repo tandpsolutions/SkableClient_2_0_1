@@ -8,6 +8,7 @@ package login;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,13 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.BranchMasterModel;
 import model.DBYearModel;
-import model.RefModel;
-import model.SalesManMasterModel;
-import model.TaxMasterModel;
-import retrofit2.Call;
-import retrofitAPI.RefralAPI;
-import retrofitAPI.SalesmanAPI;
-import retrofitAPI.StartUpAPI;
 import retrofitAPI.UpdateInterface;
 import skable.Constants;
 import support.Library;
@@ -35,6 +29,7 @@ public class SelectIP extends javax.swing.JFrame {
 
     Library lb = Library.getInstance();
     public static String password = "";
+    private String test_cmp = null;
 
     /**
      * Creates new form Login
@@ -50,6 +45,8 @@ public class SelectIP extends javax.swing.JFrame {
                 properties.load(new FileReader(f));
                 String ip = properties.getProperty("ip");
                 Constants.COMPANY_NAME = properties.getProperty("company_name");
+                jlblCmpName.setText(Constants.COMPANY_NAME);
+                test_cmp=Constants.COMPANY_NAME;
                 String[] ipList = ip.split(",");
                 jComboBox3.removeAllItems();
                 for (int i = 0; i < ipList.length; i++) {
@@ -83,18 +80,12 @@ public class SelectIP extends javax.swing.JFrame {
     private void setUpBaseData() throws IOException {
 
         final UpdateInterface update1 = lb.getRetrofit().create(UpdateInterface.class);
-        final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
-        final SalesmanAPI salesmanAPI = lb.getRetrofit().create(SalesmanAPI.class);
 
-        final JsonObject branchMaster = update1.GetBranchMaster().execute().body();
-        final JsonObject refmaster = refralAPI.GetSalesmanMaster().execute().body();
-        final JsonObject salesMan = salesmanAPI.GetSalesmanMaster().execute().body();
+        final JsonObject branchMaster = update1.GetBranchMaster(test_cmp).execute().body();
         final JsonObject systemVariables = update1.getStartUpData().execute().body();
 
         final JsonArray branchArray = branchMaster.getAsJsonArray("data");
         final JsonArray yearArray = branchMaster.getAsJsonArray("year");
-        final JsonArray refMaster = refmaster.getAsJsonArray("data");
-        final JsonArray salesmanMaster = salesMan.getAsJsonArray("data");
         final JsonArray variables = systemVariables.getAsJsonArray("data");
 
         if (branchArray.size() > 0) {
@@ -111,44 +102,10 @@ public class SelectIP extends javax.swing.JFrame {
             }
         }
 
-        if (refMaster.size() > 0) {
-            for (int i = 0; i < refMaster.size(); i++) {
-                RefModel model = new Gson().fromJson(refMaster.get(i).getAsJsonObject().toString(), RefModel.class);
-                Constants.REFERAL.add(model);
-            }
-        }
-
-        if (salesmanMaster.size() > 0) {
-            for (int i = 0; i < salesmanMaster.size(); i++) {
-                SalesManMasterModel model = new Gson().fromJson(salesmanMaster.get(i).getAsJsonObject().toString(), SalesManMasterModel.class);
-                Constants.SALESMAN.add(model);
-            }
-        }
         if (variables.size() > 0) {
             for (int i = 0; i < variables.size(); i++) {
                 Constants.params.put(variables.get(i).getAsJsonObject().get("PARAM_NAME").getAsString(), variables.get(i).getAsJsonObject().get("PARAM_VALUE").getAsString());
             }
-        }
-        getTaxMaster();
-    }
-
-    private void getTaxMaster() {
-        Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer("7");
-        try {
-            JsonObject data = call.execute().body();
-            System.out.println(data.toString());
-            int status = data.get("result").getAsInt();
-            if (status == 1) {
-                Constants.TAX.clear();
-                JsonArray array = data.getAsJsonArray("data");
-                for (int i = 0; i < array.size(); i++) {
-                    TaxMasterModel taxMasterModel = new Gson().fromJson(array.get(i), TaxMasterModel.class);
-                    Constants.TAX.add(taxMasterModel);
-                }
-            } else {
-            }
-        } catch (Exception ex) {
-            lb.showMessageDailog(ex.getMessage());
         }
     }
 
@@ -172,8 +129,14 @@ public class SelectIP extends javax.swing.JFrame {
         jbtnExit = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
+        jlblCmpName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jbtnLogin.setMnemonic('L');
         jbtnLogin.setText("Start");
@@ -254,21 +217,29 @@ public class SelectIP extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jlblCmpName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlblCmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlblCmpName, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -296,6 +267,21 @@ public class SelectIP extends javax.swing.JFrame {
     private void jComboBox3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox3KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3KeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+            if (evt.getKeyCode() == KeyEvent.VK_T) {
+                test_cmp = "TEST";
+                jlblCmpName.setText(test_cmp);
+                try {
+                    setUpBaseData();
+                } catch (IOException ex) {
+                    Logger.getLogger(SelectIP.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_formKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel5;
@@ -303,5 +289,6 @@ public class SelectIP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtnExit;
     public javax.swing.JButton jbtnLogin;
+    private javax.swing.JLabel jlblCmpName;
     // End of variables declaration//GEN-END:variables
 }

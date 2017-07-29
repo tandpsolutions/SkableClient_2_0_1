@@ -274,7 +274,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
                     if (row != -1) {
                         lb.addGlassPane(PurchaseView.this);
                         ref_no = jTable1.getValueAt(row, 0).toString();
-                        Call<JsonObject> call = purchasAPI.getTagNo(ref_no, "5");
+                        Call<JsonObject> call = purchasAPI.getTagNo(ref_no, "5",SkableHome.db_name,SkableHome.selected_year);
                         call.enqueue(new Callback<JsonObject>() {
                             @Override
                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

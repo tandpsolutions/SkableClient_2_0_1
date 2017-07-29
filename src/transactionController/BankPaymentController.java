@@ -258,9 +258,9 @@ public class BankPaymentController extends javax.swing.JDialog {
             try {
                 JsonObject call;
                 if (type == 0) {
-                    call = bankAPI.getBankDetail(ref_no, "10").execute().body();
+                    call = bankAPI.getBankDetail(ref_no, "10",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 } else {
-                    call = bankAPI.getBankDetail(ref_no, "29").execute().body();
+                    call = bankAPI.getBankDetail(ref_no, "29",SkableHome.db_name,SkableHome.selected_year).execute().body();
                 }
                 if (call != null) {
                     System.out.println(call.toString());
@@ -328,7 +328,7 @@ public class BankPaymentController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value, final int mode) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(BankPaymentController.this);
@@ -446,7 +446,7 @@ public class BankPaymentController extends javax.swing.JDialog {
 
     private void getoldb2_4(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase()).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());

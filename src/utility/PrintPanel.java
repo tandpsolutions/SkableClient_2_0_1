@@ -168,7 +168,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getQuoatePrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, "39").execute().body();
+            JsonObject call = salesAPI.getBill(ref_no, "39",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -539,9 +539,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = cashPRAPI.getCashDetail(ref_no, "9").execute().body();
+                call = cashPRAPI.getCashDetail(ref_no, "9",SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else {
-                call = cashPRAPI.getCashDetail(ref_no, "28").execute().body();
+                call = cashPRAPI.getCashDetail(ref_no, "28",SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
@@ -585,9 +585,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = cashPRAPI.getBankDetail(ref_no, "30").execute().body();
+                call = cashPRAPI.getBankDetail(ref_no, "30",SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else {
-                call = cashPRAPI.getBankDetail(ref_no, "31").execute().body();
+                call = cashPRAPI.getBankDetail(ref_no, "31",SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
@@ -636,9 +636,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = bankAPI.getBankDetail(ref_no, "10").execute().body();
+                call = bankAPI.getBankDetail(ref_no, "10",SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else {
-                call = bankAPI.getBankDetail(ref_no, "29").execute().body();
+                call = bankAPI.getBankDetail(ref_no, "29",SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
