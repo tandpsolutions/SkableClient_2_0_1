@@ -199,7 +199,7 @@ public class ColorMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = colorAPI.getColorMaster();
+        Call<JsonObject> call = colorAPI.getColorMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

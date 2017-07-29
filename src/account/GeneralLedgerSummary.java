@@ -115,7 +115,7 @@ public class GeneralLedgerSummary extends javax.swing.JInternalFrame {
         AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
         );
 
-        Call<JsonObject> call = accountAPI.GetGeneralLedgerSummary(ac_cd);
+        Call<JsonObject> call = accountAPI.GetGeneralLedgerSummary(ac_cd,SkableHome.db_name,SkableHome.selected_year);
 
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {

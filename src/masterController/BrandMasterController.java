@@ -64,7 +64,7 @@ public class BrandMasterController extends javax.swing.JDialog {
             return;
         }
         if (brand_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("brandmst", "brand_cd", "brand_name", jtxtBrandName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("brandmst", "brand_cd", "brand_name", jtxtBrandName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -86,7 +86,7 @@ public class BrandMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("brandmst", "brand_cd", "brand_name", jtxtBrandName.getText(), "brand_cd", brand_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("brandmst", "brand_cd", "brand_name", jtxtBrandName.getText(), "brand_cd", brand_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -111,7 +111,7 @@ public class BrandMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = brandAPI.addUpdateBrandMaster(brand_cd, jtxtBrandName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = brandAPI.addUpdateBrandMaster(brand_cd, jtxtBrandName.getText(), SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

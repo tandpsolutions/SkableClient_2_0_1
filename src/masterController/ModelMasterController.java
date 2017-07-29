@@ -87,7 +87,7 @@ public class ModelMasterController extends javax.swing.JDialog {
 
     public void setData(final String model_cd1) {
 
-        Call<JsonObject> call = modelAPI.GetModel(model_cd1);
+        Call<JsonObject> call = modelAPI.GetModel(model_cd1,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -194,7 +194,7 @@ public class ModelMasterController extends javax.swing.JDialog {
             return;
         }
         if (model_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("modelmst", "model_cd", "model_name", jtxtModelName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("modelmst", "model_cd", "model_name", jtxtModelName.getText(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -218,7 +218,7 @@ public class ModelMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("modelmst", "model_cd", "model_name", jtxtModelName.getText(), "model_cd", model_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("modelmst", "model_cd", "model_name", jtxtModelName.getText(), "model_cd", model_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -249,7 +249,7 @@ public class ModelMasterController extends javax.swing.JDialog {
         Call<JsonObject> call = modelAPI.AppUpdateModelMaster(model_cd, jtxtModelName.getText(),
                 brand_cd,
                 type_cd,
-                tax_cd, SkableHome.user_id, sub_type_cd, SkableHome.selected_year, jtxtHsnCode.getText(), gst_cd);
+                tax_cd, SkableHome.user_id, sub_type_cd, SkableHome.selected_year, jtxtHsnCode.getText(), gst_cd,SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

@@ -179,7 +179,7 @@ public class BankBook extends javax.swing.JInternalFrame {
             );
 
             JsonObject call = accountAPI.BankBook(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), true).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), true,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             double main_dr = 0.00, main_cr = 0.00;
@@ -305,7 +305,7 @@ public class BankBook extends javax.swing.JInternalFrame {
             dtm.addRow(row);
 
             call = accountAPI.BankBook(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), false).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), false,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -892,7 +892,7 @@ public class BankBook extends javax.swing.JInternalFrame {
                     if (!date.equalsIgnoreCase("")) {
                         AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
                         try {
-                            JsonObject call = accountAPI.SetReconsilationDate(jTable1.getValueAt(row, 11).toString(), date).execute().body();
+                            JsonObject call = accountAPI.SetReconsilationDate(jTable1.getValueAt(row, 11).toString(), date,SkableHome.db_name,SkableHome.selected_year).execute().body();
                             if (call != null) {
                                 JsonObject result = call;
                                 if (result.get("result").getAsInt() == 1) {
@@ -909,7 +909,7 @@ public class BankBook extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
                             try {
-                                JsonObject call = accountAPI.SetReconsilationDate(jTable1.getValueAt(row, 11).toString(), date).execute().body();
+                                JsonObject call = accountAPI.SetReconsilationDate(jTable1.getValueAt(row, 11).toString(), date,SkableHome.db_name,SkableHome.selected_year).execute().body();
                                 if (call != null) {
                                     JsonObject result = call;
                                     if (result.get("result").getAsInt() == 1) {

@@ -404,7 +404,8 @@ public class SnapShot extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
             JsonObject call = accountAPI.SnapShots(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()),(jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()),(jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + ""
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

@@ -317,7 +317,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         InventoryAPI inventoryAPI = lb.getRetrofit().create(InventoryAPI.class
         );
         lb.addGlassPane(this);
-        JsonObject call = inventoryAPI.IMEISearch(jtxtTagNo.getText()).execute().body();
+        JsonObject call = inventoryAPI.IMEISearch(jtxtTagNo.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         if (call != null) {
             JsonObject result = call;

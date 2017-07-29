@@ -64,7 +64,7 @@ public class TypeMasterController extends javax.swing.JDialog {
             return;
         }
         if (type_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("typemst", "type_cd", "type_name", jtxtTypeName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("typemst", "type_cd", "type_name", jtxtTypeName.getText(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(TypeMasterController.this);
             call.enqueue(new Callback<JsonObject>() {
 
@@ -89,7 +89,7 @@ public class TypeMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("typemst", "type_cd", "type_name", jtxtTypeName.getText(), "type_cd", type_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("typemst", "type_cd", "type_name", jtxtTypeName.getText(), "type_cd", type_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(TypeMasterController.this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override

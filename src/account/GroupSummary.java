@@ -181,7 +181,7 @@ public class GroupSummary extends javax.swing.JInternalFrame {
                     mode = 2;
                 }
             }
-            JsonObject call = accountAPI.GetGroupSummary(grp_cd, mode, lb.isNumber(jtxtAmt), lb.isNumber(jtxtAmt1)).execute().body();
+            JsonObject call = accountAPI.GetGroupSummary(grp_cd, mode, lb.isNumber(jtxtAmt), lb.isNumber(jtxtAmt1),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -251,7 +251,7 @@ public class GroupSummary extends javax.swing.JInternalFrame {
                 mode = 2;
             }
         }
-        JsonObject call = accountAPI.GetGroupSummary(grp_cd, mode, lb.isNumber(jtxtAmt), lb.isNumber(jtxtAmt1)).execute().body();
+        JsonObject call = accountAPI.GetGroupSummary(grp_cd, mode, lb.isNumber(jtxtAmt), lb.isNumber(jtxtAmt1),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.addGlassPane(this);
 

@@ -94,7 +94,7 @@ public class JobSheetController extends javax.swing.JDialog {
             jComboBox1.setEnabled(true);
         }
 
-        Call<JsonObject> call = jobSheetAPI.getJobType();
+        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -132,7 +132,7 @@ public class JobSheetController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 JsonObject call;
-                call = jobSheetAPI.getJobSheetDetail(ref_no).execute().body();
+                call = jobSheetAPI.getJobSheetDetail(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 if (call != null) {
                     System.out.println(call.toString());
                     JsonObject object = call;
@@ -212,7 +212,7 @@ public class JobSheetController extends javax.swing.JDialog {
             model.setBRANCHCD(jComboBox1.getSelectedIndex() + 1 + "");
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
-            JsonObject addUpdaCall = jobSheetAPI.addUpdateJobSheet(detailJson).execute().body();
+            JsonObject addUpdaCall = jobSheetAPI.addUpdateJobSheet(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(JobSheetController.this);
 
             lb.removeGlassPane(JobSheetController.this);

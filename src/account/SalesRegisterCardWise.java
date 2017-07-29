@@ -134,7 +134,7 @@ public class SalesRegisterCardWise extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
             );
 
-            JsonObject call = accountAPI.SalesRegisterCardWise(jCheckBox1.isSelected()).execute().body();
+            JsonObject call = accountAPI.SalesRegisterCardWise(jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

@@ -196,7 +196,7 @@ public class RamMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = ramAPI.getRamMaster();
+        Call<JsonObject> call = ramAPI.getRamMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

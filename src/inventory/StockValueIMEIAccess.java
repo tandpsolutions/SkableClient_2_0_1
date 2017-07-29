@@ -951,7 +951,9 @@ public class StockValueIMEIAccess extends javax.swing.JInternalFrame {
         Call<JsonObject> call = inventoryAPI.GetStockValueStatementAccess(code, mode, type_CD,
                 jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                 date_mode, before_rate, after_rate, rate_mode,
-                ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex());
+                ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "")
+                , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex()
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 
@@ -1051,7 +1053,9 @@ public class StockValueIMEIAccess extends javax.swing.JInternalFrame {
         Call<JsonObject> call = inventoryAPI.GetStockValueStatementAccess(code, mode, type_CD,
                 jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                 date_mode, before_rate, after_rate, rate_mode,
-                ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex());
+                ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "")
+                , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex()
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override

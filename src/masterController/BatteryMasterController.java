@@ -64,7 +64,7 @@ public class BatteryMasterController extends javax.swing.JDialog {
             return;
         }
         if (baterry_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("batterymst", "battery_cd", "battery_name", jtxtBaterryName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("batterymst", "battery_cd", "battery_name", jtxtBaterryName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -86,7 +86,7 @@ public class BatteryMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("batterymst", "battery_cd", "battery_name", jtxtBaterryName.getText(), "battery_cd", baterry_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("batterymst", "battery_cd", "battery_name", jtxtBaterryName.getText(), "battery_cd", baterry_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -111,7 +111,7 @@ public class BatteryMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = bateryMasterAPI.addUpdateBatteryMaster(baterry_cd, jtxtBaterryName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = bateryMasterAPI.addUpdateBatteryMaster(baterry_cd, jtxtBaterryName.getText(), SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

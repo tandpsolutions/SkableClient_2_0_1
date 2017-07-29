@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface ColorAPI {
 
     @GET("GetColorMaster")
-    Call<JsonObject> getColorMaster();
+    Call<JsonObject> getColorMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateColorMaster")
-    Call<JsonObject> addUpdateColorMaster(@Query("colour_cd") String color_cd, @Query("colour_name") String color_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateColorMaster(@Query("colour_cd") String color_cd, @Query("colour_name") String color_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

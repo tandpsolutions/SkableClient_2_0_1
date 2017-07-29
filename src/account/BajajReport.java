@@ -155,7 +155,7 @@ public class BajajReport extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
             JsonObject call = accountAPI.BajajReport(lb.ConvertDateFormetForDB(jcmbVoucherDate.getText()),
                     lb.ConvertDateFormetForDB(jcmbVoucherDate1.getText()),
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), ac_cd).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), ac_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

@@ -20,15 +20,15 @@ import retrofit2.http.Query;
 public interface JournalAPI {
 
     @GET("GetJournalVoucher")
-    Call<JsonObject> GetJournalVoucher(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("branch_cd") String branch_cd);
+    Call<JsonObject> GetJournalVoucher(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getJournalVoucher(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getJournalVoucher(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("DeleteJournalEntry")
-    Call<JsonObject> deleteJournalEntry(@Query("ref_no") String ref_no);
+    Call<JsonObject> deleteJournalEntry(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("AddUpdateJournalVoucher")
-    Call<JsonObject> addUpdateCashVoucher(@Field("detail") String param_code);
+    Call<JsonObject> addUpdateCashVoucher(@Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

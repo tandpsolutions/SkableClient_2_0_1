@@ -203,7 +203,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
             try {
                 AccountMasterAPI accountMasterAPI = lb.getRetrofit().create(AccountMasterAPI.class);
-                JsonObject call = accountMasterAPI.updateGstNo(dataJson).execute().body();
+                JsonObject call = accountMasterAPI.updateGstNo(dataJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     JsonObject result = call;

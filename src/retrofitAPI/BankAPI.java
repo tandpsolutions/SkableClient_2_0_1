@@ -21,15 +21,15 @@ public interface BankAPI {
 
     @GET("GetBankPaymentHeader")
     Call<JsonObject> GetBankPaymentHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
-            @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
+            @Query("v_type") String v_type, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getBankDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getBankDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateBankVoucher")
-    Call<JsonObject> addUpdateBankVoucher(@Field("detail") String param_code);
+    Call<JsonObject> addUpdateBankVoucher(@Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @GET("BankDelete")
-    Call<JsonObject> DeleteBankBill(@Query("ref_no") String ref_no, @Query("type") int type);
+    Call<JsonObject> DeleteBankBill(@Query("ref_no") String ref_no, @Query("type") int type,@Query("db_name") String db_name, @Query("db_year") String db_year);
 }

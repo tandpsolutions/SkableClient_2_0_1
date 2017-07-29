@@ -64,7 +64,7 @@ public class TidMasterController extends javax.swing.JDialog {
             return;
         }
         if (tid_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("tidmst", "tid_cd", "tid_name", jtxtTidNumber.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("tidmst", "tid_cd", "tid_name", jtxtTidNumber.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -86,7 +86,7 @@ public class TidMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("tidmst", "tid_cd", "tid_name", jtxtTidNumber.getText(), "tid_cd", tid_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("tidmst", "tid_cd", "tid_name", jtxtTidNumber.getText(), "tid_cd", tid_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

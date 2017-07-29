@@ -20,28 +20,28 @@ import retrofit2.http.Query;
 public interface JobSheetAPI {
 
     @GET("GetJobType")
-    Call<JsonObject> getJobType();
+    Call<JsonObject> getJobType(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetJobSheetView")
-    Call<JsonObject> getJobSheetView(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("job_type") String job_type, @Query("branch_cd") String branch_cd);
+    Call<JsonObject> getJobSheetView(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("job_type") String job_type, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("GetDataFromServer")
-    Call<JsonObject> getDataFromServer(@Field("value") String param_code, @Field("param_code") String value,@Field("db_name") String db_name, @Field("ac_year") String ac_year);
+    Call<JsonObject> getDataFromServer(@Field("value") String param_code, @Field("param_code") String value,@Field("db_name") String db_name, @Field("db_year") String ac_year);
 
     @GET("GetJobsheetDetail")
-    Call<JsonObject> getJobSheetDetail(@Query("ref_no") String ref_no);
+    Call<JsonObject> getJobSheetDetail(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     
     @FormUrlEncoded
     @POST("AddUpdateJobSheet")
-    Call<JsonObject> addUpdateJobSheet(@Field("header") String header);
+    Call<JsonObject> addUpdateJobSheet(@Field("header") String header,@Field("db_name") String db_name, @Field("db_year") String db_year);
     
     @FormUrlEncoded
     @POST("CloseJobSheet")
-    Call<JsonObject> closeJobSheet(@Field("ref_no") String header);
+    Call<JsonObject> closeJobSheet(@Field("ref_no") String header,@Field("db_name") String db_name, @Field("db_year") String db_year);
     
     @FormUrlEncoded
     @POST("DeleteJobSheet")
-    Call<JsonObject> deleteJobSheet(@Field("ref_no") String header);
+    Call<JsonObject> deleteJobSheet(@Field("ref_no") String header,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface MemoryAPI {
 
     @GET("GetMemoryMaster")
-    Call<JsonObject> getColorMaster();
+    Call<JsonObject> getColorMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateMemoryMaster")
-    Call<JsonObject> addUpdateColorMaster(@Query("memory_cd") String color_cd, @Query("memory_name") String color_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateColorMaster(@Query("memory_cd") String color_cd, @Query("memory_name") String color_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

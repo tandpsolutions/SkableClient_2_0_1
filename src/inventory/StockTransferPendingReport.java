@@ -97,7 +97,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
     private void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = inventoryAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.removeGlassPane(StockTransferPendingReport.this);
         if (call != null) {
@@ -125,7 +125,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
     private void approveVoucher() throws IOException {
         lb.addGlassPane(this);
         jButton3.setEnabled(false);
-        JsonObject call = inventoryAPI.StockTrnasferUpdate(ref_no, SkableHome.user_id).execute().body();
+        JsonObject call = inventoryAPI.StockTrnasferUpdate(ref_no, SkableHome.user_id,SkableHome.db_name,SkableHome.selected_year).execute().body();
         jButton3.setEnabled(true);
 
         lb.removeGlassPane(StockTransferPendingReport.this);

@@ -17,12 +17,12 @@ import retrofit2.http.Query;
 public interface RamAPI {
 
     @GET("GetRamMaster")
-    Call<JsonObject> getRamMaster();
+    Call<JsonObject> getRamMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
     
     @GET("GetDefaultRamValue")
-    Call<JsonObject> getDefaultRamValue();
+    Call<JsonObject> getDefaultRamValue(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateRamMaster")
-    Call<JsonObject> addUpdateRamMaster(@Query("ram_cd") String ram_cd, @Query("ram_name") String ram_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateRamMaster(@Query("ram_cd") String ram_cd, @Query("ram_name") String ram_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

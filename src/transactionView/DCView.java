@@ -119,7 +119,8 @@ public class DCView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = dcAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
-                    vType + "",(jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd()).execute().body();
+                    vType + "",(jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd()
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 System.out.println(call.toString());
@@ -236,7 +237,8 @@ public class DCView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             try {
                                 lb.addGlassPane(DCView.this);
-                                JsonObject call = dcAPI.DeleteDCBill(jTable1.getValueAt(row, 0).toString()).execute().body();
+                                JsonObject call = dcAPI.DeleteDCBill(jTable1.getValueAt(row, 0).toString()
+                                        ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                                 lb.removeGlassPane(DCView.this);
                                 if (call != null) {
                                     if (call.get("result").getAsInt() == 1) {

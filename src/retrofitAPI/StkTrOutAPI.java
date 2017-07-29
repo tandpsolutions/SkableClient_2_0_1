@@ -20,24 +20,24 @@ import retrofit2.http.Query;
 public interface StkTrOutAPI {
 
     @GET("GetStkTrfOutsideHeader")
-    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("loc") String loc);
+    Call<JsonObject> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("loc") String loc,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetStkTrBillOutside")
-    Call<JsonObject> getBill(@Query("ref_no") String ref_no);
+    Call<JsonObject> getBill(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 //    @GET("DeleteStkAdjBillOutside")
 //    Call<JsonObject> DeleteStkAdjBill(@Query("ref_no") String ref_no);
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("loc") String loc, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("loc") String loc, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateStkTrDetailOutside")
-    Call<JsonObject> AddUpdateStkAdjBill(@Field("detail") String param_code);
+    Call<JsonObject> AddUpdateStkAdjBill(@Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("GetStockTransferPrintOUtside")
-    Call<JsonObject> GetStockTransferPrint(@Field("ref_no") String ref_no);
+    Call<JsonObject> GetStockTransferPrint(@Field("ref_no") String ref_no,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

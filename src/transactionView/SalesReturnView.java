@@ -115,7 +115,7 @@ public class SalesReturnView extends javax.swing.JInternalFrame {
     public void setData() {
         lb.addGlassPane(this);
         Call<PurchaseHead> call = salsReturnAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "",
-                (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "");
+                (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "",SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -242,7 +242,7 @@ public class SalesReturnView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(SalesReturnView.this);
-                            salsReturnAPI.DeleteSalesReturn(ref_no).enqueue(new Callback<JsonObject>() {
+                            salsReturnAPI.DeleteSalesReturn(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(SalesReturnView.this);

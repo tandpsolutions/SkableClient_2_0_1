@@ -208,7 +208,7 @@ public class PurchsaeReturnRegisterDetailAccount extends javax.swing.JInternalFr
             }
             JsonObject call = accountAPI.PurchaseReturnRegisterAccount(jComboBox1.getSelectedIndex(),jComboBox3.getSelectedIndex(), 
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             if (call != null) {

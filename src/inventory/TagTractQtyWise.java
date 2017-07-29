@@ -497,7 +497,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     InventoryAPI inventoryAPI = lb.getRetrofit().create(InventoryAPI.class
     );
     lb.addGlassPane(this);
-    Call<JsonObject> call = inventoryAPI.TagTrackQty(sr_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()));
+    Call<JsonObject> call = inventoryAPI.TagTrackQty(sr_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year);
 
     call.enqueue(new Callback<JsonObject>() {
         @Override

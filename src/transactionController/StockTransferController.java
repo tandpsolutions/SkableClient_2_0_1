@@ -364,7 +364,7 @@ public class StockTransferController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                JsonObject call = StkTrAPI.getBill(ref_no).execute().body();
+                JsonObject call = StkTrAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -461,7 +461,7 @@ public class StockTransferController extends javax.swing.JDialog {
 
         String detailJson = new Gson().toJson(detail);
 
-        JsonObject addUpdaCall = StkTrAPI.AddUpdateStkAdjBill(detailJson).execute().body();
+        JsonObject addUpdaCall = StkTrAPI.AddUpdateStkAdjBill(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
         lb.addGlassPane(this);
 
         lb.removeGlassPane(StockTransferController.this);

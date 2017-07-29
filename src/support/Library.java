@@ -546,8 +546,8 @@ public class Library {
     public void getSalesBillPrint(final String ref_no) {
         try {
             SalesAPI salesAPI = getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

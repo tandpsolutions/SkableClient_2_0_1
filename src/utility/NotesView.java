@@ -168,7 +168,7 @@ public class NotesView extends javax.swing.JInternalFrame {
     private void makeQuery() {
         final SupportAPI supportAPI = lb.getRetrofit().create(SupportAPI.class);
         try {
-            JsonObject call = supportAPI.getNotes(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd).execute().body();
+            JsonObject call = supportAPI.getNotes(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
                     JsonArray array = call.get("data").getAsJsonArray();

@@ -380,7 +380,7 @@ public class OrderBookController extends javax.swing.JDialog {
             model.setUser_id(SkableHome.user_id);
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
-            JsonObject addUpdaCall = orderAPI.AddUpdateOrderBookVoucher(detailJson).execute().body();
+            JsonObject addUpdaCall = orderAPI.AddUpdateOrderBookVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(OrderBookController.this);
 
             lb.removeGlassPane(OrderBookController.this);

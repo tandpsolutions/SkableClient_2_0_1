@@ -87,7 +87,8 @@ public class EOD extends javax.swing.JInternalFrame {
             );
 
             JsonObject call = accountAPI.EOD(jComboBox1.getSelectedIndex(), lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -134,7 +135,8 @@ public class EOD extends javax.swing.JInternalFrame {
 
                 {
                     call = accountAPI.DailyCashStatement(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()).execute().body();
+                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()
+                            ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
                         if (result.get("result").getAsInt() == 1) {
@@ -169,7 +171,8 @@ public class EOD extends javax.swing.JInternalFrame {
 
                 {
                     call = accountAPI.DailyBankSummary(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()).execute().body();
+                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()
+                            ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
                         if (result.get("result").getAsInt() == 1) {
@@ -242,7 +245,8 @@ public class EOD extends javax.swing.JInternalFrame {
                 dtmDenomation.addRow(row);
 
                 call = accountAPI.GetDenomation(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                        ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                        ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 result = call;
                 if (result.get("result").getAsInt() == 1) {
                     array = call.getAsJsonArray("data");
@@ -299,7 +303,9 @@ public class EOD extends javax.swing.JInternalFrame {
         try {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
             );
-            JsonObject call = accountAPI.updateDenomation(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), row, qty).execute().body();
+            JsonObject call = accountAPI.updateDenomation(lb.ConvertDateFormetForDB(jtxtFromDate.getText())
+                    , ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), row, qty
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {

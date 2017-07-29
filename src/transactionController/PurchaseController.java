@@ -236,7 +236,7 @@ public class PurchaseController extends javax.swing.JDialog {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1").execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             jcmbPmt1.removeAllItems();
             for (int i = 0; i < detail.size(); i++) {
                 jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
@@ -1287,7 +1287,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson);
+        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1358,7 +1358,7 @@ public class PurchaseController extends javax.swing.JDialog {
     }
 
     public void getData(final String data) {
-        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "");
+        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "",SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -2760,7 +2760,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     List list = (List) sheetData.get(i);
                     String sr_cd = "";
                     if (itemCode.get(list.get(1).toString()) == null) {
-                        sr_cd = lb.getRetrofit().create(SupportAPI.class).validateData("SERIESMST", "SR_CD", "SR_NAME", list.get(1).toString()).execute().body().get("data").getAsString();
+                        sr_cd = lb.getRetrofit().create(SupportAPI.class).validateData("SERIESMST", "SR_CD", "SR_NAME", list.get(1).toString(),SkableHome.db_name,SkableHome.selected_year).execute().body().get("data").getAsString();
                         if (sr_cd.equalsIgnoreCase("")) {
                             dtm.setRowCount(0);
                             return;

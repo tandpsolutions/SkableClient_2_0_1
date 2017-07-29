@@ -21,21 +21,21 @@ import retrofit2.http.Query;
 public interface PurchaseAPI {
 
     @GET("GetPurchaseDetail")
-    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd, @Query("tax_type") String tax_type);
+    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd, @Query("tax_type") String tax_type,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getBill(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getBill(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getTagNo(@Query("ref_no") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("DeletePurchaseBill")
-    Call<JsonObject> DeletePurchaseBill(@Query("ref_no") String ref_no);
+    Call<JsonObject> DeletePurchaseBill(@Query("ref_no") String ref_no, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getTagNoDetail(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getTagNoDetail(@Query("tag_list") String ref_no, @Query("param_code") String param_code, @Query("only_stock") boolean flag, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdatePurchaseBill")
-    Call<JsonObject> addUpdatePurchaseBill(@Field("header") String ref_no, @Field("detail") String param_code);
+    Call<JsonObject> addUpdatePurchaseBill(@Field("header") String ref_no, @Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

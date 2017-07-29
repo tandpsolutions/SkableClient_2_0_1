@@ -408,7 +408,7 @@ public class BankPaymentController extends javax.swing.JDialog {
                     detail.add(model);
                 }
                 String detailJson = new Gson().toJson(detail);
-                JsonObject addUpdaCall = bankAPI.addUpdateBankVoucher(detailJson).execute().body();
+                JsonObject addUpdaCall = bankAPI.addUpdateBankVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 lb.addGlassPane(BankPaymentController.this);
 
                 lb.removeGlassPane(BankPaymentController.this);

@@ -191,7 +191,7 @@ public class PurchaseRegister extends javax.swing.JInternalFrame {
             );
 
             JsonObject call = accountAPI.PurchaseRegister(jComboBox1.getSelectedIndex(), jComboBox2.getSelectedIndex(), jComboBox3.getSelectedIndex(),
-                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

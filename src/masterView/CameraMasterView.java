@@ -196,7 +196,7 @@ public class CameraMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = cameraAPI.getCameraMaster();
+        Call<JsonObject> call = cameraAPI.getCameraMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

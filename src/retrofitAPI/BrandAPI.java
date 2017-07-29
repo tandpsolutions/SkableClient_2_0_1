@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface BrandAPI {
 
     @GET("GetBrandMaster")
-    Call<JsonObject> getBrandMaster();
+    Call<JsonObject> getBrandMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateBrandMaster")
-    Call<JsonObject> addUpdateBrandMaster(@Query("brand_cd") String brand_cd, @Query("brand_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateBrandMaster(@Query("brand_cd") String brand_cd, @Query("brand_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

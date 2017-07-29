@@ -17,12 +17,12 @@ import retrofit2.http.Query;
 public interface CameraAPI {
 
     @GET("GetCameraMaster")
-    Call<JsonObject> getCameraMaster();
+    Call<JsonObject> getCameraMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
     
     @GET("GetDefaultCameraValue")
-    Call<JsonObject> getDefaultCameraValue();
+    Call<JsonObject> getDefaultCameraValue(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateCameraMaster")
-    Call<JsonObject> addUpdateCameraMaster(@Query("camera_cd") String brand_cd, @Query("camera_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateCameraMaster(@Query("camera_cd") String brand_cd, @Query("camera_name") String brand_name, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

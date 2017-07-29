@@ -79,7 +79,7 @@ public class GroupMasterController extends javax.swing.JDialog {
             return;
         }
         if (grp_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("GROUPMST", "GRP_CD", "GROUP_NAME", jtxtGroupName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("GROUPMST", "GRP_CD", "GROUP_NAME", jtxtGroupName.getText(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -105,7 +105,7 @@ public class GroupMasterController extends javax.swing.JDialog {
 
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("GROUPMST", "GRP_CD", "GROUP_NAME", jtxtGroupName.getText(), "GRP_CD", grp_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("GROUPMST", "GRP_CD", "GROUP_NAME", jtxtGroupName.getText(), "GRP_CD", grp_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -135,7 +135,7 @@ public class GroupMasterController extends javax.swing.JDialog {
     private void saveVoucher() {
 
         Call<JsonObject> call = groupAPI.AddUpdateGroupMaster(grp_cd, jcmbEffect.getSelectedIndex() + "", jtxtGroupName.getText(),
-                jcmbHeadGroup.getSelectedItem().toString(), SkableHome.user_id, SkableHome.selected_year);
+                jcmbHeadGroup.getSelectedItem().toString(), SkableHome.user_id, SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

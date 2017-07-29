@@ -213,7 +213,8 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
                 ac_cd = "";
             }
             JsonObject call = accountAPI.SalesRegisterDetail(jComboBox1.getSelectedIndex(), jComboBox2.getSelectedIndex(), jComboBox3.getSelectedIndex(),
-                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             if (call != null) {
@@ -519,8 +520,8 @@ public class SalesRegisterDetail extends javax.swing.JInternalFrame {
     public void getSalesBillPrint(String ref_no) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

@@ -64,7 +64,7 @@ public class ColorMasterController extends javax.swing.JDialog {
             return;
         }
         if (colour_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("colourmst", "colour_cd", "colour_name", jtxtColorName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("colourmst", "colour_cd", "colour_name", jtxtColorName.getText(),SkableHome.db_name,SkableHome.selected_year);
              lb.addGlassPane(ColorMasterController.this);
             call.enqueue(new Callback<JsonObject>() {
 
@@ -89,7 +89,7 @@ public class ColorMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("colourmst", "colour_cd", "colour_name", jtxtColorName.getText(), "colour_cd", colour_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("colourmst", "colour_cd", "colour_name", jtxtColorName.getText(), "colour_cd", colour_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(ColorMasterController.this);
             call.enqueue(new Callback<JsonObject>() {
 
@@ -118,7 +118,7 @@ public class ColorMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = colorAPI.addUpdateColorMaster(colour_cd, jtxtColorName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = colorAPI.addUpdateColorMaster(colour_cd, jtxtColorName.getText(), SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(ColorMasterController.this);
         call.enqueue(new Callback<JsonObject>() {
 

@@ -186,7 +186,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(GeneralLedger1.this);
             if (call != null) {
@@ -272,7 +272,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(GeneralLedger1.this);
             if (call != null) {
@@ -315,7 +315,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GenralLedger(ac_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(GeneralLedger1.this);
             if (call != null) {

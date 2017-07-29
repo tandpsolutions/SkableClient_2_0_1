@@ -269,7 +269,7 @@ public class BuyBackTrack extends javax.swing.JInternalFrame {
                     lb.ConvertDateFormetForDB(jtxtFromDate1.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate1.getText()),
                     lb.ConvertDateFormetForDB(jtxtFromDate2.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate2.getText())).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate2.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

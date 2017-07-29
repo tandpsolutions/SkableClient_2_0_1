@@ -165,7 +165,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
 
             JsonObject call = accountAPI.GetCardDetail(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ((jComboBox1.getSelectedIndex() > 0)
-                    ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                    ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0"),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

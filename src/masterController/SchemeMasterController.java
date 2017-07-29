@@ -65,7 +65,7 @@ public class SchemeMasterController extends javax.swing.JDialog {
             return;
         }
         if (scheme_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("schememst", "scheme_cd", "scheme_name", jtxtSchemeName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("schememst", "scheme_cd", "scheme_name", jtxtSchemeName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -87,7 +87,7 @@ public class SchemeMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("schememst", "scheme_cd", "scheme_name", jtxtSchemeName.getText(), "scheme_cd", scheme_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("schememst", "scheme_cd", "scheme_name", jtxtSchemeName.getText(), "scheme_cd", scheme_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -112,7 +112,7 @@ public class SchemeMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = schemeAPI.addUpdateSchemeMaster(scheme_cd, jtxtSchemeName.getText(), jComboBox1.getSelectedIndex() + "", SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = schemeAPI.addUpdateSchemeMaster(scheme_cd, jtxtSchemeName.getText(), jComboBox1.getSelectedIndex() + "", SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

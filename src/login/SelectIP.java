@@ -46,7 +46,7 @@ public class SelectIP extends javax.swing.JFrame {
                 String ip = properties.getProperty("ip");
                 Constants.COMPANY_NAME = properties.getProperty("company_name");
                 jlblCmpName.setText(Constants.COMPANY_NAME);
-                test_cmp=Constants.COMPANY_NAME;
+                test_cmp = Constants.COMPANY_NAME;
                 String[] ipList = ip.split(",");
                 jComboBox3.removeAllItems();
                 for (int i = 0; i < ipList.length; i++) {
@@ -114,6 +114,11 @@ public class SelectIP extends javax.swing.JFrame {
         super.dispose(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void changeCompany() {
+        test_cmp = "TEST";
+        jlblCmpName.setText(test_cmp);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,6 +161,11 @@ public class SelectIP extends javax.swing.JFrame {
         jbtnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnExitActionPerformed(evt);
+            }
+        });
+        jbtnExit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnExitKeyPressed(evt);
             }
         });
 
@@ -254,6 +264,11 @@ public class SelectIP extends javax.swing.JFrame {
     private void jbtnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnLoginKeyPressed
         // TODO add your handling code here:
         lb.enterClick(evt);
+        if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+            if (evt.getKeyCode() == KeyEvent.VK_T) {
+                changeCompany();
+            }
+        }
     }//GEN-LAST:event_jbtnLoginKeyPressed
 
     private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
@@ -266,22 +281,32 @@ public class SelectIP extends javax.swing.JFrame {
 
     private void jComboBox3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox3KeyPressed
         // TODO add your handling code here:
+        lb.enterFocus(evt, jbtnLogin);
+        if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+            if (evt.getKeyCode() == KeyEvent.VK_T) {
+                changeCompany();
+            }
+        }
     }//GEN-LAST:event_jComboBox3KeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
             if (evt.getKeyCode() == KeyEvent.VK_T) {
-                test_cmp = "TEST";
-                jlblCmpName.setText(test_cmp);
-                try {
-                    setUpBaseData();
-                } catch (IOException ex) {
-                    Logger.getLogger(SelectIP.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                changeCompany();
             }
         }
     }//GEN-LAST:event_formKeyPressed
+
+    private void jbtnExitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnExitKeyPressed
+        // TODO add your handling code here:
+        if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+            if (evt.getKeyCode() == KeyEvent.VK_T) {
+                changeCompany();
+            }
+        }
+    }//GEN-LAST:event_jbtnExitKeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel5;

@@ -168,7 +168,8 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
             );
 
             JsonObject call = accountAPI.DailySalesStatementDetail(jComboBox1.getSelectedIndex(), lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -215,7 +216,8 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
 
                 if (jCheckBox1.isSelected()) {
                     call = accountAPI.DailyCashStatementDetail(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                            ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
                         if (result.get("result").getAsInt() == 1) {
@@ -250,7 +252,8 @@ public class DailySalesStatementDetail extends javax.swing.JInternalFrame {
 
                 if (jCheckBox2.isSelected()) {
                     call = accountAPI.DailyBankStatementDetail(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                            ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
                         if (result.get("result").getAsInt() == 1) {

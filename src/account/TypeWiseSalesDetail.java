@@ -146,7 +146,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0").execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             for (int i = 0; i < detail.size(); i++) {
                 jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
             }

@@ -383,7 +383,7 @@ public class DCRegister extends javax.swing.JInternalFrame {
             }
             JsonObject call = accountAPI.DCRegister(((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, sr_cd, brand_cd,
-                    model_cd, (jRadioButton5.isSelected()) ? true : false).execute().body();
+                    model_cd, (jRadioButton5.isSelected()) ? true : false,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

@@ -178,7 +178,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = groupAPI.GetGroupMaster();
+        Call<JsonObject> call = groupAPI.GetGroupMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -229,8 +229,9 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
             );
 
-            JsonObject call = accountAPI.Phonebook((jcmbHeadGroup.getSelectedIndex() == 0) ? "" : detail.get(jcmbHeadGroup.getSelectedIndex() - 1).getGRP_CD(), lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
-                    jcmbVouType.getSelectedIndex(), jCheckBox1.isSelected()).execute().body();
+            JsonObject call = accountAPI.Phonebook((jcmbHeadGroup.getSelectedIndex() == 0) ? "" : detail.get(jcmbHeadGroup.getSelectedIndex() - 1).getGRP_CD()
+                    , lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
+                    jcmbVouType.getSelectedIndex(), jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             if (call != null) {

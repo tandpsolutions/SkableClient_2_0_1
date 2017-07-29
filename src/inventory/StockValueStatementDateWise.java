@@ -251,7 +251,9 @@ public class StockValueStatementDateWise extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         Call<JsonObject> call = inventoryAPI.GetStockValueStatementDateWise(sr_cd,
                 ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""), code, model_cd,
-                lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""));
+                lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
+                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 

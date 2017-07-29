@@ -270,7 +270,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     try {
         AccountAPI inventoryAPI = lb.getRetrofit().create(AccountAPI.class
         );
-        JsonObject call = inventoryAPI.PurchaseRateByTag(jtxtTagNo.getText()).execute().body();
+        JsonObject call = inventoryAPI.PurchaseRateByTag(jtxtTagNo.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.addGlassPane(this);
 

@@ -64,7 +64,7 @@ public class RamMasterController extends javax.swing.JDialog {
             return;
         }
         if (ram_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("rammst", "ram_cd", "ram_name", jtxtRamName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("rammst", "ram_cd", "ram_name", jtxtRamName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -86,7 +86,7 @@ public class RamMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("rammst", "ram_cd", "ram_name", jtxtRamName.getText(), "ram_cd", ram_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("rammst", "ram_cd", "ram_name", jtxtRamName.getText(), "ram_cd", ram_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -111,7 +111,7 @@ public class RamMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = ramAPI.addUpdateRamMaster(ram_cd, jtxtRamName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = ramAPI.addUpdateRamMaster(ram_cd, jtxtRamName.getText(), SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

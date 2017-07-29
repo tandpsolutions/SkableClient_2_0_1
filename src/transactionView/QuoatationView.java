@@ -95,7 +95,7 @@ public class QuoatationView extends javax.swing.JInternalFrame {
 
     public void setData() {
         lb.addGlassPane(this);
-        Call<PurchaseHead> call = quotationAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()));
+        Call<PurchaseHead> call = quotationAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -216,7 +216,7 @@ public class QuoatationView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(QuoatationView.this);
-                            quotationAPI.DeleteQuotationBill(ref_no).enqueue(new Callback<JsonObject>() {
+                            quotationAPI.DeleteQuotationBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(QuoatationView.this);

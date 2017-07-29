@@ -410,7 +410,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                Call<JsonObject> call = StkAdjAPI.getBill(ref_no);
+                Call<JsonObject> call = StkAdjAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year);
                 call.enqueue(new Callback<JsonObject>() {
 
                     @Override
@@ -522,7 +522,7 @@ public class StockAdjustmentController extends javax.swing.JDialog {
 
         String detailJson = new Gson().toJson(detail);
 
-        Call<JsonObject> addUpdaCall = StkAdjAPI.AddUpdateStkAdjBill(detailJson);
+        Call<JsonObject> addUpdaCall = StkAdjAPI.AddUpdateStkAdjBill(detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override

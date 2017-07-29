@@ -167,7 +167,8 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
             JsonObject call = accountAPI.BranchWisePendingCollecionReport(((jComboBox2.getSelectedIndex() > 0)
                     ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
                     jComboBox1.getSelectedIndex() - 1, ((jComboBox3.getSelectedIndex() > 0)
-                    ? Constants.REFERAL.get(jComboBox3.getSelectedIndex() - 1).getREF_CD() : "0"), lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                    ? Constants.REFERAL.get(jComboBox3.getSelectedIndex() - 1).getREF_CD() : "0"), lb.ConvertDateFormetForDB(jtxtFromDate.getText())
+                    , lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             JsonObject result = call;
@@ -605,7 +606,8 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 5).toString(), jTable1.getValueAt(row, 11).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 2).toString(), jTable1.getValueAt(row, 5).toString()
+                                , jTable1.getValueAt(row, 11).toString(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {

@@ -323,7 +323,7 @@ public class SeriesMasterView extends javax.swing.JInternalFrame {
 
     public void getData() {
         if (!jTextField1.getText().trim().equalsIgnoreCase("")) {
-            Call<JsonObject> call = seriesAPI.getSeriesMaster(jTextField1.getText().trim(), code);
+            Call<JsonObject> call = seriesAPI.getSeriesMaster(jTextField1.getText().trim(), code,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override

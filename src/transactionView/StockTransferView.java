@@ -71,7 +71,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
     private void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = stkTrAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", vType + "").execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", vType + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.removeGlassPane(StockTransferView.this);
         if (call != null) {
@@ -175,7 +175,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(StockTransferView.this);
-                            stkTrAPI.DeleteStkAdjBill(ref_no).enqueue(new Callback<JsonObject>() {
+                            stkTrAPI.DeleteStkAdjBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(StockTransferView.this);

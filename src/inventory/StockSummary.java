@@ -260,7 +260,9 @@ public class StockSummary extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         Call<JsonObject> call = inventoryAPI.GetStockSummary(sr_cd, ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""), code,
                 jCheckBox1.isSelected(), model_cd, jCheckBox2.isSelected(), jCheckBox3.isSelected(),
-                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""));
+                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "")
+                , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 
@@ -377,7 +379,9 @@ public class StockSummary extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         Call<JsonObject> call = inventoryAPI.GetStockSummary(sr_cd, ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""), code,
                 jCheckBox1.isSelected(), model_cd, false, false,
-                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""));
+                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "")
+                , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                ,SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<JsonObject>() {
 
             @Override
@@ -452,7 +456,9 @@ public class StockSummary extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         Call<JsonObject> call = inventoryAPI.GetStockSummary(sr_cd, ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""), code,
                 jCheckBox1.isSelected(), model_cd, false, false,
-                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""));
+                ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "")
+                , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                ,SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<JsonObject>() {
 
             @Override

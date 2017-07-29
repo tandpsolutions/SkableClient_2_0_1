@@ -16,10 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -114,7 +110,7 @@ public class StockInOUTReport extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         JsonObject call = inventoryAPI.GetStockInOutReport((jComboBox1.getSelectedIndex() == 0) ? "" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd(),
                 lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.removeGlassPane(StockInOUTReport.this);
         if (call != null) {

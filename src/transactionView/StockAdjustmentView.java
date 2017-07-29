@@ -68,7 +68,7 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = stkAdjAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 JsonObject result = call;
@@ -193,7 +193,7 @@ public class StockAdjustmentView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             try {
                                 lb.addGlassPane(StockAdjustmentView.this);
-                                JsonObject call = stkAdjAPI.DeleteStkAdjBill(jTable1.getValueAt(row, 0).toString()).execute().body();
+                                JsonObject call = stkAdjAPI.DeleteStkAdjBill(jTable1.getValueAt(row, 0).toString(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                                 if (call != null) {
                                     if (call.get("result").getAsInt() == 1) {

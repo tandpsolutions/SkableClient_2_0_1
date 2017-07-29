@@ -100,7 +100,7 @@ public class TaxMasterController extends javax.swing.JDialog {
             return;
         }
         if (tax_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("taxmst", "tax_cd", "tax_name", jtxtTaxName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("taxmst", "tax_cd", "tax_name", jtxtTaxName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -122,7 +122,7 @@ public class TaxMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("taxmst", "tax_cd", "tax_name", jtxtTaxName.getText(), "tax_cd", tax_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("taxmst", "tax_cd", "tax_name", jtxtTaxName.getText(), "tax_cd", tax_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

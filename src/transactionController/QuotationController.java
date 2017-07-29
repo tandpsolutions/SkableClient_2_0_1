@@ -816,7 +816,7 @@ public class QuotationController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson);
+        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -858,7 +858,7 @@ public class QuotationController extends javax.swing.JDialog {
     }
 
     public void getData(final String data) {
-        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "");
+        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "",SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

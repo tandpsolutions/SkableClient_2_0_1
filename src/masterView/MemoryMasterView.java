@@ -200,7 +200,7 @@ public class MemoryMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = memoryAPI.getColorMaster();
+        Call<JsonObject> call = memoryAPI.getColorMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

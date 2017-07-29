@@ -80,7 +80,7 @@ public class ListBill extends javax.swing.JInternalFrame {
         try {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
-            JsonObject call = accountAPI.ListBills(ac_cd, false).execute().body();
+            JsonObject call = accountAPI.ListBills(ac_cd, false,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -129,7 +129,7 @@ public class ListBill extends javax.swing.JInternalFrame {
         try {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
-            JsonObject call = accountAPI.ListBills(ac_cd, true).execute().body();
+            JsonObject call = accountAPI.ListBills(ac_cd, true,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -177,7 +177,7 @@ public class ListBill extends javax.swing.JInternalFrame {
         try {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
 
-            JsonObject call = accountAPI.ListBillsAdjsted(ac_cd).execute().body();
+            JsonObject call = accountAPI.ListBillsAdjsted(ac_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -245,7 +245,8 @@ public class ListBill extends javax.swing.JInternalFrame {
                     jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString(), jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString(),
                     jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString(),
                     jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString(), jTable2.getValueAt(jTable2.getSelectedRow(), 5).toString(),
-                    jTable1.getValueAt(jTable1.getSelectedRow(), 6).toString(), jTable2.getValueAt(jTable2.getSelectedRow(), 6).toString(), ac_cd).execute().body();
+                    jTable1.getValueAt(jTable1.getSelectedRow(), 6).toString(), jTable2.getValueAt(jTable2.getSelectedRow(), 6).toString(), ac_cd
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (addUpdaCall != null) {
                 System.out.println(addUpdaCall.toString());
@@ -629,7 +630,8 @@ public class ListBill extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 0).toString(), ac_cd, jTable1.getValueAt(row, 6).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable1.getValueAt(row, 0).toString(), ac_cd, jTable1.getValueAt(row, 6).toString()
+                                ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {
@@ -653,7 +655,8 @@ public class ListBill extends javax.swing.JInternalFrame {
                 {
                     try {
                         final AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable2.getValueAt(row, 0).toString(), ac_cd, jTable2.getValueAt(row, 6).toString()).execute().body();
+                        JsonObject call = accountAPI.UpdateOLDB2_4(amt + "", jTable2.getValueAt(row, 0).toString(), ac_cd, jTable2.getValueAt(row, 6).toString()
+                                ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                         JsonObject result = call;
                         lb.showMessageDailog(result.get("Cause").getAsString());
                         if (result.get("result").getAsInt() == 1) {

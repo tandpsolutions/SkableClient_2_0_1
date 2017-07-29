@@ -71,7 +71,7 @@ public class SalesmanController extends javax.swing.JDialog {
             return;
         }
         if (sm_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("smmst", "sm_cd", "sm_name", jtxtSmName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("smmst", "sm_cd", "sm_name", jtxtSmName.getText(),SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -93,7 +93,7 @@ public class SalesmanController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("smmst", "sm_Cd", "sm_name", jtxtSmName.getText(), "sm_cd", sm_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("smmst", "sm_Cd", "sm_name", jtxtSmName.getText(), "sm_cd", sm_cd,SkableHome.db_name,SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -118,7 +118,7 @@ public class SalesmanController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = salesmanAPI.AddUpdateSalesmanMaster(sm_cd, jtxtSmName.getText(), SkableHome.user_id, SkableHome.selected_year);
+        Call<JsonObject> call = salesmanAPI.AddUpdateSalesmanMaster(sm_cd, jtxtSmName.getText(), SkableHome.user_id, SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

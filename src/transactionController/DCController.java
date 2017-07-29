@@ -440,7 +440,7 @@ public class DCController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                Call<JsonObject> call = dcAPI.getBill(ref_no);
+                Call<JsonObject> call = dcAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year);
                 call.enqueue(new Callback<JsonObject>() {
 
                     @Override
@@ -638,7 +638,7 @@ public class DCController extends javax.swing.JDialog {
 
         String detailJson = new Gson().toJson(detail);
 
-        Call<JsonObject> addUpdaCall = dcAPI.AddUpdateSalesBill(detailJson);
+        Call<JsonObject> addUpdaCall = dcAPI.AddUpdateSalesBill(detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override

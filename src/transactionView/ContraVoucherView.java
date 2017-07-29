@@ -94,7 +94,8 @@ public class ContraVoucherView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = contraAPI.GetContraVoucher(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd()).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd()
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {

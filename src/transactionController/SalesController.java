@@ -303,7 +303,7 @@ public class SalesController extends javax.swing.JDialog {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0").execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             jcmbScheme.removeAllItems();
             for (int i = 0; i < detail.size(); i++) {
                 jcmbScheme.addItem(detail.get(i).getSCHEME_NAME());
@@ -685,7 +685,7 @@ public class SalesController extends javax.swing.JDialog {
 
                 if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
                     try {
-                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -786,7 +786,7 @@ public class SalesController extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -818,7 +818,7 @@ public class SalesController extends javax.swing.JDialog {
                 if (lb.isEnter(e)) {
                     if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
                         try {
-                            JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                            JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                             if (call != null) {
                                 JsonArray array = call.getAsJsonArray("data");
                                 if (array.size() > 0) {
@@ -1690,7 +1690,7 @@ public class SalesController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = salesAPI.addUpdateSalesBill(headerJson, detailJson);
+        Call<JsonObject> addUpdaCall = salesAPI.addUpdateSalesBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override

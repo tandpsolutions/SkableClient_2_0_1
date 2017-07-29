@@ -948,7 +948,9 @@ public class DayWiseStockSummary extends javax.swing.JInternalFrame {
             JsonObject call = inventoryAPI.GetDayWiseStockSummary(code, mode, type_CD,
                     jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                     date_mode, before_rate, after_rate, rate_mode,
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "")
+                    , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(DayWiseStockSummary.this);
             if (call != null) {
@@ -1063,7 +1065,9 @@ public class DayWiseStockSummary extends javax.swing.JInternalFrame {
             JsonObject call = inventoryAPI.GetDayWiseStockSummary(code, mode, type_CD,
                     jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                     date_mode, before_rate, after_rate, rate_mode,
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "")
+                    , ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(DayWiseStockSummary.this);
             if (call != null) {

@@ -74,8 +74,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetSalesBillPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -218,7 +218,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getJobSheetPrint(String ref_no) {
         try {
             JobSheetAPI salesAPI = lb.getRetrofit().create(JobSheetAPI.class);
-            JsonObject call = salesAPI.getJobSheetDetail(ref_no).execute().body();
+            JsonObject call = salesAPI.getJobSheetDetail(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -268,8 +268,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getBulkSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
@@ -361,8 +361,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getSalesReturnBillPrint(String ref_no) {
         try {
             SalesReturnAPI salesAPI = lb.getRetrofit().create(SalesReturnAPI.class);
-            JsonObject call = salesAPI.GetSalesReturnPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetSalesReturnTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetSalesReturnPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesReturnTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;
@@ -426,8 +426,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getPurchaseReturnBillPrint(String ref_no) {
         try {
             PurchaseReturnAPI salesAPI = lb.getRetrofit().create(PurchaseReturnAPI.class);
-            JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no).execute().body();
-            JsonObject call1 = salesAPI.GetPurchaseReturnTaxPrint(ref_no).execute().body();
+            JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetPurchaseReturnTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;
@@ -500,7 +500,7 @@ public class PrintPanel extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase(
                 "")) {
             try {
-                JsonObject call = dcAPI.getBill(ref_no).execute().body();
+                JsonObject call = dcAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -681,7 +681,7 @@ public class PrintPanel extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase(
                 "")) {
             try {
-                JsonObject call = dcAPI.getBill(ref_no).execute().body();
+                JsonObject call = dcAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -714,7 +714,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getInsuranceBill(String ref_no) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetInsuranceBill(ref_no).execute().body();
+            JsonObject call = salesAPI.GetInsuranceBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;

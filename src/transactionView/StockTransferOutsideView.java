@@ -22,9 +22,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofitAPI.StkTrOutAPI;
 import skable.Constants;
 import skable.SkableHome;
@@ -92,7 +89,7 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
     public void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = stkTrAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
 
         lb.removeGlassPane(StockTransferOutsideView.this);
         if (call != null) {

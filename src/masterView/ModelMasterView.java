@@ -209,7 +209,7 @@ public class ModelMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = modelAPI.getModelMaster(jTextField1.getText());
+        Call<JsonObject> call = modelAPI.getModelMaster(jTextField1.getText(),SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

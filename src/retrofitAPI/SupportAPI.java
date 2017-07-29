@@ -21,17 +21,17 @@ public interface SupportAPI {
 
     @FormUrlEncoded
     @POST("ValidateData")
-    Call<JsonObject> validateData(@Field("table") String table, @Field("column1") String column1, @Field("column2") String column2, @Field("value") String value);
+    Call<JsonObject> validateData(@Field("table") String table, @Field("column1") String column1, @Field("column2") String column2, @Field("value") String value,@Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("ValidateDataEdit")
-    Call<JsonObject> ValidateDataEdit(@Field("table") String table, @Field("column1") String column1, @Field("column2") String column2, @Field("value") String value, @Field("column3") String column3, @Field("value1") String value1);
+    Call<JsonObject> ValidateDataEdit(@Field("table") String table, @Field("column1") String column1, @Field("column2") String column2, @Field("value") String value, @Field("column3") String column3, @Field("value1") String value1,@Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @GET("GetNotes")
-    Call<JsonObject> getNotes(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("ac_cd") String ac_cd);
+    Call<JsonObject> getNotes(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("ac_cd") String ac_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("AddNote")
     Call<JsonObject> addNote(@Field("rec_no") String rec_no, @Field("from_date") String from_date, @Field("to_date") String to_date,
-            @Field("ac_cd") String ac_cd, @Field("descr") String descr);
+            @Field("ac_cd") String ac_cd, @Field("descr") String descr,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

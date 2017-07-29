@@ -271,7 +271,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     lb.addGlassPane(this);
     JsonObject call;
     try {
-        call = inventoryAPI.MarginReportByTag(jtxtTagNo.getText()).execute().body();
+        call = inventoryAPI.MarginReportByTag(jtxtTagNo.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
         if (call != null) {
             JsonObject result = call;
             if (result.get("result").getAsInt() == 1) {

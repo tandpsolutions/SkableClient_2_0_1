@@ -128,10 +128,10 @@ public class SalesView extends javax.swing.JInternalFrame {
             PurchaseHead call;
             if (formCd == 130) {
                 call = salesAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else {
                 call = salesAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "").execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             if (call != null) {
                 System.out.println(call.toString());
@@ -261,7 +261,7 @@ public class SalesView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(SalesView.this);
-                            salesAPI.DeleteSalesBill(ref_no).enqueue(new Callback<JsonObject>() {
+                            salesAPI.DeleteSalesBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(SalesView.this);

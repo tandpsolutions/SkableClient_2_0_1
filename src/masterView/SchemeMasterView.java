@@ -200,7 +200,7 @@ public class SchemeMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = schemeAPI.getSchemeMaster();
+        Call<JsonObject> call = schemeAPI.getSchemeMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

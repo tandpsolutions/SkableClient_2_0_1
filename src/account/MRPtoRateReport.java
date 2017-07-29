@@ -401,7 +401,7 @@ public class MRPtoRateReport extends javax.swing.JInternalFrame {
                     ac_cd, sr_cd, brand_cd, model_cd,
                     ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
                     ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""),
-                    jCheckBox2.isSelected(), jComboBox1.getSelectedIndex()).execute().body();
+                    jCheckBox2.isSelected(), jComboBox1.getSelectedIndex(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

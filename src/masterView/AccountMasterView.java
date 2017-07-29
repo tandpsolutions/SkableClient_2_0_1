@@ -56,7 +56,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = groupAPI.GetGroupMaster();
+        Call<JsonObject> call = groupAPI.GetGroupMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -232,7 +232,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getAccountData() {
-        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null);
+        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

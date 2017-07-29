@@ -853,7 +853,8 @@ public class ItemWisePS extends javax.swing.JInternalFrame {
             lb.addGlassPane(this);
             JsonObject call = accountAPI.IMEWisePS(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), model_cd, ac_cd, type_cd, brand_cd, bill_no, sub_type_cd, sr_cd
-            ,((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+            ,((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

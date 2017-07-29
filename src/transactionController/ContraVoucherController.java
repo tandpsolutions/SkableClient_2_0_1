@@ -283,7 +283,7 @@ public class ContraVoucherController extends javax.swing.JDialog {
                     detail.add(model);
                 }
                 String detailJson = new Gson().toJson(detail);
-                JsonObject addUpdaCall = contraAPI.AddUpdateContraVoucher(detailJson).execute().body();
+                JsonObject addUpdaCall = contraAPI.AddUpdateContraVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 lb.addGlassPane(this);
 
                 lb.removeGlassPane(ContraVoucherController.this);

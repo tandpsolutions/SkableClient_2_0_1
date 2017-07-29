@@ -436,7 +436,7 @@ public class NotesController extends javax.swing.JDialog {
         if (retStatus == RET_OK) {
             final SupportAPI supportAPI = lb.getRetrofit().create(SupportAPI.class);
             try {
-                JsonObject call = supportAPI.addNote(rec_no, lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, jTextArea1.getText()).execute().body();
+                JsonObject call = supportAPI.addNote(rec_no, lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, jTextArea1.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                 if (call != null) {
                     if (call.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Note add successfully");

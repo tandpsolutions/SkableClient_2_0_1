@@ -735,7 +735,8 @@ public class HighestStockValueStatement extends javax.swing.JInternalFrame {
             lb.addGlassPane(this);
             JsonObject call = inventoryAPI.GetStockValueSummary(code, mode, type_CD,
                     jComboBox1.getSelectedIndex() + "",
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), sub_type_CD).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), sub_type_CD
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(HighestStockValueStatement.this);
             if (call != null) {
@@ -816,7 +817,8 @@ public class HighestStockValueStatement extends javax.swing.JInternalFrame {
             lb.addGlassPane(this);
             JsonObject call = inventoryAPI.GetStockValueSummary(code, mode, type_CD,
                     jComboBox1.getSelectedIndex() + "",
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), sub_type_CD).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""), sub_type_CD
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(HighestStockValueStatement.this);
 

@@ -21,29 +21,29 @@ import retrofit2.http.Query;
 public interface PurchaseReturnAPI {
 
     @GET("GetPurchaseReturnHeader")
-    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd);
+    Call<PurchaseHead> getDataHeader(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("v_type") String v_type, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code,@Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code,@Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("GetDataFromServer")
     Call<JsonObject> getTagNoDetailSales(@Query("tag_list") String ref_no, @Query("param_code") String param_code,
-            @Query("only_stock") boolean flag, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("ac_year") String ac_year);
+            @Query("only_stock") boolean flag, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @GET("GetPurchaseRateByTag")
-    Call<JsonObject> GetPurchaseRateByTag(@Query("tag_no") String tag_no);
+    Call<JsonObject> GetPurchaseRateByTag(@Query("tag_no") String tag_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetPurchaseReturnPrint")
-    Call<JsonObject> GetPurchaseReturnPrint(@Query("ref_no") String ref_no);
+    Call<JsonObject> GetPurchaseReturnPrint(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetPurchaseReturnTaxPrint")
-    Call<JsonObject> GetPurchaseReturnTaxPrint(@Query("ref_no") String ref_no);
+    Call<JsonObject> GetPurchaseReturnTaxPrint(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("AddUpdatePurchaseReturnBill")
-    Call<JsonObject> addUpdatePurchaseReturnBill(@Field("header") String ref_no, @Field("detail") String param_code);
+    Call<JsonObject> addUpdatePurchaseReturnBill(@Field("header") String ref_no, @Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("DeletePurchaseReturn")
-    Call<JsonObject> DeletePurchaseReturn(@Field("ref_no") String param_code);
+    Call<JsonObject> DeletePurchaseReturn(@Field("ref_no") String param_code,@Query("db_name") String db_name, @Query("db_year") String db_year);
 }

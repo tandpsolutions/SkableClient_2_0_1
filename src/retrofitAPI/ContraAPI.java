@@ -20,12 +20,12 @@ import retrofit2.http.Query;
 public interface ContraAPI {
 
     @GET("GetContraVoucher")
-    Call<JsonObject> GetContraVoucher(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("branch_cd") String branch_cd);
+    Call<JsonObject> GetContraVoucher(@Query("from_date") String from_date, @Query("to_date") String to_date, @Query("branch_cd") String branch_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetDataFromServer")
-    Call<JsonObject> getContraVoucher(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
+    Call<JsonObject> getContraVoucher(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateContraVoucher")
-    Call<JsonObject> AddUpdateContraVoucher(@Field("detail") String param_code);
+    Call<JsonObject> AddUpdateContraVoucher(@Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
 }

@@ -201,7 +201,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
             try {
                 ModelAPI inventoryAPI = lb.getRetrofit().create(ModelAPI.class);
-                JsonObject call = inventoryAPI.updateBulkHSN(dataJson).execute().body();
+                JsonObject call = inventoryAPI.updateBulkHSN(dataJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     JsonObject result = call;

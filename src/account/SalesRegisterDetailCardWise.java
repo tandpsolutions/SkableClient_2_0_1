@@ -159,7 +159,7 @@ public class SalesRegisterDetailCardWise extends javax.swing.JInternalFrame {
             if (!jCheckBox1.isSelected()) {
                 ac_cd = "";
             }
-            JsonObject call = accountAPI.CardWiseSalesDetailStatement(ac_cd).execute().body();
+            JsonObject call = accountAPI.CardWiseSalesDetailStatement(ac_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

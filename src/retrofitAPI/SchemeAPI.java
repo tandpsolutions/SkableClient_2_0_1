@@ -17,12 +17,12 @@ import retrofit2.http.Query;
 public interface SchemeAPI {
 
     @GET("GetSchemeMaster")
-    Call<JsonObject> getSchemeMaster();
+    Call<JsonObject> getSchemeMaster(@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("GetSchemeMaster")
-    Call<JsonObject> getSchemeMaster(@Query("type_cd") String type_cd);
+    Call<JsonObject> getSchemeMaster(@Query("type_cd") String type_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("AddUpdateSchemeMaster")
-    Call<JsonObject> addUpdateSchemeMaster(@Query("scheme_cd") String scheme_cd, @Query("scheme_name") String scheme_name, @Query("type_cd") String type_cd, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year);
+    Call<JsonObject> addUpdateSchemeMaster(@Query("scheme_cd") String scheme_cd, @Query("scheme_name") String scheme_name, @Query("type_cd") String type_cd, @Query("user_id") String user_id, @Query("AC_YEAR") String ac_year,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
 }

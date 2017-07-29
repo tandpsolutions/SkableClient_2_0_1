@@ -128,7 +128,7 @@ public class CreateSalesAccount extends javax.swing.JDialog {
     }
 
     private void saveVoucher(AccountMasterModel acc) {
-        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc), SkableHome.selected_year);
+        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc), SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

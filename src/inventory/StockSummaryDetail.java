@@ -128,7 +128,7 @@ public class StockSummaryDetail extends javax.swing.JInternalFrame {
         InventoryAPI inventoryAPI = lb.getRetrofit().create(InventoryAPI.class);
 
         lb.addGlassPane(this);
-        Call<JsonObject> call = inventoryAPI.GetStockSummaryDetail(sr_cd);
+        Call<JsonObject> call = inventoryAPI.GetStockSummaryDetail(sr_cd,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 

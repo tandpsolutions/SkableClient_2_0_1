@@ -1017,7 +1017,8 @@ public class StockValueStatementAccess extends javax.swing.JInternalFrame {
                 jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                 date_mode, before_rate, after_rate, rate_mode,
                 ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""),
-                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex());
+                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox3.getSelectedIndex()
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 
@@ -1134,7 +1135,8 @@ public class StockValueStatementAccess extends javax.swing.JInternalFrame {
                 jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                 date_mode, before_rate, after_rate, rate_mode,
                 ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""),
-                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), 0);
+                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), 0
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 
@@ -1238,7 +1240,8 @@ public class StockValueStatementAccess extends javax.swing.JInternalFrame {
                 jComboBox1.getSelectedIndex() + "", before_date, after_date, equal_date,
                 date_mode, before_rate, after_rate, rate_mode,
                 ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : ""),
-                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), 0);
+                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), 0
+                ,SkableHome.db_name,SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
 

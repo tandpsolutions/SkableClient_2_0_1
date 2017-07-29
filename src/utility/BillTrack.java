@@ -79,7 +79,7 @@ public class BillTrack extends javax.swing.JInternalFrame {
         lb.addGlassPane(this);
         Call<PurchaseHead> call = salesAPI.SalesTrack(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                 lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : ""),
-                jtxtImei.getText(), jtxtName.getText(), jtxtMobile.getText(), jtxtBillNo.getText());
+                jtxtImei.getText(), jtxtName.getText(), jtxtMobile.getText(), jtxtBillNo.getText(),SkableHome.db_name,SkableHome.selected_year);
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -204,7 +204,7 @@ public class BillTrack extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(BillTrack.this);
-                            salesAPI.DeleteSalesBill(ref_no).enqueue(new Callback<JsonObject>() {
+                            salesAPI.DeleteSalesBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(BillTrack.this);

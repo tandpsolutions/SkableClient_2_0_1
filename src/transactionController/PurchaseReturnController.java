@@ -488,7 +488,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = purchaseReturnAPI.GetPurchaseRateByTag(jtxtTag.getText()).execute().body();
+                        JsonObject call = purchaseReturnAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -1151,7 +1151,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        JsonObject addUpdaCall = purchaseReturnAPI.addUpdatePurchaseReturnBill(headerJson, detailJson).execute().body();
+        JsonObject addUpdaCall = purchaseReturnAPI.addUpdatePurchaseReturnBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
         lb.addGlassPane(this);
 
         lb.removeGlassPane(PurchaseReturnController.this);

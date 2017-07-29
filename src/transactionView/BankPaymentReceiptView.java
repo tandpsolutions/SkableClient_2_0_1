@@ -115,7 +115,8 @@ public class BankPaymentReceiptView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = bankAPI.GetBankPaymentHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd()).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd()
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
@@ -230,7 +231,8 @@ public class BankPaymentReceiptView extends javax.swing.JInternalFrame {
                             try {
                                 String ref_no = jTable1.getValueAt(row, 1).toString();
                                 lb.addGlassPane(BankPaymentReceiptView.this);
-                                JsonObject object = bankAPI.DeleteBankBill(ref_no, vType).execute().body();
+                                JsonObject object = bankAPI.DeleteBankBill(ref_no, vType
+                                        ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                                 lb.removeGlassPane(BankPaymentReceiptView.this);
 

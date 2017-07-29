@@ -682,7 +682,9 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     );
     lb.addGlassPane(this);
     Call<JsonObject> call = inventoryAPI.GetStockLedger(sr_cd, lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), jComboBox3.getSelectedItem().toString());
+            lb.ConvertDateFormetForDB(jtxtToDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+            , jComboBox3.getSelectedItem().toString()
+            ,SkableHome.db_name,SkableHome.selected_year);
 
     call.enqueue(new Callback<JsonObject>() {
         @Override

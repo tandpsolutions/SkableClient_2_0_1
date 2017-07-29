@@ -383,7 +383,7 @@ public class BuyBackRegister extends javax.swing.JInternalFrame {
             }
             JsonObject call = accountAPI.BuyBackRegister(((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, sr_cd, brand_cd, model_cd).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, sr_cd, brand_cd, model_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

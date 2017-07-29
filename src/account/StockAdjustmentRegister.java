@@ -354,7 +354,8 @@ public class StockAdjustmentRegister extends javax.swing.JInternalFrame {
                 jtxtProductName.setText("");
             }
             JsonObject call = accountAPI.GetStockAdjustmentRegister(((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
-                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), sr_cd, brand_cd, model_cd).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), sr_cd, brand_cd, model_cd
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             if (call != null) {

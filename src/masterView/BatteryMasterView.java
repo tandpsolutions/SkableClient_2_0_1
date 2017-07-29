@@ -196,7 +196,7 @@ public class BatteryMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = bateryMasterAPI.getBatteryMaster();
+        Call<JsonObject> call = bateryMasterAPI.getBatteryMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

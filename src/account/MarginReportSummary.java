@@ -807,7 +807,8 @@ public class MarginReportSummary extends javax.swing.JInternalFrame {
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), mode, sr_cd, brand_cd, model_cd,
                     ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     jComboBox1.getSelectedIndex(),
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), jCheckBox1.isSelected(), jCheckBox2.isSelected()).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    , jCheckBox1.isSelected(), jCheckBox2.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

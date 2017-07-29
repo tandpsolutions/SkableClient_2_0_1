@@ -866,7 +866,8 @@ public class ItemWisePSSales extends javax.swing.JInternalFrame {
 
             JsonObject call = accountAPI.IMEWisePSSales(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), model_cd, ac_cd, type_cd, jCheckBox3.isSelected(), brand_cd, bill_no, 
-                    sub_type_cd, sr_cd,((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                    sub_type_cd, sr_cd,((jComboBox1.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

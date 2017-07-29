@@ -573,7 +573,9 @@ public class TypeWiseProfitStatement extends javax.swing.JInternalFrame {
             JsonObject call = accountAPI.TypeWiseProftStatement(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), model_cd, ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
+                    model_cd, ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             model_cd = "";
             jtxtModelName.setText("");
             lb.addGlassPane(this);

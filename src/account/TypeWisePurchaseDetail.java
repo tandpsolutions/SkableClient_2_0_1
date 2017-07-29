@@ -127,7 +127,7 @@ public class TypeWisePurchaseDetail extends javax.swing.JInternalFrame {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1").execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             for (int i = 0; i < detail.size(); i++) {
                 jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
             }
@@ -419,7 +419,8 @@ public class TypeWisePurchaseDetail extends javax.swing.JInternalFrame {
             JsonObject call = accountAPI.TypeWisePurchaseDetail(((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ac_cd, sr_cd, brand_cd, model_cd, ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
-                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jtxtDays.getText(), (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()).execute().body();
+                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jtxtDays.getText()
+                    , (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

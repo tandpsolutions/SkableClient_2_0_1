@@ -64,7 +64,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
             return;
         }
         if (memory_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
 
@@ -89,7 +89,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText(), "MEMORY_CD", memory_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("MEMORYMST", "MEMORY_CD", "MEMORY_NAME", jtxtMemoryName.getText(), "MEMORY_CD", memory_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -118,7 +118,7 @@ public class MemoryMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher() {
-        Call<JsonObject> call = memoryAPI.addUpdateColorMaster(memory_cd, jtxtMemoryName.getText(), SkableHome.user_id,SkableHome.selected_year);
+        Call<JsonObject> call = memoryAPI.addUpdateColorMaster(memory_cd, jtxtMemoryName.getText(), SkableHome.user_id,SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

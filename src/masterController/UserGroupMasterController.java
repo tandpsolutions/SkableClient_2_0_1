@@ -19,6 +19,7 @@ import javax.swing.KeyStroke;
 import masterView.UserGroupMasterView;
 import retrofitAPI.SupportAPI;
 import retrofitAPI.UserAPI;
+import skable.SkableHome;
 import support.Library;
 
 public class UserGroupMasterController extends javax.swing.JDialog {
@@ -65,7 +66,7 @@ public class UserGroupMasterController extends javax.swing.JDialog {
         if (user_grp_cd.equalsIgnoreCase("")) {
             try {
                 JsonObject call = lb.getRetrofit().create(SupportAPI.class).
-                        validateData("USER_GRP_MST", "USER_GRP_CD", "USER_GRP", jtxtUserGroupName.getText()).execute().body();
+                        validateData("USER_GRP_MST", "USER_GRP_CD", "USER_GRP", jtxtUserGroupName.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     if (call.get("result").getAsInt() == 0) {
@@ -81,7 +82,7 @@ public class UserGroupMasterController extends javax.swing.JDialog {
         } else {
             try {
                 JsonObject call = lb.getRetrofit().create(SupportAPI.class)
-                        .ValidateDataEdit("USER_GRP_MST", "USER_GRP_CD", "USER_GRP", jtxtUserGroupName.getText(), "USER_GRP_CD", user_grp_cd).execute().body();
+                        .ValidateDataEdit("USER_GRP_MST", "USER_GRP_CD", "USER_GRP", jtxtUserGroupName.getText(), "USER_GRP_CD", user_grp_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     if (call.get("result").getAsInt() == 0) {

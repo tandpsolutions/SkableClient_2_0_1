@@ -263,7 +263,8 @@ public class CreditNoteListReport extends javax.swing.JInternalFrame {
                     model_cd,
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd, memory_cd,
                     jCheckBox5.isSelected(), brand_cd,
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")).execute().body();
+                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

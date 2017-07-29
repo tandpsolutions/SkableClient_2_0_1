@@ -90,7 +90,7 @@ public class AccountMasterController extends javax.swing.JDialog {
     }
 
     private void getData() {
-        Call<JsonObject> call = groupAPI.GetGroupMaster();
+        Call<JsonObject> call = groupAPI.GetGroupMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -121,7 +121,7 @@ public class AccountMasterController extends javax.swing.JDialog {
     }
 
     private void getAccountMaster() {
-        Call<JsonObject> call = api.getAccountMasterCode(ac_cd);
+        Call<JsonObject> call = api.getAccountMasterCode(ac_cd,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -250,7 +250,7 @@ public class AccountMasterController extends javax.swing.JDialog {
     }
 
     private void saveVoucher(AccountMasterModel acc) {
-        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc), SkableHome.selected_year);
+        Call<JsonObject> call = api.AddUpdateAccountMaster(new Gson().toJson(acc), SkableHome.selected_year,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

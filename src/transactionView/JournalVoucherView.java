@@ -94,7 +94,7 @@ public class JournalVoucherView extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = journalAPI.GetJournalVoucher(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd()).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd(),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
@@ -206,7 +206,7 @@ public class JournalVoucherView extends javax.swing.JInternalFrame {
                             try {
                                 String ref_no = jTable1.getValueAt(row, 0).toString();
                                 lb.addGlassPane(JournalVoucherView.this);
-                                JsonObject object = journalAPI.deleteJournalEntry(ref_no).execute().body();
+                                JsonObject object = journalAPI.deleteJournalEntry(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                                 lb.removeGlassPane(JournalVoucherView.this);
 

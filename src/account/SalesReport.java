@@ -88,13 +88,13 @@ public class SalesReport extends javax.swing.JInternalFrame {
             lb.addGlassPane(this);
             JsonObject call = null;
             if (mode == 0) {
-                call = accountAPI.SalesReport(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                call = accountAPI.SalesReport(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else if (mode == 1) {
-                call = accountAPI.SalesReportTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                call = accountAPI.SalesReportTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else if (mode == 2) {
-                call = accountAPI.SalesReturnReportTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                call = accountAPI.SalesReturnReportTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else if (mode == 3) {
-                call = accountAPI.PurchaseReturnTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText())).execute().body();
+                call = accountAPI.PurchaseReturnTax(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             lb.removeGlassPane(this);
 

@@ -349,7 +349,7 @@ public class TagTrack extends javax.swing.JInternalFrame {
 private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnViewActionPerformed
     InventoryAPI inventoryAPI = lb.getRetrofit().create(InventoryAPI.class
     );
-    Call<JsonObject> call = inventoryAPI.GetTagTrack(jtxtTagNo.getText().trim());
+    Call<JsonObject> call = inventoryAPI.GetTagTrack(jtxtTagNo.getText().trim(),SkableHome.db_name,SkableHome.selected_year);
 
     lb.addGlassPane(this);
     call.enqueue(new Callback<JsonObject>() {

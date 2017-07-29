@@ -181,7 +181,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
     public void setData(final String sr_cd, final String sr_alias, final String sr_name, final String brand_name, final String model_name,
             final String memory_name, final String color_name, final String type, final String sub_type, final String tax_name, final String ram_name, final String camera_name, final String battery_name) {
 
-        Call<JsonObject> call = seriesAPI.getSetUpData(sr_cd);
+        Call<JsonObject> call = seriesAPI.getSetUpData(sr_cd,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -606,7 +606,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         if (sr_cd.equalsIgnoreCase("")) {
             try {
-                JsonObject call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText()).execute().body();
+                JsonObject call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                 if (call
                         != null) {
                     if (call.get("result").getAsInt() == 0) {
@@ -624,7 +624,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
         } else {
             try {
-                JsonObject call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText(), "sr_cd", sr_cd).execute().body();
+                JsonObject call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "SR_ALIAS", jtxtSeriesAlias.getText(), "sr_cd", sr_cd,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call
                         != null) {
@@ -695,7 +695,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
         addName();
 
         if (sr_cd.equalsIgnoreCase("")) {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "sr_name", jtxtItemName.getText());
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).validateData("seriesmst", "sr_cd", "sr_name", jtxtItemName.getText(),SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(
                     this);
             call.enqueue(
@@ -721,7 +721,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 }
             });
         } else {
-            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "sr_name", jtxtSeriesAlias.getText(), "sr_cd", sr_cd);
+            Call<JsonObject> call = lb.getRetrofit().create(SupportAPI.class).ValidateDataEdit("seriesmst", "sr_cd", "sr_name", jtxtSeriesAlias.getText(), "sr_cd", sr_cd,SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(
                     this);
             call.enqueue(
@@ -770,7 +770,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
         }
         String detailJson = new Gson().toJson(detail);
         Call<JsonObject> call = seriesAPI.appUpdateSeriesMaster(sr_cd, jtxtSeriesAlias.getText(), jtxtItemName.getText(),
-                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal), SkableHome.selected_year, ram_cd, camera_cd, battery_cd);
+                "", model_cd, memory_cd, color_cd, SkableHome.user_id, detailJson, (int) lb.isNumber(jtxtQty), lb.isNumber(jtxtVal), SkableHome.selected_year, ram_cd, camera_cd, battery_cd,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -832,7 +832,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setDefaultRamValue() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(RamAPI.class).getDefaultRamValue();
+            Call<JsonObject> call = lb.getRetrofit().create(RamAPI.class).getDefaultRamValue(SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(
                     this);
             call.enqueue(
@@ -872,7 +872,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setDefaultCameraValue() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(CameraAPI.class).getDefaultCameraValue();
+            Call<JsonObject> call = lb.getRetrofit().create(CameraAPI.class).getDefaultCameraValue(SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(
                     this);
             call.enqueue(
@@ -912,7 +912,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
 
     private void setDefaultBatteryValue() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(BateryMasterAPI.class).getDefaultBatteryMaster();
+            Call<JsonObject> call = lb.getRetrofit().create(BateryMasterAPI.class).getDefaultBatteryMaster(SkableHome.db_name,SkableHome.selected_year);
             lb.addGlassPane(
                     this);
             call.enqueue(

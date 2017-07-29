@@ -94,7 +94,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             jComboBox1.setEnabled(false);
         }
 
-        Call<JsonObject> call = jobSheetAPI.getJobType();
+        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -126,7 +126,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                 int row = jTable1.getSelectedRow();
                 if (row != -1) {
                     String ref_no = jTable1.getValueAt(row, 0).toString();
-                    Call<JsonObject> call = jobSheetAPI.closeJobSheet(ref_no);
+                    Call<JsonObject> call = jobSheetAPI.closeJobSheet(ref_no,SkableHome.db_name,SkableHome.selected_year);
                     lb.addGlassPane(JobSheetView.this);
                     call.enqueue(new Callback<JsonObject>() {
                         @Override
@@ -158,7 +158,8 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             JsonObject call;
 
             call = jobSheetAPI.getJobSheetView(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), jComboBox2.getSelectedItem().toString(), (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "").execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), jComboBox2.getSelectedItem().toString(), (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + ""
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 System.out.println(call.toString());
                 TypeToken<List<JobSheetViewModel>> token = new TypeToken<List<JobSheetViewModel>>() {
@@ -279,7 +280,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(JobSheetView.this);
-                            jobSheetAPI.deleteJobSheet(ref_no).enqueue(new Callback<JsonObject>() {
+                            jobSheetAPI.deleteJobSheet(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(JobSheetView.this);

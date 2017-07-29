@@ -399,7 +399,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
                     detail.add(model);
                 }
                 String detailJson = new Gson().toJson(detail);
-                JsonObject addUpdaCall = cashPRAPI.addUpdateCashVoucher(detailJson).execute().body();
+                JsonObject addUpdaCall = cashPRAPI.addUpdateCashVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 lb.addGlassPane(CashPaymentReceiptController.this);
 
                 lb.removeGlassPane(CashPaymentReceiptController.this);

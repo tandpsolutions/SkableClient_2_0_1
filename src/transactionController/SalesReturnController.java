@@ -508,7 +508,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = salesReturnAPI.GetSalesRateByTag(jtxtTag.getText()).execute().body();
+                        JsonObject call = salesReturnAPI.GetSalesRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -1232,7 +1232,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = salesReturnAPI.addUpdateSalesBill(headerJson, detailJson);
+        Call<JsonObject> addUpdaCall = salesReturnAPI.addUpdateSalesBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override

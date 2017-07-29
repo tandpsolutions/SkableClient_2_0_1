@@ -199,7 +199,7 @@ public class BrandMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = brandAPI.getBrandMaster();
+        Call<JsonObject> call = brandAPI.getBrandMaster(SkableHome.db_name,SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override

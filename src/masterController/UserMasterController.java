@@ -26,6 +26,7 @@ import model.UserGrpMstModel;
 import retrofitAPI.SupportAPI;
 import retrofitAPI.UserAPI;
 import skable.Constants;
+import skable.SkableHome;
 import support.Library;
 
 public class UserMasterController extends javax.swing.JDialog {
@@ -116,7 +117,7 @@ public class UserMasterController extends javax.swing.JDialog {
         if (user_id.equalsIgnoreCase("")) {
             try {
                 JsonObject call = lb.getRetrofit().create(SupportAPI.class).
-                        validateData("modelmst", "model_cd", "model_name", jtxtUserName.getText()).execute().body();
+                        validateData("modelmst", "model_cd", "model_name", jtxtUserName.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     if (call.get("result").getAsInt() == 0) {
@@ -132,7 +133,7 @@ public class UserMasterController extends javax.swing.JDialog {
         } else {
             try {
                 JsonObject call = lb.getRetrofit().create(SupportAPI.class)
-                        .ValidateDataEdit("modelmst", "model_cd", "model_name", jtxtUserName.getText(), "model_cd", user_id).execute().body();
+                        .ValidateDataEdit("modelmst", "model_cd", "model_name", jtxtUserName.getText(), "model_cd", user_id,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     if (call.get("result").getAsInt() == 0) {
