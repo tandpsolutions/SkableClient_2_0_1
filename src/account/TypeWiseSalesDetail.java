@@ -421,7 +421,9 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                     ac_cd, sr_cd, brand_cd, model_cd,
                     ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
                     jcmbVouType.getSelectedIndex(), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""),
-                    ((jcmbSalesman.getSelectedIndex() > 0) ? Constants.SALESMAN.get(jcmbSalesman.getSelectedIndex() - 1).getSMCD() : ""), jCheckBox2.isSelected(), (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()).execute().body();
+                    ((jcmbSalesman.getSelectedIndex() > 0) ? Constants.SALESMAN.get(jcmbSalesman.getSelectedIndex() - 1).getSMCD() : ""), jCheckBox2.isSelected(), 
+                    (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

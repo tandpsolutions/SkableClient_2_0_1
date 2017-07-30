@@ -115,7 +115,8 @@ public interface AccountAPI {
     Call<JsonObject> TypeWiseSalesDetail(@Field("type_cd") String type_cd, @Field("from_date") String from_date, @Field("to_date") String to_date,
             @Field("ac_cd") String ac_cd, @Query("sr_cd") String sr_cd, @Query("brnad_cd") String brnad_cd,
             @Query("model_cd") String model_cd, @Field("branch_cd") String branch_cd, @Field("v_type") int v_type,
-            @Field("sub_type_cd") String sub_type_cd, @Field("sm_cd") String sm_cd, @Field("sales_return") boolean sales_return, @Field("scheme_cd") String scheme_cd);
+            @Field("sub_type_cd") String sub_type_cd, @Field("sm_cd") String sm_cd, @Field("sales_return") boolean sales_return, @Field("scheme_cd") String scheme_cd
+            ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("Phonebook")
