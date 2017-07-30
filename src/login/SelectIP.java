@@ -8,6 +8,7 @@ package login;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileReader;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 import model.BranchMasterModel;
 import model.DBYearModel;
 import retrofitAPI.UpdateInterface;
@@ -117,6 +120,14 @@ public class SelectIP extends javax.swing.JFrame {
     private void changeCompany() {
         test_cmp = "TEST";
         jlblCmpName.setText(test_cmp);
+        try {
+            Properties property = new Properties();
+            property.put("logoString", "");
+            AcrylLookAndFeel.setTheme(property);
+            javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            JOptionPane.showMessageDialog(null, e.getCause().getMessage());
+        }
     }
 
     /**

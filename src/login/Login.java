@@ -72,7 +72,7 @@ public class Login extends javax.swing.JFrame {
                 jtxtPassword.setText("");
                 Library.getInstance().makeConnection();
                 SkableHome home = new SkableHome();
-                
+                setUpBaseData();
                 home.setVisible(true);
                 Login.this.dispose();
                 
@@ -112,7 +112,29 @@ public class Login extends javax.swing.JFrame {
                 Constants.SALESMAN.add(model);
             }
         }
+        getTaxMaster();
     }
+    
+    private void getTaxMaster() {
+        Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer("7",SkableHome.db_name,SkableHome.selected_year);
+        try {
+            JsonObject data = call.execute().body();
+            System.out.println(data.toString());
+            int status = data.get("result").getAsInt();
+            if (status == 1) {
+                Constants.TAX.clear();
+                JsonArray array = data.getAsJsonArray("data");
+                for (int i = 0; i < array.size(); i++) {
+                    TaxMasterModel taxMasterModel = new Gson().fromJson(array.get(i), TaxMasterModel.class);
+                    Constants.TAX.add(taxMasterModel);
+                }
+            } else {
+            }
+        } catch (Exception ex) {
+            lb.showMessageDailog(ex.getMessage());
+        }
+    }
+
     @Override
     public void dispose() {
         super.dispose(); //To change body of generated methods, choose Tools | Templates.
