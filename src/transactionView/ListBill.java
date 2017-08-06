@@ -266,7 +266,7 @@ public class ListBill extends javax.swing.JInternalFrame {
     private void reverseBill(String doc_ref_no) {
         try {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class);
-            JsonObject addUpdaCall = accountAPI.ReverseBill(doc_ref_no).execute().body();
+            JsonObject addUpdaCall = accountAPI.ReverseBill(doc_ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             if (addUpdaCall != null) {
                 System.out.println(addUpdaCall.toString());

@@ -429,7 +429,7 @@ public class TypeWisePurchase extends javax.swing.JInternalFrame {
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ac_cd, sr_cd, brand_cd, model_cd,
                     ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
-                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()).execute().body();
+                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

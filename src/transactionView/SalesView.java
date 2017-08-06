@@ -128,10 +128,10 @@ public class SalesView extends javax.swing.JInternalFrame {
             PurchaseHead call;
             if (formCd == 130) {
                 call = salesAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex()-1).getBranch_cd(), tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             } else {
                 call = salesAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex()-1).getBranch_cd(), tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
             }
             if (call != null) {
                 System.out.println(call.toString());

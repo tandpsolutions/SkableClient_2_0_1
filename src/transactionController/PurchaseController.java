@@ -164,7 +164,7 @@ public class PurchaseController extends javax.swing.JDialog {
         jcmbPmt.setSelectedIndex(1);
         setUpData();
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         }
         setTitle("Prchase Bill");
         setPopUp();
@@ -202,11 +202,11 @@ public class PurchaseController extends javax.swing.JDialog {
     }
 
     private void setUpData() {
-        jComboBox1.removeAllItems();
+        jcmbBranch.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
     }
 
     private void tableForView() {
@@ -831,7 +831,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                jComboBox1.setEnabled(false);
+                jcmbBranch.setEnabled(false);
                 Call<JsonObject> call = purchaseAPI.getBill(ref_no, "4",SkableHome.db_name,SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
@@ -855,7 +855,7 @@ public class PurchaseController extends javax.swing.JDialog {
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jlblBillDay.setText(lb.setDay(jtxtBillDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
-                                        jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
+                                        jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         jtxtBillNo.setText(array.get(i).getAsJsonObject().get("BILL_NO").getAsString());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
@@ -1250,7 +1250,7 @@ public class PurchaseController extends javax.swing.JDialog {
         header.setADD_TAX_AMT(lb.isNumber(jlblAddTax));
         header.setFRIEGHT_CHARGES(lb.isNumber(jtxtFrieght));
         header.setAc_name(jtxtName.getText());
-        header.setBRANCH_CD(jComboBox1.getSelectedIndex() + 1);
+        header.setBRANCH_CD(Integer.parseInt(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd()));
         header.setUSER_ID(SkableHome.user_id);
         header.setV_DATE(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
         header.setSCHEME_CD(detail.get(jcmbPmt1.getSelectedIndex()).getSCHEME_CD());
@@ -1424,7 +1424,7 @@ public class PurchaseController extends javax.swing.JDialog {
         jLabel18 = new javax.swing.JLabel();
         jtxtTinNum = new javax.swing.JTextField();
         jbtnAdd = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jtxtDueDate = new javax.swing.JTextField();
@@ -1626,10 +1626,10 @@ public class PurchaseController extends javax.swing.JDialog {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -1718,7 +1718,7 @@ public class PurchaseController extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1788,7 +1788,7 @@ public class PurchaseController extends javax.swing.JDialog {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jlblVday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1822,7 +1822,7 @@ public class PurchaseController extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox1, jLabel1, jLabel2, jLabel24, jLabel3, jLabel6, jcmbPmt, jcmbType, jlblVday, jtxtVouDate, jtxtVoucher});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jLabel1, jLabel2, jLabel24, jLabel3, jLabel6, jcmbBranch, jcmbPmt, jcmbType, jlblVday, jtxtVouDate, jtxtVoucher});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn1, jLabel25, jLabel26, jlblBillDay, jtxtBillDate, jtxtBillNo});
 
@@ -2678,10 +2678,10 @@ public class PurchaseController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtBillNo);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jtxtDueDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtDueDateFocusGained
         // TODO add your handling code here:
@@ -2874,7 +2874,6 @@ public class PurchaseController extends javax.swing.JDialog {
     private javax.swing.JButton jBillDateBtn2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -2909,6 +2908,7 @@ public class PurchaseController extends javax.swing.JDialog {
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JButton jbtnBulkPurchase;
     private javax.swing.JButton jbtnOK;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbPmt;
     private javax.swing.JComboBox jcmbPmt1;
     private javax.swing.JComboBox jcmbTax;

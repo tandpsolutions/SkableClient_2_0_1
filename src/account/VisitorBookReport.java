@@ -65,16 +65,16 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
     }
 
     private void setUpData() {
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         } else {
-            jComboBox1.setEnabled(false);
+            jcmbBranch.setEnabled(false);
         }
     }
 
@@ -187,7 +187,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
 
             lb.addGlassPane(this);
             JsonObject call = accountAPI.GetVisitorBookHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex()) + "", jComboBox2.getSelectedIndex() - 1,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), jComboBox2.getSelectedIndex() - 1,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(VisitorBookReport.this);
             if (call != null) {
@@ -281,7 +281,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
         jbtnView = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jtxtToDate = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
 
         jPanel1.setLayout(new java.awt.CardLayout());
@@ -315,19 +315,17 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
 
         jPanel1.add(jScrollPane1, "card2");
 
@@ -413,10 +411,10 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -445,7 +443,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, 0, 200, Short.MAX_VALUE)
+                .addComponent(jcmbBranch, 0, 200, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -469,7 +467,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
                         .addComponent(jbtnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -555,7 +553,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
                 jtxtToDate.setText(setDate);
             }
             if ((new SimpleDateFormat("dd/MM/yyyy").format(new Date(jtxtToDate.getText().trim()))) != null) {
-                jComboBox1.requestFocusInWindow();
+                jcmbBranch.requestFocusInWindow();
             }
 
         } catch (Exception ex) {
@@ -567,7 +565,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
     private void jtxtToDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtToDateKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jComboBox1.requestFocusInWindow();
+            jcmbBranch.requestFocusInWindow();
         }
     }//GEN-LAST:event_jtxtToDateKeyPressed
 
@@ -632,10 +630,10 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
         lb.enterClick(evt);
     }//GEN-LAST:event_jbtnPreviewKeyPressed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jbtnView);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -653,7 +651,6 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -664,6 +661,7 @@ public class VisitorBookReport extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnPreview;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JTextField jtxtFromDate;
     private javax.swing.JTextField jtxtToDate;
     private javax.swing.JPanel panel;

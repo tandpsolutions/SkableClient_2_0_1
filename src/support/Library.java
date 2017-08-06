@@ -447,7 +447,7 @@ public class Library {
                     + "^FO330,185^FD" + tag1 + "^FS"
                     + "^CF0,30"
                     + "^FO210,30"
-                    + "^FB400,80"
+                    + "^FB450,80"
                     + "^FD" + item_name1 + "^FS"
                     + "^FO210,5\n"
                     + "^FB320,80\n"

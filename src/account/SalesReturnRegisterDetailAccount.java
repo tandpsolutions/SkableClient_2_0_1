@@ -206,7 +206,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
             if (!jCheckBox1.isSelected()) {
                 ac_cd = "";
             }
-            JsonObject call = accountAPI.SalesReturnRegisterDetailAccount(jComboBox1.getSelectedIndex(), jComboBox3.getSelectedIndex(),
+            JsonObject call = accountAPI.SalesReturnRegisterDetailAccount(jComboBox1.getSelectedIndex(), Integer.parseInt(Constants.BRANCH.get(jComboBox3.getSelectedIndex()-1).getBranch_cd()),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd
                     ,SkableHome.db_name,SkableHome.selected_year).execute().body();

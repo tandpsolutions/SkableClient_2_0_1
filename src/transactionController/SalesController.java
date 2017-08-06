@@ -41,6 +41,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
@@ -109,6 +110,7 @@ public class SalesController extends javax.swing.JDialog {
     SalesAPI salesAPI = null;
     private ReportTable viewTable = null;
     private ReportTable oldData = null;
+    private ReportTable rateTable = null;
     private String sr_cd = "";
     private String item_name = "";
     private ArrayList<SalesControllerDetailModel> subDetail = new ArrayList<SalesControllerDetailModel>();
@@ -134,7 +136,7 @@ public class SalesController extends javax.swing.JDialog {
         this.tax_type = tax_type;
         final RefralAPI refralAPI = lb.getRetrofit().create(RefralAPI.class);
         try {
-            final JsonObject refmaster = refralAPI.getReferalMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
+            final JsonObject refmaster = refralAPI.getReferalMaster(SkableHome.db_name, SkableHome.selected_year).execute().body();
             final JsonArray refMaster = refmaster.getAsJsonArray("data");
             if (refMaster.size() > 0) {
                 Constants.REFERAL.clear();
@@ -189,10 +191,10 @@ public class SalesController extends javax.swing.JDialog {
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
             jtxtDiscount.setEnabled(true);
 //            jtxtItem.setEnabled(true);
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         } else {
             jtxtDiscount.setEnabled(false);
-            jComboBox1.setEnabled(false);
+            jcmbBranch.setEnabled(false);
 //            jtxtItem.setEnabled(false);
         }
     }
@@ -253,11 +255,11 @@ public class SalesController extends javax.swing.JDialog {
     }
 
     private void setUpData() {
-        jComboBox1.removeAllItems();
+        jcmbBranch.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
 
         jcmbRefBy.removeAllItems();
         jcmbRefBy.addItem("");
@@ -290,6 +292,13 @@ public class SalesController extends javax.swing.JDialog {
         oldData.AddColumn(3, "Date", 120, java.lang.String.class, null, false);
         oldData.AddColumn(4, "Item Name", 120, java.lang.String.class, null, false);
         oldData.makeTable();
+
+        rateTable = new ReportTable();
+
+        rateTable.AddColumn(0, "SKU Code", 120, java.lang.String.class, null, false);
+        rateTable.AddColumn(1, "Item Name", 120, java.lang.String.class, null, false);
+        rateTable.AddColumn(2, "Rate", 120, java.lang.String.class, null, true);
+        rateTable.makeTable();
     }
 
     private void addTaxCombo() {
@@ -303,7 +312,7 @@ public class SalesController extends javax.swing.JDialog {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("0", SkableHome.db_name, SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             jcmbScheme.removeAllItems();
             for (int i = 0; i < detail.size(); i++) {
                 jcmbScheme.addItem(detail.get(i).getSCHEME_NAME());
@@ -371,7 +380,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void getLastRate() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("36", sr_cd, ac_cd,SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("36", sr_cd, ac_cd, SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -417,6 +426,254 @@ public class SalesController extends javax.swing.JDialog {
         return true;
     }
 
+    private void addItem(boolean old_flag) {
+        try {
+            JsonObject call;
+            if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
+                call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), SkableHome.db_name, SkableHome.selected_year).execute().body();
+            } else {
+                call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+            }
+
+            if (call != null) {
+                JsonArray array = call.getAsJsonArray("data");
+                JsonArray old_data = call.getAsJsonArray("old_data");
+                if (old_data.size() > 0 && old_flag) {
+                    lb.confirmDialog("Old Stock available.\n Do you want to see list of old stock?");
+                    if (lb.type) {
+                        final SelectDailog sa = new SelectDailog(null, true);
+                        sa.setData(oldData);
+                        sa.setLocationRelativeTo(null);
+                        sa.getDtmHeader().setRowCount(0);
+                        for (int i = 0; i < old_data.size(); i++) {
+                            Vector row = new Vector();
+                            row.add(old_data.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                            row.add(old_data.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                            row.add(old_data.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                            row.add(lb.ConvertDateFormetForDisplay(old_data.get(i).getAsJsonObject().get("PUR_DATE").getAsString()));
+                            row.add(old_data.get(i).getAsJsonObject().get("SR_NAME").getAsString());
+                            sa.getDtmHeader().addRow(row);
+                        }
+                        lb.setColumnSizeForTable(oldData, sa.jPanelHeader.getWidth());
+                        sa.setVisible(true);
+                    } else {
+                        subDetail.clear();
+                        if (array.size() > 0) {
+                            for (int i = 0; i < array.size(); i++) {
+                                if (array.get(i).getAsJsonObject().get("IS_MAIN").getAsInt() == 1) {
+                                    jtxtTag.setText(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                                    jtxtItem.setText(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                    pur_tag_no = (array.get(i).getAsJsonObject().get("REF_NO").getAsString());
+                                    jtxtIMEI.setText(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                                    jtxtSerialNo.setText(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                                    jtxtMRP1.setText(array.get(i).getAsJsonObject().get("MRP").getAsString());
+                                    sr_cd = (array.get(i).getAsJsonObject().get("SR_CD").getAsString());
+                                    item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                    pur_rate = 0.00;
+                                    jtxtQty.setText("1");
+                                    if (tax_type == 0) {
+                                        jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                    } else {
+                                        jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                    }
+                                    getLastRate();
+
+                                } else {
+                                    SalesControllerDetailModel model = new SalesControllerDetailModel();
+                                    model.setTAG_NO(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                                    model.setSR_NAME(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                    model.setIMEI_NO(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                                    model.setSERAIL_NO(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                                    model.setQTY(1);
+                                    model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
+                                    model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
+                                    if (tax_type == 0) {
+                                        model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                    } else {
+                                        model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                    }
+                                    model.setBASIC_AMT(0.00);
+                                    model.setTAX_AMT(0.00);
+                                    model.setADD_TAX_AMT(0.00);
+                                    model.setDISC_PER(0.00);
+                                    model.setMRP(0.00);
+                                    model.setAMT(0.00);
+                                    model.setSR_CD(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
+                                    subDetail.add(model);
+                                }
+                            }
+                        }
+                    }
+                } else {
+
+                    subDetail.clear();
+                    if (array.size() > 0) {
+                        for (int i = 0; i < array.size(); i++) {
+                            if (array.get(i).getAsJsonObject().get("IS_MAIN").getAsInt() == 1) {
+                                jtxtTag.setText(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                                jtxtItem.setText(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                pur_tag_no = (array.get(i).getAsJsonObject().get("REF_NO").getAsString());
+                                jtxtIMEI.setText(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                                jtxtSerialNo.setText(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                                jtxtMRP1.setText(array.get(i).getAsJsonObject().get("MRP").getAsString());
+                                sr_cd = (array.get(i).getAsJsonObject().get("SR_CD").getAsString());
+                                item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                pur_rate = 0.00;
+                                jtxtQty.setText("1");
+                                if (tax_type == 0) {
+                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                } else {
+                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                }
+                                getLastRate();
+                            } else {
+                                SalesControllerDetailModel model = new SalesControllerDetailModel();
+                                model.setTAG_NO(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                                model.setSR_NAME(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
+                                model.setIMEI_NO(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
+                                model.setSERAIL_NO(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
+                                model.setQTY(1);
+                                model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
+                                model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
+                                if (tax_type == 0) {
+                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                } else {
+                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                }
+                                model.setBASIC_AMT(0.00);
+                                model.setTAX_AMT(0.00);
+                                model.setADD_TAX_AMT(0.00);
+                                model.setDISC_PER(0.00);
+                                model.setMRP(0.00);
+                                model.setAMT(0.00);
+                                model.setSR_CD(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
+                                subDetail.add(model);
+                            }
+                        }
+                    }
+
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void rateEnter(FocusEvent e) {
+
+        if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            try {
+                JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(), SkableHome.db_name, SkableHome.selected_year).execute().body();
+                if (call != null) {
+                    JsonArray array = call.getAsJsonArray("data");
+                    if (array.size() > 0) {
+                        double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
+                        double sale_rate = lb.isNumber(jtxtRate);
+                        if (sale_rate < pur_rate) {
+                            lb.showMessageDailog("Please check rate");
+                            lb.confirmDialog("Are you sure to proceed?");
+                            if (lb.type) {
+                                if (lb.isNumber2(jtxtRate.getText()) > 0) {
+                                    if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                        jtxtDiscPer.setText("0.00");
+                                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                    } else {
+                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                        jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                    }
+                                    jcmbTaxItemStateChanged(null);
+                                    calculation();
+                                    jlblRate.setText("");
+                                    if (e != null) {
+                                        lb.toDouble(e);
+                                        jbtnAdd.doClick();
+                                    } else {
+                                        addAction(false);
+                                    }
+                                }
+                            } else {
+                                jtxtRate.requestFocusInWindow();
+                            }
+                            return;
+                        } else {
+                            if (lb.isNumber2(jtxtRate.getText()) > 0) {
+//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                    jtxtDiscPer.setText("0.00");
+                                    jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                } else {
+                                    jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                    jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+                                }
+//                    }
+                                jcmbTaxItemStateChanged(null);
+                                calculation();
+                                jlblRate.setText("");
+                                if (e != null) {
+                                    lb.toDouble(e);
+                                    jbtnAdd.doClick();
+                                } else {
+                                    addAction(false);
+                                }
+                            }
+                        }
+                    } else {
+                        if (lb.isNumber2(jtxtRate.getText()) > 0) {
+//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+                            if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                jtxtDiscPer.setText("0.00");
+                                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                            } else {
+                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                                jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+                                jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+                            }
+//                    }
+                            jcmbTaxItemStateChanged(null);
+                            calculation();
+                            jlblRate.setText("");
+                            if (e != null) {
+                                lb.toDouble(e);
+                                jbtnAdd.doClick();
+                            } else {
+                                addAction(false);
+                            }
+                        }
+                    }
+                }
+            } catch (IOException ex) {
+                jtxtRate.requestFocusInWindow();
+            }
+        } else {
+            if (lb.isNumber2(jtxtRate.getText()) > 0) {
+//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
+//                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
+                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+                jtxtDiscPer.setText("0.00");
+                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+//                        } else {
+//                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
+//                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
+//                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
+//                        }
+//                    }
+                jcmbTaxItemStateChanged(null);
+                calculation();
+                jlblRate.setText("");
+                if (e != null) {
+                    lb.toDouble(e);
+                    jbtnAdd.doClick();
+                } else {
+                    addAction(false);
+                }
+            }
+        }
+    }
+
     private void addJtextBox() {
         jtxtTag = new javax.swing.JTextField();
         jtxtTag.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -435,138 +692,56 @@ public class SalesController extends javax.swing.JDialog {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
 
-                if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
-                    jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                    try {
+                if (e.getKeyCode() == KeyEvent.VK_B) {
+                    if (e.getModifiers() == KeyEvent.CTRL_MASK) {
+                        String bill_no = (JOptionPane.showInputDialog("Enter Purchase Bill No"));
                         JsonObject call;
-                        if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
-                            call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox1.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
-                        } else {
-                            call = salesAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox1.getSelectedIndex() + 1) + "", "1").execute().body();
-                        }
-
-                        if (call != null) {
-                            JsonArray array = call.getAsJsonArray("data");
-                            JsonArray old_data = call.getAsJsonArray("old_data");
-                            if (old_data.size() > 0) {
-                                lb.confirmDialog("Old Stock available.\n Do you want to see list of old stock?");
-                                if (lb.type) {
-                                    final SelectDailog sa = new SelectDailog(null, true);
-                                    sa.setData(oldData);
-                                    sa.setLocationRelativeTo(null);
-                                    sa.getDtmHeader().setRowCount(0);
-                                    for (int i = 0; i < old_data.size(); i++) {
-                                        Vector row = new Vector();
-                                        row.add(old_data.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                        row.add(old_data.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                                        row.add(old_data.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
-                                        row.add(lb.ConvertDateFormetForDisplay(old_data.get(i).getAsJsonObject().get("PUR_DATE").getAsString()));
-                                        row.add(old_data.get(i).getAsJsonObject().get("SR_NAME").getAsString());
-                                        sa.getDtmHeader().addRow(row);
-                                    }
-                                    lb.setColumnSizeForTable(oldData, sa.jPanelHeader.getWidth());
-                                    sa.setVisible(true);
-                                } else {
-                                    subDetail.clear();
-                                    if (array.size() > 0) {
-                                        for (int i = 0; i < array.size(); i++) {
-                                            if (array.get(i).getAsJsonObject().get("IS_MAIN").getAsInt() == 1) {
-                                                jtxtTag.setText(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                                jtxtItem.setText(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                                pur_tag_no = (array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                                jtxtIMEI.setText(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                                                jtxtSerialNo.setText(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
-                                                jtxtMRP1.setText(array.get(i).getAsJsonObject().get("MRP").getAsString());
-                                                sr_cd = (array.get(i).getAsJsonObject().get("SR_CD").getAsString());
-                                                item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                                pur_rate = 0.00;
-                                                jtxtQty.setText("1");
-                                                if (tax_type == 0) {
-                                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
-                                                } else {
-                                                    jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
-                                                }
-                                                getLastRate();
-
-                                            } else {
-                                                SalesControllerDetailModel model = new SalesControllerDetailModel();
-                                                model.setTAG_NO(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                                model.setSR_NAME(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                                model.setIMEI_NO(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                                                model.setSERAIL_NO(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
-                                                model.setQTY(1);
-                                                model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
-                                                model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                                if (tax_type == 0) {
-                                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
-                                                } else {
-                                                    model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
-                                                }
-                                                model.setBASIC_AMT(0.00);
-                                                model.setTAX_AMT(0.00);
-                                                model.setADD_TAX_AMT(0.00);
-                                                model.setDISC_PER(0.00);
-                                                model.setMRP(0.00);
-                                                model.setAMT(0.00);
-                                                model.setSR_CD(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
-                                                subDetail.add(model);
-                                            }
-                                        }
-                                    }
-                                }
+                        final HashMap params = new HashMap();
+                        try {
+                            if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
+                                call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
                             } else {
+                                call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+                            }
+                            JsonArray array = call.getAsJsonArray("array");
+                            JsonArray rate_array = call.getAsJsonArray("rate_array");
 
-                                subDetail.clear();
-                                if (array.size() > 0) {
-                                    for (int i = 0; i < array.size(); i++) {
-                                        if (array.get(i).getAsJsonObject().get("IS_MAIN").getAsInt() == 1) {
-                                            jtxtTag.setText(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                            jtxtItem.setText(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                            pur_tag_no = (array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                            jtxtIMEI.setText(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                                            jtxtSerialNo.setText(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
-                                            jtxtMRP1.setText(array.get(i).getAsJsonObject().get("MRP").getAsString());
-                                            sr_cd = (array.get(i).getAsJsonObject().get("SR_CD").getAsString());
-                                            item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                            pur_rate = 0.00;
-                                            jtxtQty.setText("1");
-                                            if (tax_type == 0) {
-                                                jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
-                                            } else {
-                                                jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
-                                            }
-                                            getLastRate();
-                                        } else {
-                                            SalesControllerDetailModel model = new SalesControllerDetailModel();
-                                            model.setTAG_NO(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
-                                            model.setSR_NAME(array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
-                                            model.setIMEI_NO(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
-                                            model.setSERAIL_NO(array.get(i).getAsJsonObject().get("SERAIL_NO").getAsString());
-                                            model.setQTY(1);
-                                            model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
-                                            model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                            if (tax_type == 0) {
-                                                model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
-                                            } else {
-                                                model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
-                                            }
-                                            model.setBASIC_AMT(0.00);
-                                            model.setTAX_AMT(0.00);
-                                            model.setADD_TAX_AMT(0.00);
-                                            model.setDISC_PER(0.00);
-                                            model.setMRP(0.00);
-                                            model.setAMT(0.00);
-                                            model.setSR_CD(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
-                                            subDetail.add(model);
-                                        }
-                                    }
-                                }
+                            final SelectDailog sa = new SelectDailog(null, true);
+                            sa.setData(rateTable);
+                            sa.setLocationRelativeTo(null);
+                            sa.getDtmHeader().setRowCount(0);
+
+                            for (int i = 0; i < rate_array.size(); i++) {
+                                Vector row = new Vector();
+                                row.add(rate_array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
+                                row.add(rate_array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
+                                row.add("0.00");
+                                sa.getDtmHeader().addRow(row);
 
                             }
+                            lb.setColumnSizeForTable(rateTable, sa.jPanelHeader.getWidth());
+                            sa.setVisible(true);
+                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
+                                for (int i = 0; i < sa.getDtmHeader().getRowCount(); i++) {
+                                    params.put(sa.getDtmHeader().getValueAt(i, 1).toString(), sa.getDtmHeader().getValueAt(i, 2).toString());
+                                }
+                            }
+                            for (int i = 0; i < array.size(); i++) {
+                                jtxtTag.setText(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
+                                addItem(false);
+                                jtxtRate.requestFocusInWindow();
+                                jtxtRate.setText(params.get(jtxtItem.getText()).toString());
+
+                                rateEnter(null);
+                            }
+
+                        } catch (IOException ez) {
                         }
-                    } catch (IOException ex) {
-                        Logger.getLogger(SalesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
+                    jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
+                    addItem(true);
 
                 }
             }
@@ -682,102 +857,7 @@ public class SalesController extends javax.swing.JDialog {
 
             @Override
             public void focusLost(java.awt.event.FocusEvent e) {
-
-                if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-                    try {
-                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
-                        if (call != null) {
-                            JsonArray array = call.getAsJsonArray("data");
-                            if (array.size() > 0) {
-                                double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
-                                double sale_rate = lb.isNumber(jtxtRate);
-                                if (sale_rate < pur_rate) {
-                                    lb.showMessageDailog("Please check rate");
-                                    lb.confirmDialog("Are you sure to proceed?");
-                                    if (lb.type) {
-                                        if (lb.isNumber2(jtxtRate.getText()) > 0) {
-                                            if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                                jtxtDiscPer.setText("0.00");
-                                                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                            } else {
-                                                jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                                jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-                                                jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                            }
-                                            jcmbTaxItemStateChanged(null);
-                                            calculation();
-                                            jbtnAdd.doClick();
-                                            jlblRate.setText("");
-                                            lb.toDouble(e);
-                                        }
-                                    } else {
-                                        jtxtRate.requestFocusInWindow();
-                                    }
-                                    return;
-                                } else {
-                                    if (lb.isNumber2(jtxtRate.getText()) > 0) {
-//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
-                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                                            jtxtDiscPer.setText("0.00");
-                                            jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                        } else {
-                                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-                                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
-                                        }
-//                    }
-                                        jcmbTaxItemStateChanged(null);
-                                        calculation();
-                                        jbtnAdd.doClick();
-                                        jlblRate.setText("");
-                                        lb.toDouble(e);
-                                    }
-                                }
-                            } else {
-                                if (lb.isNumber2(jtxtRate.getText()) > 0) {
-//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
-                                    if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                        jtxtDiscPer.setText("0.00");
-                                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                    } else {
-                                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                                        jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-                                        jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
-                                    }
-//                    }
-                                    jcmbTaxItemStateChanged(null);
-                                    calculation();
-                                    jbtnAdd.doClick();
-                                    jlblRate.setText("");
-                                    lb.toDouble(e);
-                                }
-                            }
-                        }
-                    } catch (IOException ex) {
-                        jtxtRate.requestFocusInWindow();
-                    }
-                } else {
-                    if (lb.isNumber2(jtxtRate.getText()) > 0) {
-//                    if (lb.isNumber2(jtxtMRP.getText()) == 0) {
-//                        if (pur_rate < lb.isNumber2(jtxtRate.getText())) {
-                        jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-                        jtxtDiscPer.setText("0.00");
-                        jtxtRate.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-//                        } else {
-//                            jtxtMRP.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtRate) - getSubDetailRate()));
-//                            jtxtDiscPer.setText(lb.Convert2DecFmtForRs(pur_rate - lb.isNumber(jtxtMRP)));
-//                            jtxtRate.setText(lb.Convert2DecFmtForRs(pur_rate));
-//                        }
-//                    }
-                        jcmbTaxItemStateChanged(null);
-                        calculation();
-                        jbtnAdd.doClick();
-                        jlblRate.setText("");
-                        lb.toDouble(e);
-                    }
-                }
+                rateEnter(e);
             }
         });
 
@@ -786,7 +866,7 @@ public class SalesController extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(), SkableHome.db_name, SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -818,7 +898,7 @@ public class SalesController extends javax.swing.JDialog {
                 if (lb.isEnter(e)) {
                     if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
                         try {
-                            JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                            JsonObject call = salesAPI.GetPurchaseRateByTag(jtxtTag.getText(), SkableHome.db_name, SkableHome.selected_year).execute().body();
                             if (call != null) {
                                 JsonArray array = call.getAsJsonArray("data");
                                 if (array.size() > 0) {
@@ -1079,7 +1159,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -1175,8 +1255,8 @@ public class SalesController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                jComboBox1.setEnabled(false);
-                Call<JsonObject> call = salesAPI.GetDataFromServer(ref_no, (formCD == 130) ? "32" : "24",SkableHome.db_name,SkableHome.selected_year);
+                jcmbBranch.setEnabled(false);
+                Call<JsonObject> call = salesAPI.GetDataFromServer(ref_no, (formCD == 130) ? "32" : "24", SkableHome.db_name, SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -1198,7 +1278,7 @@ public class SalesController extends javax.swing.JDialog {
                                         jlblVday.setText(lb.setDay(jtxtVouDate));
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
-                                        jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
+                                        jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
                                         jcmbRefBy.setSelectedItem(array.get(i).getAsJsonObject().get("REF_NAME").getAsString());
                                         jcmbSalesman.setSelectedItem(array.get(i).getAsJsonObject().get("SM_NAME").getAsString());
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
@@ -1366,7 +1446,7 @@ public class SalesController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -1608,7 +1688,7 @@ public class SalesController extends javax.swing.JDialog {
         header.setTAX_AMT(lb.isNumber(jlblTax));
         header.setADD_TAX_AMT(lb.isNumber(jlblAddTax));
         header.setAc_name(jtxtAcName.getText());
-        header.setBRANCH_CD(jComboBox1.getSelectedIndex() + 1);
+        header.setBRANCH_CD(Integer.parseInt(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd()));
         header.setUSER_ID(SkableHome.user_id);
         header.setV_DATE(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
         header.setV_TYPE(jcmbType.getSelectedIndex());
@@ -1690,7 +1770,7 @@ public class SalesController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = salesAPI.addUpdateSalesBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> addUpdaCall = salesAPI.addUpdateSalesBill(headerJson, detailJson, SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1806,7 +1886,7 @@ public class SalesController extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jcmbPmt = new javax.swing.JComboBox();
         jlblVday = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jtxtDueDate = new javax.swing.JTextField();
@@ -1948,11 +2028,11 @@ public class SalesController extends javax.swing.JDialog {
 
         jlblVday.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setEnabled(false);
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.setEnabled(false);
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -2129,7 +2209,7 @@ public class SalesController extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jlblRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcmbBranch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcmbSalesman, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2184,7 +2264,7 @@ public class SalesController extends javax.swing.JDialog {
                             .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlblVday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2228,7 +2308,7 @@ public class SalesController extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox1, jLabel1, jLabel2, jLabel24, jLabel3, jLabel6, jcmbPmt, jcmbType, jlblVday, jtxtVouDate, jtxtVoucher});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jLabel1, jLabel2, jLabel24, jLabel3, jLabel6, jcmbBranch, jcmbPmt, jcmbType, jlblVday, jtxtVouDate, jtxtVoucher});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn2, jLabel27, jlblBillDay1, jtxtDueDate});
 
@@ -3027,16 +3107,7 @@ public class SalesController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcmbTaxItemStateChanged
 
-    private void jcmbTaxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbTaxKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            evt.consume();
-            jcmbTaxItemStateChanged(null);
-        }
-    }//GEN-LAST:event_jcmbTaxKeyPressed
-
-    private void jbtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddActionPerformed
-        // TODO add your handling code here:
+    private void addAction(boolean qstn) {
         String tag = "";
         if (!jtxtIMEI.getText().equalsIgnoreCase("")) {
             tag = (jtxtIMEI.getText());
@@ -3176,15 +3247,29 @@ public class SalesController extends javax.swing.JDialog {
 
             jtxtIMEI.setText("");
             jtxtSerialNo.setText("");
-            lb.confirmDialog("Do you want to add another item?");
             clear();
-            if (lb.type) {
-                jtxtTag.requestFocusInWindow();
-            } else {
-                jTextArea1.requestFocusInWindow();
+            if (qstn) {
+                lb.confirmDialog("Do you want to add another item?");
+                if (lb.type) {
+                    jtxtTag.requestFocusInWindow();
+                } else {
+                    jTextArea1.requestFocusInWindow();
+                }
             }
         }
         setTotal();
+    }
+    private void jcmbTaxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbTaxKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            evt.consume();
+            jcmbTaxItemStateChanged(null);
+        }
+    }//GEN-LAST:event_jcmbTaxKeyPressed
+
+    private void jbtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddActionPerformed
+        // TODO add your handling code here:
+        addAction(true);
     }//GEN-LAST:event_jbtnAddActionPerformed
 
     private void jbtnAddKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnAddKeyPressed
@@ -3223,10 +3308,10 @@ public class SalesController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtMobile);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jtxtDueDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtDueDateFocusGained
         // TODO add your handling code here:
@@ -3274,7 +3359,7 @@ public class SalesController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt) && !lb.isBlank(jtxtMobile)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesAPI.GetDataFromServer(jtxtMobile.getText(), "23",SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = salesAPI.GetDataFromServer(jtxtMobile.getText(), "23", SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -3620,7 +3705,6 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3667,6 +3751,7 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnAdd;
     private javax.swing.JButton jbtnOK;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbPmt;
     private javax.swing.JComboBox jcmbRefBy;
     private javax.swing.JComboBox jcmbSalesman;
