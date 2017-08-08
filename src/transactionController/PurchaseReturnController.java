@@ -81,7 +81,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ac_cd = "";
     private String ref_no = "";
@@ -106,12 +105,14 @@ public class PurchaseReturnController extends javax.swing.JDialog {
     private final HashMap<String, double[]> taxInfo;
     private final DefaultTableModel dtmTax;
     private PurchaseReturnView prc = null;
+    private int v_type;
 
     /**
      * Creates new form PurchaseController
      */
-    public PurchaseReturnController(java.awt.Frame parent, boolean modal, PurchaseReturnView prc) {
+    public PurchaseReturnController(java.awt.Frame parent, boolean modal, PurchaseReturnView prc, int v_type) {
         super(parent, modal);
+        this.v_type = v_type;
         initComponents();
         dtm = (DefaultTableModel) jTable1.getModel();
         dtmTax = (DefaultTableModel) jTable2.getModel();
@@ -147,7 +148,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -165,8 +165,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -232,7 +231,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -259,7 +257,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -284,7 +281,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
                     try {
-                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true, (jComboBox1.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        JsonObject call = purchaseReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", true, (jComboBox1.getSelectedIndex() + 1) + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
 
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
@@ -301,7 +298,11 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                                         item_name = (array.get(i).getAsJsonObject().get("ITEM_NAME").getAsString());
                                         pur_rate = (array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
                                         jtxtQty.setText("1");
-                                        jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                        if (v_type == 0) {
+                                            jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                        } else {
+                                            jcmbTax.setSelectedItem(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                        }
                                         jtxtRate.requestFocusInWindow();
                                     } else {
                                         PurchaseReturnControllerDetailModel model = new PurchaseReturnControllerDetailModel();
@@ -312,7 +313,11 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                                         model.setQTY(1);
                                         model.setRATE(array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble());
                                         model.setPUR_TAG_NO(array.get(i).getAsJsonObject().get("REF_NO").getAsString());
-                                        model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                        if (v_type == 0) {
+                                            model.setTAX_CD(array.get(i).getAsJsonObject().get("TAX_NAME").getAsString());
+                                        } else {
+                                            model.setTAX_CD(array.get(i).getAsJsonObject().get("GST_NAME").getAsString());
+                                        }
                                         model.setBASIC_AMT(0.00);
                                         model.setTAX_AMT(0.00);
                                         model.setADD_TAX_AMT(0.00);
@@ -335,7 +340,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
         jtxtItem = new javax.swing.JTextField();
         jtxtItem.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 lb.selectAll(e);
@@ -345,11 +349,9 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
                 lb.toUpper(e);
             }
-
         });
 
         jtxtItem.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -363,7 +365,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                     setSeriesData("3", jtxtItem.getText().toUpperCase(), "1");
                 }
             }
-
         });
 
         jtxtIMEI = new javax.swing.JTextField();
@@ -389,7 +390,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.onlyNumber(e, 15);
             }
-
         });
 
         jtxtSerialNo = new javax.swing.JTextField();
@@ -415,7 +415,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.fixLength(e, 20);
             }
-
         });
 
         jtxtQty = new javax.swing.JTextField();
@@ -488,7 +487,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = purchaseReturnAPI.GetPurchaseRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        JsonObject call = purchaseReturnAPI.GetPurchaseRateByTag(jtxtTag.getText(), SkableHome.db_name, SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -633,7 +632,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         jtxtAmount = new javax.swing.JTextField();
 
         jtxtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 lb.selectAll(e);
@@ -733,7 +731,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
             lb.removeGlassPane(PurchaseReturnController.this);
             if (call != null) {
@@ -749,8 +747,13 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                         Vector row = new Vector();
                         row.add(series.get(i).getSRCD());
                         row.add(series.get(i).getSRNAME());
-                        row.add(series.get(i).getTAXCD());
-                        row.add(series.get(i).getTAXNAME());
+                        if (v_type == 0) {
+                            row.add(series.get(i).getTAXCD());
+                            row.add(series.get(i).getTAXNAME());
+                        } else {
+                            row.add(series.get(i).getGSTCD());
+                            row.add(series.get(i).getGSTNAME());
+                        }
                         sa.getDtmHeader().addRow(row);
                     }
                     lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
@@ -804,7 +807,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jComboBox1.setEnabled(false);
-                JsonObject call = purchaseReturnAPI.GetDataFromServer(ref_no, "16",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject call = purchaseReturnAPI.GetDataFromServer(ref_no, "16", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 lb.addGlassPane(this);
 
                 lb.removeGlassPane(PurchaseReturnController.this);
@@ -825,6 +828,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                                 jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
                                 jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                 ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
+                                v_type = array.get(i).getAsJsonObject().get("V_TYPE").getAsInt();
                                 jtxtPmtDays.setText(array.get(i).getAsJsonObject().get("PMT_DAYS").getAsString());
                                 jtxtAdvance.setText(array.get(i).getAsJsonObject().get("ADVANCE_AMT").getAsString());
                                 jtxtName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
@@ -942,7 +946,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             lb.removeGlassPane(PurchaseReturnController.this);
             if (call != null) {
@@ -1102,7 +1106,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
         header.setBRANCH_CD(jComboBox1.getSelectedIndex() + 1);
         header.setUSER_ID(SkableHome.user_id);
         header.setV_DATE(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
-        header.setV_TYPE(0);
+        header.setV_TYPE(v_type);
         header.setCASH_AMT(lb.isNumber(sd.jtxtCashAmt.getText()));
         header.setBANK_AMT(lb.isNumber(sd.jtxtChequeAmt.getText()));
         header.setCARD_AMT(lb.isNumber(sd.jtxtCardAmt.getText()));
@@ -1151,7 +1155,7 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        JsonObject addUpdaCall = purchaseReturnAPI.addUpdatePurchaseReturnBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+        JsonObject addUpdaCall = purchaseReturnAPI.addUpdatePurchaseReturnBill(headerJson, detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
         lb.addGlassPane(this);
 
         lb.removeGlassPane(PurchaseReturnController.this);
@@ -1166,7 +1170,6 @@ public class PurchaseReturnController extends javax.swing.JDialog {
                 }
                 if (ref_no.equalsIgnoreCase("")) {
                     SwingWorker worker = new SwingWorker() {
-
                         @Override
                         protected Object doInBackground() throws Exception {
 //                                    lb.displayPurchaseVoucherEmail(header, detail);
@@ -2524,6 +2527,5 @@ public class PurchaseReturnController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVoucher;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

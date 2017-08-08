@@ -87,7 +87,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
             jComboBox1.setEnabled(false);
         }
     }
-    
+
     private void setPopUp() {
         final JPopupMenu popup = new JPopupMenu();
         ActionListener menuListener = new ActionListener() {
@@ -114,7 +114,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
     public void setData() {
         lb.addGlassPane(this);
         Call<PurchaseHead> call = purchaeReturnAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "",
-                 (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "",SkableHome.db_name,SkableHome.selected_year);
+                (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", SkableHome.db_name, SkableHome.selected_year);
         call.enqueue(new Callback<PurchaseHead>() {
             @Override
             public void onResponse(Call<PurchaseHead> call, Response<PurchaseHead> response) {
@@ -169,7 +169,6 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -196,12 +195,11 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
-    private void addSalesReturnController() {
-        PurchaseReturnController pc = new PurchaseReturnController(null, true, this);
+    private void addPurchaseReturnController() {
+        PurchaseReturnController pc = new PurchaseReturnController(null, true, this, vType);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }
@@ -213,7 +211,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
             public void callNew() {
                 if (navLoad.getModel().getADDS().equalsIgnoreCase("1")) {
                     ref_no = "";
-                    addSalesReturnController();
+                    addPurchaseReturnController();
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
                 }
@@ -225,7 +223,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         ref_no = jTable1.getValueAt(row, 0).toString();
-                        addSalesReturnController();
+                        addPurchaseReturnController();
                     }
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
@@ -241,7 +239,7 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(PurchaseReturnView.this);
-                            purchaeReturnAPI.DeletePurchaseReturn(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
+                            purchaeReturnAPI.DeletePurchaseReturn(ref_no, SkableHome.db_name, SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(PurchaseReturnView.this);
@@ -669,8 +667,6 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         lb.enterFocus(evt, jButton1);
     }//GEN-LAST:event_jComboBox1KeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

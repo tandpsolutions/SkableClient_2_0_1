@@ -1573,7 +1573,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("PR")) {
             if (SkableHome.userRightsMap.get(12).getEDITS().equalsIgnoreCase("1")) {
-                PurchaseReturnController sbc = new PurchaseReturnController(null, true, null);
+                PurchaseReturnController sbc = new PurchaseReturnController(null, true, null,-1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {
