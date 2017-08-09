@@ -205,7 +205,7 @@
                                   <Component id="jLabel3" min="-2" pref="88" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jComboBox2" pref="153" max="32767" attributes="0"/>
+                                      <Component id="jcmbBranch" pref="153" max="32767" attributes="0"/>
                                       <Component id="jComboBox3" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -278,7 +278,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBox2" linkSize="13" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jcmbBranch" linkSize="13" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" linkSize="13" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel5" linkSize="13" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jcmbType" linkSize="13" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -527,7 +527,7 @@
             <Property name="text" type="java.lang.String" value="Branch"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="jcmbBranch">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -539,7 +539,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox2KeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbBranchKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

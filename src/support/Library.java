@@ -157,6 +157,15 @@ public class Library {
         }
     }
 
+    public String getBRanchName(String branch_cd){
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            if(Constants.BRANCH.get(i).getBranch_cd().equalsIgnoreCase(branch_cd)){
+                    return Constants.BRANCH.get(i).getBranch_name();
+            }
+        }
+        return "";
+    }
+    
     public static Library getInstance() {
         return ourInstance;
     }

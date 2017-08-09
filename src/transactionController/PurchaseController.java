@@ -855,7 +855,7 @@ public class PurchaseController extends javax.swing.JDialog {
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jlblBillDay.setText(lb.setDay(jtxtBillDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
-                                        jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
+                                        jcmbBranch.setSelectedItem(lb.getBRanchName(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()+""));
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         jtxtBillNo.setText(array.get(i).getAsJsonObject().get("BILL_NO").getAsString());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
