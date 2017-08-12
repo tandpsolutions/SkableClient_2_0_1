@@ -52,20 +52,20 @@ public class EOD extends javax.swing.JInternalFrame {
 
     private void setTypeCombo() {
 
-        jComboBox1.setSelectedIndex(2);
+        jcmbVType.setSelectedIndex(2);
     }
 
     private void setUpData() {
-        jComboBox2.removeAllItems();
-        jComboBox2.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox2.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox2.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox2.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         } else {
-            jComboBox2.setEnabled(false);
+            jcmbBranch.setEnabled(false);
         }
     }
 
@@ -86,8 +86,8 @@ public class EOD extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
             );
 
-            JsonObject call = accountAPI.EOD(jComboBox1.getSelectedIndex(), lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+            JsonObject call = accountAPI.EOD(jcmbVType.getSelectedIndex(), lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
+                    lb.ConvertDateFormetForDB(jtxtFromDate.getText()), (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()-1).getBranch_cd()
                     ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
@@ -135,7 +135,7 @@ public class EOD extends javax.swing.JInternalFrame {
 
                 {
                     call = accountAPI.DailyCashStatement(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()
+                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jcmbBranch.getSelectedIndex()
                             ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
@@ -171,7 +171,7 @@ public class EOD extends javax.swing.JInternalFrame {
 
                 {
                     call = accountAPI.DailyBankSummary(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jComboBox2.getSelectedIndex()
+                            lb.ConvertDateFormetForDB(jtxtFromDate.getText()), jcmbBranch.getSelectedIndex()
                             ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                     if (call != null) {
                         result = call;
@@ -245,7 +245,7 @@ public class EOD extends javax.swing.JInternalFrame {
                 dtmDenomation.addRow(row);
 
                 call = accountAPI.GetDenomation(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0")
+                        ((jcmbBranch.getSelectedIndex() > 0) ? Constants.BRANCH.get(jcmbBranch.getSelectedIndex() - 1).getBranch_cd() : "0")
                         ,SkableHome.db_name,SkableHome.selected_year).execute().body();
                 result = call;
                 if (result.get("result").getAsInt() == 1) {
@@ -304,7 +304,7 @@ public class EOD extends javax.swing.JInternalFrame {
             AccountAPI accountAPI = lb.getRetrofit().create(AccountAPI.class
             );
             JsonObject call = accountAPI.updateDenomation(lb.ConvertDateFormetForDB(jtxtFromDate.getText())
-                    , ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), row, qty
+                    , ((jcmbBranch.getSelectedIndex() > 0) ? Constants.BRANCH.get(jcmbBranch.getSelectedIndex() - 1).getBranch_cd() : "0"), row, qty
                     ,SkableHome.db_name,SkableHome.selected_year).execute().body();
             if (call != null) {
                 JsonObject result = call;
@@ -335,7 +335,7 @@ public class EOD extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jtxtFromDate = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbVType = new javax.swing.JComboBox();
         jBillDateBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
@@ -343,7 +343,7 @@ public class EOD extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jbtnView = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -373,11 +373,9 @@ public class EOD extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -395,7 +393,7 @@ public class EOD extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Retail", "Tax", "All" }));
+        jcmbVType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Retail", "Tax" }));
 
         jBillDateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,10 +433,10 @@ public class EOD extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Branch");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -466,11 +464,11 @@ public class EOD extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbVType, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -489,13 +487,13 @@ public class EOD extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbVType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox1, jComboBox2, jLabel5, jLabel6});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jLabel6, jcmbBranch, jcmbVType});
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -521,11 +519,9 @@ public class EOD extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(2).setResizable(false);
-        }
+        jTable2.getColumnModel().getColumn(0).setResizable(false);
+        jTable2.getColumnModel().getColumn(1).setResizable(false);
+        jTable2.getColumnModel().getColumn(2).setResizable(false);
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -582,7 +578,7 @@ public class EOD extends javax.swing.JInternalFrame {
         params.put("Bank", lb.isNumber(jTable1.getValueAt(8, 1).toString()));
         params.put("Total", lb.isNumber(jTable1.getValueAt(9, 1).toString()));
 
-        params.put("branch", ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_name() : "All Branch"));
+        params.put("branch", ((jcmbBranch.getSelectedIndex() > 0) ? Constants.BRANCH.get(jcmbBranch.getSelectedIndex() - 1).getBranch_name() : "All Branch"));
 
         params.put("thousand", lb.isNumber(jTable2.getValueAt(0, 1).toString()));
         params.put("five", lb.isNumber(jTable2.getValueAt(1, 1).toString()));
@@ -663,16 +659,16 @@ public class EOD extends javax.swing.JInternalFrame {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
                 DailySalesStatementDetail dsd = new DailySalesStatementDetail(jtxtFromDate.getText(),
-                        jtxtFromDate.getText(), jComboBox1.getSelectedIndex(), jComboBox2.getSelectedItem().toString());
+                        jtxtFromDate.getText(), jcmbVType.getSelectedIndex(), jcmbBranch.getSelectedItem().toString());
                 SkableHome.addOnScreen(dsd, "Daily Sales Statement Detail");
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jbtnView);
-    }//GEN-LAST:event_jComboBox2KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
         // TODO add your handling code here:
@@ -697,8 +693,6 @@ public class EOD extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -710,6 +704,8 @@ public class EOD extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbBranch;
+    private javax.swing.JComboBox jcmbVType;
     private javax.swing.JTextField jtxtFromDate;
     // End of variables declaration//GEN-END:variables
 }

@@ -172,7 +172,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" pref="85" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jComboBox1" min="-2" pref="107" max="-2" attributes="0"/>
+                          <Component id="jcmbType" min="-2" pref="107" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel31" min="-2" pref="82" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -215,7 +215,7 @@
                       <Component id="jButton4" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton3" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" linkSize="1" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcmbType" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -286,7 +286,7 @@
             <Property name="text" type="java.lang.String" value="Type"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="jcmbType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">

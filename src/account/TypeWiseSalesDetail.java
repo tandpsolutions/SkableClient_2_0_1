@@ -92,7 +92,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
         lb.setDateChooserPropertyInit(jtxtToDate);
         searchOnTextFields();
         setPopUp();
-        jcmbVouType.setSelectedIndex(2);
+        jcmbVtype.setSelectedIndex(2);
     }
 
     private void setPopUp() {
@@ -181,10 +181,10 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
     }
 
     private void setUpData() {
-        jComboBox2.removeAllItems();
-        jComboBox2.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox2.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
     }
 
@@ -235,7 +235,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
         registerShortKeys();
         searchOnTextFields();
         setUpData();
-        jComboBox2.setSelectedIndex(branch);
+        jcmbBranch.setSelectedIndex(branch);
         typeAPI = lb.getRetrofit().create(TypeAPI.class);
         try {
             getData();
@@ -419,8 +419,8 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             JsonObject call = accountAPI.TypeWiseSalesDetail(((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ac_cd, sr_cd, brand_cd, model_cd,
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
-                    jcmbVouType.getSelectedIndex(), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""),
+                    (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()-1).getBranch_cd(),
+                    jcmbVtype.getSelectedIndex(), ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""),
                     ((jcmbSalesman.getSelectedIndex() > 0) ? Constants.SALESMAN.get(jcmbSalesman.getSelectedIndex() - 1).getSMCD() : ""), jCheckBox2.isSelected(), 
                     (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()
                     ,SkableHome.db_name,SkableHome.selected_year).execute().body();
@@ -634,10 +634,10 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
         jtxtModelName = new javax.swing.JTextField();
         jtxtBrandName = new javax.swing.JTextField();
         jtxtProductName = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jcmbVouType = new javax.swing.JComboBox();
+        jcmbVtype = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jcmbType1 = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
@@ -671,26 +671,24 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
-            jTable1.getColumnModel().getColumn(11).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(12).setResizable(false);
-            jTable1.getColumnModel().getColumn(13).setResizable(false);
-            jTable1.getColumnModel().getColumn(14).setResizable(false);
-            jTable1.getColumnModel().getColumn(15).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(12).setResizable(false);
+        jTable1.getColumnModel().getColumn(13).setResizable(false);
+        jTable1.getColumnModel().getColumn(14).setResizable(false);
+        jTable1.getColumnModel().getColumn(15).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -849,10 +847,10 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -860,10 +858,10 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Type");
 
-        jcmbVouType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Retail", "Tax", "All" }));
-        jcmbVouType.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbVtype.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Retail", "Tax" }));
+        jcmbVtype.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jcmbVouTypeKeyPressed(evt);
+                jcmbVtypeKeyPressed(evt);
             }
         });
 
@@ -921,14 +919,14 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcmbVouType, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbVtype, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -1015,7 +1013,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                             .addComponent(jtxtModelName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jCheckBox2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton3)
@@ -1026,7 +1024,7 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
                                 .addComponent(jtxtAcAlias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcmbVouType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbVtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1275,14 +1273,14 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtProductNameKeyReleased
 
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jbtnView);
-    }//GEN-LAST:event_jComboBox2KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
-    private void jcmbVouTypeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbVouTypeKeyPressed
+    private void jcmbVtypeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbVtypeKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcmbVouTypeKeyPressed
+    }//GEN-LAST:event_jcmbVtypeKeyPressed
 
     private void jcmbType1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbType1KeyPressed
         // TODO add your handling code here:
@@ -1304,7 +1302,6 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1322,11 +1319,12 @@ public class TypeWiseSalesDetail extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbPmt1;
     private javax.swing.JComboBox jcmbSalesman;
     private javax.swing.JComboBox jcmbType;
     private javax.swing.JComboBox jcmbType1;
-    private javax.swing.JComboBox jcmbVouType;
+    private javax.swing.JComboBox jcmbVtype;
     private javax.swing.JTextField jtxtAcAlias;
     private javax.swing.JTextField jtxtAcName;
     private javax.swing.JTextField jtxtBrandName;

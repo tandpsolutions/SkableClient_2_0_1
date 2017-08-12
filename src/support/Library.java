@@ -460,7 +460,7 @@ public class Library {
                     + "^FD" + item_name1 + "^FS"
                     + "^FO210,5\n"
                     + "^FB320,80\n"
-                    + "^FDManav Mandir^FS^"
+                    + "^FDAyuvaid Retail^FS^"
                     + "^FO510,90\n"
                     + "^FB260,80\n"
                     + "^FD" + pur + "^FS^"

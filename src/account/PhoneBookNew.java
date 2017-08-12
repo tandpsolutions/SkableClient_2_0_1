@@ -80,7 +80,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
         lb.setDateChooserPropertyInit(jtxtToDate);
         searchOnTextFields();
         setPopUp();
-        jcmbVouType.setSelectedIndex(2);
+        jcmbVtype.setSelectedIndex(2);
     }
 
     private void setPopUp() {
@@ -231,7 +231,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
 
             JsonObject call = accountAPI.Phonebook((jcmbHeadGroup.getSelectedIndex() == 0) ? "" : detail.get(jcmbHeadGroup.getSelectedIndex() - 1).getGRP_CD()
                     , lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
-                    jcmbVouType.getSelectedIndex(), jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    jcmbVtype.getSelectedIndex(), jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
             if (call != null) {
@@ -324,7 +324,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtxtFromDate = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jcmbVouType = new javax.swing.JComboBox();
+        jcmbVtype = new javax.swing.JComboBox();
         jcmbHeadGroup = new javax.swing.JComboBox();
         jCheckBox1 = new javax.swing.JCheckBox();
         panel = new javax.swing.JPanel();
@@ -353,12 +353,10 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -434,10 +432,10 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Type");
 
-        jcmbVouType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Retail", "Tax", "All" }));
-        jcmbVouType.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbVtype.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Retail", "Tax" }));
+        jcmbVtype.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jcmbVouTypeKeyPressed(evt);
+                jcmbVtypeKeyPressed(evt);
             }
         });
 
@@ -475,7 +473,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcmbVouType, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbVtype, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -515,7 +513,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
                             .addComponent(jbtnView)
                             .addComponent(jButton4)
                             .addComponent(jButton3))
-                        .addComponent(jcmbVouType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jcmbVtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jcmbHeadGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -677,9 +675,9 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jcmbVouTypeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbVouTypeKeyPressed
+    private void jcmbVtypeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbVtypeKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcmbVouTypeKeyPressed
+    }//GEN-LAST:event_jcmbVtypeKeyPressed
 
     private void jcmbHeadGroupItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmbHeadGroupItemStateChanged
         // TODO add your handling code here:
@@ -711,7 +709,7 @@ public class PhoneBookNew extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnView;
     private javax.swing.JComboBox jcmbHeadGroup;
-    private javax.swing.JComboBox jcmbVouType;
+    private javax.swing.JComboBox jcmbVtype;
     private javax.swing.JTextField jtxtFromDate;
     private javax.swing.JTextField jtxtToDate;
     private javax.swing.JPanel panel;

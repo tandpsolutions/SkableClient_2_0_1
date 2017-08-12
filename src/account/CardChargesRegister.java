@@ -132,16 +132,16 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
     }
 
     private void getData(final String data) {
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         } else {
-            jComboBox1.setEnabled(false);
+            jcmbBranch.setEnabled(false);
         }
     }
 
@@ -164,8 +164,8 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
             );
 
             JsonObject call = accountAPI.GetCardDetail(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
-                    ((jComboBox1.getSelectedIndex() > 0)
-                    ? Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd() : "0"),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()-1).getBranch_cd()
+                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 
@@ -282,7 +282,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
         jtxtToDate = new javax.swing.JTextField();
         jBillDateBtn1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jtxtFromDate = new javax.swing.JTextField();
         panel = new javax.swing.JPanel();
 
@@ -310,18 +310,16 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -383,9 +381,9 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
 
         jLabel4.setText("To Date");
 
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -411,7 +409,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -438,7 +436,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,7 +449,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jButton4, jComboBox1, jLabel3, jLabel4, jLabel5, jbtnClose, jbtnView, jtxtFromDate, jtxtToDate});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jButton4, jLabel3, jLabel4, jLabel5, jbtnClose, jbtnView, jcmbBranch, jtxtFromDate, jtxtToDate});
 
         panel.setLayout(new java.awt.BorderLayout());
 
@@ -502,12 +500,12 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
         callExcel();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             jbtnView.requestFocusInWindow();
         }
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jtxtFromDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtFromDateFocusGained
         // TODO add your handling code here:
@@ -619,7 +617,6 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -629,6 +626,7 @@ public class CardChargesRegister extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JTextField jtxtFromDate;
     private javax.swing.JTextField jtxtToDate;
     private javax.swing.JPanel panel;

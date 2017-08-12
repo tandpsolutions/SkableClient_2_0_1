@@ -179,7 +179,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" pref="70" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jcmbVouType" min="-2" pref="153" max="-2" attributes="0"/>
+                                  <Component id="jcmbVtype" min="-2" pref="153" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jRadioButton4" linkSize="2" min="-2" pref="133" max="-2" attributes="0"/>
@@ -188,7 +188,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" pref="70" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox2" min="-2" pref="153" max="-2" attributes="0"/>
+                                  <Component id="jcmbBranch" min="-2" pref="153" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jRadioButton1" linkSize="2" min="-2" pref="133" max="-2" attributes="0"/>
@@ -258,7 +258,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jComboBox2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jcmbBranch" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jtxtModelName" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -274,7 +274,7 @@
                           </Group>
                       </Group>
                       <Component id="jLabel7" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jcmbVouType" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcmbVtype" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -432,7 +432,7 @@
             <Property name="text" type="java.lang.String" value="Branch"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="jcmbBranch">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -444,7 +444,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox2KeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbBranchKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -452,18 +452,18 @@
             <Property name="text" type="java.lang.String" value="Type"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcmbVouType">
+        <Component class="javax.swing.JComboBox" name="jcmbVtype">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
-                <StringItem index="0" value="Retail"/>
-                <StringItem index="1" value="Tax"/>
-                <StringItem index="2" value="All"/>
+                <StringItem index="0" value="All"/>
+                <StringItem index="1" value="Retail"/>
+                <StringItem index="2" value="Tax"/>
               </StringArray>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbVouTypeKeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbVtypeKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">

@@ -166,7 +166,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
             JsonObject call = accountAPI.BranchWisePendingCollecionReport(((jComboBox2.getSelectedIndex() > 0)
                     ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"),
-                    jComboBox1.getSelectedIndex() - 1, ((jComboBox3.getSelectedIndex() > 0)
+                    jcmbType.getSelectedIndex() - 1, ((jComboBox3.getSelectedIndex() > 0)
                     ? Constants.REFERAL.get(jComboBox3.getSelectedIndex() - 1).getREF_CD() : "0"), lb.ConvertDateFormetForDB(jtxtFromDate.getText())
                     , lb.ConvertDateFormetForDB(jtxtToDate.getText()),SkableHome.db_name,SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
@@ -298,7 +298,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbType = new javax.swing.JComboBox();
         jLabel31 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
@@ -339,27 +339,25 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
-            jTable1.getColumnModel().getColumn(11).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(11).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -400,7 +398,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Type");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Retail", "Tax" }));
+        jcmbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Retail", "Tax" }));
 
         jLabel31.setText("Ref By");
 
@@ -468,7 +466,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -506,7 +504,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                     .addComponent(jButton4)
                     .addComponent(jButton3)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -520,7 +518,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jButton4, jComboBox1, jComboBox2, jLabel1, jLabel6, jbtnView});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jButton4, jComboBox2, jLabel1, jLabel6, jbtnView, jcmbType});
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox3, jLabel31});
 
@@ -721,7 +719,6 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
@@ -734,6 +731,7 @@ public class BranchWisePendingReport extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbType;
     private javax.swing.JTextField jtxtFromDate;
     private javax.swing.JTextField jtxtToDate;
     private javax.swing.JPanel panel;

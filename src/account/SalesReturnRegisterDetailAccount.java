@@ -109,16 +109,16 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
     }
 
     private void setUpData() {
-        jComboBox3.removeAllItems();
-        jComboBox3.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox3.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox3.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox3.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         } else {
-            jComboBox3.setEnabled(false);
+            jcmbBranch.setEnabled(false);
         }
     }
 
@@ -206,7 +206,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
             if (!jCheckBox1.isSelected()) {
                 ac_cd = "";
             }
-            JsonObject call = accountAPI.SalesReturnRegisterDetailAccount(jComboBox1.getSelectedIndex(), Integer.parseInt(Constants.BRANCH.get(jComboBox3.getSelectedIndex()-1).getBranch_cd()),
+            JsonObject call = accountAPI.SalesReturnRegisterDetailAccount(jcmbPmt.getSelectedIndex(), (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()-1).getBranch_cd(),
                     lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()), ac_cd
                     ,SkableHome.db_name,SkableHome.selected_year).execute().body();
@@ -379,7 +379,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
         jbtnView = new javax.swing.JButton();
         jtxtToDate = new javax.swing.JTextField();
         jtxtAcAlias = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbPmt = new javax.swing.JComboBox();
         jbtnClose = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jbtnExcel = new javax.swing.JButton();
@@ -388,7 +388,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtxtFromDate = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -415,35 +415,33 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
-            jTable1.getColumnModel().getColumn(11).setResizable(false);
-            jTable1.getColumnModel().getColumn(12).setResizable(false);
-            jTable1.getColumnModel().getColumn(13).setResizable(false);
-            jTable1.getColumnModel().getColumn(14).setResizable(false);
-            jTable1.getColumnModel().getColumn(15).setResizable(false);
-            jTable1.getColumnModel().getColumn(16).setResizable(false);
-            jTable1.getColumnModel().getColumn(17).setResizable(false);
-            jTable1.getColumnModel().getColumn(18).setResizable(false);
-            jTable1.getColumnModel().getColumn(19).setResizable(false);
-            jTable1.getColumnModel().getColumn(20).setResizable(false);
-            jTable1.getColumnModel().getColumn(21).setResizable(false);
-            jTable1.getColumnModel().getColumn(22).setResizable(false);
-            jTable1.getColumnModel().getColumn(23).setResizable(false);
-            jTable1.getColumnModel().getColumn(24).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setResizable(false);
+        jTable1.getColumnModel().getColumn(12).setResizable(false);
+        jTable1.getColumnModel().getColumn(13).setResizable(false);
+        jTable1.getColumnModel().getColumn(14).setResizable(false);
+        jTable1.getColumnModel().getColumn(15).setResizable(false);
+        jTable1.getColumnModel().getColumn(16).setResizable(false);
+        jTable1.getColumnModel().getColumn(17).setResizable(false);
+        jTable1.getColumnModel().getColumn(18).setResizable(false);
+        jTable1.getColumnModel().getColumn(19).setResizable(false);
+        jTable1.getColumnModel().getColumn(20).setResizable(false);
+        jTable1.getColumnModel().getColumn(21).setResizable(false);
+        jTable1.getColumnModel().getColumn(22).setResizable(false);
+        jTable1.getColumnModel().getColumn(23).setResizable(false);
+        jTable1.getColumnModel().getColumn(24).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -498,10 +496,10 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cash", "Credit", "All" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbPmt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cash", "Credit", "All" }));
+        jcmbPmt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbPmtKeyPressed(evt);
             }
         });
 
@@ -561,9 +559,9 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
             }
         });
 
-        jComboBox3.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox3KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -587,9 +585,9 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
                         .addGap(0, 0, 0)
                         .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
                         .addComponent(jbtnView, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -618,8 +616,8 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbPmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtnView)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtnExcel)
@@ -633,7 +631,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jComboBox1, jLabel3, jLabel4, jbtnClose, jbtnExcel, jbtnView, jtxtFromDate, jtxtToDate});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jBillDateBtn1, jLabel3, jLabel4, jbtnClose, jbtnExcel, jbtnView, jcmbPmt, jtxtFromDate, jtxtToDate});
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jCheckBox1, jtxtAcAlias, jtxtAcName});
 
@@ -726,7 +724,7 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
                 jtxtToDate.setText(setDate);
             }
             if ((new SimpleDateFormat("dd/MM/yyyy").format(new Date(jtxtToDate.getText().trim()))) != null) {
-                jComboBox1.requestFocusInWindow();
+                jcmbPmt.requestFocusInWindow();
             }
 
         } catch (Exception ex) {
@@ -809,10 +807,10 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtAcNameFocusGained
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbPmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbPmtKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jComboBox3);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+        lb.enterFocus(evt, jcmbBranch);
+    }//GEN-LAST:event_jcmbPmtKeyPressed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -825,17 +823,15 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jComboBox3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox3KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -845,6 +841,8 @@ public class SalesReturnRegisterDetailAccount extends javax.swing.JInternalFrame
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnExcel;
     private javax.swing.JButton jbtnView;
+    private javax.swing.JComboBox jcmbBranch;
+    private javax.swing.JComboBox jcmbPmt;
     private javax.swing.JTextField jtxtAcAlias;
     private javax.swing.JTextField jtxtAcName;
     private javax.swing.JTextField jtxtFromDate;

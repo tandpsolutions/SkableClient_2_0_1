@@ -101,8 +101,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -116,7 +115,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
     }
 
     private void getData() throws IOException {
-        JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year).execute().body();
+        JsonObject call = typeAPI.getTypeMaster(SkableHome.db_name, SkableHome.selected_year).execute().body();
 
         if (call != null) {
             JsonObject result = call;
@@ -139,10 +138,10 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
     }
 
     private void setUpData() {
-        jComboBox2.removeAllItems();
-        jComboBox2.addItem("All");
+        jcmbBranch.removeAllItems();
+        jcmbBranch.addItem("All");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox2.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
     }
 
@@ -177,7 +176,6 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -204,7 +202,6 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -220,9 +217,8 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
 
     private void setBrandData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     if (response.isSuccessful()) {
@@ -263,8 +259,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -329,7 +324,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
         jLabel5 = new javax.swing.JLabel();
         jcmbType = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jtxtBrandName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jbtnView1 = new javax.swing.JButton();
@@ -355,14 +350,12 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -441,10 +434,10 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
 
         jLabel6.setText("Branch");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -513,7 +506,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtxtBrandName)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcmbBranch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jcmbType, 0, 233, Short.MAX_VALUE)
                             .addComponent(jcmbType1, 0, 233, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -552,7 +545,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -576,7 +569,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -597,9 +590,8 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
             JsonObject call = accountAPI.TypeWiseBrandWiseProfitStatement(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
                     lb.ConvertDateFormetForDB(jtxtToDate.getText()),
                     ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""),
-                    ((jComboBox2.getSelectedIndex() > 0) ? Constants.BRANCH.get(jComboBox2.getSelectedIndex() - 1).getBranch_cd() : "0"), code,
-                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : "")
-                    ,SkableHome.db_name,SkableHome.selected_year)
+                    (jcmbBranch.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jcmbBranch.getSelectedIndex() - 1).getBranch_cd(), code,
+                    ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), SkableHome.db_name, SkableHome.selected_year)
                     .execute().body();
 
             jtxtBrandName.setText("");
@@ -752,10 +744,10 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
         }
     }//GEN-LAST:event_jcmbTypeKeyPressed
 
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jbtnView);
-    }//GEN-LAST:event_jComboBox2KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jtxtBrandNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBrandNameFocusGained
         // TODO add your handling code here:
@@ -765,7 +757,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
     private void jtxtBrandNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBrandNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtBrandName.getText())){
+            if (lb.validateInput(jtxtBrandName.getText())) {
                 setBrandData("8", jtxtBrandName.getText().toUpperCase());
             }
         }
@@ -788,14 +780,12 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
     private void jcmbType1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbType1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcmbType1KeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -809,6 +799,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
     private javax.swing.JButton jbtnClose;
     private javax.swing.JButton jbtnView;
     private javax.swing.JButton jbtnView1;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbType;
     private javax.swing.JComboBox jcmbType1;
     private javax.swing.JTextField jtxtBrandName;

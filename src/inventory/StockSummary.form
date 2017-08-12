@@ -185,7 +185,7 @@
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jComboBox1" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                      <Component id="jcmbBranch" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jbtnPreview" linkSize="1" min="-2" pref="85" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -238,7 +238,7 @@
                       <Component id="jLabel5" linkSize="4" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jcmbType" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" linkSize="4" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcmbBranch" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -360,7 +360,7 @@
             <Property name="text" type="java.lang.String" value="Branch"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="jcmbBranch">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -372,7 +372,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox1KeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcmbBranchKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBox1">

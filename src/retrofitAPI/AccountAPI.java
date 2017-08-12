@@ -177,7 +177,7 @@ public interface AccountAPI {
 
     @FormUrlEncoded
     @POST("SalesRegister")
-    Call<JsonObject> SalesRegister(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesRegister(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
@@ -209,7 +209,7 @@ public interface AccountAPI {
 
     @FormUrlEncoded
     @POST("SalesRegisterDetail")
-    Call<JsonObject> SalesRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd
             ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
@@ -220,56 +220,56 @@ public interface AccountAPI {
 
     @FormUrlEncoded
     @POST("SalesRegisterDetailAccount")
-    Call<JsonObject> SalesRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd
             ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseRegisterDetailAccount")
-    Call<JsonObject> PurchaseRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd
             ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("SalesReturnRegisterDetailAccount")
-    Call<JsonObject> SalesReturnRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesReturnRegisterDetailAccount(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd
             ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseReturnRegisterAccount")
-    Call<JsonObject> PurchaseReturnRegisterAccount(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseReturnRegisterAccount(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd
             ,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseRegister")
-    Call<JsonObject> PurchaseRegister(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseRegister(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("SalesReturnRegister")
-    Call<JsonObject> SalesReturnRegister(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesReturnRegister(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseReturnRegister")
-    Call<JsonObject> PurchaseReturnRegister(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseReturnRegister(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseRegisterDetail")
-    Call<JsonObject> PurchaseRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("mode") int mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("SalesReturnRegisterDetail")
-    Call<JsonObject> SalesReturnRegisgerDetail(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> SalesReturnRegisgerDetail(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @FormUrlEncoded
     @POST("PurchaseReturnRegisterDetail")
-    Call<JsonObject> PurchaseReturnRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") int branch_cd,
+    Call<JsonObject> PurchaseReturnRegisterDetail(@Field("pmt_mode") int pmt_mode, @Field("branch_cd") String branch_cd,
             @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("ac_cd") String ac_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
     @GET("MarginReport")
