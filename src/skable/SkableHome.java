@@ -102,7 +102,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -166,7 +165,6 @@ import utility.NotesView;
 import utility.TagPrint;
 import utility.TagTransfer;
 import utility.UpdateGST;
-import utility.UpdateGSTNo;
 import utility.UpdateHSN;
 import utility.UserPermission;
 
@@ -216,6 +214,8 @@ public class SkableHome extends javax.swing.JFrame {
             jmnUserGroupMaster.setVisible(false);
             jmnRetailInvoiceEdit.setVisible(false);
             jmnTaxInvoiceEdit.setVisible(false);
+            jmnRetailInvoiceLocalEdit.setVisible(false);
+            jmnSalesInvoiceOutsideEdit.setVisible(false);
             jmnUpdateGST.setVisible(false);
             jmnUpdateHSN.setVisible(false);
         }
@@ -563,7 +563,9 @@ public class SkableHome extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu13 = new javax.swing.JMenu();
         jmnSalesInvoiceLocal = new javax.swing.JMenuItem();
+        jmnRetailInvoiceLocalEdit = new javax.swing.JMenuItem();
         jmnSalesInvoiceOutside = new javax.swing.JMenuItem();
+        jmnSalesInvoiceOutsideEdit = new javax.swing.JMenuItem();
         jmnSalesReturnLocal = new javax.swing.JMenuItem();
         jmnSalesReturnOutside = new javax.swing.JMenuItem();
         jmnJobSheet = new javax.swing.JMenuItem();
@@ -942,6 +944,15 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu13.add(jmnSalesInvoiceLocal);
 
+        jmnRetailInvoiceLocalEdit.setMnemonic('R');
+        jmnRetailInvoiceLocalEdit.setText("Sales Invoice Local Edit");
+        jmnRetailInvoiceLocalEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnRetailInvoiceLocalEditActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnRetailInvoiceLocalEdit);
+
         jmnSalesInvoiceOutside.setMnemonic('R');
         jmnSalesInvoiceOutside.setText("Sales Invoice Outside");
         jmnSalesInvoiceOutside.addActionListener(new java.awt.event.ActionListener() {
@@ -950,6 +961,15 @@ public class SkableHome extends javax.swing.JFrame {
             }
         });
         jMenu13.add(jmnSalesInvoiceOutside);
+
+        jmnSalesInvoiceOutsideEdit.setMnemonic('R');
+        jmnSalesInvoiceOutsideEdit.setText("Sales Invoice Outside Edit");
+        jmnSalesInvoiceOutsideEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnSalesInvoiceOutsideEditActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jmnSalesInvoiceOutsideEdit);
 
         jmnSalesReturnLocal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
         jmnSalesReturnLocal.setText("Sales Return Local");
@@ -3054,6 +3074,18 @@ public class SkableHome extends javax.swing.JFrame {
         addOnScreen(prv, "Purchase Return View");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jmnRetailInvoiceLocalEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceLocalEditActionPerformed
+        // TODO add your handling code here:
+        SalesView sb = new SalesView(4, 130, 1);
+        addOnScreen(sb, "Sales Invoice Local Edit View");
+    }//GEN-LAST:event_jmnRetailInvoiceLocalEditActionPerformed
+
+    private void jmnSalesInvoiceOutsideEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesInvoiceOutsideEditActionPerformed
+        // TODO add your handling code here:
+        SalesView sb = new SalesView(4, 130, 2);
+        addOnScreen(sb, "Sales Invoice Outside Edit View");
+    }//GEN-LAST:event_jmnSalesInvoiceOutsideEditActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu asdsds;
     private static javax.swing.JDesktopPane jDesktopPane1;
@@ -3165,10 +3197,12 @@ public class SkableHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmnReferalMaster;
     private javax.swing.JMenuItem jmnRetailInvoice;
     private javax.swing.JMenuItem jmnRetailInvoiceEdit;
+    private javax.swing.JMenuItem jmnRetailInvoiceLocalEdit;
     private javax.swing.JMenuItem jmnSalesDot;
     private javax.swing.JMenuItem jmnSalesInsuranceBill;
     private javax.swing.JMenuItem jmnSalesInvoiceLocal;
     private javax.swing.JMenuItem jmnSalesInvoiceOutside;
+    private javax.swing.JMenuItem jmnSalesInvoiceOutsideEdit;
     private javax.swing.JMenuItem jmnSalesRegister;
     private javax.swing.JMenuItem jmnSalesRegisterCardWise;
     private javax.swing.JMenuItem jmnSalesRegisterCardWiseDetail;

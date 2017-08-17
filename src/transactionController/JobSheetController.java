@@ -84,14 +84,14 @@ public class JobSheetController extends javax.swing.JDialog {
     }
 
     private void setUpData() {
-        jComboBox1.removeAllItems();
+        jcmbBranch.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
 
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         }
 
         Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name,SkableHome.selected_year);
@@ -156,7 +156,7 @@ public class JobSheetController extends javax.swing.JDialog {
                             jtxtDeposit.setText(array.get(i).getAsJsonObject().get("DEPOSIT_AMT").getAsString());
                             jTextArea1.setText(array.get(i).getAsJsonObject().get("DEFECT_DESC").getAsString());
                             jcmbServiceType.setSelectedItem(array.get(i).getAsJsonObject().get("JOB_TYPE").getAsString());
-                            jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
+                            jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
 
                             String[] items = array.get(i).getAsJsonObject().get("ITEMS").getAsString().split(",");
                             for (int j = 0; j < items.length; j++) {
@@ -209,7 +209,7 @@ public class JobSheetController extends javax.swing.JDialog {
                 items = items.substring(0, items.length()-1);
             }
             model.setITEMS(items);
-            model.setBRANCHCD(jComboBox1.getSelectedIndex() + 1 + "");
+            model.setBRANCHCD(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd());
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
             JsonObject addUpdaCall = jobSheetAPI.addUpdateJobSheet(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
@@ -331,7 +331,7 @@ public class JobSheetController extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jcmbServiceType = new javax.swing.JComboBox();
@@ -464,10 +464,10 @@ public class JobSheetController extends javax.swing.JDialog {
 
         jLabel3.setText("Branch");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -645,7 +645,7 @@ public class JobSheetController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,7 +668,7 @@ public class JobSheetController extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1)
+                        .addComponent(jcmbBranch)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -958,10 +958,10 @@ public class JobSheetController extends javax.swing.JDialog {
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtModelNameFocusGained
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtMobileNo);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jcmbServiceTypeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbServiceTypeKeyPressed
         // TODO add your handling code here:
@@ -1030,7 +1030,6 @@ public class JobSheetController extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1060,6 +1059,7 @@ public class JobSheetController extends javax.swing.JDialog {
     private javax.swing.JCheckBox jcb7;
     private javax.swing.JCheckBox jcb8;
     private javax.swing.JCheckBox jcb9;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbServiceType;
     private javax.swing.JLabel jlblEditNo;
     private javax.swing.JLabel jlblTimeStamp;

@@ -60,7 +60,6 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     private ReportTable viewTable = null;
     private JLabel jlblTotQty;
     private StockTransferOutsideView stockTransferOutsideView;
-
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -74,18 +73,18 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
      * Creates new form SalesBillDetailController
      */
     private void setUpData() {
-        jComboBox1.removeAllItems();
-        jComboBox2.removeAllItems();
-        jComboBox1.addItem("Please Select Branch");
+        jcmbBranchTo.removeAllItems();
+        jcmbBranchFrom.removeAllItems();
+        jcmbBranchTo.addItem("Please Select Branch");
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
-            jComboBox2.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranchTo.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranchFrom.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox2.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranchFrom.setSelectedItem(SkableHome.selected_branch.getBranch_name());
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox2.setEnabled(true);
+            jcmbBranchFrom.setEnabled(true);
         } else {
-            jComboBox2.setEnabled(false);
+            jcmbBranchFrom.setEnabled(false);
         }
     }
 
@@ -107,7 +106,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         setUpData();
         dtm = (DefaultTableModel) jTable1.getModel();
         StkTrAPI = lb.getRetrofit().create(StkTrOutAPI.class);
-        jComboBox1.setSelectedIndex(vtype);
+        jcmbBranchTo.setSelectedIndex(vtype);
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -129,7 +128,6 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -155,8 +153,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -197,7 +194,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     try {
                         jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jComboBox2.getSelectedIndex() + 1) + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        JsonObject call = StkTrAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "20", true, (jcmbBranchFrom.getSelectedIndex() + 1) + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -277,7 +274,6 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.onlyNumber(e, 15);
             }
-
         });
 
         jtxtSerialNo = new javax.swing.JTextField();
@@ -303,7 +299,6 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.fixLength(e, 20);
             }
-
         });
 
         jtxtQty = new javax.swing.JTextField();
@@ -327,12 +322,10 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         });
 
         jtxtQty.addComponentListener(new java.awt.event.ComponentAdapter() {
-
             @Override
             public void componentMoved(ComponentEvent e) {
                 lb.setTable(jTable1, new JComponent[]{jtxtTag, null, null, null, null, null, null});
             }
-
         });
 
         jtxtTag.setBounds(0, 0, 20, 20);
@@ -422,7 +415,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
 
         if (!ref_no.equalsIgnoreCase("")) {
             try {
-                JsonObject call = StkTrAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject call = StkTrAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -433,8 +426,8 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                         for (int i = 0; i < array.size(); i++) {
                             StockTransferOutsideController.this.ref_no = array.get(i).getAsJsonObject().get("REF_NO").getAsString();
                             jtxtVoucher.setText(array.get(i).getAsJsonObject().get("REF_NO").getAsString() + "");
-                            jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("to_loc").getAsInt());
-                            jComboBox2.setSelectedIndex(array.get(i).getAsJsonObject().get("from_loc").getAsInt() - 1);
+                            jcmbBranchTo.setSelectedIndex(array.get(i).getAsJsonObject().get("to_loc").getAsInt());
+                            jcmbBranchFrom.setSelectedIndex(array.get(i).getAsJsonObject().get("from_loc").getAsInt() - 1);
                             jtxtVouDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                             jlblVday.setText(lb.setDay(jtxtVouDate));
                             jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
@@ -555,8 +548,8 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
             StockTransferDetail row = new StockTransferDetail();
             row.setRef_no(ref_no);
             row.setV_date(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
-            row.setFrom_loc((jComboBox2.getSelectedIndex() + 1) + "");
-            row.setTo_loc(Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd());
+            row.setFrom_loc(Constants.BRANCH.get(jcmbBranchFrom.getSelectedIndex()).getBranch_cd());
+            row.setTo_loc(Constants.BRANCH.get(jcmbBranchTo.getSelectedIndex() - 1).getBranch_cd());
             row.setUser_id(SkableHome.user_id);
             row.setTag_no(jTable1.getValueAt(i, 5).toString());
             row.setRemark(jTextArea1.getText());
@@ -566,7 +559,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         String detailJson = new Gson().toJson(detail);
 
         if (ref_no.equalsIgnoreCase("")) {
-            JsonObject addUpdaCall = StkTrAPI.AddUpdateStkAdjBill(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject addUpdaCall = StkTrAPI.AddUpdateStkAdjBill(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(StockTransferOutsideController.this);
@@ -576,7 +569,7 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 if (object.get("result").getAsInt() == 1) {
                     lb.showMessageDailog("Voucher saved successfully");
                     StockTransferOutsideController.this.dispose();
-                    if(getStockTransferOutsideView()!= null){
+                    if (getStockTransferOutsideView() != null) {
                         getStockTransferOutsideView().setData();
                     }
                 } else {
@@ -609,9 +602,9 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         jbtnAdd = new javax.swing.JButton();
         jlblVday = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranchTo = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcmbBranchFrom = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -688,19 +681,19 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
 
         jLabel2.setText("Transfer To");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Godown", "Shop" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranchTo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Godown", "Shop" }));
+        jcmbBranchTo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchToKeyPressed(evt);
             }
         });
 
         jLabel5.setText("From");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranchFrom.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranchFrom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox2KeyPressed(evt);
+                jcmbBranchFromKeyPressed(evt);
             }
         });
 
@@ -728,11 +721,11 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnAdd))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcmbBranchTo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -752,19 +745,19 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcmbBranchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbtnAdd))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcmbBranchTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox1, jLabel1, jLabel2, jLabel24, jlblVday, jtxtVouDate, jtxtVoucher});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jLabel1, jLabel2, jLabel24, jcmbBranchTo, jlblVday, jtxtVouDate, jtxtVoucher});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox2, jLabel5});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jcmbBranchFrom});
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -815,24 +808,22 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(400);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(400);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -944,7 +935,6 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
 
     private void jtxtVoucherKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVoucherKeyPressed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_jtxtVoucherKeyPressed
 
     private void jtxtVouDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtVouDateFocusLost
@@ -976,9 +966,9 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
         if (lb.isEnter(evt)) {
             if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-                jComboBox1.requestFocusInWindow();
+                jcmbBranchTo.requestFocusInWindow();
             } else {
-                jComboBox2.requestFocusInWindow();
+                jcmbBranchFrom.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
@@ -1080,8 +1070,8 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (validateVoucher()) {
             try {
-                if (jComboBox1.getSelectedIndex() != 0) {
-                    if (!((jComboBox2.getSelectedIndex() + 1) + "").equalsIgnoreCase(Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd())) {
+                if (jcmbBranchTo.getSelectedIndex() != 0) {
+                    if (!((Constants.BRANCH.get(jcmbBranchFrom.getSelectedIndex()).getBranch_cd()).equalsIgnoreCase(Constants.BRANCH.get(jcmbBranchTo.getSelectedIndex() - 1).getBranch_cd()))) {
                         saveVoucher();
                     } else {
                         lb.showMessageDailog("You can not transfer to your branch");
@@ -1095,28 +1085,25 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+    private void jcmbBranchFromKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchFromKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jComboBox2);
-    }//GEN-LAST:event_jComboBox2KeyPressed
+        lb.enterFocus(evt, jcmbBranchFrom);
+    }//GEN-LAST:event_jcmbBranchFromKeyPressed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchToKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchToKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtTag);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchToKeyPressed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1133,6 +1120,8 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnAdd;
+    private javax.swing.JComboBox jcmbBranchFrom;
+    private javax.swing.JComboBox jcmbBranchTo;
     private javax.swing.JLabel jlblEditNo;
     private javax.swing.JLabel jlblTimeStamp;
     private javax.swing.JLabel jlblUser;
@@ -1140,6 +1129,5 @@ public class StockTransferOutsideController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

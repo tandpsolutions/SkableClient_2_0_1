@@ -57,7 +57,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             JsonArray array = result.getAsJsonArray("data");
             for (int i = 0; i < array.size(); i++) {
                 Vector row = new Vector();
-                row.add(i+1);
+                row.add(i + 1);
                 row.add(array.get(i).getAsJsonObject().get("SR_NAME").getAsString());
                 row.add(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
                 row.add(array.get(i).getAsJsonObject().get("TAG_NO").getAsString());
@@ -89,7 +89,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             if (jrbtRandom.isSelected()) {
                 int[] selectedrows = jTable2.getSelectedRows();
                 for (int i = 0; i < selectedrows.length; i++) {
-                    tagListForRandom += ("'" + jTable2.getValueAt(selectedrows[i], 0).toString() + "',");
+                    tagListForRandom += ("'" + jTable2.getValueAt(selectedrows[i], 3).toString() + "',");
                 }
             } else {
                 for (int i = 0; i < jTable2.getRowCount(); i++) {
@@ -98,7 +98,7 @@ public class TagPrint extends javax.swing.JInternalFrame {
             }
             tagListForRandom = tagListForRandom.substring(0, tagListForRandom.length() - 1);
 
-            JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = purchaseAPI.getTagNoDetail(tagListForRandom, "6", jCheckBox1.isSelected(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call != null) {
                 result = call;
                 if (Constants.params.get("TAG_GENERATION").toString().equalsIgnoreCase("0")) {
@@ -160,12 +160,12 @@ public class TagPrint extends javax.swing.JInternalFrame {
         try {
             JsonArray array = result.getAsJsonArray("data");
             if (array != null) {
-                String tag1 = "", SR_NAME1 = "",SR_NAME2 = "";
+                String tag1 = "", SR_NAME1 = "", SR_NAME2 = "";
                 int i = 0;
                 for (i = 0; i < array.size(); i++) {
                     tag1 = array.get(i).getAsJsonObject().get("TAG_NO").getAsString();
                     SR_NAME1 = array.get(i).getAsJsonObject().get("SR_NAME").getAsString().replaceAll("NONE", "");
-                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()))+"\\&"+SR_NAME1.substring(SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()));
+                    SR_NAME2 = SR_NAME1.substring(0, SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString())) + "\\&" + SR_NAME1.substring(SR_NAME1.lastIndexOf(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString()));
                     String[] data = (((int) array.get(i).getAsJsonObject().get("PUR_RATE").getAsDouble()) + "").split("(?!^)");
                     lb.PrintLabel(tag1, SR_NAME2, generateCode(data));
                 }
@@ -413,13 +413,15 @@ public class TagPrint extends javax.swing.JInternalFrame {
         if (lb.isEnter(evt)) {
             jTextField1.setText(lb.checkTag(jTextField1.getText()));
             Vector row = new Vector();
+            row.add(jTable2.getRowCount() + 1);
+            row.add("");
+            row.add("");
             row.add(jTextField1.getText().toUpperCase());
+            row.add("");
             dtmTag.addRow(row);
             jTextField1.setText("");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;

@@ -74,8 +74,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetSalesBillPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -168,7 +168,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getQuoatePrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, "39",SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.getBill(ref_no, "39", SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -218,7 +218,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getJobSheetPrint(String ref_no) {
         try {
             JobSheetAPI salesAPI = lb.getRetrofit().create(JobSheetAPI.class);
-            JsonObject call = salesAPI.getJobSheetDetail(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.getJobSheetDetail(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -268,8 +268,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getBulkSalesBillPrint(String ref_no, String type) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetBulkSalesBillPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call != null) {
                 JsonObject result = call;
                 if (result.get("result").getAsInt() == 1) {
@@ -361,8 +361,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getSalesReturnBillPrint(String ref_no) {
         try {
             SalesReturnAPI salesAPI = lb.getRetrofit().create(SalesReturnAPI.class);
-            JsonObject call = salesAPI.GetSalesReturnPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
-            JsonObject call1 = salesAPI.GetSalesReturnTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetSalesReturnPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesReturnTaxPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;
@@ -426,8 +426,8 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getPurchaseReturnBillPrint(String ref_no) {
         try {
             PurchaseReturnAPI salesAPI = lb.getRetrofit().create(PurchaseReturnAPI.class);
-            JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
-            JsonObject call1 = salesAPI.GetPurchaseReturnTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetPurchaseReturnTaxPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;
@@ -449,8 +449,26 @@ public class PrintPanel extends javax.swing.JDialog {
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", Constants.COMPANY_NAME);
-                            params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
-                            params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
+                            if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
+                                params.put("tax_title", "Vat");
+                                params.put("add_tax_title", "Add Vat");
+                                params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
+                                if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
+                                    params.put("bill_type", "Retail Invoice");
+                                } else {
+                                    params.put("bill_type", "Tax Invoice");
+                                }
+                            } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
+                                params.put("tax_title", "State GST");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("add_tax_title", "Central GST");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            } else {
+                                params.put("tax_title", "IGST");
+                                params.put("add_tax_title", "");
+                                params.put("bill_type", "Tax Invoice");
+                                params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            }
                             params.put("add1", SkableHome.selected_branch.getAddress1());
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
@@ -500,7 +518,7 @@ public class PrintPanel extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase(
                 "")) {
             try {
-                JsonObject call = dcAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject call = dcAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -539,9 +557,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = cashPRAPI.getCashDetail(ref_no, "9",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = cashPRAPI.getCashDetail(ref_no, "9", SkableHome.db_name, SkableHome.selected_year).execute().body();
             } else {
-                call = cashPRAPI.getCashDetail(ref_no, "28",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = cashPRAPI.getCashDetail(ref_no, "28", SkableHome.db_name, SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
@@ -585,9 +603,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = cashPRAPI.getBankDetail(ref_no, "30",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = cashPRAPI.getBankDetail(ref_no, "30", SkableHome.db_name, SkableHome.selected_year).execute().body();
             } else {
-                call = cashPRAPI.getBankDetail(ref_no, "31",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = cashPRAPI.getBankDetail(ref_no, "31", SkableHome.db_name, SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
@@ -636,9 +654,9 @@ public class PrintPanel extends javax.swing.JDialog {
             JsonObject call;
             if (type
                     == 0) {
-                call = bankAPI.getBankDetail(ref_no, "10",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = bankAPI.getBankDetail(ref_no, "10", SkableHome.db_name, SkableHome.selected_year).execute().body();
             } else {
-                call = bankAPI.getBankDetail(ref_no, "29",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = bankAPI.getBankDetail(ref_no, "29", SkableHome.db_name, SkableHome.selected_year).execute().body();
             }
             if (call
                     != null) {
@@ -681,7 +699,7 @@ public class PrintPanel extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase(
                 "")) {
             try {
-                JsonObject call = dcAPI.getBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject call = dcAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
                 if (call != null) {
                     System.out.println(call.toString());
@@ -714,7 +732,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getInsuranceBill(String ref_no) {
         try {
             SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetInsuranceBill(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetInsuranceBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call
                     != null) {
                 JsonObject result = call;

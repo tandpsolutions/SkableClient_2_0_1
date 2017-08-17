@@ -420,7 +420,7 @@ public class TypeWiseSales extends javax.swing.JInternalFrame {
                     ((jcmbBranch.getSelectedIndex() > 0) ? Constants.BRANCH.get(jcmbBranch.getSelectedIndex() - 1).getBranch_cd() : "0"),
                     jcmbVtype.getSelectedIndex()
                     , (jcmbBranch.getSelectedIndex() == 0)?"0":Constants.BRANCH.get(jcmbBranch.getSelectedIndex()-1).getBranch_cd()
-                    , (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD()).execute().body();
+                    , (jcmbPmt1.getSelectedIndex() == 0) ? "0" : detail.get(jcmbPmt1.getSelectedIndex() - 1).getSCHEME_CD(),SkableHome.db_name,SkableHome.selected_year).execute().body();
 
             lb.addGlassPane(this);
 

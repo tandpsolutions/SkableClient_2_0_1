@@ -157,15 +157,15 @@ public class Library {
         }
     }
 
-    public String getBRanchName(String branch_cd){
+    public String getBRanchName(String branch_cd) {
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            if(Constants.BRANCH.get(i).getBranch_cd().equalsIgnoreCase(branch_cd)){
-                    return Constants.BRANCH.get(i).getBranch_name();
+            if (Constants.BRANCH.get(i).getBranch_cd().equalsIgnoreCase(branch_cd)) {
+                return Constants.BRANCH.get(i).getBranch_name();
             }
         }
         return "";
     }
-    
+
     public static Library getInstance() {
         return ourInstance;
     }
@@ -391,7 +391,7 @@ public class Library {
                     + "^BCN,30,N,Y,N\n"
                     + "^FD" + tag1 + "^FS\n"
                     + "^CF0,23"
-                    + "^FO140,47^FD" + tag1.substring(0, 6) + (int) isNumber(nlRate1) + tag1.substring(6) + "^FS"
+                    + "^FO140,47^FD" + tag1 + "^FS"
                     + "^FO140,68^FD" + item_name1 + "^FS"
                     + "^FO140,92^FD" + Rate1 + "-I^FS"
                     //Second Label
@@ -399,7 +399,7 @@ public class Library {
                     + "^BCN,30,Y,Y,N\n"
                     + "^FD" + tag2 + "^FS\n"
                     + "^CF0,23"
-                    + "^FO440,47^FD" + tag2.substring(0, 6) + (int) isNumber(nlRate2) + tag2.substring(6) + "^FS"
+                    + "^FO440,47^FD" + tag2 + "^FS"
                     + "^FO440,68^FD" + item_name2 + "^FS"
                     + "^FO440,92^FD" + Rate2 + "-I^FS"
                     + "^XZ";   // Print content of buffer, 1 label
@@ -460,7 +460,7 @@ public class Library {
                     + "^FD" + item_name1 + "^FS"
                     + "^FO210,5\n"
                     + "^FB320,80\n"
-                    + "^FDAyuvaid Retail^FS^"
+                    + "^FDAYUVAID RETAIL^FS^"
                     + "^FO510,90\n"
                     + "^FB260,80\n"
                     + "^FD" + pur + "^FS^"
@@ -514,7 +514,7 @@ public class Library {
                     + "^BCN,30,N,Y,N\n"
                     + "^FD" + tag1 + "^FS\n"
                     + "^CF0,23"
-                    + "^FO140,47^FD" + tag1.substring(0, 6) + (int) isNumber(nlRate1) + tag1.substring(6) + "^FS"
+                    + "^FO140,47^FD" + tag1 + "^FS"
                     + "^FO140,68^FD" + item_name1 + "^FS"
                     + "^FO140,92^FD" + Rate1 + "-I^FS"
                     + "^XZ";   // Print content of buffer, 1 label
@@ -555,8 +555,8 @@ public class Library {
     public void getSalesBillPrint(final String ref_no) {
         try {
             SalesAPI salesAPI = getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetSalesBillPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
-            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.GetSalesBillPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call1 = salesAPI.GetSalesBillTaxPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -1582,7 +1582,7 @@ public class Library {
             }
         } else if (ref_no.startsWith("PR")) {
             if (SkableHome.userRightsMap.get(12).getEDITS().equalsIgnoreCase("1")) {
-                PurchaseReturnController sbc = new PurchaseReturnController(null, true, null,-1);
+                PurchaseReturnController sbc = new PurchaseReturnController(null, true, null, -1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
             } else {

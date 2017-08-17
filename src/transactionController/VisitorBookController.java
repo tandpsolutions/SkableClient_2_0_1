@@ -42,7 +42,6 @@ public class VisitorBookController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ref_no = "";
     boolean flag = false;
@@ -103,14 +102,14 @@ public class VisitorBookController extends javax.swing.JDialog {
             jcmbSalesman.addItem(Constants.SALESMAN.get(i).getSMNAME());
         }
 
-        jComboBox1.removeAllItems();
+        jcmbBranch.removeAllItems();
         for (int i = 0; i < Constants.BRANCH.size(); i++) {
-            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
         }
-        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
 
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
-            jComboBox1.setEnabled(true);
+            jcmbBranch.setEnabled(true);
         }
     }
 
@@ -131,7 +130,7 @@ public class VisitorBookController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 JsonObject call;
-                call = orderAPI.getVisitorBookDetail(ref_no, "34",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = orderAPI.getVisitorBookDetail(ref_no, "34", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 if (call != null) {
                     System.out.println(call.toString());
                     JsonObject object = call;
@@ -154,7 +153,7 @@ public class VisitorBookController extends javax.swing.JDialog {
                             jtxtColorName.setText(array.get(i).getAsJsonObject().get("color_name").getAsString());
                             jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                             jcmbSalesman.setSelectedItem(array.get(i).getAsJsonObject().get("sm_name").getAsString());
-                            jComboBox1.setSelectedIndex(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1);
+                            jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1);
                             jcmbStatus.setSelectedIndex(array.get(i).getAsJsonObject().get("is_del").getAsInt());
                             jlblVday1.setText(lb.setDay(jtxtVouDate1));
                         }
@@ -185,11 +184,11 @@ public class VisitorBookController extends javax.swing.JDialog {
             model.setColor_name(jtxtColorName.getText());
             model.setSm_cd(Constants.SALESMAN.get(jcmbSalesman.getSelectedIndex() - 1).getSMCD());
             model.setUser_id(SkableHome.user_id);
-            model.setBranch_cd(jComboBox1.getSelectedIndex() + 1);
+            model.setBranch_cd(Integer.parseInt(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd()));
             model.setIs_del(jcmbStatus.getSelectedIndex());
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
-            JsonObject addUpdaCall = visitorBookAPI.AddUpdateOrderBookVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject addUpdaCall = visitorBookAPI.AddUpdateOrderBookVoucher(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(VisitorBookController.this);
 
             lb.removeGlassPane(VisitorBookController.this);
@@ -288,7 +287,7 @@ public class VisitorBookController extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jcmbBranch = new javax.swing.JComboBox();
         jLabel33 = new javax.swing.JLabel();
         jcmbStatus = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
@@ -464,10 +463,10 @@ public class VisitorBookController extends javax.swing.JDialog {
 
         jLabel3.setText("Branch");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
+                jcmbBranchKeyPressed(evt);
             }
         });
 
@@ -533,7 +532,7 @@ public class VisitorBookController extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jcmbSalesman, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -544,7 +543,7 @@ public class VisitorBookController extends javax.swing.JDialog {
                                 .addComponent(jBillDateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jlblVday1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 7, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
 
@@ -580,7 +579,7 @@ public class VisitorBookController extends javax.swing.JDialog {
                                         .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jComboBox1)
+                                        .addComponent(jcmbBranch)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jlblVday)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -782,7 +781,7 @@ public class VisitorBookController extends javax.swing.JDialog {
 
     private void jcmbSalesmanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbSalesmanKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jComboBox1);
+        lb.enterFocus(evt, jcmbBranch);
     }//GEN-LAST:event_jcmbSalesmanKeyPressed
 
     private void jtxtVouDate1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtVouDate1FocusGained
@@ -871,10 +870,10 @@ public class VisitorBookController extends javax.swing.JDialog {
         lb.selectAll(evt);
     }//GEN-LAST:event_jtxtColorNameFocusGained
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
         // TODO add your handling code here:
         lb.enterFocus(evt, jtxtMobileNo);
-    }//GEN-LAST:event_jComboBox1KeyPressed
+    }//GEN-LAST:event_jcmbBranchKeyPressed
 
     private void jcmbStatusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbStatusKeyPressed
         // TODO add your handling code here:
@@ -889,7 +888,6 @@ public class VisitorBookController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -909,6 +907,7 @@ public class VisitorBookController extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton jbtnOK;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JComboBox jcmbSalesman;
     private javax.swing.JComboBox jcmbStatus;
     private javax.swing.JLabel jlblEditNo;
@@ -925,6 +924,5 @@ public class VisitorBookController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVouDate1;
     private javax.swing.JTextField jtxtVoucher;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }
