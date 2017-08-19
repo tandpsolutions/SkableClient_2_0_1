@@ -5,9 +5,7 @@
  */
 package transactionView;
 
-import account.GeneralLedger1;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.awt.BorderLayout;
@@ -74,11 +72,12 @@ public class JobSheetView extends javax.swing.JInternalFrame {
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
         dtm = (DefaultTableModel) jTable1.getModel();
-        setData();
+
         searchOnTextFields();
         connectNavigation();
         navLoad.setFormCd(formCd);
         setPopUp();
+        setData();
     }
 
     private void setUpData() {
@@ -94,7 +93,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
             jComboBox1.setEnabled(false);
         }
 
-        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -126,7 +125,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                 int row = jTable1.getSelectedRow();
                 if (row != -1) {
                     String ref_no = jTable1.getValueAt(row, 0).toString();
-                    Call<JsonObject> call = jobSheetAPI.closeJobSheet(ref_no,SkableHome.db_name,SkableHome.selected_year);
+                    Call<JsonObject> call = jobSheetAPI.closeJobSheet(ref_no, SkableHome.db_name, SkableHome.selected_year);
                     lb.addGlassPane(JobSheetView.this);
                     call.enqueue(new Callback<JsonObject>() {
                         @Override
@@ -153,13 +152,18 @@ public class JobSheetView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
+    public void askPrint(String ref_no) {
+        PrintPanel pp = new PrintPanel(null, true);
+        pp.getJobSheetPrintWithoutPreview(ref_no);
+        pp.getJobSheetPrintWithoutPreview(ref_no);
+    }
+
     public void setData() {
         try {
             JsonObject call;
 
             call = jobSheetAPI.getJobSheetView(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), jComboBox2.getSelectedItem().toString(), (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + ""
-                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), jComboBox2.getSelectedItem().toString(), (jComboBox1.getSelectedIndex() == 0) ? "0" : jComboBox1.getSelectedIndex() + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call != null) {
                 System.out.println(call.toString());
                 TypeToken<List<JobSheetViewModel>> token = new TypeToken<List<JobSheetViewModel>>() {
@@ -232,7 +236,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
     }
 
     private void addPurchaseConroller() {
-        JobSheetController pc = new JobSheetController(null, true, jobSheetAPI);
+        JobSheetController pc = new JobSheetController(null, true, jobSheetAPI, this);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }
@@ -280,7 +284,7 @@ public class JobSheetView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(JobSheetView.this);
-                            jobSheetAPI.deleteJobSheet(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
+                            jobSheetAPI.deleteJobSheet(ref_no, SkableHome.db_name, SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(JobSheetView.this);

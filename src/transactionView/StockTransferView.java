@@ -32,6 +32,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.SmallNavigation;
 import transactionController.StockTransferController;
+import utility.PrintPanel;
 
 /**
  *
@@ -71,7 +72,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
     private void setData() throws IOException {
         lb.addGlassPane(this);
         JsonObject call = stkTrAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", vType + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", vType + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
 
         lb.removeGlassPane(StockTransferView.this);
         if (call != null) {
@@ -103,7 +104,6 @@ public class StockTransferView extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -130,7 +130,6 @@ public class StockTransferView extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -175,7 +174,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(StockTransferView.this);
-                            stkTrAPI.DeleteStkAdjBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
+                            stkTrAPI.DeleteStkAdjBill(ref_no, SkableHome.db_name, SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(StockTransferView.this);
@@ -207,6 +206,13 @@ public class StockTransferView extends javax.swing.JInternalFrame {
 
             @Override
             public void callPrint() {
+                int row = jTable1.getSelectedRow();
+                if (row != -1) {
+                    ref_no = jTable1.getValueAt(row, 0).toString();
+                    PrintPanel pp = new PrintPanel(null, true);
+                    pp.generateStocktransfer(ref_no);
+                    pp.setVisible(true);
+                }
             }
         }
         navLoad = new navigation();
@@ -555,8 +561,6 @@ public class StockTransferView extends javax.swing.JInternalFrame {
             navLoad.callEdit();
         }
     }//GEN-LAST:event_jTable1KeyPressed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;

@@ -64,6 +64,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.swing.JRViewer;
 import okhttp3.Interceptor;
@@ -1530,6 +1531,19 @@ public class Library {
             printToLogFile("Exception at reportGenerator report", ex);
         }
         return print;
+    }
+
+    public void reportPrinter(String fileName, HashMap params, JRDataSource viewDataRs) {
+//        JRResultSetDataSource dataSource = new JRResultSetDataSource(viewDataRs);
+        JasperPrint print = null;
+//        jScrollPane1.setVisible(false);
+        try {
+            print = JasperFillManager.fillReport(System.getProperty("user.dir") + File.separatorChar + "Reports" + File.separatorChar + fileName, params, viewDataRs);
+            JasperPrintManager.printReport(print, true);
+//            ((JPanel)jrViewer.getComponent(0)).remove(0);
+        } catch (Exception ex) {
+            printToLogFile("Exception at reportGenerator report", ex);
+        }
     }
 
     public void openVoucherBook(String ref_no) {

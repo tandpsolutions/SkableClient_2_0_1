@@ -18,6 +18,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import retrofitAPI.BankAPI;
@@ -29,6 +30,7 @@ import retrofitAPI.PurchaseReturnAPI;
 import retrofitAPI.QuotationAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SalesReturnAPI;
+import retrofitAPI.StkTrAPI;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -250,6 +252,56 @@ public class PrintPanel extends javax.swing.JDialog {
                                     lb.reportGenerator(Constants.params.get("JOB_FILE").toString() + "PDF.jasper", params, dataSource, jPanel1);
                                 } else {
                                     lb.reportGenerator(Constants.params.get("JOB_FILE").toString() + ".jasper", params, dataSource, jPanel1);
+                                }
+                            }
+                        } catch (Exception ex) {
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog(call.get("Cause").getAsString());
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PrintPanel.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void getJobSheetPrintWithoutPreview(String ref_no) {
+        try {
+            JobSheetAPI salesAPI = lb.getRetrofit().create(JobSheetAPI.class);
+            JsonObject call = salesAPI.getJobSheetDetail(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+
+            if (call != null) {
+                JsonObject result = call;
+                if (result.get("result").getAsInt() == 1) {
+                    JsonArray array = call.getAsJsonArray("data");
+                    if (array != null) {
+                        try {
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            file.write(array.toString());
+                            file.close();
+                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            HashMap params = new HashMap();
+                            params.put("dir", System.getProperty("user.dir"));
+                            params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
+                                lb.reportPrinter(Constants.params.get("JOB_FILE").toString() + ".jasper", params, dataSource);
+                            } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
+                                lb.reportPrinter(Constants.params.get("JOB_FILE").toString() + "PDF.jasper", params, dataSource);
+                            } else {
+                                lb.confirmDialog("Do you want to print Job Sheet with header?");
+                                if (lb.type) {
+                                    lb.reportPrinter(Constants.params.get("JOB_FILE").toString() + "PDF.jasper", params, dataSource);
+                                } else {
+                                    lb.reportPrinter(Constants.params.get("JOB_FILE").toString() + ".jasper", params, dataSource);
                                 }
                             }
                         } catch (Exception ex) {
@@ -766,6 +818,45 @@ public class PrintPanel extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(PrintPanel.class
                     .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void generateStocktransfer(String ref_no) {
+        try {
+            StkTrAPI salesAPI = lb.getRetrofit().create(StkTrAPI.class);
+            JsonObject call = salesAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+
+            if (call != null) {
+                JsonObject result = call;
+                if (result.get("result").getAsInt() == 1) {
+                    JsonArray array = call.getAsJsonArray("data");
+                    if (array != null) {
+                        try {
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            file.write(array.toString());
+                            file.close();
+                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            HashMap params = new HashMap();
+                            params.put("dir", System.getProperty("user.dir"));
+                            params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            params.put("from_loc", "Godown");
+                            params.put("to_loc", "Shop");
+                            lb.reportGenerator("stockTransfer.jasper", params, dataSource, jPanel1);
+                        } catch (Exception ex) {
+                        }
+                    }
+                } else {
+                    lb.showMessageDailog(call.get("Cause").getAsString());
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

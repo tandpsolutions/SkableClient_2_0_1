@@ -34,6 +34,7 @@ import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
+import transactionView.JobSheetView;
 
 /**
  *
@@ -54,11 +55,12 @@ public class JobSheetController extends javax.swing.JDialog {
     boolean flag = false;
     JobSheetAPI jobSheetAPI = null;
     private String ac_cd = "";
+    private JobSheetView jv;
 
     /**
      * Creates new form PurchaseController
      */
-    public JobSheetController(java.awt.Frame parent, boolean modal, JobSheetAPI jobSheetAPI) {
+    public JobSheetController(java.awt.Frame parent, boolean modal, JobSheetAPI jobSheetAPI, JobSheetView jv) {
         super(parent, modal);
         initComponents();
 
@@ -66,6 +68,7 @@ public class JobSheetController extends javax.swing.JDialog {
             jobSheetAPI = lb.getRetrofit().create(JobSheetAPI.class);
         }
         this.jobSheetAPI = jobSheetAPI;
+        this.jv = jv;
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -94,7 +97,7 @@ public class JobSheetController extends javax.swing.JDialog {
             jcmbBranch.setEnabled(true);
         }
 
-        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = jobSheetAPI.getJobType(SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -132,7 +135,7 @@ public class JobSheetController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 JsonObject call;
-                call = jobSheetAPI.getJobSheetDetail(ref_no,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                call = jobSheetAPI.getJobSheetDetail(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
                 if (call != null) {
                     System.out.println(call.toString());
                     JsonObject object = call;
@@ -168,7 +171,7 @@ public class JobSheetController extends javax.swing.JDialog {
                                 }
                             }
                         }
-                        
+
                     } catch (Exception ex) {
                         lb.printToLogFile("Exception", ex);
                     }
@@ -200,19 +203,19 @@ public class JobSheetController extends javax.swing.JDialog {
             String items = "";
             for (int i = 0; i < data.length; i++) {
                 if (((JCheckBox) data[i]).isSelected()) {
-                    items += data[i].getName()+",";
+                    items += data[i].getName() + ",";
                     System.out.println(data[i].getName());
                 }
 
             }
-            if(!items.isEmpty()){
-                items = items.substring(0, items.length()-1);
+            if (!items.isEmpty()) {
+                items = items.substring(0, items.length() - 1);
             }
             model.setITEMS(items);
             model.setBRANCHCD(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd());
             detail.add(model);
             String detailJson = new Gson().toJson(detail);
-            JsonObject addUpdaCall = jobSheetAPI.addUpdateJobSheet(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject addUpdaCall = jobSheetAPI.addUpdateJobSheet(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(JobSheetController.this);
 
             lb.removeGlassPane(JobSheetController.this);
@@ -222,6 +225,12 @@ public class JobSheetController extends javax.swing.JDialog {
                 if (object.get("result").getAsInt() == 1) {
                     lb.showMessageDailog("Voucher saved successfully");
                     JobSheetController.this.dispose();
+                    if (jv != null) {
+                        jv.setData();
+                        if (ref_no.equalsIgnoreCase("")) {
+                            jv.askPrint(object.get("ref_no").getAsString());
+                        }
+                    }
                 } else {
                     lb.showMessageDailog(object.get("Cause").getAsString());
                 }
@@ -261,7 +270,7 @@ public class JobSheetController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -891,7 +900,7 @@ public class JobSheetController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt) && !lb.isBlank(jtxtMobileNo)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = jobSheetAPI.getDataFromServer(jtxtMobileNo.getText(), "23",SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = jobSheetAPI.getDataFromServer(jtxtMobileNo.getText(), "23", SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {

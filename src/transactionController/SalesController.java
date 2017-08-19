@@ -1782,8 +1782,12 @@ public class SalesController extends javax.swing.JDialog {
                     if (object.get("result").getAsInt() == 1) {
                         lb.showMessageDailog("Voucher saved successfully");
                         SalesController.this.dispose();
+                        sv.setData();
                         if (ref_no.equalsIgnoreCase("")) {
-                            sv.setData();
+                            lb.confirmDialog("Do you want to print sales bill?");
+                            if(lb.type){
+                                sv.askPrint(object.get("ref_no").getAsString());
+                            }
                             SwingWorker worker = new SwingWorker() {
                                 @Override
                                 protected Object doInBackground() throws Exception {
@@ -3395,7 +3399,7 @@ public class SalesController extends javax.swing.JDialog {
                                     jtxtMobile.setText(bmc.account.getMOBILE1());
                                     jtxtTin.setText(bmc.account.getTIN());
                                     jtxtRefBy.setText(bmc.account.getREF_BY());
-                                    jtxtItem.requestFocusInWindow();
+                                    jtxtTag.requestFocusInWindow();
                                 }
                             } else {
                                 ac_cd = "";

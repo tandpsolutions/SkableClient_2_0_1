@@ -23,6 +23,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import model.StockTransferDetail;
 import retrofitAPI.StkTrAPI;
@@ -45,6 +46,7 @@ public class StockTransferController extends javax.swing.JDialog {
     private DefaultTableModel dtm = null;
     javax.swing.JTextField jtxtTag = null, jtxtIMEI = null, jtxtSerialNo = null, jtxtQty = null,
             jtxtPurTagNo = null;
+    private javax.swing.JLabel jlblTotal;
     javax.swing.JTextField jtxtItem = null;
     private ReportTable viewTable = null;
 
@@ -81,6 +83,7 @@ public class StockTransferController extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         addJtextBox();
+        addJLabel();
         tableForView();
         setUpData();
         dtm = (DefaultTableModel) jTable1.getModel();
@@ -118,6 +121,18 @@ public class StockTransferController extends javax.swing.JDialog {
         return returnStatus;
     }
 
+    private void addJLabel()
+    {
+        jlblTotal = new javax.swing.JLabel();
+        jlblTotal.setBounds(0, 0, 20, 20);
+        jlblTotal.setVisible(true);
+        jlblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+        jPanel4.add(jlblTotal);
+        
+        
+        lb.setTable(jTable1, new JComponent[]{jtxtTag, null, null, null, null, null, null});
+        lb.setTable(jTable1, new JComponent[]{null, null, null, null, jlblTotal, null, null});
+    }
     private void addJtextBox() {
         jtxtPurTagNo = new javax.swing.JTextField();
         jtxtTag = new javax.swing.JTextField();
@@ -273,6 +288,7 @@ public class StockTransferController extends javax.swing.JDialog {
             @Override
             public void componentMoved(ComponentEvent e) {
                 lb.setTable(jTable1, new JComponent[]{jtxtTag, null, null, null, null, null, null});
+                lb.setTable(jTable1, new JComponent[]{null, null, null, null, jlblTotal, null, null});
             }
 
         });
@@ -297,6 +313,7 @@ public class StockTransferController extends javax.swing.JDialog {
 ////        jtxtQty.setVisible(true);
 //        jPanel2.add(jtxtQty);
         lb.setTable(jTable1, new JComponent[]{jtxtTag, null, null, null, null, null, null});
+        lb.setTable(jTable1, new JComponent[]{null, null, null, null, jlblTotal, null, null});
     }
 
 //    private void setSeriesData(String param_cd, String value, final String mode) {
@@ -389,6 +406,7 @@ public class StockTransferController extends javax.swing.JDialog {
                             row.add(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
                             dtm.addRow(row);
                         }
+                        jlblTotal.setText(jTable1.getRowCount()+"");
                     } catch (Exception ex) {
                         lb.printToLogFile("Exception", ex);
                     }
@@ -432,6 +450,14 @@ public class StockTransferController extends javax.swing.JDialog {
             jtxtQty.requestFocusInWindow();
             return false;
         }
+        
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+                if (i != jTable1.getSelectedRow() && jtxtTag.getText().equalsIgnoreCase(jTable1.getValueAt(i, 0).toString())) {
+                    lb.showMessageDailog("Item already present");
+                    jtxtIMEI.requestFocusInWindow();
+                    return false;
+                }
+            }
         return true;
     }
 
@@ -504,6 +530,7 @@ public class StockTransferController extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -589,7 +616,7 @@ public class StockTransferController extends javax.swing.JDialog {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(jbtnAdd)
                 .addContainerGap())
         );
@@ -611,7 +638,7 @@ public class StockTransferController extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jbtnAdd)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 12, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn, jComboBox1, jLabel1, jLabel2, jLabel24, jlblVday, jtxtVouDate, jtxtVoucher});
@@ -665,24 +692,22 @@ public class StockTransferController extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(400);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(400);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -693,6 +718,19 @@ public class StockTransferController extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 24, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -705,10 +743,11 @@ public class StockTransferController extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 781, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelButton)))
+                        .addComponent(cancelButton))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -720,6 +759,8 @@ public class StockTransferController extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
@@ -814,6 +855,7 @@ public class StockTransferController extends javax.swing.JDialog {
             clear();
 //            lb.confirmDialog("Do you want to add another item?");
 //            if (lb.type) {
+            jlblTotal.setText(jTable1.getRowCount()+"");
             jtxtTag.requestFocusInWindow();
 //            } else {
 //                jButton1.requestFocusInWindow();
@@ -895,6 +937,7 @@ public class StockTransferController extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnAdd;

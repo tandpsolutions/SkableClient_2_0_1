@@ -123,15 +123,29 @@ public class SalesView extends javax.swing.JInternalFrame {
         jTable1.setComponentPopupMenu(popup);
     }
 
+    public void askPrint(String ref_no) {
+        if (Constants.params.get("BULK_PRINT").toString().equalsIgnoreCase("1")) {
+            lb.confirmDialog("Do you want to print normal sales bill?");
+            if (lb.type) {
+
+                normalSalesBill(ref_no);
+            } else {
+                bulkSalesBill(ref_no);
+            }
+        } else {
+            normalSalesBill(ref_no);
+        }
+    }
+
     public void setData() {
         try {
             PurchaseHead call;
             if (formCd == 130) {
                 call = salesAPI.getDataHeaderOLD(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex()-1).getBranch_cd(), tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd(), tax_type + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
             } else {
                 call = salesAPI.getDataHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex()-1).getBranch_cd(), tax_type + "",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        lb.ConvertDateFormetForDB(jtxtToDate.getText()), vType + "", (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd(), tax_type + "", SkableHome.db_name, SkableHome.selected_year).execute().body();
             }
             if (call != null) {
                 System.out.println(call.toString());
@@ -261,7 +275,7 @@ public class SalesView extends javax.swing.JInternalFrame {
                         if (lb.type) {
                             String ref_no = jTable1.getValueAt(row, 0).toString();
                             lb.addGlassPane(SalesView.this);
-                            salesAPI.DeleteSalesBill(ref_no,SkableHome.db_name,SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
+                            salesAPI.DeleteSalesBill(ref_no, SkableHome.db_name, SkableHome.selected_year).enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
                                     lb.removeGlassPane(SalesView.this);
@@ -296,17 +310,8 @@ public class SalesView extends javax.swing.JInternalFrame {
                 if (navLoad.getModel().getPRINTS().equalsIgnoreCase("1")) {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
-
-                        if (Constants.params.get("BULK_PRINT").toString().equalsIgnoreCase("1")) {
-                            lb.confirmDialog("Do you want to print normal sales bill?");
-                            if (lb.type) {
-                                normalSalesBill(row);
-                            } else {
-                                bulkSalesBill(row);
-                            }
-                        } else {
-                            normalSalesBill(row);
-                        }
+                        String ref_no = jTable1.getValueAt(row, 0).toString();
+                        askPrint(ref_no);
                     }
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");
@@ -321,32 +326,32 @@ public class SalesView extends javax.swing.JInternalFrame {
                 true);
     }
 
-    private void normalSalesBill(int row) {
+    private void normalSalesBill(String ref_no) {
         PrintPanel pp = new PrintPanel(null, true);
         if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
             lb.confirmDialog("Do you want to print customer print?");
             if (lb.type) {
-                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
+                pp.getSalesBillPrint(ref_no, "1");
             } else {
-                pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+                pp.getSalesBillPrint(ref_no, "0");
             }
         } else {
-            pp.getSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+            pp.getSalesBillPrint(ref_no, "0");
         }
         pp.setVisible(true);
     }
 
-    private void bulkSalesBill(int row) {
+    private void bulkSalesBill(String row) {
         PrintPanel pp = new PrintPanel(null, true);
         if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
             lb.confirmDialog("Do you want to print customer print?");
             if (lb.type) {
-                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "1");
+                pp.getBulkSalesBillPrint(ref_no, "1");
             } else {
-                pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+                pp.getBulkSalesBillPrint(ref_no, "0");
             }
         } else {
-            pp.getBulkSalesBillPrint(jTable1.getValueAt(row, 0).toString(), "0");
+            pp.getBulkSalesBillPrint(ref_no, "0");
         }
         pp.setVisible(true);
     }
@@ -358,7 +363,7 @@ public class SalesView extends javax.swing.JInternalFrame {
     public void getQuoatationPrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, "39",SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.getBill(ref_no, "39", SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

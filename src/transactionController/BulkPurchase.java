@@ -116,7 +116,7 @@ public class BulkPurchase extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -172,8 +172,7 @@ public class BulkPurchase extends javax.swing.JDialog {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(BulkPurchase.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -182,13 +181,13 @@ public class BulkPurchase extends javax.swing.JDialog {
 
     private void getLastRate() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, pc.ac_cd,SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, pc.ac_cd, SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(BulkPurchase.this);
+                    jtxtRate.requestFocusInWindow();
                     if (response.isSuccessful()) {
                         System.out.println(response.body().toString());
                         JsonObject header = (JsonObject) response.body();
@@ -196,7 +195,7 @@ public class BulkPurchase extends javax.swing.JDialog {
                             if (header.get("data").getAsJsonArray().size() != 0) {
                                 jtxtRate.setText(header.get("data").getAsJsonArray().get(0).getAsJsonObject().get("rate").getAsString());
                             }
-                            jtxtRate.requestFocusInWindow();
+
                         } else {
                             lb.showMessageDailog(response.body().get("Cause").getAsString());
                         }
@@ -209,10 +208,9 @@ public class BulkPurchase extends javax.swing.JDialog {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(BulkPurchase.this);
-
+                    jtxtRate.requestFocusInWindow();
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -221,7 +219,6 @@ public class BulkPurchase extends javax.swing.JDialog {
     private void initText() {
 
         jtxtItem.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 lb.selectAll(e);
@@ -231,11 +228,9 @@ public class BulkPurchase extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
                 lb.toUpper(e);
             }
-
         });
 
         jtxtItem.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -251,7 +246,6 @@ public class BulkPurchase extends javax.swing.JDialog {
                     }
                 }
             }
-
         });
 
         jtxtRate.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -907,8 +901,6 @@ public class BulkPurchase extends javax.swing.JDialog {
         dtm.setRowCount(0);
 
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -942,6 +934,5 @@ public class BulkPurchase extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtRate;
     private javax.swing.JTextField jtxtTaxAmt;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }
