@@ -66,7 +66,10 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.swing.JRViewer;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.poi.hpsf.HPSFException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -138,18 +141,32 @@ public class Library {
         try {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-            OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
-                    .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(interceptor).build();
+            OkHttpClient.Builder client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(interceptor);
+            client.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Interceptor.Chain chain) throws IOException {
+                    Request original = chain.request();
+
+                    Request request = original.newBuilder()
+                            .header("main_db", Constants.MAIN_DB)
+                            .header("login_db", Constants.LOGIN_DB)
+                            .method(original.method(), original.body())
+                            .build();
+
+                    return chain.proceed(request);
+                }
+            });
             if (!Constants.BASE_URL.isEmpty()) {
                 retrofit = new Retrofit.Builder()
                         .baseUrl(Constants.BASE_URL)
-                        .client(client)
+                        .client(client.build())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
             }
             upDateRetrofit = new Retrofit.Builder()
                     .baseUrl(Constants.UPDATE_BASE_URL)
-                    .client(client)
+                    .client(client.build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         } catch (Exception ex) {
@@ -696,7 +713,7 @@ public class Library {
         //{
         strOrgDate = strOrgDate.trim();
         if (!strOrgDate.startsWith("/")) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             java.util.Date dt = new Date();
             try {
                 dt = sdf.parse(strOrgDate);

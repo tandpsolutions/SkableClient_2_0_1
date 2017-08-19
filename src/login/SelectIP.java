@@ -48,6 +48,10 @@ public class SelectIP extends javax.swing.JFrame {
                 properties.load(new FileReader(f));
                 String ip = properties.getProperty("ip");
                 Constants.COMPANY_NAME = properties.getProperty("company_name");
+                Constants.MAIN_DB = properties.getProperty("main_db","skablemain");
+                Constants.LOGIN_DB = properties.getProperty("login_db","skablelogindb");
+                Constants.FOLDER_NEW = properties.getProperty("server_name","SkableServer2.0.1_2");
+                
                 jlblCmpName.setText(Constants.COMPANY_NAME);
                 
                 String[] ipList = ip.split(",");

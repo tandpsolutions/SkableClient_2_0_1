@@ -236,7 +236,7 @@ public class PurchaseController extends javax.swing.JDialog {
             ;
             TypeToken<List<SchemeMasterModel>> token = new TypeToken<List<SchemeMasterModel>>() {
             };
-            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1",SkableHome.db_name,SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
+            detail = new Gson().fromJson(schemeAPI.getSchemeMaster("1", SkableHome.db_name, SkableHome.selected_year).execute().body().getAsJsonArray("data").toString(), token.getType());
             jcmbPmt1.removeAllItems();
             for (int i = 0; i < detail.size(); i++) {
                 jcmbPmt1.addItem(detail.get(i).getSCHEME_NAME());
@@ -702,7 +702,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -770,7 +770,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
     private void getLastRate() {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, ac_cd,SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, ac_cd, SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -832,7 +832,7 @@ public class PurchaseController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jcmbBranch.setEnabled(false);
-                Call<JsonObject> call = purchaseAPI.getBill(ref_no, "4",SkableHome.db_name,SkableHome.selected_year);
+                Call<JsonObject> call = purchaseAPI.getBill(ref_no, "4", SkableHome.db_name, SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -855,7 +855,7 @@ public class PurchaseController extends javax.swing.JDialog {
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jlblBillDay.setText(lb.setDay(jtxtBillDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
-                                        jcmbBranch.setSelectedItem(lb.getBRanchName(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()+""));
+                                        jcmbBranch.setSelectedItem(lb.getBRanchName(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString() + ""));
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         jtxtBillNo.setText(array.get(i).getAsJsonObject().get("BILL_NO").getAsString());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
@@ -945,7 +945,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -1287,7 +1287,7 @@ public class PurchaseController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> addUpdaCall = purchaseAPI.addUpdatePurchaseBill(headerJson, detailJson, SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1358,7 +1358,7 @@ public class PurchaseController extends javax.swing.JDialog {
     }
 
     public void getData(final String data) {
-        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "",SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = lb.getRetrofit().create(SeriesAPI.class).getSeriesMaster(data, "", SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1373,7 +1373,7 @@ public class PurchaseController extends javax.swing.JDialog {
                         for (int i = 0; i < detail.size(); i++) {
                             SeriesMasterController smc = new SeriesMasterController(null, true);
                             smc.setLocationRelativeTo(null);
-                            smc.setData(detail.get(i).getSR_CD(), detail.get(i).getSR_ALIAS(), detail.get(i).getSR_NAME(), detail.get(i).getBRAND_NAME(), detail.get(i).getMODEL_NAME(), detail.get(i).getMEMORY_NAME(), detail.get(i).getCOLOUR_NAME(), detail.get(i).getTYPE_NAME(), detail.get(i).getSUB_TYPE_NAME(), detail.get(i).getTAX_NAME(),detail.get(i).getRAM_NAME(),detail.get(i).getCAMERA_NAME(),detail.get(i).getBATTERY_NAME());
+                            smc.setData(detail.get(i).getSR_CD(), detail.get(i).getSR_ALIAS(), detail.get(i).getSR_NAME(), detail.get(i).getBRAND_NAME(), detail.get(i).getMODEL_NAME(), detail.get(i).getMEMORY_NAME(), detail.get(i).getCOLOUR_NAME(), detail.get(i).getTYPE_NAME(), detail.get(i).getSUB_TYPE_NAME(), detail.get(i).getTAX_NAME(), detail.get(i).getRAM_NAME(), detail.get(i).getCAMERA_NAME(), detail.get(i).getBATTERY_NAME());
                             smc.setVisible(true);
                             break;
                         }
@@ -2483,10 +2483,17 @@ public class PurchaseController extends javax.swing.JDialog {
                         Logger.getLogger(SalesReturnController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                double taxable = (lb.isNumber2(jtxtRate.getText()) * 100) / (100 + tax_rate + add_tax_rate);
-                jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
-                jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
-                jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
+                if (Constants.params.get("BULK_PURCHASE") == null || Constants.params.get("BULK_PURCHASE").toString().equalsIgnoreCase("0")) {
+                    double taxable = (lb.isNumber2(jtxtRate.getText()) * 100) / (100 + tax_rate + add_tax_rate);
+                    jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
+                    jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
+                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
+                } else {
+                    double taxable = (lb.isNumber2(jtxtRate.getText())*lb.isNumber2(jtxtQty.getText())  * 100) / (100 + tax_rate + add_tax_rate);
+                    jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
+                    jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
+                    jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
+                }
             }
         }
     }//GEN-LAST:event_jcmbTaxItemStateChanged
@@ -2513,7 +2520,81 @@ public class PurchaseController extends javax.swing.JDialog {
         if (validateRow(tag)) {
             int index = jTable1.getSelectedRow();
             if (index == -1) {
-                for (int i = 0; i < (int) lb.isNumber2(jtxtQty.getText()); i++) {
+                if (Constants.params.get("BULK_PURCHASE") == null || Constants.params.get("BULK_PURCHASE").toString().equalsIgnoreCase("0")) {
+                    for (int i = 0; i < (int) lb.isNumber2(jtxtQty.getText()); i++) {
+                        Vector row = new Vector();
+                        if (!jtxtIMEI.getText().equalsIgnoreCase("")) {
+                            row.add(jtxtIMEI.getText());
+                        } else if (!jtxtSerialNo.getText().equalsIgnoreCase("")) {
+                            row.add(jtxtSerialNo.getText());
+                        } else {
+                            row.add("");
+                        }
+                        row.add(item_name);
+                        row.add(jtxtIMEI.getText());
+                        row.add(jtxtSerialNo.getText());
+                        row.add(1);
+                        row.add(lb.isNumber2(jtxtRate.getText()));
+                        row.add("");
+                        row.add("0");
+                        row.add(jcmbTax.getSelectedItem().toString());
+                        row.add(lb.isNumber2(jtxtBasicAmt.getText()));
+                        row.add(lb.isNumber2(jtxtTaxAmt.getText()));
+                        row.add(lb.isNumber2(jtxtAddTaxAmt.getText()));
+                        row.add(lb.isNumber2(jtxtDiscPer.getText()));
+                        row.add(lb.isNumber2(jtxtNlc.getText()));
+                        row.add(lb.isNumber2(jtxtMRP.getText()));
+                        row.add(lb.isNumber2(jtxtRate.getText()));
+                        row.add(lb.isNumber2("1"));
+                        row.add(sr_cd);
+                        dtm.addRow(row);
+                        if (taxInfo.get(jcmbTax.getSelectedItem().toString()) != null) {
+                            double[] tax = taxInfo.get(jcmbTax.getSelectedItem().toString());
+                            tax[0] += lb.isNumber2(jtxtTaxAmt.getText());
+                            tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
+                            taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
+                        } else {
+                            double[] tax = new double[2];
+                            tax[0] += lb.isNumber2(jtxtTaxAmt.getText());;
+                            tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
+                            taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
+                        }
+                    }
+                    for (int i = 0; i < subDetail.size(); i++) {
+                        Vector row = new Vector();
+                        row.add(subDetail.get(i).getTAG_NO());
+                        row.add(subDetail.get(i).getSR_NAME());
+                        row.add(subDetail.get(i).getIMEI_NO());
+                        row.add(subDetail.get(i).getSERAIL_NO());
+                        row.add(subDetail.get(i).getQTY());
+                        row.add(subDetail.get(i).getRATE());
+                        row.add("");
+                        row.add(0);
+                        row.add(subDetail.get(i).getTAX_CD());
+                        row.add(subDetail.get(i).getBASIC_AMT());
+                        row.add(subDetail.get(i).getTAX_AMT());
+                        row.add(subDetail.get(i).getADD_TAX_AMT());
+                        row.add(subDetail.get(i).getDISC_PER());
+                        row.add(0.00);
+                        row.add(subDetail.get(i).getMRP());
+                        row.add(subDetail.get(i).getAMT());
+                        row.add("0");
+                        row.add(subDetail.get(i).getSR_CD());
+                        dtm.addRow(row);
+                        if (taxInfo.get(jcmbTax.getSelectedItem().toString()) != null) {
+                            double[] tax = taxInfo.get(jcmbTax.getSelectedItem().toString());
+                            tax[0] += lb.isNumber2(jtxtTaxAmt.getText());
+                            tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
+                            taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
+                        } else {
+                            double[] tax = new double[2];
+                            tax[0] += lb.isNumber2(jtxtTaxAmt.getText());;
+                            tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
+                            taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
+                        }
+                    }
+                    subDetail.clear();
+                } else {
                     Vector row = new Vector();
                     if (!jtxtIMEI.getText().equalsIgnoreCase("")) {
                         row.add(jtxtIMEI.getText());
@@ -2525,7 +2606,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     row.add(item_name);
                     row.add(jtxtIMEI.getText());
                     row.add(jtxtSerialNo.getText());
-                    row.add(1);
+                    row.add(jtxtQty.getText());
                     row.add(lb.isNumber2(jtxtRate.getText()));
                     row.add("");
                     row.add("0");
@@ -2536,8 +2617,8 @@ public class PurchaseController extends javax.swing.JDialog {
                     row.add(lb.isNumber2(jtxtDiscPer.getText()));
                     row.add(lb.isNumber2(jtxtNlc.getText()));
                     row.add(lb.isNumber2(jtxtMRP.getText()));
-                    row.add(lb.isNumber2(jtxtRate.getText()));
-                    row.add(lb.isNumber2("1"));
+                    row.add(lb.isNumber2(jtxtAmount.getText()));
+                    row.add("1");
                     row.add(sr_cd);
                     dtm.addRow(row);
                     if (taxInfo.get(jcmbTax.getSelectedItem().toString()) != null) {
@@ -2552,40 +2633,6 @@ public class PurchaseController extends javax.swing.JDialog {
                         taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
                     }
                 }
-                for (int i = 0; i < subDetail.size(); i++) {
-                    Vector row = new Vector();
-                    row.add(subDetail.get(i).getTAG_NO());
-                    row.add(subDetail.get(i).getSR_NAME());
-                    row.add(subDetail.get(i).getIMEI_NO());
-                    row.add(subDetail.get(i).getSERAIL_NO());
-                    row.add(subDetail.get(i).getQTY());
-                    row.add(subDetail.get(i).getRATE());
-                    row.add("");
-                    row.add(0);
-                    row.add(subDetail.get(i).getTAX_CD());
-                    row.add(subDetail.get(i).getBASIC_AMT());
-                    row.add(subDetail.get(i).getTAX_AMT());
-                    row.add(subDetail.get(i).getADD_TAX_AMT());
-                    row.add(subDetail.get(i).getDISC_PER());
-                    row.add(0.00);
-                    row.add(subDetail.get(i).getMRP());
-                    row.add(subDetail.get(i).getAMT());
-                    row.add("0");
-                    row.add(subDetail.get(i).getSR_CD());
-                    dtm.addRow(row);
-                    if (taxInfo.get(jcmbTax.getSelectedItem().toString()) != null) {
-                        double[] tax = taxInfo.get(jcmbTax.getSelectedItem().toString());
-                        tax[0] += lb.isNumber2(jtxtTaxAmt.getText());
-                        tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
-                        taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
-                    } else {
-                        double[] tax = new double[2];
-                        tax[0] += lb.isNumber2(jtxtTaxAmt.getText());;
-                        tax[1] += lb.isNumber2(jtxtAddTaxAmt.getText());
-                        taxInfo.put(jcmbTax.getSelectedItem().toString(), tax);
-                    }
-                }
-                subDetail.clear();
             } else {
                 if (taxInfo.get(jTable1.getValueAt(index, 8).toString()) != null) {
                     double[] tax = taxInfo.get(jTable1.getValueAt(index, 8).toString());
@@ -2760,7 +2807,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     List list = (List) sheetData.get(i);
                     String sr_cd = "";
                     if (itemCode.get(list.get(1).toString()) == null) {
-                        sr_cd = lb.getRetrofit().create(SupportAPI.class).validateData("SERIESMST", "SR_CD", "SR_NAME", list.get(1).toString(),SkableHome.db_name,SkableHome.selected_year).execute().body().get("data").getAsString();
+                        sr_cd = lb.getRetrofit().create(SupportAPI.class).validateData("SERIESMST", "SR_CD", "SR_NAME", list.get(1).toString(), SkableHome.db_name, SkableHome.selected_year).execute().body().get("data").getAsString();
                         if (sr_cd.equalsIgnoreCase("")) {
                             dtm.setRowCount(0);
                             return;
