@@ -300,7 +300,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Customer's Tin :"+$F{TIN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Customer's GST : "+$F{GST_NO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="08ea1664-4493-450e-b677-6b5eb53f11ec" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="151" width="555" height="15"/>
