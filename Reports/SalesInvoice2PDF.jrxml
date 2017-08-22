@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="3.2153832150000037"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="237"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="words" class="java.lang.String"/>
@@ -150,6 +150,9 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 	<field name="GST_NO" class="java.lang.String">
 		<fieldDescription><![CDATA[GST_NO]]></fieldDescription>
 	</field>
+	<field name="INIT_TIMESTAMP" class="java.lang.String">
+		<fieldDescription><![CDATA[INIT_TIMESTAMP]]></fieldDescription>
+	</field>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{QTY}*$F{RATE}]]></variableExpression>
 	</variable>
@@ -212,7 +215,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"logo.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="5ffac756-7a8e-4f58-8479-3809722bb462" mode="Transparent" x="159" y="155" width="236" height="15" forecolor="#000000"/>
+				<reportElement uuid="5ffac756-7a8e-4f58-8479-3809722bb462" mode="Transparent" x="165" y="155" width="230" height="15" forecolor="#000000"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -241,7 +244,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Invoice No. : "+(($F{V_TYPE}==0)?$F{INV_NO}:($F{V_TYPE}==1)?"TI-"+$F{INV_NO}:"SI-"+$F{INV_NO})]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="dbeabd35-2542-47cb-acd2-2adf79798d32" mode="Transparent" x="67" y="155" width="92" height="15"/>
+				<reportElement uuid="dbeabd35-2542-47cb-acd2-2adf79798d32" mode="Transparent" x="73" y="140" width="92" height="15"/>
 				<box leftPadding="4">
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -251,7 +254,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA[$F{V_DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d" mode="Transparent" x="62" y="155" width="5" height="15" forecolor="#000000"/>
+				<reportElement uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d" mode="Transparent" x="68" y="155" width="5" height="15" forecolor="#000000"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
@@ -293,7 +296,7 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 				<textFieldExpression><![CDATA["Customer's Email :"+$F{EMAIL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="01f9b046-7a75-477b-8fc2-a8add7c973df" mode="Transparent" x="1" y="155" width="61" height="15" forecolor="#000000"/>
+				<reportElement uuid="01f9b046-7a75-477b-8fc2-a8add7c973df" mode="Transparent" x="2" y="140" width="65" height="15" forecolor="#000000"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -319,6 +322,36 @@ left join VILSDT v1 on v.REF_NO=v1.REF_NO left join SERIESMST s on v1.SR_CD=s.SR
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Customer's State Code: 24"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="519cf3b1-fe1e-449b-94ff-d81fa5cf2b7d" mode="Transparent" x="68" y="140" width="5" height="15" forecolor="#000000"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01f9b046-7a75-477b-8fc2-a8add7c973df" mode="Transparent" x="2" y="155" width="65" height="15" forecolor="#000000"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Time]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="dbeabd35-2542-47cb-acd2-2adf79798d32" mode="Transparent" x="73" y="155" width="92" height="15"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INIT_TIMESTAMP}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
