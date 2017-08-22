@@ -903,7 +903,6 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jMenu12.add(jmnRdPurchaseLocal);
 
-        jmnRdPurchaseOutside.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jmnRdPurchaseOutside.setMnemonic('R');
         jmnRdPurchaseOutside.setText("RD Purchase Bill Outside");
         jmnRdPurchaseOutside.addActionListener(new java.awt.event.ActionListener() {
@@ -3005,13 +3004,13 @@ public class SkableHome extends javax.swing.JFrame {
     private void jmnRdPurchaseLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRdPurchaseLocalActionPerformed
         // TODO add your handling code here:
         PurchaseView pv = new PurchaseView(0, 17, 1);
-        addOnScreen(pv, "RD Purchase View");
+        addOnScreen(pv, "RD Purchase Local View");
     }//GEN-LAST:event_jmnRdPurchaseLocalActionPerformed
 
     private void jmnRdPurchaseOutsideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRdPurchaseOutsideActionPerformed
         // TODO add your handling code here:
         PurchaseView pv = new PurchaseView(0, 18, 2);
-        addOnScreen(pv, "RD Purchase View");
+        addOnScreen(pv, "RD Purchase Outside View");
     }//GEN-LAST:event_jmnRdPurchaseOutsideActionPerformed
 
     private void jmnSalesInvoiceLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnSalesInvoiceLocalActionPerformed
@@ -3065,13 +3064,13 @@ public class SkableHome extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         PurchaseReturnView prv = new PurchaseReturnView(1, 44);
-        addOnScreen(prv, "Purchase Return View");
+        addOnScreen(prv, "Purchase Return Local View");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         PurchaseReturnView prv = new PurchaseReturnView(2, 44);
-        addOnScreen(prv, "Purchase Return View");
+        addOnScreen(prv, "Purchase Return Local View");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jmnRetailInvoiceLocalEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceLocalEditActionPerformed

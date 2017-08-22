@@ -77,6 +77,7 @@ import retrofitAPI.SchemeAPI;
 import retrofitAPI.SeriesAPI;
 import retrofitAPI.StartUpAPI;
 import retrofitAPI.SupportAPI;
+import selecthint.SeriesSelection;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -166,7 +167,17 @@ public class PurchaseController extends javax.swing.JDialog {
         if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
             jcmbBranch.setEnabled(true);
         }
-        setTitle("Prchase Bill");
+        if (tax_type == 0) {
+            if (type == 0) {
+                setTitle("RD Purchase");
+            } else if (type == 1) {
+                setTitle("URD Purchase");
+            }
+        } else if (tax_type == 1) {
+            setTitle("Rd Purchase Local");
+        } else {
+            setTitle("RD Purchase Outside");
+        }
         setPopUp();
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
@@ -348,7 +359,28 @@ public class PurchaseController extends javax.swing.JDialog {
                 }
                 if (lb.isEnter(e)) {
                     if (lb.validateInput(jtxtItem.getText())) {
-                        setSeriesData("3", jtxtItem.getText().toUpperCase());
+                        SeriesSelection ss = new SeriesSelection(null, true);
+                        ss.setSeriesData("3", jtxtItem.getText().toUpperCase());
+                        ss.setVisible(true);
+                        if (ss.getReturnStatus() == SelectDailog.RET_OK) {
+                            int row = ss.getjTable1().getSelectedRow();
+                            if (row != -1) {
+                                sr_cd = ss.getjTable1().getValueAt(row, 0).toString();
+                                item_name = ss.getjTable1().getValueAt(row, 1).toString();
+                                jtxtItem.setText(ss.getjTable1().getValueAt(row, 1).toString());
+                                jtxtIMEI.requestFocusInWindow();
+                                if(tax_type == 0){
+                                    jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 3).toString());
+                                }else{
+                                    jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 5).toString());
+                                }
+                                jcmbTaxItemStateChanged(null);
+                                getLastRate();
+                            }
+                            ss.dispose();
+                        } else {
+                            jtxtItem.requestFocusInWindow();
+                        }
                     }
                 }
             }
@@ -700,74 +732,7 @@ public class PurchaseController extends javax.swing.JDialog {
         lb.setTable(jTable1, new JComponent[]{null, jtxtItem, jtxtIMEI, jtxtSerialNo, jtxtQty, jtxtRate, null, null, jcmbTax, jtxtBasicAmt, jtxtTaxAmt, jtxtAddTaxAmt, jtxtDiscPer, jtxtNlc, jtxtMRP, jtxtAmount, null, null});
     }
 
-    private void setSeriesData(String param_cd, String value) {
-        try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
-            lb.addGlassPane(this);
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    lb.removeGlassPane(PurchaseController.this);
-                    if (response.isSuccessful()) {
-                        System.out.println(response.body().toString());
-                        SeriesHead header = (SeriesHead) new Gson().fromJson(response.body(), SeriesHead.class);
-                        if (header.getResult() == 1) {
-                            final SelectDailog sa = new SelectDailog(null, true);
-                            sa.setData(viewTable);
-                            sa.setLocationRelativeTo(null);
-                            ArrayList<SeriesMaster> series = (ArrayList<SeriesMaster>) header.getAccountHeader();
-                            sa.getDtmHeader().setRowCount(0);
-                            for (int i = 0; i < series.size(); i++) {
-                                Vector row = new Vector();
-                                row.add(series.get(i).getSRCD());
-                                row.add(series.get(i).getSRNAME());
-                                if (tax_type == 0) {
-                                    row.add(series.get(i).getTAXCD());
-                                    row.add(series.get(i).getTAXNAME());
-                                } else {
-                                    row.add(series.get(i).getGSTCD());
-                                    row.add(series.get(i).getGSTNAME());
-                                }
-                                row.add(series.get(i).getSRALIAS());
-                                sa.getDtmHeader().addRow(row);
-                            }
-                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                            sa.setVisible(true);
-                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                int row = viewTable.getSelectedRow();
-                                if (row != -1) {
-                                    sr_cd = viewTable.getValueAt(row, 0).toString();
-                                    item_name = viewTable.getValueAt(row, 1).toString();
-                                    jtxtItem.setText(viewTable.getValueAt(row, 1).toString());
-                                    jtxtIMEI.requestFocusInWindow();
-                                    jcmbTax.setSelectedItem(viewTable.getValueAt(row, 3).toString());
-                                    jcmbTaxItemStateChanged(null);
-                                    getLastRate();
-                                }
-                                sa.dispose();
-                            } else {
-                                jtxtItem.requestFocusInWindow();
-                            }
-                        } else {
-                            lb.showMessageDailog(header.getCause());
-                        }
-                    } else {
-                        // handle request errors yourself
-                        lb.showMessageDailog(response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                    lb.removeGlassPane(PurchaseController.this);
-                }
-            });
-        } catch (Exception ex) {
-            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
-        }
-
-    }
-
+    
     private void getLastRate() {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, ac_cd, SkableHome.db_name, SkableHome.selected_year);
@@ -860,6 +825,17 @@ public class PurchaseController extends javax.swing.JDialog {
                                         jtxtBillNo.setText(array.get(i).getAsJsonObject().get("BILL_NO").getAsString());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
                                         tax_type = array.get(i).getAsJsonObject().get("TAX_TYPE").getAsInt();
+                                        if (tax_type == 0) {
+                                            if (type == 0) {
+                                                setTitle("RD Purchase");
+                                            } else if (type == 1) {
+                                                setTitle("URD Purchase");
+                                            }
+                                        } else if (tax_type == 1) {
+                                            setTitle("Rd Purchase Local");
+                                        } else {
+                                            setTitle("RD Purchase Outside");
+                                        }
                                         jtxtName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
 //                                    jtxtAddress.setText(array.get(i).getAsJsonObject().get("ADD1").getAsString());
 //                                    jtxtMobile.setText(array.get(i).getAsJsonObject().get("MOBILE1").getAsString());
@@ -968,6 +944,8 @@ public class PurchaseController extends javax.swing.JDialog {
                                     jtxtTinNum.setText(header.getAccountHeader().get(row).getTIN());
                                     jtxtItem.requestFocusInWindow();
                                 }
+                            }else{
+                                jtxtName.requestFocusInWindow();
                             }
                         } else {
                             lb.showMessageDailog(response.body().get("Cause").getAsString().toString());
@@ -2489,7 +2467,7 @@ public class PurchaseController extends javax.swing.JDialog {
                     jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
                     jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));
                 } else {
-                    double taxable = (lb.isNumber2(jtxtRate.getText())*lb.isNumber2(jtxtQty.getText())  * 100) / (100 + tax_rate + add_tax_rate);
+                    double taxable = (lb.isNumber2(jtxtRate.getText()) * lb.isNumber2(jtxtQty.getText()) * 100) / (100 + tax_rate + add_tax_rate);
                     jtxtBasicAmt.setText(lb.Convert2DecFmtForRs(taxable));
                     jtxtTaxAmt.setText(lb.Convert2DecFmtForRs((tax_rate * taxable) / 100));
                     jtxtAddTaxAmt.setText(lb.Convert2DecFmtForRs((add_tax_rate * taxable) / 100));

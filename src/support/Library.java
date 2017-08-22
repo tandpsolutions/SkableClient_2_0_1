@@ -1548,7 +1548,7 @@ public class Library {
 
     public void openVoucherBook(String ref_no) {
         if (ref_no.startsWith("02")) {
-            if (SkableHome.userRightsMap.get(13).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(19).getEDITS().equalsIgnoreCase("1")) {
                 SalesController sbc = new SalesController(null, true);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
@@ -1556,7 +1556,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("05")) {
-            if (SkableHome.userRightsMap.get(10).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(17).getEDITS().equalsIgnoreCase("1")) {
                 PurchaseController sbc = new PurchaseController(null, true, 0, null, -1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1564,7 +1564,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("BP")) {
-            if (SkableHome.userRightsMap.get(19).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(26).getEDITS().equalsIgnoreCase("1")) {
                 BankPaymentController sbc = new BankPaymentController(null, true, 0);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1572,7 +1572,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("BR")) {
-            if (SkableHome.userRightsMap.get(20).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(27).getEDITS().equalsIgnoreCase("1")) {
                 BankPaymentController sbc = new BankPaymentController(null, true, 1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1580,7 +1580,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("CV")) {
-            if (SkableHome.userRightsMap.get(22).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(29).getEDITS().equalsIgnoreCase("1")) {
                 ContraVoucherController sbc = new ContraVoucherController(null, true);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1588,7 +1588,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("CR")) {
-            if (SkableHome.userRightsMap.get(18).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(25).getEDITS().equalsIgnoreCase("1")) {
                 CashPaymentReceiptController sbc = new CashPaymentReceiptController(null, true, 1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1596,7 +1596,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("CP")) {
-            if (SkableHome.userRightsMap.get(17).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(24).getEDITS().equalsIgnoreCase("1")) {
                 CashPaymentReceiptController sbc = new CashPaymentReceiptController(null, true, 0);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1604,7 +1604,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("JV")) {
-            if (SkableHome.userRightsMap.get(21).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(28).getEDITS().equalsIgnoreCase("1")) {
                 JournalVoucherController sbc = new JournalVoucherController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1620,7 +1620,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("SR")) {
-            if (SkableHome.userRightsMap.get(15).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(21).getEDITS().equalsIgnoreCase("1")) {
                 SalesReturnController sbc = new SalesReturnController(null, true, null, -1);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
@@ -1628,7 +1628,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("DCI")) {
-            if (SkableHome.userRightsMap.get(24).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(31).getEDITS().equalsIgnoreCase("1")) {
                 DCController sbc = new DCController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
@@ -1636,7 +1636,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("STK")) {
-            if (SkableHome.userRightsMap.get(25).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(32).getEDITS().equalsIgnoreCase("1")) {
                 StockAdjustmentController sbc = new StockAdjustmentController(null, true, null);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(ref_no);
@@ -1644,7 +1644,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("VB")) {
-            if (SkableHome.userRightsMap.get(13).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(39).getEDITS().equalsIgnoreCase("1")) {
                 VisitorBookController sbc = new VisitorBookController(null, true);
                 sbc.setLocationRelativeTo(null);
                 sbc.setData(null, ref_no);
@@ -1652,7 +1652,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("CN")) {
-            if (SkableHome.userRightsMap.get(90).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(35).getEDITS().equalsIgnoreCase("1")) {
                 DNCNController pc = new DNCNController(null, true, 1);
                 pc.setLocationRelativeTo(null);
                 pc.setData(null, ref_no);
@@ -1660,7 +1660,7 @@ public class Library {
                 showMessageDailog("You don't have rights to perform this action");
             }
         } else if (ref_no.startsWith("DN")) {
-            if (SkableHome.userRightsMap.get(91).getEDITS().equalsIgnoreCase("1")) {
+            if (SkableHome.userRightsMap.get(36).getEDITS().equalsIgnoreCase("1")) {
                 DNCNController pc = new DNCNController(null, true, 1);
                 pc.setLocationRelativeTo(null);
                 pc.setData(null, ref_no);

@@ -205,8 +205,8 @@ public class StockTransferView extends javax.swing.JInternalFrame {
             }
 
             @Override
-            public void callPrint() {
-                int row = jTable1.getSelectedRow();
+            public void callPrint() { 
+               int row = jTable1.getSelectedRow();
                 if (row != -1) {
                     ref_no = jTable1.getValueAt(row, 0).toString();
                     PrintPanel pp = new PrintPanel(null, true);

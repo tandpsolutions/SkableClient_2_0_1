@@ -44,6 +44,9 @@ public class SeriesMaster {
     @SerializedName("GST_NAME")
     @Expose
     private String GSTNAME;
+    @SerializedName("HSN_CODE")
+    @Expose
+    private String HSNCODE;
 
     public String getGSTCD() {
         return GSTCD;
@@ -139,5 +142,13 @@ public class SeriesMaster {
 
     public void setTAXNAME(String TAXNAME) {
         this.TAXNAME = TAXNAME;
+    }
+
+    public String getHSNCODE() {
+        return HSNCODE;
+    }
+
+    public void setHSNCODE(String HSNCODE) {
+        this.HSNCODE = HSNCODE;
     }
 }

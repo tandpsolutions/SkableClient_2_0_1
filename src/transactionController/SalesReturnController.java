@@ -64,6 +64,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.SalesReturnAPI;
 import retrofitAPI.StartUpAPI;
+import selecthint.SeriesSelection;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -86,7 +87,6 @@ public class SalesReturnController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ac_cd = "";
     private String ref_no = "";
@@ -148,12 +148,17 @@ public class SalesReturnController extends javax.swing.JDialog {
             jcmbBranch.setEnabled(true);
         }
         taxInfo = new HashMap<String, double[]>();
-        setTitle("Sales Return");
+        if (tax_type == 0) {
+            setTitle("Sales Return");
+        } else if (tax_type == 1) {
+            setTitle("Sales Return Local");
+        } else {
+            setTitle("Sales Return Outside");
+        }
         setPopUp();
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -171,8 +176,7 @@ public class SalesReturnController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -238,7 +242,6 @@ public class SalesReturnController extends javax.swing.JDialog {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -265,7 +268,6 @@ public class SalesReturnController extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -289,7 +291,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
                 if (lb.isEnter(e) && !lb.isBlank(jtxtTag)) {
                     jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                    Call<JsonObject> call = salesReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", false,SkableHome.db_name,SkableHome.selected_year);
+                    Call<JsonObject> call = salesReturnAPI.getTagNoDetailSales("'" + jtxtTag.getText() + "'", "15", false, SkableHome.db_name, SkableHome.selected_year);
                     call.enqueue(new Callback<JsonObject>() {
                         @Override
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -355,7 +357,6 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         jtxtItem = new javax.swing.JTextField();
         jtxtItem.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 lb.selectAll(e);
@@ -365,11 +366,9 @@ public class SalesReturnController extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
                 lb.toUpper(e);
             }
-
         });
 
         jtxtItem.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -380,10 +379,29 @@ public class SalesReturnController extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    setSeriesData("3", jtxtItem.getText().toUpperCase(), "1");
+                    SeriesSelection ss = new SeriesSelection(null, true);
+                    ss.setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    ss.setVisible(true);
+                    if (ss.getReturnStatus() == SelectDailog.RET_OK) {
+
+                        int row = ss.getjTable1().getSelectedRow();
+                        if (row != -1) {
+                            sr_cd = ss.getjTable1().getValueAt(row, 0).toString();
+                            item_name = ss.getjTable1().getValueAt(row, 1).toString();
+                            jtxtItem.setText(ss.getjTable1().getValueAt(row, 1).toString());
+                            jtxtIMEI.requestFocusInWindow();
+                            if(tax_type == 0){
+                                jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 3).toString());
+                            }else{
+                                jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 5).toString());
+                            }
+                            jcmbTaxItemStateChanged(null);
+                        }
+
+                        ss.dispose();
+                    }
                 }
             }
-
         });
 
         jtxtIMEI = new javax.swing.JTextField();
@@ -409,7 +427,6 @@ public class SalesReturnController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.onlyNumber(e, 15);
             }
-
         });
 
         jtxtSerialNo = new javax.swing.JTextField();
@@ -435,7 +452,6 @@ public class SalesReturnController extends javax.swing.JDialog {
             public void keyTyped(KeyEvent e) {
                 lb.fixLength(e, 20);
             }
-
         });
 
         jtxtQty = new javax.swing.JTextField();
@@ -508,7 +524,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     try {
-                        JsonObject call = salesReturnAPI.GetSalesRateByTag(jtxtTag.getText(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+                        JsonObject call = salesReturnAPI.GetSalesRateByTag(jtxtTag.getText(), SkableHome.db_name, SkableHome.selected_year).execute().body();
                         if (call != null) {
                             JsonArray array = call.getAsJsonArray("data");
                             if (array.size() > 0) {
@@ -652,7 +668,6 @@ public class SalesReturnController extends javax.swing.JDialog {
         jtxtAmount = new javax.swing.JTextField();
 
         jtxtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
-
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 lb.selectAll(e);
@@ -752,7 +767,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void setSeriesData(String param_cd, String value, final String mode) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -810,8 +825,7 @@ public class SalesReturnController extends javax.swing.JDialog {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(SalesReturnController.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -842,7 +856,7 @@ public class SalesReturnController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jcmbBranch.setEnabled(false);
-                Call<JsonObject> call = salesReturnAPI.GetDataFromServer(ref_no, "25",SkableHome.db_name,SkableHome.selected_year);
+                Call<JsonObject> call = salesReturnAPI.GetDataFromServer(ref_no, "25", SkableHome.db_name, SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -866,6 +880,13 @@ public class SalesReturnController extends javax.swing.JDialog {
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
                                         tax_type = array.get(i).getAsJsonObject().get("tax_type").getAsInt();
+                                        if (tax_type == 0) {
+                                            setTitle("Sales Return");
+                                        } else if (tax_type == 1) {
+                                            setTitle("Sales Return Local");
+                                        } else {
+                                            setTitle("Sales Return Outside");
+                                        }
                                         jtxtPmtDays.setText(array.get(i).getAsJsonObject().get("PMT_DAYS").getAsString());
                                         jtxtAdvance.setText(array.get(i).getAsJsonObject().get("ADVANCE_AMT").getAsString());
                                         jtxtAcAlias.setText(array.get(i).getAsJsonObject().get("AC_CD").getAsString());
@@ -1000,9 +1021,8 @@ public class SalesReturnController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(SalesReturnController.this);
@@ -1232,7 +1252,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         String headerJson = new Gson().toJson(header);
         String detailJson = new Gson().toJson(detail);
-        Call<JsonObject> addUpdaCall = salesReturnAPI.addUpdateSalesBill(headerJson, detailJson,SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> addUpdaCall = salesReturnAPI.addUpdateSalesBill(headerJson, detailJson, SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         addUpdaCall.enqueue(new Callback<JsonObject>() {
             @Override
@@ -1249,7 +1269,6 @@ public class SalesReturnController extends javax.swing.JDialog {
                         }
                         if (ref_no.equalsIgnoreCase("")) {
                             SwingWorker worker = new SwingWorker() {
-
                                 @Override
                                 protected Object doInBackground() throws Exception {
 //                                    lb.displayPurchaseVoucherEmail(header, detail);
@@ -2468,7 +2487,7 @@ public class SalesReturnController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt) && !lb.isBlank(jtxtMobile)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtMobile.getText(), "23",SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtMobile.getText(), "23", SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -2532,7 +2551,6 @@ public class SalesReturnController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtAcAliasFocusGained
 
     private void jtxtAcAliasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcAliasFocusLost
-
     }//GEN-LAST:event_jtxtAcAliasFocusLost
 
     private void jtxtAcAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyPressed
@@ -2565,7 +2583,6 @@ public class SalesReturnController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtAcAliasKeyPressed
 
     private void jtxtAcAliasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyReleased
-
     }//GEN-LAST:event_jtxtAcAliasKeyReleased
 
     private void jtxtCardNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCardNoKeyPressed
@@ -2573,7 +2590,7 @@ public class SalesReturnController extends javax.swing.JDialog {
 
         if (lb.isEnter(evt) && !lb.isBlank(jtxtCardNo)) {
             lb.addGlassPane(this);
-            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtCardNo.getText(), "22",SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = salesReturnAPI.GetDataFromServer(jtxtCardNo.getText(), "22", SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> rspns) {
@@ -2732,6 +2749,5 @@ public class SalesReturnController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVoucher;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

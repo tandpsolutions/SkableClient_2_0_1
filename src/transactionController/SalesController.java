@@ -71,6 +71,7 @@ import retrofitAPI.RefralAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SchemeAPI;
 import retrofitAPI.StartUpAPI;
+import selecthint.SeriesSelection;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -175,7 +176,17 @@ public class SalesController extends javax.swing.JDialog {
         jcmbType.setSelectedIndex(type);
         setUpData();
         taxInfo = new HashMap<String, double[]>();
-        setTitle("Sales Bill");
+        if (tax_type == 0) {
+            if (type == 0) {
+                setTitle("Retail Invoice");
+            } else if (type == 1) {
+                setTitle("Tax Invoice");
+            }
+        } else if (tax_type == 1) {
+            setTitle("Tax Invoice Local");
+        } else {
+            setTitle("Tax Invoice Outside");
+        }
         setPopUp();
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
@@ -771,7 +782,27 @@ public class SalesController extends javax.swing.JDialog {
                     }
                 }
                 if (lb.isEnter(e)) {
-                    setSeriesData("3", jtxtItem.getText().toUpperCase(), "1");
+                    SeriesSelection ss = new SeriesSelection(null, true);
+                    ss.setSeriesData("3", jtxtItem.getText().toUpperCase());
+                    ss.setVisible(true);
+                    if (ss.getReturnStatus() == SelectDailog.RET_OK) {
+
+                        int row = ss.getjTable1().getSelectedRow();
+                        if (row != -1) {
+                            sr_cd = ss.getjTable1().getValueAt(row, 0).toString();
+                            item_name = ss.getjTable1().getValueAt(row, 1).toString();
+                            jtxtItem.setText(ss.getjTable1().getValueAt(row, 1).toString());
+                            jtxtIMEI.requestFocusInWindow();
+                            if(tax_type == 0){
+                                jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 3).toString());
+                            }else{
+                                jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 5).toString());
+                            }
+                            jcmbTaxItemStateChanged(null);
+                        }
+
+                        ss.dispose();
+                    }
                 }
             }
         });
@@ -1272,6 +1303,17 @@ public class SalesController extends javax.swing.JDialog {
                                     taxInfo.clear();
                                     for (int i = 0; i < array.size(); i++) {
                                         tax_type = array.get(i).getAsJsonObject().get("TAX_TYPE").getAsInt();
+                                        if (tax_type == 0) {
+                                            if (type == 0) {
+                                                setTitle("Retail Invoice");
+                                            } else if (type == 1) {
+                                                setTitle("Tax Invoice");
+                                            }
+                                        } else if (tax_type == 1) {
+                                            setTitle("Tax Invoice Local");
+                                        } else {
+                                            setTitle("Tax Invoice Outside");
+                                        }
                                         jtxtVoucher.setText(array.get(i).getAsJsonObject().get("INV_NO").getAsInt() + "");
                                         jtxtVouDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
                                         jtxtDueDate.setText(lb.ConvertDateFormetForDBForConcurrency(array.get(i).getAsJsonObject().get("DUE_DATE").getAsString()));
@@ -1785,7 +1827,7 @@ public class SalesController extends javax.swing.JDialog {
                         sv.setData();
                         if (ref_no.equalsIgnoreCase("")) {
                             lb.confirmDialog("Do you want to print sales bill?");
-                            if(lb.type){
+                            if (lb.type) {
                                 sv.askPrint(object.get("ref_no").getAsString());
                             }
                             SwingWorker worker = new SwingWorker() {
