@@ -204,10 +204,26 @@ public class PurchaseController extends javax.swing.JDialog {
                 }
             }
         };
-        final JMenuItem item;
-        popup.add(item = new JMenuItem("COPY"));
+
+        ActionListener itemListner = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                popup.setVisible(false);
+                int row = jTable1.getSelectedRow();
+                int column = 1;
+                if (row != -1 && column != -1) {
+                    SeriesSelection ss = new SeriesSelection(null, true);
+                    ss.setSeriesData("3", jTable1.getValueAt(row, column).toString());
+                    ss.setVisible(true);
+                }
+            }
+        };
+        final JMenuItem copy, item;
+        popup.add(copy = new JMenuItem("COPY"));
+        popup.add(item = new JMenuItem("Item Help"));
+        copy.setHorizontalTextPosition(JMenuItem.RIGHT);
         item.setHorizontalTextPosition(JMenuItem.RIGHT);
-        item.addActionListener(menuListener);
+        copy.addActionListener(menuListener);
+        item.addActionListener(itemListner);
         popup.setLocation(MouseInfo.getPointerInfo().getLocation());
         jTable1.setComponentPopupMenu(popup);
     }
@@ -369,9 +385,9 @@ public class PurchaseController extends javax.swing.JDialog {
                                 item_name = ss.getjTable1().getValueAt(row, 1).toString();
                                 jtxtItem.setText(ss.getjTable1().getValueAt(row, 1).toString());
                                 jtxtIMEI.requestFocusInWindow();
-                                if(tax_type == 0){
+                                if (tax_type == 0) {
                                     jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 3).toString());
-                                }else{
+                                } else {
                                     jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 5).toString());
                                 }
                                 jcmbTaxItemStateChanged(null);
@@ -732,7 +748,6 @@ public class PurchaseController extends javax.swing.JDialog {
         lb.setTable(jTable1, new JComponent[]{null, jtxtItem, jtxtIMEI, jtxtSerialNo, jtxtQty, jtxtRate, null, null, jcmbTax, jtxtBasicAmt, jtxtTaxAmt, jtxtAddTaxAmt, jtxtDiscPer, jtxtNlc, jtxtMRP, jtxtAmount, null, null});
     }
 
-    
     private void getLastRate() {
         try {
             Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).GetDataFromServer("21", sr_cd, ac_cd, SkableHome.db_name, SkableHome.selected_year);
@@ -944,7 +959,7 @@ public class PurchaseController extends javax.swing.JDialog {
                                     jtxtTinNum.setText(header.getAccountHeader().get(row).getTIN());
                                     jtxtItem.requestFocusInWindow();
                                 }
-                            }else{
+                            } else {
                                 jtxtName.requestFocusInWindow();
                             }
                         } else {

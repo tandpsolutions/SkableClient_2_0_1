@@ -225,10 +225,26 @@ public class SalesController extends javax.swing.JDialog {
                 }
             }
         };
-        final JMenuItem item;
-        popup.add(item = new JMenuItem("COPY"));
+
+        ActionListener itemListner = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                popup.setVisible(false);
+                int row = jTable1.getSelectedRow();
+                int column = 1;
+                if (row != -1 && column != -1) {
+                    SeriesSelection ss = new SeriesSelection(null, true);
+                    ss.setSeriesData("3", jTable1.getValueAt(row, column).toString());
+                    ss.setVisible(true);
+                }
+            }
+        };
+        final JMenuItem copy, item;
+        popup.add(copy = new JMenuItem("COPY"));
+        popup.add(item = new JMenuItem("Item Help"));
+        copy.setHorizontalTextPosition(JMenuItem.RIGHT);
         item.setHorizontalTextPosition(JMenuItem.RIGHT);
-        item.addActionListener(menuListener);
+        copy.addActionListener(menuListener);
+        item.addActionListener(itemListner);
         popup.setLocation(MouseInfo.getPointerInfo().getLocation());
         jTable1.setComponentPopupMenu(popup);
     }
