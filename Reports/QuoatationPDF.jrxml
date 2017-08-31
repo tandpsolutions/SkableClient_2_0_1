@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.7715610000000013"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1776"/>
+	<property name="ireport.y" value="16"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="dir" class="java.lang.String"/>
@@ -73,6 +73,12 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 	</field>
 	<field name="SR_ALIAS" class="java.lang.String">
 		<fieldDescription><![CDATA[SR_ALIAS]]></fieldDescription>
+	</field>
+	<field name="VAT" class="java.lang.String">
+		<fieldDescription><![CDATA[VAT]]></fieldDescription>
+	</field>
+	<field name="GST" class="java.lang.String">
+		<fieldDescription><![CDATA[GST]]></fieldDescription>
 	</field>
 	<background>
 		<band height="802">
@@ -422,10 +428,11 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="8941f662-6ba1-46ad-80bb-c4b1d0cb7362" stretchType="RelativeToTallestObject" x="19" y="0" width="197" height="13"/>
+				<box topPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")+"\n"+"HSN : "+$F{HSN_CODE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "")+"\n"+"HSN : "+$F{HSN_CODE}+"\n"+"VAT : "+$F{VAT}+"\n"+"GST : "+$F{GST}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00">
 				<reportElement uuid="10c74bb4-d750-4506-a290-fe30656b646e" stretchType="RelativeToTallestObject" x="342" y="0" width="52" height="13"/>
