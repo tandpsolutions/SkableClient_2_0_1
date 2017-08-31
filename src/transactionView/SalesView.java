@@ -341,7 +341,7 @@ public class SalesView extends javax.swing.JInternalFrame {
         pp.setVisible(true);
     }
 
-    private void bulkSalesBill(String row) {
+    private void bulkSalesBill(String ref_no) {
         PrintPanel pp = new PrintPanel(null, true);
         if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
             lb.confirmDialog("Do you want to print customer print?");

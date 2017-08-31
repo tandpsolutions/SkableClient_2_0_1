@@ -705,14 +705,27 @@ public class SalesController extends javax.swing.JDialog {
 
                 if (e.getKeyCode() == KeyEvent.VK_B) {
                     if (e.getModifiers() == KeyEvent.CTRL_MASK) {
-                        String bill_no = (JOptionPane.showInputDialog("Enter Purchase Bill No"));
-                        JsonObject call;
-                        final HashMap params = new HashMap();
+                        lb.confirmDialog("Press 1 for bulk sale by purchase bill\n Press 2 for bulksale by tag.", "1", "2");
                         try {
-                            if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
-                                call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
+                            JsonObject call;
+                            final HashMap params = new HashMap();
+                            if (lb.type) {
+                                String bill_no = (JOptionPane.showInputDialog("Enter Purchase Bill No"));
+                                if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
+                                    call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                } else {
+                                    call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                }
                             } else {
-                                call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                BulkTag bt = new BulkTag(null, true);
+                                bt.setVisible(true);
+                                
+
+                                if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
+                                    call = salesAPI.getTagsByTagNo(bt.getModels(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                } else {
+                                    call = salesAPI.getTagsByTagNo(bt.getModels(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                }
                             }
                             JsonArray array = call.getAsJsonArray("array");
                             JsonArray rate_array = call.getAsJsonArray("rate_array");
@@ -745,15 +758,17 @@ public class SalesController extends javax.swing.JDialog {
 
                                 rateEnter(null);
                             }
+                            if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
+                                jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
+                                addItem(true);
+
+                            }
+
+
 
                         } catch (IOException ez) {
                         }
                     }
-                }
-                if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
-                    jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                    addItem(true);
-
                 }
             }
         });
@@ -793,9 +808,9 @@ public class SalesController extends javax.swing.JDialog {
                             item_name = ss.getjTable1().getValueAt(row, 1).toString();
                             jtxtItem.setText(ss.getjTable1().getValueAt(row, 1).toString());
                             jtxtIMEI.requestFocusInWindow();
-                            if(tax_type == 0){
+                            if (tax_type == 0) {
                                 jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 3).toString());
-                            }else{
+                            } else {
                                 jcmbTax.setSelectedItem(ss.getjTable1().getValueAt(row, 5).toString());
                             }
                             jcmbTaxItemStateChanged(null);

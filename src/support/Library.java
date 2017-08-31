@@ -244,6 +244,56 @@ public class Library {
         JButton[] options = {yes, no};
         JP.showOptionDialog(null, message + " \n (Press Y for Yes)  (Press N for No)", "", -1, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
+    
+    
+    public void confirmDialog(String message,String positiveString,String negativeString) {
+        final JButton positive = new JButton(positiveString);
+        final JButton negative = new JButton(negativeString);
+        type = false;
+        JOptionPane JP = new JOptionPane();
+//                b1.setMnemonic(KeyEvent.VK_Y);
+//                b2.setMnemonic(KeyEvent.VK_N);
+
+        negative.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                type = false;
+                negative.getTopLevelAncestor().setVisible(false);
+            }
+        });
+
+        positive.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                type = true;
+                positive.getTopLevelAncestor().setVisible(false);
+            }
+        });
+
+        Action positiveKeyAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                positive.doClick();
+            }
+        };
+
+        Action negativeKeyAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                negative.doClick();
+            }
+        };
+        positive.getInputMap().put(KeyStroke.getKeyStroke(KeyStroke.getKeyStroke(positiveString.charAt(0), 0).getKeyCode(), 0, false), "Click Me Button");
+        positive.getInputMap().put(KeyStroke.getKeyStroke(KeyStroke.getKeyStroke(negativeString.charAt(0), 0).getKeyCode(), 0, false), "Click Me");
+        negative.getInputMap().put(KeyStroke.getKeyStroke(KeyStroke.getKeyStroke(negativeString.charAt(0), 0).getKeyCode(), 0, false), "Click Me");
+        negative.getInputMap().put(KeyStroke.getKeyStroke(KeyStroke.getKeyStroke(positiveString.charAt(0), 0).getKeyCode(), 0, false), "Click Me Button");
+        positive.getActionMap().put("Click Me Button", positiveKeyAction);
+        positive.getActionMap().put("Click Me", negativeKeyAction);
+        negative.getActionMap().put("Click Me Button", positiveKeyAction);
+        negative.getActionMap().put("Click Me", negativeKeyAction);
+        JButton[] options = {positive, negative};
+        JP.showOptionDialog(null, message , "", -1, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
 
     public String getCustomFormat(String input) {
         String value = "";

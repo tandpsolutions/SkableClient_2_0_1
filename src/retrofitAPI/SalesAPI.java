@@ -51,6 +51,11 @@ public interface SalesAPI {
     @GET("GetPurcahseByInvNo")
     Call<JsonObject> getPurcahseByInvNo(@Query("inv_no") String inv_no, @Query("branch_cd") String loc, @Query("loc") String godown, @Query("db_name") String db_name, @Query("ac_year") String ac_year);
     
+    @FormUrlEncoded
+    @POST("GetTagsByTagNo")
+    Call<JsonObject> getTagsByTagNo(@Field("tag_no") String tag_no, @Field("branch_cd") String loc, @Field("loc") String godown, @Field("db_name") String db_name, @Field("ac_year") String ac_year);
+    
+    
     @GET("GetSalesBillPrint")
     Call<JsonObject> GetSalesBillPrint(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
 
