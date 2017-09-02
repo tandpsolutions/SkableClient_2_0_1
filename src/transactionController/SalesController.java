@@ -735,7 +735,7 @@ public class SalesController extends javax.swing.JDialog {
                             } else {
                                 BulkTag bt = new BulkTag(null, true);
                                 bt.setVisible(true);
-                                
+
 
                                 if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
                                     call = salesAPI.getTagsByTagNo(bt.getModels(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
@@ -784,6 +784,11 @@ public class SalesController extends javax.swing.JDialog {
 
                         } catch (IOException ez) {
                         }
+                    }
+                } else {
+                    if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
+                        jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
+                        addItem(true);
                     }
                 }
             }

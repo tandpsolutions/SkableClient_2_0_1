@@ -438,13 +438,25 @@ public class DNCNController extends javax.swing.JDialog {
         }
 
         if (bank_cd.equalsIgnoreCase("")) {
-            lb.showMessageDailog("Please select valid our bank");
+            lb.showMessageDailog("Please select valid account");
             return false;
         }
+        
+        if (ac_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Please select valid party account");
+            return false;
+        }
+        
+        
         if (!lb.checkDate(jtxtVouDate)) {
             lb.showMessageDailog("Invalid Voucher Date");
             jtxtVouDate.requestFocusInWindow();
             flag = false;
+        }
+        
+        if(jTable1.getRowCount()>1){
+            lb.showMessageDailog("You can not add multiple entry in voucher");
+            return false;
         }
 
         return true;

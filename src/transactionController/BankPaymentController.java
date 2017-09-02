@@ -500,11 +500,21 @@ public class BankPaymentController extends javax.swing.JDialog {
             lb.showMessageDailog("Please select valid our bank");
             return false;
         }
+        
+        if (ac_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Please select valid Account");
+            return false;
+        }
 
         if (!lb.checkDate(jtxtVouDate)) {
             lb.showMessageDailog("Invalid Voucher Date");
             jtxtVouDate.requestFocusInWindow();
             flag = false;
+        }
+        
+        if(jTable1.getRowCount()>1){
+            lb.showMessageDailog("You can not add multiple entry in voucher");
+            return false;
         }
 
         return true;

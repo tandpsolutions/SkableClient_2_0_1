@@ -61,7 +61,6 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ac_cd = "";
     private String ref_no = "";
@@ -112,7 +111,6 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -152,7 +150,6 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -183,8 +180,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -256,9 +252,9 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
             try {
                 JsonObject call;
                 if (type == 0) {
-                    call = cashPRAPI.getCashDetail(ref_no, "9",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    call = cashPRAPI.getCashDetail(ref_no, "9", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 } else {
-                    call = cashPRAPI.getCashDetail(ref_no, "28",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    call = cashPRAPI.getCashDetail(ref_no, "28", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 }
                 if (call != null) {
                     System.out.println(call.toString());
@@ -318,7 +314,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(CashPaymentReceiptController.this);
@@ -377,6 +373,16 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
             flag = false;
         }
 
+        if (ac_cd.equalsIgnoreCase("")) {
+            lb.showMessageDailog("Please select account");
+            return false;
+        }
+
+        if (jTable1.getRowCount() > 1) {
+            lb.showMessageDailog("You can not add multiple entry in voucher");
+            return false;
+        }
+
         return true;
     }
 
@@ -399,7 +405,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
                     detail.add(model);
                 }
                 String detailJson = new Gson().toJson(detail);
-                JsonObject addUpdaCall = cashPRAPI.addUpdateCashVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject addUpdaCall = cashPRAPI.addUpdateCashVoucher(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
                 lb.addGlassPane(CashPaymentReceiptController.this);
 
                 lb.removeGlassPane(CashPaymentReceiptController.this);
@@ -437,7 +443,7 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
 
     private void getoldb2_4(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -1105,6 +1111,5 @@ public class CashPaymentReceiptController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }
