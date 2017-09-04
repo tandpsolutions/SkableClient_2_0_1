@@ -586,7 +586,7 @@ public class SalesController extends javax.swing.JDialog {
         }
     }
 
-    private void rateEnter(FocusEvent e) {
+    private void rateEnter(FocusEvent e, boolean validateFlag) {
 
         if (!SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
             try {
@@ -596,7 +596,7 @@ public class SalesController extends javax.swing.JDialog {
                     if (array.size() > 0) {
                         double pur_rate = lb.isNumber(array.get(0).getAsJsonObject().get("PUR_RATE").getAsString().split("/")[0]);
                         double sale_rate = lb.isNumber(jtxtRate);
-                        if (sale_rate < pur_rate) {
+                        if (validateFlag && sale_rate < pur_rate) {
                             lb.showMessageDailog("Please check rate");
                             lb.confirmDialog("Are you sure to proceed?");
                             if (lb.type) {
@@ -723,7 +723,7 @@ public class SalesController extends javax.swing.JDialog {
                     if (e.getModifiers() == KeyEvent.CTRL_MASK) {
                         lb.confirmDialog("Press 1 for bulk sale by purchase bill\n Press 2 for bulksale by tag.", "1", "2");
                         try {
-                            JsonObject call;
+                            JsonObject call = null;
                             final HashMap params = new HashMap();
                             if (lb.type) {
                                 String bill_no = (JOptionPane.showInputDialog("Enter Purchase Bill No"));
@@ -733,14 +733,14 @@ public class SalesController extends javax.swing.JDialog {
                                     call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
                                 }
                             } else {
-                                BulkTag bt = new BulkTag(null, true);
+                               
+                                BulkSalesByTag bt = new BulkSalesByTag(null, true);
+                                bt.setLocationRelativeTo(null);
                                 bt.setVisible(true);
-
-
                                 if (SkableHome.user_grp_cd.equalsIgnoreCase("1") || SkableHome.user_grp_cd.equalsIgnoreCase("4")) {
-                                    call = salesAPI.getTagsByTagNo(bt.getModels(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                    call = salesAPI.getTagsByTagNo(bt.getBarcodes(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), null, SkableHome.db_name, SkableHome.selected_year).execute().body();
                                 } else {
-                                    call = salesAPI.getTagsByTagNo(bt.getModels(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
+                                    call = salesAPI.getTagsByTagNo(bt.getBarcodes(), Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
                                 }
                             }
                             JsonArray array = call.getAsJsonArray("array");
@@ -772,13 +772,9 @@ public class SalesController extends javax.swing.JDialog {
                                 jtxtRate.requestFocusInWindow();
                                 jtxtRate.setText(params.get(jtxtItem.getText()).toString());
 
-                                rateEnter(null);
+                                rateEnter(null, false);
                             }
-                            if (lb.isEnter(e) && !lb.isBlank(jtxtTag) && validateTag()) {
-                                jtxtTag.setText(lb.checkTag(jtxtTag.getText()));
-                                addItem(true);
 
-                            }
 
 
 
@@ -924,7 +920,7 @@ public class SalesController extends javax.swing.JDialog {
 
             @Override
             public void focusLost(java.awt.event.FocusEvent e) {
-                rateEnter(e);
+                rateEnter(e, true);
             }
         });
 

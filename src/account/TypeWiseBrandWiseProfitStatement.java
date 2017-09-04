@@ -594,8 +594,7 @@ public class TypeWiseBrandWiseProfitStatement extends javax.swing.JInternalFrame
                     ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), SkableHome.db_name, SkableHome.selected_year)
                     .execute().body();
 
-            jtxtBrandName.setText("");
-            code = "";
+            
             lb.addGlassPane(this);
 
             if (call != null) {

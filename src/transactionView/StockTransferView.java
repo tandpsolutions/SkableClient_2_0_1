@@ -134,7 +134,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
     }
 
     private void addSalesReturnController() {
-        StockTransferController pc = new StockTransferController(null, true, vType);
+        StockTransferController pc = new StockTransferController(null, true, vType,this);
         pc.setLocationRelativeTo(null);
         pc.setData(ref_no);
     }
@@ -205,8 +205,8 @@ public class StockTransferView extends javax.swing.JInternalFrame {
             }
 
             @Override
-            public void callPrint() { 
-               int row = jTable1.getSelectedRow();
+            public void callPrint() {
+                int row = jTable1.getSelectedRow();
                 if (row != -1) {
                     ref_no = jTable1.getValueAt(row, 0).toString();
                     PrintPanel pp = new PrintPanel(null, true);
@@ -225,6 +225,11 @@ public class StockTransferView extends javax.swing.JInternalFrame {
 
     private void close() {
         this.dispose();
+    }
+
+    public void printVoucher(String ref_no) {
+        PrintPanel pp = new PrintPanel(null, true);
+        pp.generateStocktransferPrint(ref_no);
     }
 
     @Override

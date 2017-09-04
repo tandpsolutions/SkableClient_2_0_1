@@ -853,6 +853,7 @@ public class MarginReport extends javax.swing.JInternalFrame {
                     double pur_tot = 0;
                     double sale_tot = 0;
                     for (int i = 0; i < array.size(); i++) {
+                        try{
                         Vector row = new Vector();
                         row.add(i + 1);
                         row.add(lb.ConvertDateFormetForDisplay(array.get(i).getAsJsonObject().get("V_DATE").getAsString()));
@@ -873,6 +874,9 @@ public class MarginReport extends javax.swing.JInternalFrame {
                             row.add("RI - " + array.get(i).getAsJsonObject().get("INV_NO").getAsInt());
                         }
                         dtm.addRow(row);
+                        }catch(Exception ex){
+                            
+                        }
                     }
 
                     for (int i = 0; i < jTable1.getRowCount(); i++) {

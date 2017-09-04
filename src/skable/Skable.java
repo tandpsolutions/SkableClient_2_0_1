@@ -7,12 +7,8 @@ package skable;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import java.io.IOException;
-import java.util.Properties;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UnsupportedLookAndFeelException;
 import login.SelectIP;
 import retrofitAPI.UpdateInterface;
 import support.Library;
@@ -26,18 +22,18 @@ public class Skable {
 
     /**
      */
-    public static String ver = "58";
+    public static String ver = "60";
 
     public static void main(String[] args) {
         // TODO code application logic here
-        try {
-            Properties property = new Properties();
-            property.put("logoString", "");
-            McWinLookAndFeel.setTheme(property);
-            javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            JOptionPane.showMessageDialog(null, e.getCause().getMessage());
-        }
+//        try {
+//            Properties property = new Properties();
+//            property.put("logoString", "");
+//            McWinLookAndFeel.setTheme(property);
+//            javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+//            JOptionPane.showMessageDialog(null, e.getCause().getMessage());
+//        }
         final Library lb = Library.getInstance();
 //
         try {

@@ -1307,7 +1307,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmnIMEIPSSales">
               <Properties>
-                <Property name="text" type="java.lang.String" value="IMEI Purchase Sales on Purchase"/>
+                <Property name="text" type="java.lang.String" value="IMEI Purchase Sales on Sales"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmnIMEIPSSalesActionPerformed"/>
@@ -1315,7 +1315,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmnIMIEPSOnPurchase">
               <Properties>
-                <Property name="text" type="java.lang.String" value="IMEI Purchase Sales on Sales"/>
+                <Property name="text" type="java.lang.String" value="IMEI Purchase Sales on Purchase"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmnIMIEPSOnPurchaseActionPerformed"/>

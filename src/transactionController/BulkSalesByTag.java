@@ -1,12 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package transactionController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -15,12 +15,13 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import support.Library;
+import support.ReportTable;
 
 /**
  *
- * @author bhaumikshah
+ * @author bhaumik
  */
-public class BulkTag extends javax.swing.JDialog {
+public class BulkSalesByTag extends javax.swing.JDialog {
 
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -30,17 +31,18 @@ public class BulkTag extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-    Library lb = Library.getInstance();
+    private Library lb = Library.getInstance();
+    private ReportTable viewTable = null;
+    boolean flag = false;
     private DefaultTableModel dtm;
-    String models = "";
+    String barcodes="";
 
     /**
-     * Creates new form BulkTag
+     * Creates new form BulkPurchase
      */
-    public BulkTag(java.awt.Frame parent, boolean modal) {
+    public BulkSalesByTag(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        dtm = (DefaultTableModel) jTable1.getModel();
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -52,6 +54,24 @@ public class BulkTag extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
+        initOther();
+    }
+
+    private void initOther() {
+        dtm = (DefaultTableModel) jTable1.getModel();
+        tableForView();
+    }
+
+    
+
+    private void tableForView() {
+        viewTable = new ReportTable();
+
+        viewTable.AddColumn(0, "Item Code", 120, java.lang.String.class, null, false);
+        viewTable.AddColumn(1, "Item Name", 120, java.lang.String.class, null, false);
+        viewTable.AddColumn(2, "Tax Code", 0, java.lang.String.class, null, false);
+        viewTable.AddColumn(3, "Tax Name", 120, java.lang.String.class, null, false);
+        viewTable.makeTable();
     }
 
     /**
@@ -61,6 +81,7 @@ public class BulkTag extends javax.swing.JDialog {
         return returnStatus;
     }
 
+   
     public boolean validateRow(String tag) {
         boolean flag = true;
         if (!tag.equalsIgnoreCase("")) {
@@ -75,13 +96,11 @@ public class BulkTag extends javax.swing.JDialog {
         return flag;
     }
 
-    public String getModels() {
-        return models;
+    public String getBarcodes() {
+        return barcodes;
     }
-
-    public void setModels(String models) {
-        this.models = models;
-    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,15 +112,15 @@ public class BulkTag extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         cancelButton = new javax.swing.JButton();
-        jlblCount = new javax.swing.JLabel();
         jtxtIMEI = new javax.swing.JTextField();
+        jbtnAdd = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        jlblCount = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -115,8 +134,6 @@ public class BulkTag extends javax.swing.JDialog {
                 cancelButtonActionPerformed(evt);
             }
         });
-
-        jlblCount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jtxtIMEI.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -132,6 +149,18 @@ public class BulkTag extends javax.swing.JDialog {
             }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtxtIMEIKeyPressed(evt);
+            }
+        });
+
+        jbtnAdd.setText("Add");
+        jbtnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAddActionPerformed(evt);
+            }
+        });
+        jbtnAdd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnAddKeyPressed(evt);
             }
         });
 
@@ -159,85 +188,50 @@ public class BulkTag extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Serial No");
+        jlblCount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("IMEI");
-
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
-            }
-        });
-
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
-                .add(jButton1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(cancelButton)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlblCount, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton))
+                    .addComponent(jtxtIMEI)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
                 .addContainerGap())
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jtxtIMEI)
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                        .add(layout.createSequentialGroup()
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jlblCount, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(layout.createSequentialGroup()
-                                    .add(jRadioButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(18, 18, 18)
-                                    .add(jRadioButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 79, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                            .add(0, 0, Short.MAX_VALUE)))
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(266, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(cancelButton)
-                    .add(jButton1))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtxtIMEI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblCount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cancelButton)
+                        .addComponent(jbtnAdd)))
                 .addContainerGap())
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jRadioButton1)
-                        .add(jRadioButton2))
-                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                    .add(jtxtIMEI, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .add(12, 12, 12)
-                    .add(jlblCount, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        lb.confirmDialog("Do you want to discard this form?");
-        if (lb.type) {
-            doClose(RET_CANCEL);
-        }
+        doClose(RET_CANCEL);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -247,25 +241,22 @@ public class BulkTag extends javax.swing.JDialog {
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
 
-    private void jtxtIMEIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtIMEIFocusGained
+    private void jbtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddActionPerformed
         // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtIMEIFocusGained
-
-    private void jtxtIMEIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtIMEIFocusLost
-        // TODO add your handling code here:
-        lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtIMEIFocusLost
-
-    private void jtxtIMEIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtIMEIKeyTyped
-        // TODO add your handling code here:
-        if (jRadioButton1.isSelected()) {
-            lb.fixLength(evt, 15);
-            lb.onlyNumber(evt, 15);
-        } else {
-            lb.fixLength(evt, 25);
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+                barcodes+="'"+jTable1.getValueAt(i, 0).toString()+"',";
         }
-    }//GEN-LAST:event_jtxtIMEIKeyTyped
+        barcodes=barcodes.substring(0,barcodes.length()-1);
+        doClose(RET_OK);
+
+        
+
+    }//GEN-LAST:event_jbtnAddActionPerformed
+
+    private void jbtnAddKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnAddKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnAddKeyPressed
 
     private void jtxtIMEIKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtIMEIKeyPressed
         // TODO add your handling code here:
@@ -273,9 +264,9 @@ public class BulkTag extends javax.swing.JDialog {
             jtxtIMEI.setText(lb.checkTag(jtxtIMEI.getText()));
             if (lb.isBlank(jtxtIMEI)) {
                 if (jTable1.getRowCount() > 0) {
-                    lb.confirmDialog("Do you want to add this item to Sales bill");
+                    lb.confirmDialog("Do you want to add this item to purchase bill");
                     if (lb.type) {
-                        jButton1.requestFocusInWindow();
+                        jbtnAdd.requestFocusInWindow();
                     } else {
                         jtxtIMEI.requestFocusInWindow();
                     }
@@ -284,15 +275,20 @@ public class BulkTag extends javax.swing.JDialog {
                 Vector row = new Vector();
                 row.add(jtxtIMEI.getText().toUpperCase());
                 dtm.addRow(row);
-                //                lb.confirmDialog("Do you want to add more item?");
-                //                if (lb.type) {
+//                lb.confirmDialog("Do you want to add more item?");
+//                if (lb.type) {
                 jtxtIMEI.setText("");
                 jtxtIMEI.requestFocusInWindow();
                 jlblCount.setText(jTable1.getRowCount() + "");
-                //                }
+//                }
             }
         }
     }//GEN-LAST:event_jtxtIMEIKeyPressed
+
+    private void jtxtIMEIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtIMEIKeyTyped
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jtxtIMEIKeyTyped
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
@@ -308,37 +304,31 @@ public class BulkTag extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jtxtIMEIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtIMEIFocusGained
         // TODO add your handling code here:
-        String models = "";
-        for (int i = 0; i < dtm.getRowCount(); i++) {
-            models += "'" + jTable1.getValueAt(i, 0).toString() + "',";
+        lb.selectAll(evt);
+    }//GEN-LAST:event_jtxtIMEIFocusGained
 
-        }
-        models = models.substring(0, models.length() - 1);
-        setModels(models);
-        doClose(RET_OK);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void jtxtIMEIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtIMEIFocusLost
         // TODO add your handling code here:
-        lb.enterClick(evt);
-    }//GEN-LAST:event_jButton1KeyPressed
+        lb.toUpper(evt);
+    }//GEN-LAST:event_jtxtIMEIFocusLost
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbtnAdd;
     private javax.swing.JLabel jlblCount;
     private javax.swing.JTextField jtxtIMEI;
     // End of variables declaration//GEN-END:variables

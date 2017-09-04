@@ -1912,7 +1912,7 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnAccounts.add(jmnPartyWiseStockOnHand);
 
-        jmnIMEIPSSales.setText("IMEI Purchase Sales on Purchase");
+        jmnIMEIPSSales.setText("IMEI Purchase Sales on Sales");
         jmnIMEIPSSales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmnIMEIPSSalesActionPerformed(evt);
@@ -1920,7 +1920,7 @@ public class SkableHome extends javax.swing.JFrame {
         });
         jmnAccounts.add(jmnIMEIPSSales);
 
-        jmnIMIEPSOnPurchase.setText("IMEI Purchase Sales on Sales");
+        jmnIMIEPSOnPurchase.setText("IMEI Purchase Sales on Purchase");
         jmnIMIEPSOnPurchase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmnIMIEPSOnPurchaseActionPerformed(evt);
@@ -2562,7 +2562,7 @@ public class SkableHome extends javax.swing.JFrame {
     private void jmnIMIEPSOnPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnIMIEPSOnPurchaseActionPerformed
         // TODO add your handling code here:
         ItemWisePS ips = new ItemWisePS();
-        addOnScreen(ips, "Date Range Wise Pur Sales and Profit Party Wise With IMEI");
+        addOnScreen(ips, "Purchase Date Range Wise Pur Sales and Profit Party Wise With IMEI");
     }//GEN-LAST:event_jmnIMIEPSOnPurchaseActionPerformed
 
     private void jmnPartyWiseStockOnHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnPartyWiseStockOnHandActionPerformed
@@ -3070,7 +3070,7 @@ public class SkableHome extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         PurchaseReturnView prv = new PurchaseReturnView(2, 44);
-        addOnScreen(prv, "Purchase Return Local View");
+        addOnScreen(prv, "Purchase Return Outside View");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jmnRetailInvoiceLocalEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnRetailInvoiceLocalEditActionPerformed

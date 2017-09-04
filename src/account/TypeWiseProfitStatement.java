@@ -592,8 +592,8 @@ public class TypeWiseProfitStatement extends javax.swing.JInternalFrame {
                         Vector row = new Vector();
                         row.add(array.get(i).getAsJsonObject().get("TYPE_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("QTY").getAsString());
-                        row.add(array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble());
-                        row.add(array.get(i).getAsJsonObject().get("SALES").getAsDouble());
+                        row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble()));
+                        row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("SALES").getAsDouble()));
                         row.add(lb.Convert2DecFmtForRs(array.get(i).getAsJsonObject().get("SALES").getAsDouble() - array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble()));
                         row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
                         dtm.addRow(row);

@@ -31,6 +31,7 @@ import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
+import transactionView.StockTransferView;
 
 /**
  *
@@ -49,6 +50,7 @@ public class StockTransferController extends javax.swing.JDialog {
     private javax.swing.JLabel jlblTotal;
     javax.swing.JTextField jtxtItem = null;
     private ReportTable viewTable = null;
+    private StockTransferView stv;
 
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -79,9 +81,10 @@ public class StockTransferController extends javax.swing.JDialog {
         viewTable.makeTable();
     }
 
-    public StockTransferController(java.awt.Frame parent, boolean modal, int vtype) {
+    public StockTransferController(java.awt.Frame parent, boolean modal, int vtype, StockTransferView stv) {
         super(parent, modal);
         initComponents();
+        this.stv=stv;
         addJtextBox();
         addJLabel();
         tableForView();
@@ -497,6 +500,9 @@ public class StockTransferController extends javax.swing.JDialog {
             if (object.get("result").getAsInt() == 1) {
                 lb.showMessageDailog("Voucher saved successfully");
                 StockTransferController.this.dispose();
+                if(ref_no.equalsIgnoreCase("")){
+                    stv.printVoucher(object.get("ref_no").getAsString());
+                }
             } else {
                 lb.showMessageDailog(object.get("Cause").getAsString());
             }

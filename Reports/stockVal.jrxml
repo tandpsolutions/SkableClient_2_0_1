@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stockVal" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d45cf4c6-5661-443e-8475-0cc7f2a729a2">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000028"/>
+	<property name="ireport.x" value="18"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="type" class="java.lang.String"/>
 	<field name="IMEI_NO" class="java.lang.String">
@@ -19,103 +19,253 @@
 	<field name="V_DATE" class="java.sql.Date">
 		<fieldDescription><![CDATA[V_DATE]]></fieldDescription>
 	</field>
+	<field name="DAYS" class="java.lang.String">
+		<fieldDescription><![CDATA[DAYS]]></fieldDescription>
+	</field>
+	<field name="TAG_NO" class="java.lang.String">
+		<fieldDescription><![CDATA[TAG_NO]]></fieldDescription>
+	</field>
+	<field name="PRICE" class="java.lang.String">
+		<fieldDescription><![CDATA[PRICE]]></fieldDescription>
+	</field>
 	<variable name="tot_brand" class="java.lang.Double" resetType="Group" resetGroup="brand" calculation="Sum">
 		<variableExpression><![CDATA[$F{PUR_RATE}]]></variableExpression>
 	</variable>
+	<variable name="IMEI_NO_1" class="java.lang.Integer" resetType="Column" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{IMEI_NO}]]></variableExpression>
+	</variable>
 	<group name="brand">
 		<groupExpression><![CDATA[$F{BRAND_NAME}]]></groupExpression>
-		<groupHeader>
-			<band height="20">
-				<textField>
-					<reportElement x="0" y="0" width="277" height="20" uuid="4f8cc401-af42-458d-a2ca-1d71754db50d"/>
-					<box leftPadding="2"/>
-					<textElement verticalAlignment="Middle">
-						<font size="12" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Brand :"+$F{BRAND_NAME}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="51" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="31" uuid="e395002c-d421-4047-a5ea-0536e7d7fc82"/>
+				<reportElement uuid="e395002c-d421-4047-a5ea-0536e7d7fc82" x="0" y="0" width="555" height="31"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IMEI Wise Stock Report]]></text>
+				<text><![CDATA[Current Stock]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="50">
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="455" y="30" width="100" height="20" uuid="9ad284ac-44d8-4263-9e7b-6bf1fcd0ba13"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="9ad284ac-44d8-4263-9e7b-6bf1fcd0ba13" x="455" y="30" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="390" y="30" width="65" height="20" uuid="f69e2daa-1dd3-4278-990e-84ac9d0ff3bd"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="f69e2daa-1dd3-4278-990e-84ac9d0ff3bd" x="390" y="30" width="65" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Print Date]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="436" y="10" width="80" height="20" uuid="4e8ee818-dc4b-46a9-ae9a-d18a8c3cd132"/>
-				<textElement textAlignment="Right"/>
+				<reportElement uuid="4e8ee818-dc4b-46a9-ae9a-d18a8c3cd132" x="436" y="10" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="516" y="10" width="40" height="20" uuid="be50327a-23be-4295-8438-c13e8d49d14e"/>
+				<reportElement uuid="be50327a-23be-4295-8438-c13e8d49d14e" x="516" y="10" width="40" height="20"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="752d398d-fceb-4f0b-8979-e987a3f203d0" x="144" y="0" width="186" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a712fb8-5b98-42ca-8416-24cd70fd8035" x="330" y="0" width="92" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMEI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6893ad0a-b934-4226-9fdc-44734c142a7f" x="422" y="0" width="52" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b04a204-eb51-4da3-a4cc-5ef0619ac427" x="474" y="0" width="79" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Barcode No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01b93677-d393-4a57-aeba-21fd6036b322" x="106" y="0" width="38" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Days]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07d8679a-9f88-4fb8-95b3-fac3e44a1634" x="29" y="0" width="77" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pur. Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3fe5164b-1392-4961-a3f7-4ea686fee12a" x="0" y="0" width="29" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="40" y="0" width="288" height="16" uuid="c0991aaf-549b-4ec8-8bd5-f6ee88428d18"/>
-				<box leftPadding="2">
+				<reportElement uuid="c0991aaf-549b-4ec8-8bd5-f6ee88428d18" stretchType="RelativeToTallestObject" x="144" y="0" width="186" height="16"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{SR_NAME}.replaceAll( "NONE", "" )]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="328" y="0" width="127" height="16" uuid="96691424-251b-4bc5-93f1-c5f7b3e8e2e0"/>
+				<reportElement uuid="96691424-251b-4bc5-93f1-c5f7b3e8e2e0" stretchType="RelativeToTallestObject" x="422" y="0" width="52" height="16"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{IMEI_NO}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="40" height="16" uuid="f4ec3a64-1873-4f74-a2da-a82d87cfd7f4"/>
+				<reportElement uuid="f4ec3a64-1873-4f74-a2da-a82d87cfd7f4" stretchType="RelativeToTallestObject" x="0" y="0" width="29" height="16"/>
 				<box>
+					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-				<reportElement stretchType="RelativeToTallestObject" x="455" y="0" width="98" height="16" uuid="681c8674-6762-4b71-8397-ad4bb51ace3c"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="681c8674-6762-4b71-8397-ad4bb51ace3c" stretchType="RelativeToTallestObject" x="474" y="0" width="79" height="16"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAG_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="96691424-251b-4bc5-93f1-c5f7b3e8e2e0" stretchType="RelativeToTallestObject" x="330" y="0" width="92" height="16"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMEI_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="681c8674-6762-4b71-8397-ad4bb51ace3c" stretchType="RelativeToTallestObject" x="29" y="0" width="77" height="16"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{V_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="681c8674-6762-4b71-8397-ad4bb51ace3c" stretchType="RelativeToTallestObject" x="106" y="0" width="38" height="16"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DAYS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
