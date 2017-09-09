@@ -31,6 +31,7 @@ import retrofitAPI.QuotationAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SalesReturnAPI;
 import retrofitAPI.StkTrAPI;
+import retrofitAPI.StkTrOutAPI;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -823,8 +824,8 @@ public class PrintPanel extends javax.swing.JDialog {
 
     public void generateStocktransfer(String ref_no) {
         try {
-            StkTrAPI salesAPI = lb.getRetrofit().create(StkTrAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+            StkTrOutAPI salesAPI = lb.getRetrofit().create(StkTrOutAPI.class);
+            JsonObject call = salesAPI.GetStockTransferPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;

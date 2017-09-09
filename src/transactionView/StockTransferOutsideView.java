@@ -236,7 +236,8 @@ public class StockTransferOutsideView extends javax.swing.JInternalFrame {
                 if (row != -1) {
                     ref_no = jTable1.getValueAt(row, 0).toString();
                     PrintPanel pp = new PrintPanel(null, true);
-//                    pp.generateStocktransfer(ref_no);
+                    pp.generateStocktransfer(ref_no);
+                    pp.setVisible(true);
                 }
             }
         }
