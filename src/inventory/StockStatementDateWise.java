@@ -177,7 +177,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = typeAPI.getTypeMaster(SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = typeAPI.getTypeMaster(SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
 
@@ -256,8 +256,8 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
         Call<JsonObject> call = inventoryAPI.GetStockStatementDateWise(sr_cd,
                 ((jcmbType.getSelectedIndex() > 0) ? typeList.get(jcmbType.getSelectedIndex() - 1).getTYPE_CD() : ""), code, model_cd,
                 lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()),
-                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox1.getSelectedIndex()
-                ,SkableHome.db_name,SkableHome.selected_year);
+                ((jcmbType1.getSelectedIndex() > 0) ? typeList.get(jcmbType1.getSelectedIndex() - 1).getTYPE_CD() : ""), jComboBox1.getSelectedIndex(),
+                SkableHome.db_name, SkableHome.selected_year);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -269,7 +269,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
                     if (result.get("result").getAsInt() == 1) {
                         JsonArray array = rspns.body().getAsJsonArray("data");
                         dtm.setRowCount(0);
-                        double opb = 0.00, pur = 0.00, sal = 0.00, stock = 0.00;
+                        double opb = 0.00, pur = 0.00, sal = 0.00, stock = 0.00, issue = 0.00, receipt = 0.00;
                         for (int i = 0; i < array.size(); i++) {
                             Vector row = new Vector();
                             row.add(i + 1);
@@ -280,7 +280,13 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
                             row.add(array.get(i).getAsJsonObject().get("OPB").getAsDouble());
                             row.add(array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble());
                             row.add(array.get(i).getAsJsonObject().get("SALES").getAsDouble());
-                            row.add(array.get(i).getAsJsonObject().get("OPB").getAsDouble() + array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() - array.get(i).getAsJsonObject().get("SALES").getAsDouble());
+                            row.add(array.get(i).getAsJsonObject().get("receipt").getAsDouble());
+                            row.add(array.get(i).getAsJsonObject().get("issue").getAsDouble());
+                            row.add(array.get(i).getAsJsonObject().get("OPB").getAsDouble() 
+                                    + array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble() 
+                                    - array.get(i).getAsJsonObject().get("SALES").getAsDouble() 
+                                    - array.get(i).getAsJsonObject().get("issue").getAsDouble() 
+                                    + array.get(i).getAsJsonObject().get("receipt").getAsDouble());
                             row.add(array.get(i).getAsJsonObject().get("SR_CD").getAsString());
                             row.add(array.get(i).getAsJsonObject().get("SR_ALIAS").getAsString());
                             row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
@@ -288,9 +294,13 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
                             opb += array.get(i).getAsJsonObject().get("OPB").getAsDouble();
                             pur += array.get(i).getAsJsonObject().get("PURCHASE").getAsDouble();
                             sal += array.get(i).getAsJsonObject().get("SALES").getAsDouble();
-                            stock = opb + pur - sal;
+                            issue += array.get(i).getAsJsonObject().get("issue").getAsDouble();
+                            receipt += array.get(i).getAsJsonObject().get("receipt").getAsDouble();
+                            stock = opb + pur - sal + receipt - issue;
                         }
                         Vector row = new Vector();
+                        row.add(" ");
+                        row.add(" ");
                         row.add(" ");
                         row.add(" ");
                         row.add(" ");
@@ -308,6 +318,8 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
                         row.add(opb);
                         row.add(pur);
                         row.add(sal);
+                        row.add(receipt);
+                        row.add(issue);
                         row.add(stock);
                         row.add(" ");
                         row.add(" ");
@@ -336,7 +348,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
 
     private void setSeriesData(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             if (call != null) {
                 System.out.println(call.toString());
                 SeriesHead header = (SeriesHead) new Gson().fromJson(call, SeriesHead.class);
@@ -366,7 +378,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
 
     private void setBrandData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
 
                 @Override
@@ -425,7 +437,7 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
 
     private void setModelData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -556,11 +568,11 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr No", "Product Name", "Opening", "Purchase", "Sales", "Balance", "sr_cd", "SR Alias", "Branch"
+                "Sr No", "Product Name", "Opening", "Purchase", "Sales", "In", "Out", "Balance", "sr_cd", "SR Alias", "Branch"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -582,11 +594,13 @@ public class StockStatementDateWise extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
             jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
+            jTable1.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);

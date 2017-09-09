@@ -71,12 +71,14 @@
                   <Font name="Arial" size="11" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="9" rowCount="0">
+                  <Table columnCount="11" rowCount="0">
                     <Column editable="false" title="Sr No" type="java.lang.Object"/>
                     <Column editable="false" title="Product Name" type="java.lang.Object"/>
                     <Column editable="false" title="Opening" type="java.lang.Object"/>
                     <Column editable="false" title="Purchase" type="java.lang.Object"/>
                     <Column editable="false" title="Sales" type="java.lang.Object"/>
+                    <Column editable="false" title="In" type="java.lang.Object"/>
+                    <Column editable="false" title="Out" type="java.lang.Object"/>
                     <Column editable="false" title="Balance" type="java.lang.Object"/>
                     <Column editable="false" title="sr_cd" type="java.lang.Object"/>
                     <Column editable="false" title="SR Alias" type="java.lang.Object"/>
@@ -86,6 +88,16 @@
                 <Property name="autoResizeMode" type="int" value="0"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
