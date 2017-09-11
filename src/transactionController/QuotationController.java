@@ -60,6 +60,7 @@ import retrofitAPI.PurchaseAPI;
 import retrofitAPI.QuotationAPI;
 import retrofitAPI.SeriesAPI;
 import retrofitAPI.StartUpAPI;
+import selecthint.SeriesSelection;
 import skable.Constants;
 import skable.SkableHome;
 import support.Library;
@@ -279,7 +280,22 @@ public class QuotationController extends javax.swing.JDialog {
                 }
                 if (lb.isEnter(e)) {
                     if (lb.validateInput(jtxtItem.getText())) {
-                        setSeriesData("3", jtxtItem.getText().toUpperCase());
+                        SeriesSelection ss = new SeriesSelection(null, true);
+                        ss.setSeriesData("3", jtxtItem.getText().toUpperCase());
+                        ss.setVisible(true);
+                        if (ss.getReturnStatus() == SelectDailog.RET_OK) {
+
+                            int row = ss.getjTable1().getSelectedRow();
+                            if (row != -1) {
+                                sr_cd = viewTable.getValueAt(row, 0).toString();
+                                item_name = viewTable.getValueAt(row, 1).toString();
+                                sku_code = viewTable.getValueAt(row, 4).toString();
+                                jtxtItem.setText(viewTable.getValueAt(row, 1).toString());
+                                getLastRate();
+                            }
+
+                            ss.dispose();
+                        }
                     }
                 }
             }
@@ -346,7 +362,11 @@ public class QuotationController extends javax.swing.JDialog {
         jtxtDiscPer.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
-                lb.enterFocus(e, jbtnAdd);
+                if (lb.isNumber(jtxtMRP) != 0.00) {
+                    lb.enterFocus(e, jbtnAdd);
+                } else {
+                    lb.enterFocus(e, jtxtMRP);
+                }
             }
         });
 
@@ -361,6 +381,7 @@ public class QuotationController extends javax.swing.JDialog {
             @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 lb.toDouble(e);
+                calculation();
             }
         });
 
@@ -368,6 +389,7 @@ public class QuotationController extends javax.swing.JDialog {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
                 lb.enterFocus(e, jbtnAdd);
+                calculation();
             }
         });
 
@@ -426,67 +448,6 @@ public class QuotationController extends javax.swing.JDialog {
         jPanel3.add(jtxtAmount);
 
         lb.setTable(jTable1, new JComponent[]{jtxtItem, null, jtxtRate, jtxtQty, jtxtDiscPer, jtxtMRP, jtxtAmount, null});
-    }
-
-    private void setSeriesData(String param_cd, String value) {
-        try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
-            lb.addGlassPane(this);
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    lb.removeGlassPane(QuotationController.this);
-                    if (response.isSuccessful()) {
-                        System.out.println(response.body().toString());
-                        SeriesHead header = (SeriesHead) new Gson().fromJson(response.body(), SeriesHead.class);
-                        if (header.getResult() == 1) {
-                            final SelectDailog sa = new SelectDailog(null, true);
-                            sa.setData(viewTable);
-                            sa.setLocationRelativeTo(null);
-                            ArrayList<SeriesMaster> series = (ArrayList<SeriesMaster>) header.getAccountHeader();
-                            sa.getDtmHeader().setRowCount(0);
-                            for (int i = 0; i < series.size(); i++) {
-                                Vector row = new Vector();
-                                row.add(series.get(i).getSRCD());
-                                row.add(series.get(i).getSRNAME());
-                                row.add(series.get(i).getTAXCD());
-                                row.add(series.get(i).getTAXNAME());
-                                row.add(series.get(i).getSRALIAS());
-                                sa.getDtmHeader().addRow(row);
-                            }
-                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                            sa.setVisible(true);
-                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-                                int row = viewTable.getSelectedRow();
-                                if (row != -1) {
-                                    sr_cd = viewTable.getValueAt(row, 0).toString();
-                                    item_name = viewTable.getValueAt(row, 1).toString();
-                                    sku_code = viewTable.getValueAt(row, 4).toString();
-                                    jtxtItem.setText(viewTable.getValueAt(row, 1).toString());
-                                    getLastRate();
-                                }
-                                sa.dispose();
-                            } else {
-                                jtxtItem.requestFocusInWindow();
-                            }
-                        } else {
-                            lb.showMessageDailog(header.getCause());
-                        }
-                    } else {
-                        // handle request errors yourself
-                        lb.showMessageDailog(response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                    lb.removeGlassPane(QuotationController.this);
-                }
-            });
-        } catch (Exception ex) {
-            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
-        }
-
     }
 
     private void getLastRate() {
@@ -555,7 +516,7 @@ public class QuotationController extends javax.swing.JDialog {
         if (!ref_no.equalsIgnoreCase("")) {
             try {
                 jcmbBranch.setEnabled(false);
-                Call<JsonObject> call = purchaseAPI.getBill(ref_no, "39", SkableHome.db_name, SkableHome.selected_year);
+                Call<JsonObject> call = purchaseAPI.getQuotationBill(ref_no, SkableHome.db_name, SkableHome.selected_year);
                 lb.addGlassPane(this);
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
@@ -577,7 +538,7 @@ public class QuotationController extends javax.swing.JDialog {
                                         jlblBillDay.setText(lb.setDay(jtxtBillDate));
                                         jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
-                                        jtxtName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
+                                        jtxtAcName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
                                         QuotationController.this.ref_no = array.get(i).getAsJsonObject().get("REF_NO").getAsString();
                                         jlblTotal.setText(array.get(i).getAsJsonObject().get("NET_AMT").getAsDouble() + "");
                                         jlblUser.setText(array.get(i).getAsJsonObject().get("USER_ID").getAsString() + "");
@@ -648,11 +609,13 @@ public class QuotationController extends javax.swing.JDialog {
                                 if (row != -1) {
                                     ac_cd = header.getAccountHeader().get(row).getACCD();
 //                                    jtxtMobile.setText(response.body().getAccountHeader().get(row).getMOBILE1());
-                                    jtxtName.setText(header.getAccountHeader().get(row).getFNAME());
+                                    jtxtAcName.setText(header.getAccountHeader().get(row).getFNAME());
 //                                    jtxtAddress.setText(response.body().getAccountHeader().get(row).getADD1());
 
                                     jtxtItem.requestFocusInWindow();
                                 }
+                            } else {
+                                jtxtAcName.requestFocusInWindow();
                             }
                         } else {
                             lb.showMessageDailog(response.body().get("Cause").getAsString().toString());
@@ -783,7 +746,7 @@ public class QuotationController extends javax.swing.JDialog {
         header.setAC_CD(ac_cd);
         header.setDUE_DATE(lb.ConvertDateFormetForDB(jtxtDueDate.getText()));
         header.setNET_AMT(lb.isNumber(jlblTotal));
-        header.setAc_name(jtxtName.getText());
+        header.setAc_name(jtxtAcName.getText());
         header.setBRANCH_CD(Integer.parseInt(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd()));
         header.setUSER_ID(SkableHome.user_id);
         header.setV_DATE(lb.ConvertDateFormetForDB(jtxtVouDate.getText()));
@@ -902,7 +865,7 @@ public class QuotationController extends javax.swing.JDialog {
         jlblVday = new javax.swing.JLabel();
         jlblBillDay = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jtxtName = new javax.swing.JTextField();
+        jtxtAcName = new javax.swing.JTextField();
         jbtnAdd = new javax.swing.JButton();
         jcmbBranch = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
@@ -1001,20 +964,20 @@ public class QuotationController extends javax.swing.JDialog {
 
         jLabel4.setText("Name");
 
-        jtxtName.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtxtAcName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtNameFocusGained(evt);
+                jtxtAcNameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtNameFocusLost(evt);
+                jtxtAcNameFocusLost(evt);
             }
         });
-        jtxtName.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtxtAcName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtxtNameKeyTyped(evt);
+                jtxtAcNameKeyTyped(evt);
             }
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtNameKeyPressed(evt);
+                jtxtAcNameKeyPressed(evt);
             }
         });
 
@@ -1134,7 +1097,7 @@ public class QuotationController extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(186, 186, 186)
-                .addComponent(jtxtName, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1174,7 +1137,7 @@ public class QuotationController extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -1184,7 +1147,7 @@ public class QuotationController extends javax.swing.JDialog {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBillDateBtn2, jLabel27, jlblBillDay1, jtxtDueDate});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jtxtName});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jtxtAcName});
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -1303,6 +1266,11 @@ public class QuotationController extends javax.swing.JDialog {
         jbtnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnOKActionPerformed(evt);
+            }
+        });
+        jbtnOK.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnOKKeyPressed(evt);
             }
         });
 
@@ -1498,20 +1466,20 @@ public class QuotationController extends javax.swing.JDialog {
         odc.showDialog(jp, "Select Date");
     }//GEN-LAST:event_jBillDateBtn1ActionPerformed
 
-    private void jtxtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtNameFocusGained
+    private void jtxtAcNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusGained
         // TODO add your handling code here:
         lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtNameFocusGained
+    }//GEN-LAST:event_jtxtAcNameFocusGained
 
-    private void jtxtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtNameFocusLost
+    private void jtxtAcNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtAcNameFocusLost
         // TODO add your handling code here:
         lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtNameFocusLost
+    }//GEN-LAST:event_jtxtAcNameFocusLost
 
-    private void jtxtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNameKeyPressed
+    private void jtxtAcNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcNameKeyPressed
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
-            if (lb.isBlank(jtxtName)) {
+            if (lb.isBlank(jtxtAcName)) {
                 lb.confirmDialog("Do you want to create new account?");
                 if (lb.type) {
                     CreateSalesAccount bmc = new CreateSalesAccount(null, true);
@@ -1519,32 +1487,31 @@ public class QuotationController extends javax.swing.JDialog {
                     bmc.setVisible(true);
                     if (bmc.getReturnStatus() == RET_OK) {
                         ac_cd = bmc.ac_cd;
-                        jtxtName.setText(bmc.account.getFNAME());
+                        jtxtAcName.setText(bmc.account.getFNAME());
                         jtxtItem.requestFocusInWindow();
                     }
                 } else {
                     ac_cd = "";
                 }
             } else {
-                if (lb.validateInput(jtxtName.getText())) {
-                    setAccountDetailMobile("2", jtxtName.getText());
+                if (lb.validateInput(jtxtAcName.getText())) {
+                    setAccountDetailMobile("2", jtxtAcName.getText());
                 }
             }
         }
-    }//GEN-LAST:event_jtxtNameKeyPressed
+    }//GEN-LAST:event_jtxtAcNameKeyPressed
 
-    private void jtxtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNameKeyTyped
+    private void jtxtAcNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcNameKeyTyped
         // TODO add your handling code here:
         lb.fixLength(evt, 255);
-    }//GEN-LAST:event_jtxtNameKeyTyped
+    }//GEN-LAST:event_jtxtAcNameKeyTyped
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             {
                 int index = jTable1.getSelectedRow();
-                int is_del = Integer.parseInt(jTable1.getValueAt(index, 7).toString());
-                if (index != -1 && is_del == 0) {
+                if (index != -1 ) {
                     evt.consume();
                     item_name = jTable1.getValueAt(index, 0).toString();
                     sr_cd = jTable1.getValueAt(index, 7).toString();
@@ -1563,10 +1530,8 @@ public class QuotationController extends javax.swing.JDialog {
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
         int index = jTable1.getSelectedRow();
-        int is_del = Integer.parseInt(jTable1.getValueAt(index, 7).toString());
-        int is_main = Integer.parseInt(jTable1.getValueAt(index, 16).toString());
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            if (index != -1 && is_del == 0 && is_main == 1) {
+            if (index != -1) {
                 lb.confirmDialog("Do you want to delete this row?");
                 if (lb.type) {
                     dtm.removeRow(index);
@@ -1577,7 +1542,7 @@ public class QuotationController extends javax.swing.JDialog {
 
         if (evt.getKeyCode() == KeyEvent.VK_D) {
             if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
-                if (index != -1 && is_del == 0 && is_main == 1) {
+                if (index != -1) {
                     lb.confirmDialog("Do you want to delete this row?");
                     if (lb.type) {
                         dtm.removeRow(index);
@@ -1691,7 +1656,7 @@ public class QuotationController extends javax.swing.JDialog {
 
     private void jtxtDueDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtDueDateKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jtxtName);
+        lb.enterFocus(evt, jtxtAcName);
     }//GEN-LAST:event_jtxtDueDateKeyPressed
 
     private void jBillDateBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtn2ActionPerformed
@@ -1726,6 +1691,11 @@ public class QuotationController extends javax.swing.JDialog {
         // TODO add your handling code here:
         lb.onlyNumber(evt, 2);
     }//GEN-LAST:event_jtxtPmtDaysKeyTyped
+
+    private void jbtnOKKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnOKKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnOKKeyPressed
 
     private void doClose(int retStatus) {
         lb.confirmDialog("Do you want to discard this voucher?");
@@ -1772,9 +1742,9 @@ public class QuotationController extends javax.swing.JDialog {
     private javax.swing.JLabel jlblTotal;
     private javax.swing.JLabel jlblUser;
     private javax.swing.JLabel jlblVday;
+    public javax.swing.JTextField jtxtAcName;
     private javax.swing.JTextField jtxtBillDate;
     private javax.swing.JTextField jtxtDueDate;
-    public javax.swing.JTextField jtxtName;
     private javax.swing.JTextField jtxtPmtDays;
     public javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;

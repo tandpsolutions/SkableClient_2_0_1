@@ -107,7 +107,7 @@ public class SeriesMasterController extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
-        jbtnSave.setVisible(false);
+//        jbtnSave.setVisible(false);
         seriesAPI = lb.getRetrofit().create(SeriesAPI.class);
         tableForView();
         tableForViewModel();

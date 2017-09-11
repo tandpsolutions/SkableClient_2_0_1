@@ -171,7 +171,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getQuoatePrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getBill(ref_no, "39", SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.getQuotationBill(ref_no,  SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
