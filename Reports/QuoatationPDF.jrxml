@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inVoice" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f096cfe-7c20-47fd-8f84-d94a86d085ec">
 	<property name="ireport.zoom" value="1.7715610000000013"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="16"/>
+	<property name="ireport.y" value="416"/>
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="dir" class="java.lang.String"/>
@@ -385,7 +385,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="13" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement uuid="58952e66-cc1a-4ffd-a171-83739ef8b9b8" stretchType="RelativeToTallestObject" x="500" y="0" width="53" height="13"/>
 				<box rightPadding="2"/>
@@ -421,7 +421,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d2ae3666-5301-4c96-a60d-5603a645f5ec" stretchType="RelativeToTallestObject" x="216" y="0" width="98" height="13"/>
 				<box leftPadding="4"/>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SR_ALIAS}]]></textFieldExpression>
@@ -507,7 +507,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 			<staticText>
 				<reportElement uuid="2737d6df-f20e-4b90-a6b7-f13855c39f87" x="394" y="3" width="106" height="15" forecolor="#000000"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
-					<leftPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
