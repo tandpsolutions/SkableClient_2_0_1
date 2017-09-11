@@ -1110,7 +1110,14 @@ public class StockValueStatement extends javax.swing.JInternalFrame {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            lb.reportGenerator("StockValueStatement.jasper", params, dataSource, jPanel1);
+                            params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            params.put("branch", SkableHome.selected_branch.getBranch_name());
+                            lb.reportGenerator("stockVal.jasper", params, dataSource, jPanel1);
                             lb.removeGlassPane(StockValueStatement.this);
                         } catch (Exception ex) {
                             lb.removeGlassPane(StockValueStatement.this);

@@ -862,7 +862,7 @@ public class PrintPanel extends javax.swing.JDialog {
     }
 
     
-     public void generateStocktransferPrint(String ref_no) {
+     public void generateStocktransferPrint(String ref_no,boolean flag) {
         try {
             StkTrAPI salesAPI = lb.getRetrofit().create(StkTrAPI.class);
             JsonObject call = salesAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
@@ -887,8 +887,12 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
                             params.put("from_loc", "Godown");
-                            params.put("to_loc", "Shop");
-                            lb.reportPrinter("stockTransfer.jasper", params, dataSource);
+                            params.put("to_loc", SkableHome.selected_branch.getBranch_name());
+                            if(flag){
+                                lb.reportPrinter("stockTransfer.jasper", params, dataSource);
+                            }else{
+                                lb.reportGenerator("stockTransfer.jasper", params, dataSource, jPanel1);
+                            }
                         } catch (Exception ex) {
                         }
                     }
@@ -900,7 +904,7 @@ public class PrintPanel extends javax.swing.JDialog {
             Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+     
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
      */

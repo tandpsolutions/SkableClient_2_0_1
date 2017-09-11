@@ -210,7 +210,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
                 if (row != -1) {
                     ref_no = jTable1.getValueAt(row, 0).toString();
                     PrintPanel pp = new PrintPanel(null, true);
-                    pp.generateStocktransfer(ref_no);
+                    pp.generateStocktransferPrint(ref_no,false);
                     pp.setVisible(true);
                 }
             }
@@ -229,7 +229,7 @@ public class StockTransferView extends javax.swing.JInternalFrame {
 
     public void printVoucher(String ref_no) {
         PrintPanel pp = new PrintPanel(null, true);
-        pp.generateStocktransferPrint(ref_no);
+        pp.generateStocktransferPrint(ref_no,true);
     }
 
     @Override

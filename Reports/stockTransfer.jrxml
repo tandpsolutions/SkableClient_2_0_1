@@ -11,6 +11,7 @@
 	<parameter name="email" class="java.lang.String"/>
 	<parameter name="mobile" class="java.lang.String"/>
 	<parameter name="dir" class="java.lang.String"/>
+	<parameter name="comp_name" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT s.REF_NO,TR_DATE,b.BRANCH_NAME AS FROM_LOC,b1.BRANCH_NAME AS TO_LOC,TAG_NO,IMEI_NO,PCS,s3.SR_NAME FROM STRHD s,STRDT s1,BRANCH_MST b,BRANCH_MST b1,SERIESMST s3
  WHERE s.REF_NO=s1.REF_NO AND b.branch_cd=FROM_LOC AND b1.branch_cd = s.TO_LOC AND s1.ITEM_CD=s3.SR_CD AND s.REF_NO='ST00001']]>
@@ -54,6 +55,9 @@
 	<field name="TYPE_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[TYPE_NAME]]></fieldDescription>
 	</field>
+	<field name="INIT_TIMESTAMP" class="java.lang.String">
+		<fieldDescription><![CDATA[INIT_TIMESTAMP]]></fieldDescription>
+	</field>
 	<variable name="pcs" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
 	</variable>
@@ -64,7 +68,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Stock Transfer]]></text>
+				<text><![CDATA[STOCK TRANSFER]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="-1" y="79" width="76" height="20"/>
@@ -131,27 +135,42 @@
 				<textFieldExpression><![CDATA[$P{from_loc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="32acf127-76aa-4471-ab49-3cae92906cb3" x="463" y="79" width="91" height="20"/>
+				<reportElement uuid="32acf127-76aa-4471-ab49-3cae92906cb3" x="462" y="79" width="91" height="20"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{INIT_TIMESTAMP}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="ef28e18f-6d8d-4a6a-80e5-cc9b2f60193a" stretchType="RelativeToBandHeight" x="0" y="2" width="320" height="28"/>
+				<reportElement uuid="ef28e18f-6d8d-4a6a-80e5-cc9b2f60193a" stretchType="RelativeToBandHeight" x="-1" y="16" width="320" height="28"/>
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{add1}+" "+$P{add2}+" "+$P{add3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="7e681260-9319-41d8-a4b3-73365dc52948" stretchType="RelativeToBandHeight" x="0" y="30" width="319" height="14"/>
+				<reportElement uuid="7e681260-9319-41d8-a4b3-73365dc52948" stretchType="RelativeToBandHeight" x="-1" y="44" width="319" height="14"/>
 				<textElement>
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Email:"+$P{email}+",Mobile :"+$P{mobile}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Mobile :"+$P{mobile}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7e681260-9319-41d8-a4b3-73365dc52948" stretchType="RelativeToBandHeight" x="0" y="2" width="319" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{comp_name}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="353" y="79" width="95" height="20"/>
+				<box leftPadding="2" rightPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transfer Time:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
@@ -169,20 +188,6 @@
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TYPE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="353" y="0" width="39" height="20"/>
-				<box leftPadding="2" rightPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[QTY]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="136" y="0" width="161" height="20"/>
@@ -210,10 +215,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[BRNAD]]></text>
+				<text><![CDATA[BRAND]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="297" y="0" width="56" height="20"/>
+				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="297" y="0" width="95" height="20"/>
 				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -238,7 +243,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[BARCODE]]></text>
+				<text><![CDATA[IMEI]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7ed9418d-3c4f-42d1-ba79-ac6c67c7a1b7" x="479" y="0" width="75" height="20"/>
@@ -252,7 +257,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TAG]]></text>
+				<text><![CDATA[BARCODE]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -287,20 +292,6 @@
 				<textFieldExpression><![CDATA[$F{SR_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="a694be23-7a9f-46e7-aa5f-4312c12bd59a" stretchType="RelativeToTallestObject" x="353" y="0" width="39" height="20"/>
-				<box leftPadding="2" rightPadding="0">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
 				<reportElement uuid="a694be23-7a9f-46e7-aa5f-4312c12bd59a" stretchType="RelativeToTallestObject" x="62" y="0" width="74" height="20"/>
 				<box leftPadding="2" rightPadding="0">
 					<pen lineWidth="1.0"/>
@@ -315,7 +306,7 @@
 				<textFieldExpression><![CDATA[$F{BRAND_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="a694be23-7a9f-46e7-aa5f-4312c12bd59a" stretchType="RelativeToTallestObject" x="297" y="0" width="56" height="20"/>
+				<reportElement uuid="a694be23-7a9f-46e7-aa5f-4312c12bd59a" stretchType="RelativeToTallestObject" x="297" y="0" width="95" height="20"/>
 				<box leftPadding="2" rightPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0"/>
@@ -323,7 +314,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COLOUR_NAME}]]></textFieldExpression>
@@ -337,7 +328,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{IMEI}]]></textFieldExpression>
@@ -351,7 +342,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TAG_NO}]]></textFieldExpression>
@@ -360,14 +351,13 @@
 	</detail>
 	<columnFooter>
 		<band height="93">
-			<staticText>
-				<reportElement uuid="e687223c-0a69-4b04-9e7e-09b9766d7974" x="0" y="0" width="353" height="20"/>
-				<box leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+			<textField>
+				<reportElement uuid="269333b5-0a4a-4707-b61f-ab784c6e6a2b" x="0" y="0" width="135" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total : ]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Total : "+$V{pcs}]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement uuid="9232f008-df14-4209-aacf-88c9a669c10b" x="231" y="73" width="80" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -381,14 +371,6 @@
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="a694be23-7a9f-46e7-aa5f-4312c12bd59a" x="353" y="0" width="44" height="20"/>
-				<box leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{pcs}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="f829032b-59d2-48eb-87ac-28a6d8d1878d" x="74" y="39" width="221" height="20"/>

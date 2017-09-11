@@ -517,20 +517,20 @@ public class Library {
 
             // Prepare string to send to the printer
             String s = "^XA\n"
-                    + "^FO210,125^BY3\n"
-                    + "^BCN,50,N,N,N\n"
-                    + "^FD" + tag1 + "^FS\n"
+                    + "^FO200,125^BY3"
+                    + "^BCN,50,N,N,N"
+                    + "^FD" + tag1 + "^FS"
                     + "^CF0,35"
                     + "^FO330,185^FD" + tag1 + "^FS"
                     + "^CF0,30"
                     + "^FO210,30"
                     + "^FB450,80"
                     + "^FD" + item_name1 + "^FS"
-                    + "^FO210,5\n"
-                    + "^FB320,80\n"
+                    + "^FO210,5"
+                    + "^FB320,80"
                     + "^FDAYUVAID RETAIL^FS^"
-                    + "^FO510,90\n"
-                    + "^FB260,80\n"
+                    + "^FO510,90"
+                    + "^FB260,80"
                     + "^FD" + pur + "^FS^"
                     + "^XZ";   // Print content of buffer, 1 label
             byte[] by = s.getBytes();
