@@ -32,6 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.OrderBookAPI;
 import retrofitAPI.StartUpAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
@@ -64,6 +65,7 @@ public class OrderBookController extends javax.swing.JDialog {
     private String memory_cd = "";
     private String color_cd = "";
     private OrderBookView odv;
+    private SalesPaymentDialog sd = null;
 
     /**
      * Creates new form PurchaseController
@@ -83,12 +85,29 @@ public class OrderBookController extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
+        setUpData();
         lb.setDateChooserPropertyInit(jtxtVouDate);
+        sd = new SalesPaymentDialog(null, true);
         tableForView();
         tableForViewModel();
         flag = true;
         setTitle("Order Book");
         SkableHome.zoomTable.setToolTipOn(true);
+
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            jcmbBranch.setEnabled(true);
+        } else {
+            jcmbBranch.setEnabled(false);
+        }
+    }
+
+    private void setUpData() {
+        jcmbBranch.removeAllItems();
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            jcmbBranch.addItem(Constants.BRANCH.get(i).getBranch_name());
+        }
+        jcmbBranch.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+
     }
 
     private void tableForView() {
@@ -322,6 +341,54 @@ public class OrderBookController extends javax.swing.JDialog {
                             jtxtRemark.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                             jtxtAmount.setText(array.get(i).getAsJsonObject().get("BAL").getAsString());
 
+                            sd.bank_cd = array.get(i).getAsJsonObject().get("BANK_CD").getAsString();
+                            sd.card_cd = array.get(i).getAsJsonObject().get("CARD_CD").getAsString();
+                            if (!array.get(i).getAsJsonObject().get("BAJAJ_CD").isJsonNull()) {
+                                sd.bajaj_cd = array.get(i).getAsJsonObject().get("BAJAJ_CD").getAsString();
+                            } else {
+                                sd.bajaj_cd = "";
+                            }
+                            if (lb.isNumber(array.get(i).getAsJsonObject().get("CASH_AMT").getAsString()) > 0) {
+                                sd.jcbCash.setSelected(true);
+                            }
+                            sd.jtxtCashAmt.setText(lb.Convert2DecFmtForRs(lb.isNumber(array.get(i).getAsJsonObject().get("CASH_AMT").getAsString())));
+                            if (!sd.bank_cd.equalsIgnoreCase("")) {
+                                sd.jcbBank.setSelected(true);
+                                sd.jtxtBankAc.setText(array.get(i).getAsJsonObject().get("OUR_BANK").getAsString());
+                                sd.jtxtBankName.setText(array.get(i).getAsJsonObject().get("BANK_NAME").getAsString());
+                                sd.jtxtBranchName.setText(array.get(i).getAsJsonObject().get("BANK_BRANCH").getAsString());
+                                sd.jtxtChequeAmt.setText(array.get(i).getAsJsonObject().get("BANK_AMT").getAsString());
+                                sd.jtxtChequeNo.setText(array.get(i).getAsJsonObject().get("CHEQUE_NO").getAsString());
+                                if (!array.get(i).getAsJsonObject().get("CHEQUE_DATE").isJsonNull()) {
+                                    sd.jtxtChequeDate.setText(lb.ConvertDateFormetForDisplay(array.get(i).getAsJsonObject().get("CHEQUE_DATE").getAsString()));
+                                }
+                            }
+                            if (!sd.card_cd.equalsIgnoreCase("")) {
+                                sd.jcbCard.setSelected(true);
+                                sd.jtxtCardBank.setText(array.get(i).getAsJsonObject().get("CARD_NAME").getAsString());
+                                sd.jtxtCardAmt.setText(array.get(i).getAsJsonObject().get("CARD_AMT").getAsString());
+                                sd.jtxtCardPer.setText(array.get(i).getAsJsonObject().get("CARD_PER").getAsString());
+                                sd.jlblCardChanges.setText(array.get(i).getAsJsonObject().get("CARD_CHG").getAsString());
+                                sd.jtxtCardNo.setText(array.get(i).getAsJsonObject().get("CARD_NO").getAsString());
+                                sd.jtxtTIDNo.setText(array.get(i).getAsJsonObject().get("TID_NO").getAsString());
+                            }
+                            if (!array.get(i).getAsJsonObject().get("BAJAJ_CD").isJsonNull()) {
+                                if (!sd.bajaj_cd.equalsIgnoreCase("")) {
+                                    sd.jcbBajaj.setSelected(true);
+                                    sd.jtxtBajajCapital.setText(array.get(i).getAsJsonObject().get("BAJAJ_NAME").getAsString());
+                                    sd.jtxtBajajAmt.setText(array.get(i).getAsJsonObject().get("BAJAJ_AMT").getAsString());
+                                    sd.jtxtBajajPer.setText(array.get(i).getAsJsonObject().get("BAJAJ_PER").getAsString());
+                                    sd.jlblBajajCharges.setText(array.get(i).getAsJsonObject().get("BAJAJ_CHG").getAsString());
+                                    sd.jtxtSFID.setText(array.get(i).getAsJsonObject().get("SFID").getAsString());
+                                }
+                            } else {
+                                if (!sd.bajaj_cd.equalsIgnoreCase("")) {
+                                    sd.jcbBajaj.setSelected(false);
+                                    sd.jtxtBajajCapital.setText("");
+                                    sd.jtxtBajajAmt.setText("");
+                                }
+                            }
+
                         }
                     } catch (Exception ex) {
                         lb.printToLogFile("Exception", ex);
@@ -381,6 +448,29 @@ public class OrderBookController extends javax.swing.JDialog {
             model.setMemory_cd(memory_cd);
             model.setColor_cd(color_cd);
             model.setUser_id(SkableHome.user_id);
+            model.setCASH_AMT(lb.isNumber(sd.jtxtCashAmt.getText()));
+            model.setBANK_AMT(lb.isNumber(sd.jtxtChequeAmt.getText()));
+            model.setCARD_AMT(lb.isNumber(sd.jtxtCardAmt.getText()));
+            model.setCARD_PER(lb.isNumber(sd.jtxtCardPer.getText()));
+            model.setCARD_CHG(lb.isNumber(sd.jlblCardChanges.getText()));
+            model.setBAJAJ_AMT(lb.isNumber(sd.jtxtBajajAmt.getText()));
+            model.setBAJAJ_PER(lb.isNumber(sd.jtxtBajajPer.getText()));
+            model.setBAJAJ_CHG(lb.isNumber(sd.jlblBajajCharges.getText()));
+            model.setBANK_CD(sd.bank_cd);
+            model.setCARD_NAME(sd.card_cd);
+            model.setBAJAJ_NAME(sd.bajaj_cd);
+            model.setSFID(sd.jtxtSFID.getText());
+            model.setBANK_NAME(sd.jtxtBankName.getText());
+            model.setBANK_BRANCH(sd.jtxtBranchName.getText());
+            model.setCard_no(sd.jtxtCardNo.getText());
+            model.setTid_no(sd.jtxtTIDNo.getText());
+            model.setBranch_cd(Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd());
+            model.setCHEQUE_NO(sd.jtxtChequeNo.getText());
+            if (!sd.jtxtChequeDate.getText().equalsIgnoreCase("")) {
+                model.setCHEQUE_DATE(lb.ConvertDateFormetForDB(sd.jtxtChequeDate.getText()));
+            } else {
+                model.setCHEQUE_DATE(null);
+            }
             String detailJson = new Gson().toJson(model);
             JsonObject addUpdaCall = orderAPI.AddUpdateOrderBookVoucher(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(OrderBookController.this);
@@ -477,6 +567,8 @@ public class OrderBookController extends javax.swing.JDialog {
         jlblTimeStamp = new javax.swing.JLabel();
         jbtnOK = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jcmbBranch = new javax.swing.JComboBox();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -620,6 +712,16 @@ public class OrderBookController extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setText("Branch");
+
+        jcmbBranch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcmbBranch.setEnabled(false);
+        jcmbBranch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcmbBranchKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -627,60 +729,57 @@ public class OrderBookController extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtxtMemoryName)
+                    .addComponent(jtxtModelName)
+                    .addComponent(jtxtAcName)
+                    .addComponent(jcmbBranch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlblEditNo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jlblTimeStamp, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                    .addComponent(jtxtModelName)
-                                    .addComponent(jtxtMemoryName)
-                                    .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtxtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jlblVday, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jtxtAcName)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelButton)))
-                .addContainerGap())
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlblVday, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblEditNo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblTimeStamp, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cancelButton)
+                .addGap(6, 6, 6))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7});
@@ -700,7 +799,11 @@ public class OrderBookController extends javax.swing.JDialog {
                     .addComponent(jtxtVouDate, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlblVday))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -716,14 +819,14 @@ public class OrderBookController extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtMemoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -736,7 +839,7 @@ public class OrderBookController extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlblTimeStamp, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(jbtnOK))
@@ -755,7 +858,7 @@ public class OrderBookController extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -806,7 +909,11 @@ public class OrderBookController extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtVouDateFocusLost
 
     private void jtxtVouDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtVouDateKeyPressed
-        lb.enterFocus(evt, jtxtAcName);
+        if (jcmbBranch.isEnabled()) {
+            lb.enterFocus(evt, jcmbBranch);
+        } else {
+            lb.enterFocus(evt, jtxtAcName);
+        }
     }//GEN-LAST:event_jtxtVouDateKeyPressed
 
     private void jBillDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBillDateBtnActionPerformed
@@ -824,7 +931,16 @@ public class OrderBookController extends javax.swing.JDialog {
     private void jbtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOKActionPerformed
         // TODO add your handling code here:
         if (validateVoucher()) {
-            saveVoucher();
+            lb.confirmDialog("Do you want to save this voucher?");
+            if (lb.type) {
+                sd.jlblSale.setText(lb.Convert2DecFmtForRs(lb.isNumber(jtxtAmount)));
+                sd.setTotal();
+                sd.setLocationRelativeTo(null);
+                sd.setVisible(true);
+                if (sd.getReturnStatus() == RET_OK) {
+                    saveVoucher();
+                }
+            }
         }
     }//GEN-LAST:event_jbtnOKActionPerformed
 
@@ -933,6 +1049,11 @@ public class OrderBookController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jtxtRemarkKeyPressed
 
+    private void jcmbBranchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbBranchKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jtxtAcName);
+    }//GEN-LAST:event_jcmbBranchKeyPressed
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
@@ -952,9 +1073,11 @@ public class OrderBookController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnOK;
+    private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JLabel jlblEditNo;
     private javax.swing.JLabel jlblTimeStamp;
     private javax.swing.JLabel jlblUser;

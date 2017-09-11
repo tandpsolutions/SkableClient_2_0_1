@@ -1783,6 +1783,11 @@ public class SalesController extends javax.swing.JDialog {
         header.setCard_no(sd.jtxtCardNo.getText());
         header.setTid_no(sd.jtxtTIDNo.getText());
         header.setCHEQUE_NO(sd.jtxtChequeNo.getText());
+        if (!sd.jtxtChequeDate.getText().equalsIgnoreCase("")) {
+            header.setCHEQUE_DATE(lb.ConvertDateFormetForDB(sd.jtxtChequeDate.getText()));
+        } else {
+            header.setCHEQUE_DATE(null);
+        }
         header.setBuy_back_amt(lb.isNumber(jtxtByBackAmt));
         header.setBuy_back_imei(jtxtBuyBackIMEI.getText());
         header.setBuy_back_model(jtxtBuyBack.getText());
@@ -1795,11 +1800,6 @@ public class SalesController extends javax.swing.JDialog {
         header.setPmt_days(((int) (lb.isNumber(jtxtPmtDays))) + "");
         header.setAdvance_amt(lb.isNumber(jtxtAdvance));
         header.setSCHEME_CD(detail.get(jcmbScheme.getSelectedIndex()).getSCHEME_CD());
-        if (!sd.jtxtChequeDate.getText().equalsIgnoreCase("")) {
-            header.setCHEQUE_DATE(lb.ConvertDateFormetForDB(sd.jtxtChequeDate.getText()));
-        } else {
-            header.setCHEQUE_DATE(null);
-        }
         if (jcmbRefBy.getSelectedIndex() > 0) {
             header.setRef_cd(Constants.REFERAL.get(jcmbRefBy.getSelectedIndex() - 1).getREF_CD());
         } else {
