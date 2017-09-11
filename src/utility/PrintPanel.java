@@ -26,6 +26,7 @@ import retrofitAPI.CashPRAPI;
 import retrofitAPI.DCAPI;
 import retrofitAPI.DNCNApi;
 import retrofitAPI.JobSheetAPI;
+import retrofitAPI.OrderBookAPI;
 import retrofitAPI.PurchaseReturnAPI;
 import retrofitAPI.QuotationAPI;
 import retrofitAPI.SalesAPI;
@@ -171,7 +172,7 @@ public class PrintPanel extends javax.swing.JDialog {
     public void getQuoatePrint(String ref_no) {
         try {
             QuotationAPI salesAPI = lb.getRetrofit().create(QuotationAPI.class);
-            JsonObject call = salesAPI.getQuotationBill(ref_no,  SkableHome.db_name, SkableHome.selected_year).execute().body();
+            JsonObject call = salesAPI.getQuotationBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 JsonObject result = call;
@@ -861,8 +862,7 @@ public class PrintPanel extends javax.swing.JDialog {
         }
     }
 
-    
-     public void generateStocktransferPrint(String ref_no,boolean flag) {
+    public void generateStocktransferPrint(String ref_no, boolean flag) {
         try {
             StkTrAPI salesAPI = lb.getRetrofit().create(StkTrAPI.class);
             JsonObject call = salesAPI.getBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
@@ -888,9 +888,9 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("mobile", SkableHome.selected_branch.getPhone());
                             params.put("from_loc", "Godown");
                             params.put("to_loc", SkableHome.selected_branch.getBranch_name());
-                            if(flag){
+                            if (flag) {
                                 lb.reportPrinter("stockTransfer.jasper", params, dataSource);
-                            }else{
+                            } else {
                                 lb.reportGenerator("stockTransfer.jasper", params, dataSource, jPanel1);
                             }
                         } catch (Exception ex) {
@@ -904,7 +904,51 @@ public class PrintPanel extends javax.swing.JDialog {
             Logger.getLogger(PrintPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
+
+    public void printOrderVoucher(final String ref_no) {
+        OrderBookAPI orderBookAPI = lb.getRetrofit().create(OrderBookAPI.class);
+        if (!ref_no.equalsIgnoreCase("")) {
+            try {
+                JsonObject call = orderBookAPI.getOrderBookDetail(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
+
+                if (call != null) {
+                    System.out.println(call.toString());
+                    JsonObject object = call;
+                    JsonArray array = object.get("data").getAsJsonArray();
+                    if (array != null) {
+                        try {
+                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            file.write(array.toString());
+                            file.close();
+                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
+                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
+                            HashMap params = new HashMap();
+                            params.put("dir", System.getProperty("user.dir"));
+                            params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                            params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("add2", SkableHome.selected_branch.getAddress2());
+                            params.put("add3", SkableHome.selected_branch.getAddress3());
+                            params.put("email", SkableHome.selected_branch.getEmail());
+                            params.put("mobile", SkableHome.selected_branch.getPhone());
+                            lb.confirmDialog("Do you want to print Bill with header?");
+                            if (lb.type) {
+                                lb.reportGenerator("OrderBook.jasper", params, dataSource, jPanel1);
+                            } else {
+                                lb.reportGenerator("OrderBook.jasper", params, dataSource, jPanel1);
+                            }
+                        } catch (Exception ex) {
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                lb.printToLogFile("Exception at getDataFor PurchaseBill", ex);
+            }
+        } else {
+        }
+
+    }
+
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
      */

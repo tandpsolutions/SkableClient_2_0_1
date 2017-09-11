@@ -21,15 +21,15 @@ public interface OrderBookAPI {
 
     @GET("GetOrderBookHeader")
     Call<JsonObject> GetOrderBookHeader(@Query("from_date") String from_date, @Query("to_date") String to_date,
-            @Query("branch_cd") String branch_cd, @Query("model_cd") String model_cd, @Query("memory_cd") String memory_cd, @Query("colour_cd") String colour_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);
+            @Query("branch_cd") String branch_cd, @Query("model_cd") String model_cd, @Query("memory_cd") String memory_cd, @Query("colour_cd") String colour_cd, @Query("db_name") String db_name, @Query("db_year") String db_year);
 
-    @GET("GetDataFromServer")
-    Call<JsonObject> getOrderBookDetail(@Query("value") String value, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
+    @GET("GetOrderBookBill")
+    Call<JsonObject> getOrderBookDetail(@Query("ref_no") String value, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 
     @FormUrlEncoded
     @POST("AddUpdateOrderBookVoucher")
-    Call<JsonObject> AddUpdateOrderBookVoucher(@Field("detail") String param_code,@Field("db_name") String db_name, @Field("db_year") String db_year);
+    Call<JsonObject> AddUpdateOrderBookVoucher(@Field("detail") String param_code, @Field("db_name") String db_name, @Field("db_year") String db_year);
 
     @GET("DeleteOrderBookEntry")
-    Call<JsonObject> DeleteOrderBookEntry(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);
+    Call<JsonObject> DeleteOrderBookEntry(@Query("ref_no") String ref_no, @Query("db_name") String db_name, @Query("db_year") String db_year);
 }

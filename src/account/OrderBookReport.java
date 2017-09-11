@@ -152,8 +152,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = orderBookAPI.GetOrderBookHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd(), model_cd, memory_cd, color_cd
-                    ,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd(), model_cd, memory_cd, color_cd, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
@@ -220,7 +219,6 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -247,12 +245,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
     private void addOrderController() {
-        OrderBookController pc = new OrderBookController(null, true);
+        OrderBookController pc = new OrderBookController(null, true, null);
         pc.setLocationRelativeTo(null);
         pc.setData(orderBookAPI, ref_no);
     }
@@ -269,7 +266,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
     private void setModelData(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -317,8 +314,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(OrderBookReport.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -327,7 +323,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
     private void setMemoryMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
@@ -371,8 +367,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(OrderBookReport.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -381,10 +376,9 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
     private void setColorMaster(String param_cd, String value) {
         try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year);
+            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
             lb.addGlassPane(this);
             call.enqueue(new Callback<JsonObject>() {
-
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     lb.removeGlassPane(OrderBookReport.this);
@@ -426,8 +420,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
                     lb.removeGlassPane(OrderBookReport.this);
                 }
-            }
-            );
+            });
         } catch (Exception ex) {
             lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
         }
@@ -951,7 +944,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtMemoryName.getText())){
+            if (lb.validateInput(jtxtMemoryName.getText())) {
                 setMemoryMaster("13", jtxtMemoryName.getText().toUpperCase());
             }
         }
@@ -972,7 +965,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtColorName.getText())){
+            if (lb.validateInput(jtxtColorName.getText())) {
                 setColorMaster("14", jtxtColorName.getText().toUpperCase());
             }
         }
@@ -1000,7 +993,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         }
         if (lb.isEnter(evt)) {
-            if(lb.validateInput(jtxtModelName.getText())){
+            if (lb.validateInput(jtxtModelName.getText())) {
                 setModelData("12", jtxtModelName.getText().toUpperCase());
             }
         }
@@ -1020,8 +1013,6 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         color_cd = "";
     }//GEN-LAST:event_jButton6ActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
