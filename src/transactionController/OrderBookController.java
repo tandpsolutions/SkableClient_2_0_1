@@ -483,7 +483,7 @@ public class OrderBookController extends javax.swing.JDialog {
                     lb.showMessageDailog("Voucher saved successfully");
                     OrderBookController.this.dispose();
                     if (odv != null) {
-                        odv.filter.viewClick();
+                        odv.jButton1.doClick();
                         if (ref_no.equalsIgnoreCase("")) {
                             odv.callPrint(object.get("ref_no").getAsString());
                         }

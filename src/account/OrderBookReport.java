@@ -883,7 +883,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
-                ref_no = jTable1.getValueAt(row, 0).toString();
+                ref_no = jTable1.getValueAt(row, 1).toString();
                 addOrderController();
             }
         }
