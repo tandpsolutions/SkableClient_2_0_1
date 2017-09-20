@@ -6,6 +6,11 @@
 	<parameter name="tin_no" class="java.lang.String"/>
 	<parameter name="comp_name" class="java.lang.String"/>
 	<parameter name="dir" class="java.lang.String"/>
+	<parameter name="add1" class="java.lang.String"/>
+	<parameter name="add2" class="java.lang.String"/>
+	<parameter name="add3" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="mobile" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT  v.INV_NO,a.FNAME,a1.ADD1,p.MOBILE1,a.TIN,v.V_DATE,
 s.SR_NAME,v1.QTY,v1.RATE as RATE,v1.MRP,v1.amount as amt,v.NET_AMT,p.EMAIL,HSN_CODE,GST_NO
@@ -263,7 +268,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BAL}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize" onErrorType="Blank">
+			<image scaleImage="RetainShape" onErrorType="Blank">
 				<reportElement uuid="cc927c62-6b5f-439b-8242-b9f0e87c69af" x="0" y="0" width="381" height="91"/>
 				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"logo.png"]]></imageExpression>
 			</image>
@@ -288,7 +293,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 	<lastPageFooter>
 		<band height="272">
 			<staticText>
-				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="0" y="251" width="140" height="20"/>
+				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="0" y="186" width="140" height="20"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
@@ -298,7 +303,7 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 				<text><![CDATA[Customer's Signature]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="200" y="251" width="181" height="20"/>
+				<reportElement uuid="8ecef96e-b330-4629-b5d7-23931429d10f" x="199" y="186" width="181" height="20"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
@@ -308,25 +313,36 @@ where v.REF_NO='Q000000001' and a1.sr_no=1]]>
 				<text><![CDATA[Authorized Signatory]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="d22a1a0a-6e55-4c25-b4fa-3f50f1e9852a" x="200" y="173" width="180" height="20"/>
+				<reportElement uuid="d22a1a0a-6e55-4c25-b4fa-3f50f1e9852a" x="201" y="123" width="180" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["For, "+$P{comp_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="5a2444b4-32ff-473e-8b94-17dde492a536" x="0" y="28" width="380" height="115"/>
+				<reportElement uuid="5a2444b4-32ff-473e-8b94-17dde492a536" x="0" y="0" width="380" height="111"/>
 				<textElement markup="html">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b>Terms and Conditions </b>: <br/><br/>1. YOUR BOOKED IPHONE OF A DESIRED COLOUR, VARIANT CAN BE DELIVERED, BUT NOT GUARANTEED.<br/><br/>2. BOOKED IPHONE - IF IT IS IN STOCK THAN WILL BE DELIVERED.<br/><br/>3. WE WILL CONFIRM YOUR ORDER ON RECEIVING OF STOCK AT OUR SHOP ONLY.<br/><br/>4. COLOUR/VARIANT CAN NOT BE CHANGED, ONCE IT IS BOOKED.<br/><br/>5. ADVANCE AMOUNT IS REFUNDABLE WITHIN 3 MONTHS FROM BOOKING DATE.<br/><br/>6. ALLOCATION POLICY AS PER THE STORE AUTHORITY.<br/><br/>7. BILL WILL BE MADE AS PER THE BOOKING DETAIL."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<br/><b>Terms and Conditions </b>: <br/>1. YOUR BOOKED IPHONE OF A DESIRED COLOUR, VARIANT CAN BE DELIVERED, BUT NOT GUARANTEED.<br/>2. BOOKED IPHONE - IF IT IS IN STOCK THAN WILL BE DELIVERED.<br/>3. WE WILL CONFIRM YOUR ORDER ON RECEIVING OF STOCK AT OUR SHOP ONLY.<br/>4. COLOUR/VARIANT CAN NOT BE CHANGED, ONCE IT IS BOOKED.<br/>5. ADVANCE AMOUNT IS REFUNDABLE WITHIN 3 MONTHS FROM BOOKING DATE.<br/>6. ALLOCATION POLICY AS PER THE STORE AUTHORITY.<br/>7. BILL WILL BE MADE AS PER THE BOOKING DETAIL."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f" x="0" y="173" width="158" height="20"/>
+				<reportElement uuid="c1ffbbab-b751-48d2-8b7e-0d81eee3bc6f" x="1" y="123" width="158" height="20"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{tin_no}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement uuid="4083ed02-1254-42b7-bae5-942ccfacef17" x="234" y="218" width="146" height="42"/>
+				<imageExpression><![CDATA[$P{dir}+File.separatorChar+"Resources"+File.separatorChar+"Images"+File.separatorChar+"image.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="9811bc9d-25e2-4d26-8643-8324e9f0f671" x="0" y="218" width="199" height="54"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{add1}+", "+$P{add2}+", "+$P{add3}+"\nM. : +91 -"+$P{mobile}+" E-mail : "+$P{email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
