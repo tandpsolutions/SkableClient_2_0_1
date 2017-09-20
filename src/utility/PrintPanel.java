@@ -109,19 +109,24 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                                 if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
                                     params.put("bill_type", "Retail Invoice");
+                                    params.put("inv_type", "");
+                                    
                                 } else {
                                     params.put("bill_type", "Tax Invoice");
+                                    params.put("inv_type", "TI");
                                 }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
                                 params.put("tax_title", "State GST");
                                 params.put("bill_type", "Tax Invoice");
                                 params.put("add_tax_title", "Central GST");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("inv_type", "SI");
                             } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
                                 params.put("bill_type", "Tax Invoice");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
+                                params.put("inv_type", "SI");
                             }
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
@@ -477,7 +482,7 @@ public class PrintPanel extends javax.swing.JDialog {
         }
     }
 
-    public void getPurchaseReturnBillPrint(String ref_no) {
+    public void getPurchaseReturnBillPrint(String ref_no, String type) {
         try {
             PurchaseReturnAPI salesAPI = lb.getRetrofit().create(PurchaseReturnAPI.class);
             JsonObject call = salesAPI.GetPurchaseReturnPrint(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
@@ -503,24 +508,19 @@ public class PrintPanel extends javax.swing.JDialog {
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
                             params.put("comp_name", Constants.COMPANY_NAME);
+                            params.put("bill_type", "Purchase Return");
+                            params.put("inv_type", "PR");
                             if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 0) {
                                 params.put("tax_title", "Vat");
                                 params.put("add_tax_title", "Add Vat");
                                 params.put("tin_no", "Tin No : " + (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
-                                if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
-                                    params.put("bill_type", "Retail Invoice");
-                                } else {
-                                    params.put("bill_type", "Tax Invoice");
-                                }
                             } else if (array.get(0).getAsJsonObject().get("tax_type").getAsInt() == 1) {
                                 params.put("tax_title", "State GST");
-                                params.put("bill_type", "Tax Invoice");
                                 params.put("add_tax_title", "Central GST");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             } else {
                                 params.put("tax_title", "IGST");
                                 params.put("add_tax_title", "");
-                                params.put("bill_type", "Tax Invoice");
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -529,11 +529,33 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
                             params.put("tax_data", dataSource1);
-                            lb.confirmDialog("Do you want to print Bill with header?");
-                            if (lb.type) {
-                                lb.reportGenerator("PurchaseReturnPDF.jasper", params, dataSource, jPanel1);
+                            if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
+                                if (type.equalsIgnoreCase("0")) {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                }
+                            } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
+                                if (type.equalsIgnoreCase("0")) {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                } else {
+                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
+                                }
                             } else {
-                                lb.reportGenerator("PurchaseReturn.jasper", params, dataSource, jPanel1);
+                                lb.confirmDialog("Do you want to print sales Bill with header?");
+                                if (lb.type) {
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
+                                    }
+                                } else {
+                                    if (type.equalsIgnoreCase("0")) {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
+                                    } else {
+                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                    }
+                                }
                             }
                         } catch (Exception ex) {
                         }

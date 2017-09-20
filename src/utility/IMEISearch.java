@@ -189,11 +189,11 @@ public class IMEISearch extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tag No", "Item"
+                "Tag No", "Item", "IMEI"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -209,10 +209,9 @@ public class IMEISearch extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
 
         jPanel1.add(jScrollPane1, "card2");
 
@@ -329,6 +328,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     Vector row = new Vector();
                     row.add(array.get(i).getAsJsonObject().get("tag_no").getAsString());
                     row.add(array.get(i).getAsJsonObject().get("sr_name").getAsString());
+                    row.add(array.get(i).getAsJsonObject().get("imei_no").getAsString());
                     dtm.addRow(row);
                 }
                 lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());

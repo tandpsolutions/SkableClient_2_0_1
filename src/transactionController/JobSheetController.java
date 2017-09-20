@@ -152,6 +152,7 @@ public class JobSheetController extends javax.swing.JDialog {
                             jlblTimeStamp.setText(array.get(i).getAsJsonObject().get("TIME_STAMP").getAsString());
                             jlblVday.setText(lb.setDay(jtxtVouDate));
                             jtxtAcName.setText(array.get(i).getAsJsonObject().get("FNAME").getAsString());
+                            jtxtMobileNo.setText(array.get(i).getAsJsonObject().get("MOBILE1").getAsString());
                             ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
                             jtxtModelName.setText(array.get(i).getAsJsonObject().get("MODEL_CD").getAsString());
                             jtxtImeiNo.setText(array.get(i).getAsJsonObject().get("IMEI_NO").getAsString());
@@ -194,7 +195,7 @@ public class JobSheetController extends javax.swing.JDialog {
             model.setJOBTYPE(jcmbServiceType.getSelectedItem().toString());
             model.setACCD(ac_cd);
             model.setMODELCD(jtxtModelName.getText());
-            model.setDEFECTDESC(jTextArea1.getText());
+            model.setDEFECTDESC(jTextArea1.getText().toUpperCase());
             model.setIMEINO(jtxtImeiNo.getText());
             model.setESTIMATEDAMT(jtxtEstimated.getText());
             model.setDEPOSITAMT(jtxtDeposit.getText());
@@ -464,6 +465,11 @@ public class JobSheetController extends javax.swing.JDialog {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextArea1FocusLost(evt);
+            }
+        });
         jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextArea1KeyPressed(evt);
@@ -1030,6 +1036,11 @@ public class JobSheetController extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
+
+    private void jTextArea1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea1FocusLost
+        // TODO add your handling code here:
+        jTextArea1.setText(jTextArea1.getText().toUpperCase());
+    }//GEN-LAST:event_jTextArea1FocusLost
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;

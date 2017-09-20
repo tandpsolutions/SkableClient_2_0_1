@@ -32,4 +32,7 @@ public interface OrderBookAPI {
 
     @GET("DeleteOrderBookEntry")
     Call<JsonObject> DeleteOrderBookEntry(@Query("ref_no") String ref_no, @Query("db_name") String db_name, @Query("db_year") String db_year);
+
+    @GET("GetDataFromServer")
+    Call<JsonObject> GetDataFromServer(@Query("VALUE") String ref_no, @Query("param_code") String param_code, @Query("db_name") String db_name, @Query("db_year") String ac_year);
 }

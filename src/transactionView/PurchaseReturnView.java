@@ -274,7 +274,17 @@ public class PurchaseReturnView extends javax.swing.JInternalFrame {
                     int row = jTable1.getSelectedRow();
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
-                        pp.getPurchaseReturnBillPrint(jTable1.getValueAt(row, 0).toString());
+                        ref_no = jTable1.getValueAt(row, 0).toString();
+                        if (Constants.params.get("CUSTOMER_PRINT").toString().equalsIgnoreCase("1")) {
+                            lb.confirmDialog("Do you want to print customer print?");
+                            if (lb.type) {
+                                pp.getPurchaseReturnBillPrint(ref_no, "1");
+                            } else {
+                                pp.getPurchaseReturnBillPrint(ref_no, "0");
+                            }
+                        } else {
+                            pp.getPurchaseReturnBillPrint(ref_no, "0");
+                        }
                         pp.setVisible(true);
                     }
                 } else {
