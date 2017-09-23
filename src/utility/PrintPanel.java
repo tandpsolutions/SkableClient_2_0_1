@@ -35,6 +35,7 @@ import retrofitAPI.StkTrAPI;
 import retrofitAPI.StkTrOutAPI;
 import skable.Constants;
 import skable.SkableHome;
+import support.AmountInWords;
 import support.Library;
 
 /**
@@ -524,6 +525,7 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("add1", SkableHome.selected_branch.getAddress1());
+                            params.put("words", new AmountInWords().convertToWords((int)lb.isNumber(array.get(0).getAsJsonObject().get("NET_AMT").getAsString())));
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
@@ -531,29 +533,29 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("tax_data", dataSource1);
                             if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("0")) {
                                 if (type.equalsIgnoreCase("0")) {
-                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
                                 } else {
-                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
                                 }
                             } else if (Constants.params.get("BILL_HEADER").toString().equalsIgnoreCase("1")) {
                                 if (type.equalsIgnoreCase("0")) {
-                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
                                 } else {
-                                    lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
+                                    lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
                                 }
                             } else {
                                 lb.confirmDialog("Do you want to print sales Bill with header?");
                                 if (lb.type) {
                                     if (type.equalsIgnoreCase("0")) {
-                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
+                                        lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "PDF.jasper", params, dataSource, jPanel1);
                                     } else {
-                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
+                                        lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "PDFWoCalc.jasper", params, dataSource, jPanel1);
                                     }
                                 } else {
                                     if (type.equalsIgnoreCase("0")) {
-                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
+                                        lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + ".jasper", params, dataSource, jPanel1);
                                     } else {
-                                        lb.reportGenerator(Constants.params.get("FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
+                                        lb.reportGenerator(Constants.params.get("PUR_RETURN_FILE_NAME").toString() + "WoCalc.jasper", params, dataSource, jPanel1);
                                     }
                                 }
                             }
