@@ -22,7 +22,7 @@ public class Skable {
 
     /**
      */
-    public static String ver = "66";
+    public static String ver = "67";
 
     public static void main(String[] args) {
         // TODO code application logic here
