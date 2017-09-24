@@ -20,7 +20,8 @@ import retrofit2.http.Query;
 public interface AccountMasterAPI {
 
     @GET("GetAccountMaster")
-    Call<JsonObject> getAccountMaster(@Query("AC_NAME") String ac_name,@Query("GRP_NAME") String grp_name,@Query("ZERO") String zero,@Query("db_name") String db_name, @Query("db_year") String db_year);
+    Call<JsonObject> getAccountMaster(@Query("AC_NAME") String ac_name,@Query("GRP_NAME") String grp_name,@Query("ZERO") String zero
+            ,@Query("db_name") String db_name, @Query("db_year") String db_year, @Query("is_dealer") int is_dealer);
 
     @GET("GetAccountMasterCode")
     Call<JsonObject> getAccountMasterCode(@Query("ac_cd") String ac_cd,@Query("db_name") String db_name, @Query("db_year") String db_year);

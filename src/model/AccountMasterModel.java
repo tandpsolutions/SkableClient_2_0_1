@@ -25,10 +25,10 @@ public class AccountMasterModel {
     private String CARD_NO;
     private double OPB_AMT;
     private int OPB_EFF;
+    private int IS_DEALER;
     private String REF_BY;
     private String ref_cd;
     private ArrayList<String> address;
-
     private String GST_NO;
 
     public String getGST_NO() {
@@ -159,4 +159,11 @@ public class AccountMasterModel {
         this.address = address;
     }
 
+    public int getIS_DEALER() {
+        return IS_DEALER;
+    }
+
+    public void setIS_DEALER(int IS_DEALER) {
+        this.IS_DEALER = IS_DEALER;
+    }
 }
