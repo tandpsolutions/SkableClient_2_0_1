@@ -14,8 +14,6 @@ import java.util.Properties;
 import javax.swing.SwingUtilities;
 import login.SelectIP;
 import retrofitAPI.UpdateInterface;
-import static skable.Constants.COMPANY_NAME;
-import static skable.Constants.UPDATE_host;
 import support.Library;
 import utility.SwingFileDownloadHTTP;
 
@@ -27,7 +25,7 @@ public class Skable {
 
     /**
      */
-    public static String ver = "1";
+    public static String ver = "2";
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -73,7 +71,7 @@ public class Skable {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                SwingFileDownloadHTTP sf = new SwingFileDownloadHTTP("http://www.tandpsolutions.in/iPearl/" + ver + ".zip");
+                                SwingFileDownloadHTTP sf = new SwingFileDownloadHTTP("http://www.tandpsolutions.in/" + Constants.COMPANY_NAME + "/" + ver + ".zip");
                                 sf.setTitle("Downloading...  Ver " + ver);
                                 sf.setVisible(true);
                                 sf.buttonDownloadActionPerformed();
