@@ -114,6 +114,7 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
                     row.add(Constants.BRANCH.get(header.get(i).getAsJsonObject().get("to_loc").getAsInt() - 1).getBranch_name());
                     row.add(header.get(i).getAsJsonObject().get("approve_by").getAsString());
                     row.add(header.get(i).getAsJsonObject().get("user_name").getAsString());
+                    row.add(header.get(i).getAsJsonObject().get("remark").getAsString());
                     dtm.addRow(row);
                 }
             } else {
@@ -375,11 +376,11 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ref no", "INV No", "Date", "From Location", "To Location", "Arrpove Status", "Entry By"
+                "ref no", "INV No", "Date", "From Location", "To Location", "Arrpove Status", "Entry By", "Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -397,17 +398,16 @@ public class StockTransferPendingReport extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 

@@ -496,7 +496,7 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Ref_no", "VDATE", "INFO", "Debit", "Credi", "Closing", "Remark", "ref", "Opp Name"
+                "Ref_no", "VDATE", "INFO", "Debit", "Credi", "Closing", "Remark", "Ref", "Opp Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -519,10 +519,18 @@ public class GeneralLedger1 extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
         jTable1.getColumnModel().getColumn(7).setPreferredWidth(0);
-        jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
 
         jPanel1.add(jScrollPane1, "card2");
 

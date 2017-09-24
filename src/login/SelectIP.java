@@ -99,6 +99,7 @@ public class SelectIP extends javax.swing.JFrame {
             for (int i = 0; i < branchArray.size(); i++) {
                 BranchMasterModel model = new Gson().fromJson(branchArray.get(i).getAsJsonObject().toString(), BranchMasterModel.class);
                 Constants.BRANCH.add(model);
+                Constants.branchMap.put(model.getBranch_cd(), model);
             }
         }
 

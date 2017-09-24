@@ -39,4 +39,5 @@ public class Constants {
     public static final ArrayList<RefModel> REFERAL = new ArrayList<RefModel>();
     public static final ArrayList<SalesManMasterModel> SALESMAN = new ArrayList<SalesManMasterModel>();
     public static final HashMap params = new HashMap();
+    public static final HashMap<String,BranchMasterModel> branchMap = new HashMap();
 }

@@ -41,6 +41,9 @@
 	<field name="OPB" class="java.lang.Double">
 		<fieldDescription><![CDATA[OPB]]></fieldDescription>
 	</field>
+	<field name="CHEQUE_NO" class="java.lang.String">
+		<fieldDescription><![CDATA[CHEQUE_NO]]></fieldDescription>
+	</field>
 	<variable name="bal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[($V{REPORT_COUNT}== 1)?$F{OPB}+$F{DR}-$F{CR}:$F{DR}-$F{CR}]]></variableExpression>
 	</variable>
@@ -262,7 +265,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PARTICULAR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PARTICULAR}+" "+$F{CHEQUE_NO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 				<reportElement uuid="21005107-af34-4e3f-9585-d26285a56602" stretchType="RelativeToTallestObject" x="1" y="20" width="52" height="20"/>

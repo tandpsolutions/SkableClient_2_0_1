@@ -871,9 +871,9 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
-                            params.put("from_loc", "Godown");
-                            params.put("to_loc", "Shop");
-                            lb.reportGenerator("stockTransfer.jasper", params, dataSource, jPanel1);
+                            params.put("from_loc", SkableHome.selected_branch.getBranch_name());
+                            params.put("to_loc", Constants.branchMap.get(array.get(0).getAsJsonObject().get("to_loc").getAsString()).getBranch_name());
+                            lb.reportGenerator("stockTransferOUT.jasper", params, dataSource, jPanel1);
                         } catch (Exception ex) {
                         }
                     }

@@ -714,7 +714,7 @@ private void jbtnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         row.add(array.get(i).getAsJsonObject().get("tag_no").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("doc_ref_no").getAsString());
                         if (!array.get(i).getAsJsonObject().get("branch_cd").isJsonNull()) {
-                            row.add(Constants.BRANCH.get(array.get(i).getAsJsonObject().get("branch_cd").getAsInt() - 1).getBranch_name());
+                            row.add(Constants.branchMap.get(array.get(i).getAsJsonObject().get("branch_cd").getAsString()).getBranch_name());
                         } else {
                             row.add("");
                         }

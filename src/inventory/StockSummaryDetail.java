@@ -435,11 +435,11 @@ public class StockSummaryDetail extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2 && jTable1.getSelectedRow() != -1) {
             String fromDate = "", toDate = "";
             if (jTable1.getSelectedRow() < 9) {
-                fromDate = "01/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + 2016;
-                toDate = "31/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + 2016;
+                fromDate = "01/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + SkableHome.selected_year;
+                toDate = "31/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + SkableHome.selected_year;
             } else {
-                fromDate = "01/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + (int) (lb.isNumber2("2016") + 1);
-                toDate = "31/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + (int) (lb.isNumber2("2016") + 1);
+                fromDate = "01/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + (int) (lb.isNumber2(SkableHome.selected_year) + 1);
+                toDate = "31/" + lb.getMonth(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), "C") + "/" + (int) (lb.isNumber2(SkableHome.selected_year) + 1);
             }
             StockLedger stk = new StockLedger(jtxtProductName.getText(), fromDate, toDate, sr_cd);
             SkableHome.addOnScreen(stk, "Item Ledger");

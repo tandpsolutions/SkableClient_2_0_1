@@ -61,7 +61,6 @@ public class DNCNController extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
-
     Library lb = Library.getInstance();
     private String ac_cd = "";
     private String bank_cd = "";
@@ -113,7 +112,6 @@ public class DNCNController extends javax.swing.JDialog {
         SkableHome.zoomTable.setToolTipOn(true);
         final Container zoomIFrame = this;
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-
             @Override
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 SkableHome.zoomTable.zoomInToolTipForTable(jTable1, jScrollPane1, zoomIFrame, evt);
@@ -139,8 +137,7 @@ public class DNCNController extends javax.swing.JDialog {
                 if (row != -1 && column != -1) {
                     String selection = jTable1.getValueAt(row, column).toString();
                     StringSelection data = new StringSelection(selection);
-                    Clipboard clipboard
-                            = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(data, data);
                 }
             }
@@ -212,9 +209,9 @@ public class DNCNController extends javax.swing.JDialog {
             try {
                 JsonObject call;
                 if (type == 0) {
-                    call = bankAPI.getBankDetail(ref_no, "30",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    call = bankAPI.getBankDetail(ref_no, "30", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 } else {
-                    call = bankAPI.getBankDetail(ref_no, "31",SkableHome.db_name,SkableHome.selected_year).execute().body();
+                    call = bankAPI.getBankDetail(ref_no, "31", SkableHome.db_name, SkableHome.selected_year).execute().body();
                 }
                 if (call != null) {
                     System.out.println(call.toString());
@@ -276,7 +273,7 @@ public class DNCNController extends javax.swing.JDialog {
 
     private void setAccountDetailMobile(String param_cd, String value, final int mode) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.addGlassPane(this);
 
             lb.removeGlassPane(DNCNController.this);
@@ -349,7 +346,7 @@ public class DNCNController extends javax.swing.JDialog {
                     detail.add(model);
                 }
                 String detailJson = new Gson().toJson(detail);
-                JsonObject addUpdaCall = bankAPI.addUpdateBankVoucher(detailJson,SkableHome.db_name,SkableHome.selected_year).execute().body();
+                JsonObject addUpdaCall = bankAPI.addUpdateBankVoucher(detailJson, SkableHome.db_name, SkableHome.selected_year).execute().body();
                 lb.addGlassPane(DNCNController.this);
 
                 lb.removeGlassPane(DNCNController.this);
@@ -365,6 +362,7 @@ public class DNCNController extends javax.swing.JDialog {
                     } else {
                         lb.showMessageDailog(object.get("Cause").getAsString());
                     }
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(DNCNController.class.getName()).log(Level.SEVERE, null, ex);
@@ -387,7 +385,7 @@ public class DNCNController extends javax.swing.JDialog {
 
     private void getoldb2_4(String param_cd, String value) {
         try {
-            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(),SkableHome.db_name,SkableHome.selected_year).execute().body();
+            JsonObject call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year).execute().body();
 
             if (call != null) {
                 System.out.println(call.toString());
@@ -441,20 +439,20 @@ public class DNCNController extends javax.swing.JDialog {
             lb.showMessageDailog("Please select valid account");
             return false;
         }
-        
+
         if (ac_cd.equalsIgnoreCase("")) {
             lb.showMessageDailog("Please select valid party account");
             return false;
         }
-        
-        
+
+
         if (!lb.checkDate(jtxtVouDate)) {
             lb.showMessageDailog("Invalid Voucher Date");
             jtxtVouDate.requestFocusInWindow();
             flag = false;
         }
-        
-        if(jTable1.getRowCount()>1){
+
+        if (jTable1.getRowCount() > 1) {
             lb.showMessageDailog("You can not add multiple entry in voucher");
             return false;
         }
@@ -1087,6 +1085,5 @@ public class DNCNController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;
     // End of variables declaration//GEN-END:variables
-
     private int returnStatus = RET_CANCEL;
 }

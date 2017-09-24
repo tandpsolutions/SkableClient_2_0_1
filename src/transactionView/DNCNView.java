@@ -169,6 +169,7 @@ public class DNCNView extends javax.swing.JInternalFrame {
     private void addCashController() {
         DNCNController pc = new DNCNController(null, true, vType);
         pc.setLocationRelativeTo(null);
+        pc.setdNCNView(this);
         pc.setData(dncnAPI, ref_no);
     }
 
