@@ -1220,73 +1220,7 @@ public class SalesController extends javax.swing.JDialog {
         return rate;
     }
 
-    private void setSeriesData(String param_cd, String value, final String mode) {
-        try {
-            Call<JsonObject> call = lb.getRetrofit().create(StartUpAPI.class).getDataFromServer(param_cd, value.toUpperCase(), SkableHome.db_name, SkableHome.selected_year);
-            lb.addGlassPane(this);
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    lb.removeGlassPane(SalesController.this);
-                    if (response.isSuccessful()) {
-                        System.out.println(response.body().toString());
-                        SeriesHead header = (SeriesHead) new Gson().fromJson(response.body(), SeriesHead.class);
-                        if (header.getResult() == 1) {
-                            final SelectDailog sa = new SelectDailog(null, true);
-                            sa.setData(viewTable);
-                            sa.setLocationRelativeTo(null);
-                            ArrayList<SeriesMaster> series = (ArrayList<SeriesMaster>) header.getAccountHeader();
-                            sa.getDtmHeader().setRowCount(0);
-                            for (int i = 0; i < series.size(); i++) {
-                                Vector row = new Vector();
-                                row.add(series.get(i).getSRCD());
-                                row.add(series.get(i).getSRNAME());
-                                if (tax_type == 0) {
-                                    row.add(series.get(i).getTAXCD());
-                                    row.add(series.get(i).getTAXNAME());
-                                } else {
-                                    row.add(series.get(i).getGSTCD());
-                                    row.add(series.get(i).getGSTNAME());
-                                }
-                                sa.getDtmHeader().addRow(row);
-                            }
-                            lb.setColumnSizeForTable(viewTable, sa.jPanelHeader.getWidth());
-                            sa.setVisible(true);
-                            if (sa.getReturnStatus() == SelectDailog.RET_OK) {
-
-                                int row = viewTable.getSelectedRow();
-                                if (mode.equalsIgnoreCase("1")) {
-                                    if (row != -1) {
-                                        sr_cd = viewTable.getValueAt(row, 0).toString();
-                                        item_name = viewTable.getValueAt(row, 1).toString();
-                                        jtxtItem.setText(viewTable.getValueAt(row, 1).toString());
-                                        jtxtIMEI.requestFocusInWindow();
-                                        jcmbTax.setSelectedItem(viewTable.getValueAt(row, 3).toString());
-                                        jcmbTaxItemStateChanged(null);
-                                    }
-                                }
-                                sa.dispose();
-                            }
-                        } else {
-                            lb.showMessageDailog(header.getCause());
-                        }
-                    } else {
-                        // handle request errors yourself
-                        lb.showMessageDailog(response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable thrwbl) {
-                    lb.removeGlassPane(SalesController.this);
-                }
-            });
-        } catch (Exception ex) {
-            lb.printToLogFile("Exception at setData at account master in sales invoice", ex);
-        }
-
-    }
-
+   
     private void calculation() {
         double qty = lb.isNumber(jtxtQty);
         double rate = lb.isNumber(jtxtMRP);
@@ -1344,7 +1278,7 @@ public class SalesController extends javax.swing.JDialog {
                                         jlblVday.setText(lb.setDay(jtxtVouDate));
                                         jlblBillDay1.setText(lb.setDay(jtxtDueDate));
                                         jcmbType.setSelectedIndex(array.get(i).getAsJsonObject().get("V_TYPE").getAsInt());
-                                        jcmbBranch.setSelectedIndex(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsInt() - 1);
+                                        jcmbBranch.setSelectedItem(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
                                         jcmbRefBy.setSelectedItem(array.get(i).getAsJsonObject().get("REF_NAME").getAsString());
                                         jcmbSalesman.setSelectedItem(array.get(i).getAsJsonObject().get("SM_NAME").getAsString());
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
