@@ -188,6 +188,9 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("NOTES").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("COUPEN_CODE").getAsString());
                         row.add(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
+                        int order_status = array.get(i).getAsJsonObject().get("ORDER_STATUS").getAsInt();
+                        row.add((order_status == 0) ? "Pending" : "Close");
+                        row.add(array.get(i).getAsJsonObject().get("ORDER_CLOSE_REMARK").getAsString());
                         dtm.addRow(row);
                     }
                     double tot = 0.00;
@@ -205,6 +208,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add("");
+                    row.add("");
+                    row.add("");
                     dtm.addRow(row);
 
                     row = new Vector();
@@ -213,6 +218,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add(lb.Convert2DecFmtForRs(tot));
+                    row.add("");
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -460,6 +467,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 9).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
+                row.add(jTable1.getValueAt(i, 11).toString());
+                row.add(jTable1.getValueAt(i, 12).toString());
+                row.add(jTable1.getValueAt(i, 13).toString());
                 rows.add(row);
             }
 
@@ -473,6 +485,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             header.add("Model");
             header.add("Memory");
             header.add("Color");
+            header.add("Notes");
+            header.add("Coupen Code");
+            header.add("Branch");
+            header.add("Order Status");
+            header.add("Order Closing Remark");
             lb.exportToExcel("Order Book Detail", header, rows, "Order Book Detail");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
@@ -762,11 +779,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr NO", "Voucher", "Date", "Name", "Balance", "Remark", "Model Name", "Memory", "Color", "Notes", "Coupen", "Branch"
+                "Sr NO", "Voucher", "Date", "Name", "Balance", "Remark", "Model Name", "Memory", "Color", "Notes", "Coupen", "Branch", "Order Status", "Order Close Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -796,6 +813,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         jTable1.getColumnModel().getColumn(9).setResizable(false);
         jTable1.getColumnModel().getColumn(10).setResizable(false);
         jTable1.getColumnModel().getColumn(11).setResizable(false);
+        jTable1.getColumnModel().getColumn(12).setResizable(false);
+        jTable1.getColumnModel().getColumn(13).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 

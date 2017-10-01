@@ -61,6 +61,9 @@ public class SalesControllerHeaderModel {
     private String tid_no;
     private int add_sr_no;
     private int tax_type;
+    private String order_no;
+    private String order_item;
+    private String order_amt;
 
     public int getTax_type() {
         return tax_type;
@@ -460,5 +463,29 @@ public class SalesControllerHeaderModel {
 
     public void setAdd_sr_no(int add_sr_no) {
         this.add_sr_no = add_sr_no;
+    }
+
+    public String getOrder_no() {
+        return order_no;
+    }
+
+    public void setOrder_no(String order_no) {
+        this.order_no = order_no;
+    }
+
+    public String getOrder_amt() {
+        return order_amt;
+    }
+
+    public void setOrder_amt(String order_amt) {
+        this.order_amt = order_amt;
+    }
+
+    public String getOrder_item() {
+        return order_item;
+    }
+
+    public void setOrder_item(String order_item) {
+        this.order_item = order_item;
     }
 }

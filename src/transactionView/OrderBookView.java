@@ -66,6 +66,7 @@ public class OrderBookView extends javax.swing.JInternalFrame {
         connectNavigation();
         navLoad.setFormCd(formCd);
         setPopUp();
+        jButton1.doClick();
         setUpData();
     }
 
@@ -127,6 +128,9 @@ public class OrderBookView extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("NOTES").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("COUPEN_CODE").getAsString());
                         row.add(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
+                        int order_status = array.get(i).getAsJsonObject().get("ORDER_STATUS").getAsInt();
+                        row.add((order_status == 0) ? "Pending" : "Close");
+                        row.add(array.get(i).getAsJsonObject().get("ORDER_CLOSE_REMARK").getAsString());
                         dtm.addRow(row);
                     }
                 } else {
@@ -448,11 +452,11 @@ public class OrderBookView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Voucher", "Date", "Name", "Balance", "Remark", "AC Cd", "Model Name", "Notes", "Coupen", "Branch"
+                "Voucher", "Date", "Name", "Balance", "Remark", "AC Cd", "Model Name", "Notes", "Coupen", "Branch", "Status", "Order Closing Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -481,6 +485,8 @@ public class OrderBookView extends javax.swing.JInternalFrame {
         jTable1.getColumnModel().getColumn(6).setResizable(false);
         jTable1.getColumnModel().getColumn(7).setResizable(false);
         jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 

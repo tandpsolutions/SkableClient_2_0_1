@@ -71,6 +71,7 @@ import retrofitAPI.RefralAPI;
 import retrofitAPI.SalesAPI;
 import retrofitAPI.SchemeAPI;
 import retrofitAPI.StartUpAPI;
+import selecthint.OrderBookHint;
 import selecthint.SeriesSelection;
 import skable.Constants;
 import skable.SkableHome;
@@ -117,8 +118,6 @@ public class SalesController extends javax.swing.JDialog {
     private ArrayList<SalesControllerDetailModel> subDetail = new ArrayList<SalesControllerDetailModel>();
     private double pur_rate = 0.00;
     private String pur_tag_no = "";
-    private String buy_back_cd = "";
-    private String ins_cd = "";
     private SalesPaymentDialog sd = null;
     private HashMap<String, double[]> taxInfo;
     private DefaultTableModel dtmTax;
@@ -126,6 +125,7 @@ public class SalesController extends javax.swing.JDialog {
     private SalesView sv = null;
     private ArrayList<SchemeMasterModel> detail;
     private int tax_type;
+    private String order_ref_no;
 
     /**
      * Creates new form PurchaseController
@@ -733,7 +733,7 @@ public class SalesController extends javax.swing.JDialog {
                                     call = salesAPI.getPurcahseByInvNo(bill_no, Constants.BRANCH.get(jcmbBranch.getSelectedIndex()).getBranch_cd(), "1", SkableHome.db_name, SkableHome.selected_year).execute().body();
                                 }
                             } else {
-                               
+
                                 BulkSalesByTag bt = new BulkSalesByTag(null, true);
                                 bt.setLocationRelativeTo(null);
                                 bt.setVisible(true);
@@ -1264,14 +1264,6 @@ public class SalesController extends javax.swing.JDialog {
                                         jcmbTax.setSelectedItem(viewTable.getValueAt(row, 3).toString());
                                         jcmbTaxItemStateChanged(null);
                                     }
-                                } else if (mode.equalsIgnoreCase("2")) {
-                                    buy_back_cd = viewTable.getValueAt(row, 0).toString();
-                                    jtxtBuyBack.setText(viewTable.getValueAt(row, 1).toString());
-                                    jtxtByBackAmt.requestFocusInWindow();
-                                } else if (mode.equalsIgnoreCase("3")) {
-                                    ins_cd = viewTable.getValueAt(row, 0).toString();
-                                    jtxtInstItemName.setText(viewTable.getValueAt(row, 1).toString());
-                                    jtxtInsAmt.requestFocusInWindow();
                                 }
                                 sa.dispose();
                             }
@@ -1357,19 +1349,7 @@ public class SalesController extends javax.swing.JDialog {
                                         jcmbSalesman.setSelectedItem(array.get(i).getAsJsonObject().get("SM_NAME").getAsString());
                                         jcmbPmt.setSelectedIndex(array.get(i).getAsJsonObject().get("PMT_MODE").getAsInt());
                                         ac_cd = array.get(i).getAsJsonObject().get("AC_CD").getAsString();
-                                        if (!array.get(i).getAsJsonObject().get("BUY_BACK_CD").isJsonNull()) {
-                                            buy_back_cd = array.get(i).getAsJsonObject().get("BUY_BACK_CD").getAsString();
-                                            jtxtBuyBack.setText(array.get(i).getAsJsonObject().get("BUY_BACK_MODEL").getAsString());
-                                        }
-                                        if (!array.get(i).getAsJsonObject().get("INS_CD").isJsonNull()) {
-                                            ins_cd = array.get(i).getAsJsonObject().get("INS_CD").getAsString();
-                                            jtxtInstItemName.setText(array.get(i).getAsJsonObject().get("INS_MODEL").getAsString());
 
-                                        }
-                                        jtxtBuyBackIMEI.setText(array.get(i).getAsJsonObject().get("BUY_BACK_IMEI_NO").getAsString());
-                                        jtxtByBackAmt.setText(array.get(i).getAsJsonObject().get("BUY_BACK_AMT").getAsString());
-                                        jtxtPartNo.setText(array.get(i).getAsJsonObject().get("PART_NO").getAsString());
-                                        jtxtInsAmt.setText(array.get(i).getAsJsonObject().get("INS_AMT").getAsString());
                                         jtxtPmtDays.setText(array.get(i).getAsJsonObject().get("PMT_DAYS").getAsString());
                                         jtxtBankCharges.setText(array.get(i).getAsJsonObject().get("BANK_CHARGES").getAsString());
                                         jtxtAdvance.setText(array.get(i).getAsJsonObject().get("ADVANCE_AMT").getAsString());
@@ -1389,6 +1369,16 @@ public class SalesController extends javax.swing.JDialog {
                                         jlblEditNo.setText(array.get(i).getAsJsonObject().get("EDIT_NO").getAsDouble() + "");
                                         jlblTimeStamp.setText(array.get(i).getAsJsonObject().get("TIME_STAMP").getAsString());
                                         add_sr_no = (array.get(i).getAsJsonObject().get("add_sr_no").getAsInt());
+                                        if (!array.get(i).getAsJsonObject().get("ORDER_ARRAY").isJsonNull()) {
+                                            JsonArray orderArray = array.get(i).getAsJsonObject().get("ORDER_ARRAY").getAsJsonArray();
+                                            if (orderArray.size() > 0) {
+                                                order_ref_no = orderArray.get(0).getAsJsonObject().get("REF_NO").getAsString();
+                                                jlblOrderNo.setText(order_ref_no);
+                                                jlblOrderItem.setText(orderArray.get(0).getAsJsonObject().get("MODEL_NAME").getAsString() + " " + orderArray.get(0).getAsJsonObject().get("MEMORY_NAME").getAsString() + " " + orderArray.get(0).getAsJsonObject().get("COLOUR_NAME").getAsString());
+                                                jlblOrderAmount.setText(orderArray.get(0).getAsJsonObject().get("BAL").getAsString());
+                                            }
+
+                                        }
                                         if (!array.get(i).getAsJsonObject().get("REMARK").isJsonNull()) {
                                             jTextArea1.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                                         }
@@ -1542,7 +1532,7 @@ public class SalesController extends javax.swing.JDialog {
                                     jtxtAcName.setText(header.getAccountHeader().get(row).getFNAME());
                                     jtxtAddress.setText(header.getAccountHeader().get(row).getADD1());
                                     jtxtTin.setText(header.getAccountHeader().get(row).getTIN());
-                                    jtxtRefBy.setText(header.getAccountHeader().get(row).getRef_by());
+                                    jtxtGST.setText(header.getAccountHeader().get(row).getRef_by());
                                     add_sr_no = header.getAccountHeader().get(row).getSr_no();
                                     jlblBal.setText(lb.Convert2DecFmtForRs(header.getAccountHeader().get(row).getBAL()));
                                     jtxtTag.requestFocusInWindow();
@@ -1574,8 +1564,6 @@ public class SalesController extends javax.swing.JDialog {
         double tot_basic = 0;
         double tot_tax = 0;
         double tot_add_tax = 0;
-        double buyBack = lb.isNumber(jtxtByBackAmt);
-        double insAmt = lb.isNumber(jtxtInsAmt);
         double discount = lb.isNumber(jtxtDiscount);
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             tot += lb.isNumber2(jTable1.getValueAt(i, 14).toString());
@@ -1589,7 +1577,7 @@ public class SalesController extends javax.swing.JDialog {
         jlblTax.setText(lb.Convert2DecFmtForRs(tot_tax));
         jlblAddTax.setText(lb.Convert2DecFmtForRs(tot_add_tax));
         jlblTotQty.setText((tot_qty) + "");
-        jlblNet.setText(lb.Convert2DecFmtForRs(tot - buyBack + insAmt - discount));
+        jlblNet.setText(lb.Convert2DecFmtForRs(tot - discount));
 
         dtmTax.setRowCount(0);
         double tax_amt = 0.00, add_tax_amt = 0.00, basic = 0.00, disc = 0.00;
@@ -1681,17 +1669,7 @@ public class SalesController extends javax.swing.JDialog {
             lb.showMessageDailog("Please select valid account");
             return false;
         }
-        if (lb.isNumber(jtxtByBackAmt) > 0) {
-            if ((!lb.isBlank(jtxtBuyBack)) && buy_back_cd.equalsIgnoreCase("")) {
-                lb.showMessageDailog("Please select valid buy back model");
-                return false;
-            }
 
-        } else {
-            if (lb.isBlank(jtxtBuyBack)) {
-                buy_back_cd = "";
-            }
-        }
 
 //        if (jcmbType.getSelectedIndex() == 1) {
 //            if (lb.isBlank(jtxtTin)) {
@@ -1788,14 +1766,15 @@ public class SalesController extends javax.swing.JDialog {
         } else {
             header.setCHEQUE_DATE(null);
         }
-        header.setBuy_back_amt(lb.isNumber(jtxtByBackAmt));
-        header.setBuy_back_imei(jtxtBuyBackIMEI.getText());
-        header.setBuy_back_model(jtxtBuyBack.getText());
-        header.setPart_no(jtxtPartNo.getText());
+        header.setBuy_back_amt(0.00);
+        header.setBuy_back_imei("");
+        header.setBuy_back_model("");
+        header.setPart_no("");
         header.setAdd_sr_no(add_sr_no);
-        header.setBuy_back_cd(buy_back_cd);
-        header.setIns_amt(lb.isNumber(jtxtInsAmt));
-        header.setIns_cd(ins_cd);
+        header.setBuy_back_cd("");
+        header.setIns_amt(0.00);
+        header.setIns_cd("");
+        header.setOrder_no(order_ref_no);
         header.setBank_charges(lb.isNumber(jtxtBankCharges));
         header.setPmt_days(((int) (lb.isNumber(jtxtPmtDays))) + "");
         header.setAdvance_amt(lb.isNumber(jtxtAdvance));
@@ -1917,9 +1896,6 @@ public class SalesController extends javax.swing.JDialog {
     private void updateFooter() {
 
         if (flag) {
-            double net_amt = (lb.isNumber2(jlblTotal.getText()));
-            double by_back = (lb.isNumber2(jtxtByBackAmt.getText()));
-            double insurence = (lb.isNumber2(jtxtInsAmt.getText()));
 //            double bank_charge = (lb.isNumber2(jtxtBankCharges.getText()));
             jlblAdjst.setText(lb.Convert2DecFmtForRs(lb.isNumber(jlblTotal) - (lb.isNumber(jlblBasicAmount) + lb.isNumber(jlblTax) + lb.isNumber(jlblAddTax))));
             setTotal();
@@ -1940,6 +1916,33 @@ public class SalesController extends javax.swing.JDialog {
             cal.setTime(dt);
             cal.add(Calendar.DATE, numOfDays);
             jtxtDueDate.setText(((cal.get(Calendar.DATE) > 9) ? cal.get(Calendar.DATE) : "0" + cal.get(Calendar.DATE)) + "/" + (((cal.get(Calendar.MONTH) + 1) > 9) ? (cal.get(Calendar.MONTH) + 1) : "0" + (cal.get(Calendar.MONTH) + 1)) + "/" + cal.get(Calendar.YEAR));
+        }
+    }
+
+    private void openOrderHint() {
+        try {
+            JsonObject call = salesAPI.FindOrderByAccountCode(ac_cd, SkableHome.db_name, SkableHome.selected_year).execute().body();
+
+            JsonArray array = call.get("data").getAsJsonArray();
+            int row = -1;
+            if (array.size() > 1) {
+                OrderBookHint obh = new OrderBookHint(null, true);
+                obh.fillData(call);
+                obh.setVisible(true);
+                if (obh.getReturnStatus() == RET_OK) {
+                    row = obh.row;
+                }
+            } else if (array.size() == 1) {
+                row = 0;
+            }
+
+            if (row != -1) {
+                order_ref_no = array.get(row).getAsJsonObject().get("REF_NO").getAsString();
+                jlblOrderNo.setText(order_ref_no);
+                jlblOrderItem.setText(array.get(row).getAsJsonObject().get("MODEL_NAME").getAsString() + " " + array.get(row).getAsJsonObject().get("MEMORY_NAME").getAsString() + " " + array.get(row).getAsJsonObject().get("COLOUR_NAME").getAsString());
+                jlblOrderAmount.setText(array.get(row).getAsJsonObject().get("BAL").getAsString());
+            }
+        } catch (IOException ex) {
         }
     }
 
@@ -1977,7 +1980,7 @@ public class SalesController extends javax.swing.JDialog {
         jtxtAcName = new javax.swing.JTextField();
         jtxtAddress = new javax.swing.JTextField();
         jtxtTin = new javax.swing.JTextField();
-        jtxtRefBy = new javax.swing.JTextField();
+        jtxtGST = new javax.swing.JTextField();
         jlblPmtDays = new javax.swing.JLabel();
         jtxtPmtDays = new javax.swing.JTextField();
         jlblRate = new javax.swing.JLabel();
@@ -2028,18 +2031,14 @@ public class SalesController extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jtxtBuyBackIMEI = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jtxtPartNo = new javax.swing.JTextField();
-        jtxtBuyBack = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jtxtInsAmt = new javax.swing.JTextField();
-        jtxtInstItemName = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jtxtByBackAmt = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jlblOrderNo = new javax.swing.JLabel();
+        jlblOrderItem = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jlblOrderAmount = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -2169,17 +2168,22 @@ public class SalesController extends javax.swing.JDialog {
 
         jtxtTin.setEnabled(false);
 
-        jtxtRefBy.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtRefByFocusGained(evt);
+        jtxtGST.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtGSTActionPerformed(evt);
             }
         });
-        jtxtRefBy.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtxtGST.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtxtGSTFocusGained(evt);
+            }
+        });
+        jtxtGST.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtxtRefByKeyTyped(evt);
+                jtxtGSTKeyTyped(evt);
             }
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtRefByKeyPressed(evt);
+                jtxtGSTKeyPressed(evt);
             }
         });
 
@@ -2251,7 +2255,7 @@ public class SalesController extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxtTin, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtRefBy))
+                        .addComponent(jtxtGST))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -2381,7 +2385,7 @@ public class SalesController extends javax.swing.JDialog {
                         .addComponent(jtxtAcName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jtxtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jtxtTin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtxtRefBy, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtxtGST, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -2728,157 +2732,87 @@ public class SalesController extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(jTextArea1);
 
-        jLabel4.setText("Buy Back Model");
+        jLabel29.setText("Order No");
 
-        jtxtBuyBackIMEI.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtBuyBackIMEIFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtBuyBackIMEIFocusLost(evt);
-            }
-        });
-        jtxtBuyBackIMEI.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtBuyBackIMEIKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtxtBuyBackIMEIKeyTyped(evt);
-            }
-        });
+        jlblOrderNo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel7.setText("Buy Back Value");
+        jlblOrderItem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jtxtPartNo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtPartNoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtPartNoFocusLost(evt);
-            }
-        });
-        jtxtPartNo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtPartNoKeyPressed(evt);
+        jLabel35.setText("Order Item");
+
+        jLabel36.setText("Advance Amount");
+
+        jlblOrderAmount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButton1.setText("Find Order");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
-        jtxtBuyBack.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtBuyBackFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtBuyBackFocusLost(evt);
+        jButton2.setText("Remove Order");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
-        jtxtBuyBack.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtBuyBackKeyPressed(evt);
-            }
-        });
-
-        jLabel9.setText("IMEI NO");
-
-        jtxtInsAmt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtInsAmtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtInsAmtFocusLost(evt);
-            }
-        });
-        jtxtInsAmt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtInsAmtKeyPressed(evt);
-            }
-        });
-
-        jtxtInstItemName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtInstItemNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtInstItemNameFocusLost(evt);
-            }
-        });
-        jtxtInstItemName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtInstItemNameKeyPressed(evt);
-            }
-        });
-
-        jLabel10.setText("Insurance");
-
-        jtxtByBackAmt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtxtByBackAmtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtxtByBackAmtFocusLost(evt);
-            }
-        });
-        jtxtByBackAmt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtByBackAmtKeyPressed(evt);
-            }
-        });
-
-        jLabel8.setText("Part No");
-
-        jLabel11.setText("Amt");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtxtBuyBackIMEI, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtInstItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtInsAmt, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtPartNo, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
-                    .addComponent(jtxtByBackAmt)
-                    .addComponent(jtxtBuyBack))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblOrderNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblOrderItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jlblOrderAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtBuyBack, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblOrderNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtByBackAmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblOrderItem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtPartNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtBuyBackIMEI, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblOrderAmount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtInstItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtInsAmt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel29, jlblOrderNo});
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel35, jlblOrderItem});
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel36, jlblOrderAmount});
 
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -2929,7 +2863,7 @@ public class SalesController extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1393, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1308, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2957,8 +2891,8 @@ public class SalesController extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -2984,6 +2918,10 @@ public class SalesController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3008,11 +2946,7 @@ public class SalesController extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cancelButton)
                             .addComponent(jbtnOK))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -3381,7 +3315,7 @@ public class SalesController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
-                jtxtBuyBack.requestFocusInWindow();
+                jlblAdjst.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
@@ -3451,14 +3385,14 @@ public class SalesController extends javax.swing.JDialog {
                             jtxtTin.setText(array.get(0).getAsJsonObject().get("TIN").getAsString());
                             jtxtAddress.setText(array.get(0).getAsJsonObject().get("ADD1").getAsString());
                             jtxtMobile.setText(array.get(0).getAsJsonObject().get("MOBILE1").getAsString());
-                            jtxtRefBy.setText(array.get(0).getAsJsonObject().get("REF_BY").getAsString());
+                            jtxtGST.setText(array.get(0).getAsJsonObject().get("REF_BY").getAsString());
                             jtxtTag.requestFocusInWindow();
                         } else {
                             ac_cd = "";
                             jtxtAcName.setText("");
                             jtxtTin.setText("");
                             jtxtAddress.setText("");
-                            jtxtRefBy.setText("");
+                            jtxtGST.setText("");
                             lb.confirmDialog("Mobile does not exist.\nDo you want to create new account?");
                             if (lb.type) {
                                 CreateSalesAccount bmc = new CreateSalesAccount(null, true);
@@ -3472,7 +3406,7 @@ public class SalesController extends javax.swing.JDialog {
                                     jtxtAddress.setText(bmc.account.getADD1());
                                     jtxtMobile.setText(bmc.account.getMOBILE1());
                                     jtxtTin.setText(bmc.account.getTIN());
-                                    jtxtRefBy.setText(bmc.account.getREF_BY());
+                                    jtxtGST.setText(bmc.account.getREF_BY());
                                     jtxtTag.requestFocusInWindow();
                                 }
                             } else {
@@ -3518,7 +3452,7 @@ public class SalesController extends javax.swing.JDialog {
                         jtxtAddress.setText(bmc.account.getADD1());
                         jtxtMobile.setText(bmc.account.getMOBILE1());
                         jtxtTin.setText(bmc.account.getTIN());
-                        jtxtRefBy.setText(bmc.account.getREF_BY());
+                        jtxtGST.setText(bmc.account.getREF_BY());
                         add_sr_no = 1;
                         jtxtTag.requestFocusInWindow();
                     }
@@ -3534,132 +3468,18 @@ public class SalesController extends javax.swing.JDialog {
     private void jtxtAcAliasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtAcAliasKeyReleased
     }//GEN-LAST:event_jtxtAcAliasKeyReleased
 
-    private void jtxtRefByFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtRefByFocusGained
+    private void jtxtGSTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtGSTFocusGained
         lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtRefByFocusGained
+    }//GEN-LAST:event_jtxtGSTFocusGained
 
-    private void jtxtRefByKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtRefByKeyPressed
+    private void jtxtGSTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtGSTKeyPressed
         lb.enterFocus(evt, jtxtAcAlias);
-    }//GEN-LAST:event_jtxtRefByKeyPressed
+    }//GEN-LAST:event_jtxtGSTKeyPressed
 
-    private void jtxtRefByKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtRefByKeyTyped
+    private void jtxtGSTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtGSTKeyTyped
         // TODO add your handling code here:
         lb.fixLength(evt, 50);
-    }//GEN-LAST:event_jtxtRefByKeyTyped
-
-    private void jtxtBuyBackIMEIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBuyBackIMEIFocusGained
-        // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtBuyBackIMEIFocusGained
-
-    private void jtxtBuyBackIMEIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBuyBackIMEIFocusLost
-        // TODO add your handling code here:
-        lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtBuyBackIMEIFocusLost
-
-    private void jtxtBuyBackIMEIKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBuyBackIMEIKeyPressed
-        // TODO add your handling code here:
-        if (lb.isEnter(evt)) {
-            jtxtInstItemName.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_jtxtBuyBackIMEIKeyPressed
-
-    private void jtxtBuyBackIMEIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBuyBackIMEIKeyTyped
-        // TODO add your handling code here:
-        lb.fixLength(evt, 15);
-    }//GEN-LAST:event_jtxtBuyBackIMEIKeyTyped
-
-    private void jtxtPartNoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtPartNoFocusGained
-        // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtPartNoFocusGained
-
-    private void jtxtPartNoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtPartNoFocusLost
-        // TODO add your handling code here:
-        lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtPartNoFocusLost
-
-    private void jtxtPartNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPartNoKeyPressed
-        // TODO add your handling code here:
-        if (lb.isEnter(evt)) {
-            jtxtBuyBackIMEI.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_jtxtPartNoKeyPressed
-
-    private void jtxtBuyBackFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBuyBackFocusGained
-        // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtBuyBackFocusGained
-
-    private void jtxtBuyBackFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBuyBackFocusLost
-        // TODO add your handling code here:
-        lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtBuyBackFocusLost
-
-    private void jtxtBuyBackKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBuyBackKeyPressed
-        // TODO add your handling code here:
-        if (lb.isEnter(evt)) {
-            if (!lb.isBlank(jtxtBuyBack)) {
-                setSeriesData("3", jtxtBuyBack.getText().toUpperCase(), "2");
-            } else {
-                jtxtByBackAmt.requestFocusInWindow();
-            }
-        }
-    }//GEN-LAST:event_jtxtBuyBackKeyPressed
-
-    private void jtxtInsAmtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtInsAmtFocusGained
-        // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtInsAmtFocusGained
-
-    private void jtxtInsAmtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtInsAmtFocusLost
-        // TODO add your handling code here:
-        lb.toDouble(evt);
-        updateFooter();
-    }//GEN-LAST:event_jtxtInsAmtFocusLost
-
-    private void jtxtInsAmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtInsAmtKeyPressed
-        // TODO add your handling code here:
-        if (lb.isEnter(evt)) {
-            jtxtBankCharges.requestFocusInWindow();
-            updateFooter();
-        }
-    }//GEN-LAST:event_jtxtInsAmtKeyPressed
-
-    private void jtxtInstItemNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtInstItemNameFocusGained
-        // TODO add your handling code here:
-        jtxtInstItemName.selectAll();
-    }//GEN-LAST:event_jtxtInstItemNameFocusGained
-
-    private void jtxtInstItemNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtInstItemNameFocusLost
-        lb.toUpper(evt);
-    }//GEN-LAST:event_jtxtInstItemNameFocusLost
-
-    private void jtxtInstItemNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtInstItemNameKeyPressed
-        if (lb.isEnter(evt)) {
-            if (!lb.isBlank(jtxtInstItemName)) {
-                setSeriesData("3", jtxtInstItemName.getText().toUpperCase(), "3");
-            } else {
-                jtxtInsAmt.requestFocusInWindow();
-            }
-        }
-    }//GEN-LAST:event_jtxtInstItemNameKeyPressed
-
-    private void jtxtByBackAmtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtByBackAmtFocusGained
-        // TODO add your handling code here:
-        lb.selectAll(evt);
-    }//GEN-LAST:event_jtxtByBackAmtFocusGained
-
-    private void jtxtByBackAmtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtByBackAmtFocusLost
-        // TODO add your handling code here:
-        lb.toDouble(evt);
-        updateFooter();
-    }//GEN-LAST:event_jtxtByBackAmtFocusLost
-
-    private void jtxtByBackAmtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtByBackAmtKeyPressed
-        // TODO add your handling code here:
-        lb.enterFocus(evt, jtxtPartNo);
-    }//GEN-LAST:event_jtxtByBackAmtKeyPressed
+    }//GEN-LAST:event_jtxtGSTKeyTyped
 
     private void jtxtBankChargesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBankChargesFocusGained
         // TODO add your handling code here:
@@ -3771,6 +3591,23 @@ public class SalesController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jcmbSchemeKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        openOrderHint();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jlblOrderNo.setText("");
+        jlblOrderItem.setText("");
+        jlblOrderAmount.setText("");
+        order_ref_no="";
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jtxtGSTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtGSTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtGSTActionPerformed
+
     private void doClose(int retStatus) {
         lb.confirmDialog("Do you want to discard this voucher?");
         if (lb.type) {
@@ -3783,9 +3620,9 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -3804,16 +3641,15 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -3844,6 +3680,9 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JLabel jlblEditNo;
     private javax.swing.JLabel jlblNet;
     private javax.swing.JLabel jlblNet1;
+    private javax.swing.JLabel jlblOrderAmount;
+    private javax.swing.JLabel jlblOrderItem;
+    private javax.swing.JLabel jlblOrderNo;
     private javax.swing.JLabel jlblPmtDays;
     private javax.swing.JLabel jlblRate;
     private javax.swing.JLabel jlblRemAmt;
@@ -3857,17 +3696,11 @@ public class SalesController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtAddress;
     private javax.swing.JTextField jtxtAdvance;
     private javax.swing.JTextField jtxtBankCharges;
-    private javax.swing.JTextField jtxtBuyBack;
-    private javax.swing.JTextField jtxtBuyBackIMEI;
-    private javax.swing.JTextField jtxtByBackAmt;
     private javax.swing.JTextField jtxtDiscount;
     private javax.swing.JTextField jtxtDueDate;
-    private javax.swing.JTextField jtxtInsAmt;
-    private javax.swing.JTextField jtxtInstItemName;
+    private javax.swing.JTextField jtxtGST;
     private javax.swing.JTextField jtxtMobile;
-    private javax.swing.JTextField jtxtPartNo;
     private javax.swing.JTextField jtxtPmtDays;
-    private javax.swing.JTextField jtxtRefBy;
     private javax.swing.JTextField jtxtTin;
     private javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;
