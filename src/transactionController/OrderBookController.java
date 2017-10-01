@@ -342,6 +342,9 @@ public class OrderBookController extends javax.swing.JDialog {
                             jtxtRemark.setText(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                             jtxtAmount.setText(array.get(i).getAsJsonObject().get("BAL").getAsString());
                             jtxtMobile.setText(array.get(i).getAsJsonObject().get("MOBILE1").getAsString());
+                            jtxtNote.setText(array.get(i).getAsJsonObject().get("NOTES").getAsString());
+                            jtxtCoupnCode.setText(array.get(i).getAsJsonObject().get("COUPEN_CODE").getAsString());
+                            jcmbBranch.setSelectedItem(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
 
                             sd.bank_cd = array.get(i).getAsJsonObject().get("BANK_CD").getAsString();
                             sd.card_cd = array.get(i).getAsJsonObject().get("CARD_CD").getAsString();
@@ -446,6 +449,8 @@ public class OrderBookController extends javax.swing.JDialog {
             model.setAc_cd(ac_cd);
             model.setAmt(lb.isNumber2(jtxtAmount.getText()));
             model.setRemark(jtxtRemark.getText());
+            model.setNotes(jtxtNote.getText());
+            model.setCoupen_code(jtxtCoupnCode.getText());
             model.setModel_cd(model_cd);
             model.setMemory_cd(memory_cd);
             model.setColor_cd(color_cd);
@@ -573,6 +578,11 @@ public class OrderBookController extends javax.swing.JDialog {
         jcmbBranch = new javax.swing.JComboBox();
         jLabel28 = new javax.swing.JLabel();
         jtxtMobile = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtxtNote = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        jtxtCoupnCode = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -734,6 +744,25 @@ public class OrderBookController extends javax.swing.JDialog {
             }
         });
 
+        jLabel9.setText("Notes");
+
+        jtxtNote.setColumns(20);
+        jtxtNote.setRows(5);
+        jtxtNote.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtNoteKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtxtNote);
+
+        jLabel10.setText("Coupen Code");
+
+        jtxtCoupnCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtCoupnCodeKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -758,23 +787,30 @@ public class OrderBookController extends javax.swing.JDialog {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jcmbBranch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtAcName)
-                    .addComponent(jtxtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtMemoryName)
                     .addComponent(jtxtModelName)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jtxtCoupnCode))
+                .addGap(14, 14, 14))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -849,6 +885,14 @@ public class OrderBookController extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtCoupnCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1066,7 +1110,7 @@ public class OrderBookController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
-                jbtnOK.requestFocusInWindow();
+                jtxtNote.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_jtxtRemarkKeyPressed
@@ -1126,6 +1170,19 @@ public class OrderBookController extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jtxtMobileKeyPressed
 
+    private void jtxtNoteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNoteKeyPressed
+        // TODO add your handling code here:
+        if (lb.isEnter(evt)) {
+            if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
+                jtxtCoupnCode.requestFocusInWindow();
+            }
+        }
+    }//GEN-LAST:event_jtxtNoteKeyPressed
+
+    private void jtxtCoupnCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtCoupnCodeKeyPressed
+        lb.enterFocus(evt, jbtnOK);
+    }//GEN-LAST:event_jtxtCoupnCodeKeyPressed
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
@@ -1135,6 +1192,7 @@ public class OrderBookController extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
@@ -1147,8 +1205,10 @@ public class OrderBookController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtnOK;
     private javax.swing.JComboBox jcmbBranch;
     private javax.swing.JLabel jlblEditNo;
@@ -1158,9 +1218,11 @@ public class OrderBookController extends javax.swing.JDialog {
     private javax.swing.JTextField jtxtAcName;
     private javax.swing.JTextField jtxtAmount;
     private javax.swing.JTextField jtxtColorName;
+    private javax.swing.JTextField jtxtCoupnCode;
     private javax.swing.JTextField jtxtMemoryName;
     private javax.swing.JTextField jtxtMobile;
     private javax.swing.JTextField jtxtModelName;
+    private javax.swing.JTextArea jtxtNote;
     private javax.swing.JTextArea jtxtRemark;
     private javax.swing.JTextField jtxtVouDate;
     private javax.swing.JTextField jtxtVoucher;

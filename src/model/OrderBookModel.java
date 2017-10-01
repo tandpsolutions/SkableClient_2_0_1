@@ -39,6 +39,8 @@ public class OrderBookModel {
     private String card_no;
     private String tid_no;
     private String branch_cd;
+    private String notes;
+    private String coupen_code;
 
     public String getBranch_cd() {
         return branch_cd;
@@ -47,8 +49,6 @@ public class OrderBookModel {
     public void setBranch_cd(String branch_cd) {
         this.branch_cd = branch_cd;
     }
-    
-    
 
     public String getCard_no() {
         return card_no;
@@ -264,5 +264,21 @@ public class OrderBookModel {
 
     public void setColor_cd(String color_cd) {
         this.color_cd = color_cd;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getCoupen_code() {
+        return coupen_code;
+    }
+
+    public void setCoupen_code(String coupen_code) {
+        this.coupen_code = coupen_code;
     }
 }

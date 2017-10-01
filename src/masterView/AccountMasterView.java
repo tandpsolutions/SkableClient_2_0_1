@@ -56,7 +56,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getData() {
-        Call<JsonObject> call = groupAPI.GetGroupMaster(SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = groupAPI.GetGroupMaster(SkableHome.db_name, SkableHome.selected_year);
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -103,7 +103,6 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
 //        add(panel, BorderLayout.SOUTH);
 //        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jtfFilter.getText();
@@ -130,7 +129,6 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
     }
 
@@ -222,9 +220,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
 
             @Override
             public void callPrint() {
-
             }
-
         }
         navLoad = new navigation();
         jPanel2.add(navLoad);
@@ -232,7 +228,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     }
 
     public void getAccountData() {
-        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null,SkableHome.db_name,SkableHome.selected_year);
+        Call<JsonObject> call = accountAPI.getAccountMaster(jTextField1.getText(), jcmbHeadGroup.getSelectedItem().toString(), null, SkableHome.db_name, SkableHome.selected_year, jcmbDealer.getSelectedIndex());
         lb.addGlassPane(this);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -257,6 +253,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
                             row.add(detailAc.get(i).getEMAIL());
                             row.add(i);
                             row.add(detailAc.get(i).getGST_NO());
+                            row.add((detailAc.get(i).getIS_DEALER() == 0) ? "" : "Yes");
                             dtm.addRow(row);
                         }
                         lb.setColumnSizeForTable(jTable1, jPanel1.getWidth());
@@ -288,6 +285,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jcmbHeadGroup = new javax.swing.JComboBox();
+        jcmbDealer = new javax.swing.JComboBox();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -301,11 +299,11 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ac_cd", "Name", "Group", "Mobile", "CST", "TIN", "Address", "Email", "index", "GST No"
+                "ac_cd", "Name", "Group", "Mobile", "CST", "TIN", "Address", "Email", "index", "GST No", "Dealer"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -324,22 +322,21 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
-            jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -388,22 +385,28 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
             }
         });
 
+        jcmbDealer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "No", "Yes" }));
+        jcmbDealer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcmbDealerKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jButton1)
-                        .addGap(0, 124, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcmbHeadGroup, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1))))
+                    .addComponent(jcmbDealer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcmbHeadGroup, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(jButton1)
+                .addGap(130, 130, 130))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,6 +414,8 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jcmbHeadGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcmbDealer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
@@ -422,7 +427,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -438,7 +443,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -499,10 +504,13 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
 
     private void jcmbHeadGroupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbHeadGroupKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jButton1);
+        lb.enterFocus(evt, jcmbDealer);
     }//GEN-LAST:event_jcmbHeadGroupKeyPressed
 
-
+    private void jcmbDealerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcmbDealerKeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jcmbDealerKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -511,6 +519,7 @@ public class AccountMasterView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox jcmbDealer;
     private javax.swing.JComboBox jcmbHeadGroup;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables

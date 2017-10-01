@@ -43,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofitAPI.OrderBookAPI;
 import retrofitAPI.StartUpAPI;
+import skable.Constants;
 import skable.SkableHome;
 import support.Library;
 import support.OurDateChooser;
@@ -73,6 +74,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
     public OrderBookReport(int formCd) {
         initComponents();
+        setUpData();
         orderBookAPI = lb.getRetrofit().create(OrderBookAPI.class);
         lb.setDateChooserPropertyInit(jtxtFromDate);
         lb.setDateChooserPropertyInit(jtxtToDate);
@@ -83,6 +85,20 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         searchOnTextFields();
         registerShortKeys();
         setPopUp();
+    }
+
+    private void setUpData() {
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("ALL");
+        for (int i = 0; i < Constants.BRANCH.size(); i++) {
+            jComboBox1.addItem(Constants.BRANCH.get(i).getBranch_name());
+        }
+        jComboBox1.setSelectedItem(SkableHome.selected_branch.getBranch_name());
+        if (SkableHome.user_grp_cd.equalsIgnoreCase("1")) {
+            jComboBox1.setEnabled(true);
+        } else {
+            jComboBox1.setEnabled(false);
+        }
     }
 
     private void tableForView() {
@@ -152,7 +168,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         try {
             lb.addGlassPane(this);
             JsonObject call = orderBookAPI.GetOrderBookHeader(lb.ConvertDateFormetForDB(jtxtFromDate.getText()),
-                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), SkableHome.selected_branch.getBranch_cd(), model_cd, memory_cd, color_cd, SkableHome.db_name, SkableHome.selected_year).execute().body();
+                    lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex() == 0) ? "" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd(), model_cd, memory_cd, color_cd, SkableHome.db_name, SkableHome.selected_year).execute().body();
             lb.removeGlassPane(this);
             if (call != null) {
                 if (call.get("result").getAsInt() == 1) {
@@ -169,6 +185,12 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("MODEL_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("MEMORY_NAME").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("COLOUR_NAME").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("NOTES").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("COUPEN_CODE").getAsString());
+                        row.add(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
+                        int order_status = array.get(i).getAsJsonObject().get("ORDER_STATUS").getAsInt();
+                        row.add((order_status == 0) ? "Pending" : "Close");
+                        row.add(array.get(i).getAsJsonObject().get("ORDER_CLOSE_REMARK").getAsString());
                         dtm.addRow(row);
                     }
                     double tot = 0.00;
@@ -186,6 +208,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add("");
+                    row.add("");
+                    row.add("");
                     dtm.addRow(row);
 
                     row = new Vector();
@@ -194,6 +218,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                     row.add("");
                     row.add("");
                     row.add(lb.Convert2DecFmtForRs(tot));
+                    row.add("");
+                    row.add("");
                     row.add("");
                     row.add("");
                     row.add("");
@@ -441,6 +467,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 row.add(jTable1.getValueAt(i, 6).toString());
                 row.add(jTable1.getValueAt(i, 7).toString());
                 row.add(jTable1.getValueAt(i, 8).toString());
+                row.add(jTable1.getValueAt(i, 9).toString());
+                row.add(jTable1.getValueAt(i, 10).toString());
+                row.add(jTable1.getValueAt(i, 11).toString());
+                row.add(jTable1.getValueAt(i, 12).toString());
+                row.add(jTable1.getValueAt(i, 13).toString());
                 rows.add(row);
             }
 
@@ -454,6 +485,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             header.add("Model");
             header.add("Memory");
             header.add("Color");
+            header.add("Notes");
+            header.add("Coupen Code");
+            header.add("Branch");
+            header.add("Order Status");
+            header.add("Order Closing Remark");
             lb.exportToExcel("Order Book Detail", header, rows, "Order Book Detail");
         } catch (Exception ex) {
             lb.printToLogFile("Exception at callView as OPDPatientListDateWise", ex);
@@ -489,6 +525,8 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -636,6 +674,15 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setText("Branch");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -663,15 +710,18 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtxtModelName, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                             .addComponent(jtxtMemoryName)
-                            .addComponent(jtxtColorName))
+                            .addComponent(jtxtColorName)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4)
@@ -713,6 +763,10 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtxtColorName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -725,11 +779,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Sr NO", "Voucher", "Date", "Name", "Balance", "Remark", "Model Name", "Memory", "Color"
+                "Sr NO", "Voucher", "Date", "Name", "Balance", "Remark", "Model Name", "Memory", "Color", "Notes", "Coupen", "Branch", "Order Status", "Order Close Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -747,17 +801,20 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-        }
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(8).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setResizable(false);
+        jTable1.getColumnModel().getColumn(12).setResizable(false);
+        jTable1.getColumnModel().getColumn(13).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -781,7 +838,7 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1013,6 +1070,11 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         color_cd = "";
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+        // TODO add your handling code here:
+        lb.enterFocus(evt, jButton1);
+    }//GEN-LAST:event_jComboBox1KeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBillDateBtn;
     private javax.swing.JButton jBillDateBtn1;
@@ -1022,11 +1084,13 @@ public class OrderBookReport extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

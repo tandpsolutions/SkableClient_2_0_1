@@ -66,6 +66,7 @@ public class OrderBookView extends javax.swing.JInternalFrame {
         connectNavigation();
         navLoad.setFormCd(formCd);
         setPopUp();
+        jButton1.doClick();
         setUpData();
     }
 
@@ -124,6 +125,12 @@ public class OrderBookView extends javax.swing.JInternalFrame {
                         row.add(array.get(i).getAsJsonObject().get("REMARK").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("AC_CD").getAsString());
                         row.add(array.get(i).getAsJsonObject().get("MODEL_NAME").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("NOTES").getAsString());
+                        row.add(array.get(i).getAsJsonObject().get("COUPEN_CODE").getAsString());
+                        row.add(Constants.branchMap.get(array.get(i).getAsJsonObject().get("BRANCH_CD").getAsString()).getBranch_name());
+                        int order_status = array.get(i).getAsJsonObject().get("ORDER_STATUS").getAsInt();
+                        row.add((order_status == 0) ? "Pending" : "Close");
+                        row.add(array.get(i).getAsJsonObject().get("ORDER_CLOSE_REMARK").getAsString());
                         dtm.addRow(row);
                     }
                 } else {
@@ -405,9 +412,7 @@ public class OrderBookView extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1)
                                 .addGap(14, 14, 14))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -447,11 +452,11 @@ public class OrderBookView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Voucher", "Date", "Name", "Balance", "Remark", "AC Cd", "Model Name"
+                "Voucher", "Date", "Name", "Balance", "Remark", "AC Cd", "Model Name", "Notes", "Coupen", "Branch", "Status", "Order Closing Remark"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -478,6 +483,10 @@ public class OrderBookView extends javax.swing.JInternalFrame {
         jTable1.getColumnModel().getColumn(5).setPreferredWidth(0);
         jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jTable1.getColumnModel().getColumn(7).setResizable(false);
+        jTable1.getColumnModel().getColumn(9).setResizable(false);
+        jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jTable1.getColumnModel().getColumn(11).setResizable(false);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -587,7 +596,7 @@ public class OrderBookView extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        setData(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex() == 0) ? "0" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd());
+        setData(lb.ConvertDateFormetForDB(jtxtFromDate.getText()), lb.ConvertDateFormetForDB(jtxtToDate.getText()), (jComboBox1.getSelectedIndex() == 0) ? "" : Constants.BRANCH.get(jComboBox1.getSelectedIndex() - 1).getBranch_cd());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
