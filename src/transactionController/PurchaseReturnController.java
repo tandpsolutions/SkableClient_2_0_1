@@ -50,6 +50,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import masterController.CreateSalesAccount;
 import masterController.SeriesMasterController;
 import model.AccountHead;
 import model.PurchaseReturnControllerHeaderModel;
@@ -66,6 +67,7 @@ import support.Library;
 import support.OurDateChooser;
 import support.ReportTable;
 import support.SelectDailog;
+import static transactionController.PurchaseController.RET_OK;
 import transactionView.PurchaseReturnView;
 
 /**
@@ -2453,10 +2455,26 @@ public class PurchaseReturnController extends javax.swing.JDialog {
 
     private void jtxtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNameKeyPressed
         // TODO add your handling code here:
-        lb.enterFocus(evt, jtxtTinNum);
         if (lb.isEnter(evt)) {
-            if (!lb.isBlank(jtxtName)) {
-                setAccountDetailMobile("2", jtxtName.getText());
+            if (lb.isBlank(jtxtName)) {
+                lb.confirmDialog("Do you want to create new account?");
+                if (lb.type) {
+                    CreateSalesAccount bmc = new CreateSalesAccount(null, true);
+                    bmc.setLocationRelativeTo(null);
+                    bmc.setVisible(true);
+                    if (bmc.getReturnStatus() == RET_OK) {
+                        ac_cd = bmc.ac_cd;
+                        jtxtName.setText(bmc.account.getFNAME());
+                        jtxtTinNum.setText(bmc.account.getTIN());
+                        jtxtTag.requestFocusInWindow();
+                    }
+                } else {
+                    ac_cd = "";
+                }
+            } else {
+                if (lb.validateInput(jtxtName.getText())) {
+                    setAccountDetailMobile("2", jtxtName.getText());
+                }
             }
         }
     }//GEN-LAST:event_jtxtNameKeyPressed
