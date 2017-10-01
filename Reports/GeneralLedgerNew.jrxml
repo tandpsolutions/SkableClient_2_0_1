@@ -44,6 +44,12 @@
 	<field name="CHEQUE_NO" class="java.lang.String">
 		<fieldDescription><![CDATA[CHEQUE_NO]]></fieldDescription>
 	</field>
+	<field name="OUR_BANK" class="java.lang.String">
+		<fieldDescription><![CDATA[OUR_BANK]]></fieldDescription>
+	</field>
+	<field name="ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[ADDRESS]]></fieldDescription>
+	</field>
 	<variable name="bal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[($V{REPORT_COUNT}== 1)?$F{OPB}+$F{DR}-$F{CR}:$F{DR}-$F{CR}]]></variableExpression>
 	</variable>
@@ -58,33 +64,12 @@
 	</group>
 	<title>
 		<band height="117" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="d9ade3e4-0677-45c0-924e-bb9eece69008" x="177" y="95" width="33" height="12"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<text><![CDATA[From :]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="e9e015d7-d3de-4f70-b377-22e65eddf0b5" x="210" y="95" width="80" height="12"/>
-				<textElement>
+				<reportElement uuid="e9e015d7-d3de-4f70-b377-22e65eddf0b5" x="177" y="105" width="208" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="d9ade3e4-0677-45c0-924e-bb9eece69008" x="290" y="95" width="33" height="12"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<text><![CDATA[TO :]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="e9e015d7-d3de-4f70-b377-22e65eddf0b5" x="323" y="94" width="62" height="12"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fromDate}+" to "+$P{toDate}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="772eccf6-9a9c-420f-aceb-4c6935411178" x="177" y="15" width="208" height="15"/>
@@ -125,6 +110,14 @@
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{ac_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="18ea9148-bc91-4d52-977e-f17ba97973f5" x="1" y="82" width="555" height="22"/>
+				<box topPadding="0" leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -265,7 +258,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PARTICULAR}+" "+$F{CHEQUE_NO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PARTICULAR}+" "+$F{CHEQUE_NO}+" "+$F{OUR_BANK}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 				<reportElement uuid="21005107-af34-4e3f-9585-d26285a56602" stretchType="RelativeToTallestObject" x="1" y="20" width="52" height="20"/>

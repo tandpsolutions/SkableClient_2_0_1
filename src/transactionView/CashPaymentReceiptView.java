@@ -261,6 +261,7 @@ public class CashPaymentReceiptView extends javax.swing.JInternalFrame {
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
                         pp.getCashreceiptPrint(jTable1.getValueAt(row, 0).toString(), vType);
+                        pp.setVisible(true);
                     }
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");

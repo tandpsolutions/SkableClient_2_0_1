@@ -267,6 +267,7 @@ public class BankPaymentReceiptView extends javax.swing.JInternalFrame {
                     if (row != -1) {
                         PrintPanel pp = new PrintPanel(null, true);
                         pp.getBankreceiptPrint(jTable1.getValueAt(row, 1).toString(), vType);
+                        pp.setVisible(true);
                     }
                 } else {
                     lb.showMessageDailog("You don't have rights to perform this action");

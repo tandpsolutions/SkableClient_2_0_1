@@ -111,7 +111,7 @@ public class PrintPanel extends javax.swing.JDialog {
                                 if (array.get(0).getAsJsonObject().get("V_TYPE").getAsInt() == 0) {
                                     params.put("bill_type", "Retail Invoice");
                                     params.put("inv_type", "");
-                                    
+
                                 } else {
                                     params.put("bill_type", "Tax Invoice");
                                     params.put("inv_type", "TI");
@@ -525,7 +525,7 @@ public class PrintPanel extends javax.swing.JDialog {
                                 params.put("tin_no", "GST No : " + (array.get(0).getAsJsonObject().get("COMPANY_GST_NO").getAsString()));
                             }
                             params.put("add1", SkableHome.selected_branch.getAddress1());
-                            params.put("words", new AmountInWords().convertToWords((int)lb.isNumber(array.get(0).getAsJsonObject().get("NET_AMT").getAsString())));
+                            params.put("words", new AmountInWords().convertToWords((int) lb.isNumber(array.get(0).getAsJsonObject().get("NET_AMT").getAsString())));
                             params.put("add2", SkableHome.selected_branch.getAddress2());
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
@@ -653,7 +653,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "APPLE N BERRY");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -661,7 +661,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
-                            lb.reportGeneratorPDF("cashReport.jasper", params, dataSource, ref_no);
+                            lb.reportGenerator("cashReport.jasper", params, dataSource, jPanel1);
                         } catch (Exception ex) {
                         }
                     }
@@ -750,7 +750,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             JsonDataSource dataSource = new JsonDataSource(jsonFile);
                             HashMap params = new HashMap();
                             params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "APPLE N BERRY");
+                            params.put("comp_name", Constants.COMPANY_NAME);
                             params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
                             params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
                             params.put("add1", SkableHome.selected_branch.getAddress1());
@@ -758,7 +758,7 @@ public class PrintPanel extends javax.swing.JDialog {
                             params.put("add3", SkableHome.selected_branch.getAddress3());
                             params.put("email", SkableHome.selected_branch.getEmail());
                             params.put("mobile", SkableHome.selected_branch.getPhone());
-                            lb.reportGeneratorPDF("bankReport.jasper", params, dataSource, ref_no);
+                            lb.reportGenerator("bankReport.jasper", params, dataSource, jPanel1);
                         } catch (Exception ex) {
                         }
                     }
@@ -805,46 +805,6 @@ public class PrintPanel extends javax.swing.JDialog {
         } else {
         }
 
-    }
-
-    public void getInsuranceBill(String ref_no) {
-        try {
-            SalesAPI salesAPI = lb.getRetrofit().create(SalesAPI.class);
-            JsonObject call = salesAPI.GetInsuranceBill(ref_no, SkableHome.db_name, SkableHome.selected_year).execute().body();
-            if (call
-                    != null) {
-                JsonObject result = call;
-                if (result.get("result").getAsInt() == 1) {
-                    JsonArray array = call.getAsJsonArray("data");
-                    if (array != null) {
-                        try {
-                            FileWriter file = new FileWriter(System.getProperty("user.dir") + File.separator + "file1.txt");
-                            file.write(array.toString());
-                            file.close();
-                            File jsonFile = new File(System.getProperty("user.dir") + File.separator + "file1.txt");
-                            JsonDataSource dataSource = new JsonDataSource(jsonFile);
-                            HashMap params = new HashMap();
-                            params.put("dir", System.getProperty("user.dir"));
-                            params.put("comp_name", "APPLE N BERRY");
-                            params.put("tin_no", (array.get(0).getAsJsonObject().get("COMPANY_TIN").getAsString()));
-                            params.put("cst_no", (array.get(0).getAsJsonObject().get("COMPANY_CST").getAsString()));
-                            params.put("add1", SkableHome.selected_branch.getAddress1());
-                            params.put("add2", SkableHome.selected_branch.getAddress2());
-                            params.put("add3", SkableHome.selected_branch.getAddress3());
-                            params.put("email", SkableHome.selected_branch.getEmail());
-                            params.put("mobile", SkableHome.selected_branch.getPhone());
-                            lb.reportGenerator("InsBill.jasper", params, dataSource, jPanel1);
-                        } catch (Exception ex) {
-                        }
-                    }
-                } else {
-                    lb.showMessageDailog(call.get("Cause").getAsString());
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(PrintPanel.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void generateStocktransfer(String ref_no) {
