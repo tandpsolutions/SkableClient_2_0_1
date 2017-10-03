@@ -27,7 +27,7 @@ public interface JobSheetAPI {
 
     @FormUrlEncoded
     @POST("GetDataFromServer")
-    Call<JsonObject> getDataFromServer(@Field("value") String param_code, @Field("param_code") String value,@Field("db_name") String db_name, @Field("db_year") String ac_year);
+    Call<JsonObject> getDataFromServer(@Field("VALUE") String param_code, @Field("param_code") String value,@Field("db_name") String db_name, @Field("db_year") String ac_year);
 
     @GET("GetJobsheetDetail")
     Call<JsonObject> getJobSheetDetail(@Query("ref_no") String ref_no,@Query("db_name") String db_name, @Query("db_year") String db_year);

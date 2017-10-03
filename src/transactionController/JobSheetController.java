@@ -362,6 +362,9 @@ public class JobSheetController extends javax.swing.JDialog {
         jtxtEstimated = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jtxtDeposit = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jlblUser = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -517,33 +520,83 @@ public class JobSheetController extends javax.swing.JDialog {
 
         jcb0.setText("Battery");
         jcb0.setName("0"); // NOI18N
+        jcb0.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb0KeyPressed(evt);
+            }
+        });
 
         jcb1.setText("Charger");
         jcb1.setName("1"); // NOI18N
+        jcb1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb1KeyPressed(evt);
+            }
+        });
 
         jcb3.setText("M.M.C");
         jcb3.setName("3"); // NOI18N
+        jcb3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb3KeyPressed(evt);
+            }
+        });
 
         jcb4.setText("H.F");
         jcb4.setName("4"); // NOI18N
+        jcb4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb4KeyPressed(evt);
+            }
+        });
 
         jcb6.setText("Data Cable");
         jcb6.setName("6"); // NOI18N
+        jcb6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb6KeyPressed(evt);
+            }
+        });
 
         jcb2.setText("Back Cover");
         jcb2.setName("2"); // NOI18N
+        jcb2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb2KeyPressed(evt);
+            }
+        });
 
         jcb5.setText("Sim Card");
         jcb5.setName("5"); // NOI18N
+        jcb5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb5KeyPressed(evt);
+            }
+        });
 
         jcb7.setText("Flip Cover");
         jcb7.setName("7"); // NOI18N
+        jcb7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb7KeyPressed(evt);
+            }
+        });
 
         jcb8.setText("USB Dock");
         jcb8.setName("8"); // NOI18N
+        jcb8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb8KeyPressed(evt);
+            }
+        });
 
         jcb9.setText("Car Dock");
         jcb9.setName("9"); // NOI18N
+        jcb9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb9KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -630,6 +683,12 @@ public class JobSheetController extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setText("Press CTRL + ENTER to exit this box");
+
+        jLabel7.setText("Press ENTER to next item");
+
+        jLabel16.setText("Press SPACEBAR  to select this item");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -648,19 +707,35 @@ public class JobSheetController extends javax.swing.JDialog {
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxtDeposit)
-                    .addComponent(jtxtEstimated)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtImeiNo)
-                    .addComponent(jtxtModelName)
-                    .addComponent(jtxtAcName)
-                    .addComponent(jcmbServiceType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtxtMobileNo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtDeposit)
+                            .addComponent(jtxtEstimated)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtImeiNo)
+                            .addComponent(jtxtModelName)
+                            .addComponent(jtxtAcName)
+                            .addComponent(jcmbServiceType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtxtMobileNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jcmbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(407, 407, 407)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addComponent(jtxtVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -672,7 +747,7 @@ public class JobSheetController extends javax.swing.JDialog {
                 .addComponent(jBillDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlblVday, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel10, jLabel11, jLabel14, jLabel2, jLabel4, jLabel5, jLabel8, jLabel9});
@@ -716,9 +791,15 @@ public class JobSheetController extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -743,6 +824,11 @@ public class JobSheetController extends javax.swing.JDialog {
         jbtnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnOKActionPerformed(evt);
+            }
+        });
+        jbtnOK.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbtnOKKeyPressed(evt);
             }
         });
 
@@ -1032,7 +1118,7 @@ public class JobSheetController extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (lb.isEnter(evt)) {
             if (evt.getModifiers() == KeyEvent.CTRL_MASK) {
-                jtxtEstimated.requestFocusInWindow();
+                jcb0.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
@@ -1041,6 +1127,81 @@ public class JobSheetController extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextArea1.setText(jTextArea1.getText().toUpperCase());
     }//GEN-LAST:event_jTextArea1FocusLost
+
+    private void jcb0KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb0KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb1.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb0KeyPressed
+
+    private void jcb1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb1KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb2.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb1KeyPressed
+
+    private void jcb2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb2KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb3.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb2KeyPressed
+
+    private void jcb3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb3KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb4.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb3KeyPressed
+
+    private void jcb4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb4KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb5.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb4KeyPressed
+
+    private void jcb5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb5KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb6.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb5KeyPressed
+
+    private void jcb6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb6KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb7.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb6KeyPressed
+
+    private void jcb7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb7KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb8.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb7KeyPressed
+
+    private void jcb8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb8KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jcb9.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb8KeyPressed
+
+    private void jcb9KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb9KeyPressed
+        // TODO add your handling code here:
+        if(lb.isEnter(evt)){
+            jtxtEstimated.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_jcb9KeyPressed
+
+    private void jbtnOKKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnOKKeyPressed
+        // TODO add your handling code here:
+        lb.enterClick(evt);
+    }//GEN-LAST:event_jbtnOKKeyPressed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -1057,11 +1218,14 @@ public class JobSheetController extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

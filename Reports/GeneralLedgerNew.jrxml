@@ -258,7 +258,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PARTICULAR}+" "+$F{CHEQUE_NO}+" "+$F{OUR_BANK}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{OUR_BANK}+" "+$F{CHEQUE_NO}+" "+$F{PARTICULAR}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 				<reportElement uuid="21005107-af34-4e3f-9585-d26285a56602" stretchType="RelativeToTallestObject" x="1" y="20" width="52" height="20"/>
